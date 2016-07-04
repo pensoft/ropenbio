@@ -35,7 +35,7 @@ test_that("GET-ing a query with a XML-result returns a character...", {
 
 
 test_that("POST-ing a query with CSV result returns a data.frame...",
-          {
+          {you
             expect_is( POST_query( options, "plazi", query, "CSV" ), "data.frame" )
           })
 

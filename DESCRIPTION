@@ -9,4 +9,7 @@ LazyData: TRUE
 Imports:
   RCurl,
   XML
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
