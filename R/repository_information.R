@@ -23,7 +23,7 @@ get_repositories = function( options ) {
 
   }
   else { #API-case
-    r = RCurl::getURL( paste( options$server_url, endpoint, sep = ""), verbose = TRUE, httpheader = header)
+    r = RCurl::getURL( paste( options$server_url, endpoint, sep = ""), verbose = FALSE, httpheader = header)
   }
   cols = c("uri", "id", "title", "readable", "writable")
   d = xmlTreeParse(r, asText = TRUE, useInternalNodes = TRUE)

@@ -34,3 +34,21 @@ test_that("Getting list of repositories returns a data frame (API authentication
             options = create_server_options(protocol = "https://", server_add = "rdf.s4.ontotext.com/4937448214/OBKMS", authentication = "api", api_key = "s4i0k6o7v6l0", secret = "9k03ah49e3da607"  )
             expect_is( get_repositories( options ), "data.frame" )
           })
+
+my_context = "GET QUERY "
+context( paste( my_context, paste( rep( "=", 80 - nchar( my_context ) ) , collapse = ""), "\n", sep = "" ) )
+
+# does not work for the server with basic authentication
+
+test_that("Getting list of repositories returns a data frame (API authentication)::",
+          {
+            # now with API
+            options = create_server_options(protocol = "https://", server_add = "rdf.s4.ontotext.com/4937448214/OBKMS", authentication = "api", api_key = "s4i0k6o7v6l0", secret = "9k03ah49e3da607"  )
+            query = "SELECT (COUNT(*) as ?count)
+                      FROM <http://www.ontotext.com/implicit>
+                      WHERE {
+                         ?s ?p ?o .
+                      }"
+            expect_is( GET_query( options, "plazi", query, "CSV" ), "data.frame" )
+            expect_is( GET_query( options, "plazi", query, "XML" ), "character" )
+          })
