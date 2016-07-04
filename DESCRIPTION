@@ -1,8 +1,12 @@
 Package: rdf4jr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: R-Functions to Access an RDF4J-Compatible REST API
 Version: 0.1.0
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: c( person("Viktor", "Senderov", email = "vsenderov@gmail.com", role = c("aut", "cre")), person("Scott", "Chamberlain", role = c("rev")) )
+Description: This package contains a collection of R-functions, abstracting access to an RDF4J API. Using it, you may programatically communicate with an RDF database (triple store/ quad store) that supports RDF4J. RDF4J was formerly known as Sesame. This package has been tested with GraphDB.
+License: To be determined! Possibly GPL?
 LazyData: TRUE
+Imports:
+  RCurl,
+  XML
+Suggests: testthat
