@@ -79,4 +79,3 @@ POST_query = function ( options , repo_id, query, results_format = "CSV", query_
     }
 }
 
-
