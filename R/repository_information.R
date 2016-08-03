@@ -1,8 +1,23 @@
-# Functions needed to query repository information from the server
+#   _____  ______ _____   ____   _____ _____ _______ ____  _______     __  _____ _   _ ______  ____
+#  |  __ \|  ____|  __ \ / __ \ / ____|_   _|__   __/ __ \|  __ \ \   / / |_   _| \ | |  ____ / __ \
+#  | |__) | |__  | |__) | |  | | (___   | |    | | | |  | | |__) \ \_/ /    | | |  \| | |__  | |  | |
+#  |  _  /|  __| |  ___/| |  | |\___ \  | |    | | | |  | |  _  / \   /     | | | . ` |  __| | |  | |
+#  | | \ \| |____| |    | |__| |____) |_| |_   | | | |__| | | \ \  | |     _| |_| |\  | |    | |__| |
+#  |_|  \_\______|_|     \____/|_____/|_____|  |_|  \____/|_|  \_\ |_|    |_____|_| \_|_|     \____/
+#
 
-# Gets the communication protocol version
-# Parameters:
-# options         should be an object returned by create_server_options
+
+#' Get the communication protocol version
+#'
+#' This function queries the RDF endpoint for information about the protocol version.
+#'
+#' @param options           a list returned by \code{create_server_options}.
+#'
+#' @return a string, the protocol version.
+#'
+#' @examples
+#' \dontrun{get_protocol_version(options)}
+#'
 get_protocol_version = function( options  ) {
   if ( options$authentication == "basic_http" ) {
     RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE, userpwd = options$userpwd, httpauth = 1L)
