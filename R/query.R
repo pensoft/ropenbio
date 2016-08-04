@@ -66,12 +66,14 @@ GET_query = function ( options, repo_id, query, results_format = "CSV",  query_l
 #' @param options           a list returned by \code{create_server_options}.
 #' @param repo_id           a string holding the repository id as returned by \code{get_repositories}.
 #' @param results_format    a string, indicating the type of results required. Currently supported: "XML", "CSV".
-#'                            If "XML" is specified, the return value is an XML string, ready to be parsed as a document.
-#'                            If "CSV" is specified, the return variable is already parsed as a data.frame.
+
 #' @param infer             a boolean, indicating whether we want to use inference.
 #' @param query_language    a string: "SPARQL" or "SERQL" (untested)
 #' @param varbindings       currently unused
 #' @param timeout           currently unused
+#'
+#' @return                  If \code{results_format} is "XML", the return value is an XML string containing the output of the , ready to be parsed as a document.
+#'                            If "CSV" is specified, the return variable is already parsed as a data.frame.
 #'
 #' @examples
 #' \dontrun{r = POST_query( options, "plazi", query, "CSV" )}
