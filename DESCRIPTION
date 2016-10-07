@@ -11,6 +11,7 @@ Description: This package contains a collection of R-functions, abstracting
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
+    httr,
     RCurl,
     XML
 Suggests:

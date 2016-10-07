@@ -6,21 +6,27 @@
 #  |_|  \_\______|_|     \____/|_____/|_____|  |_|  \____/|_|  \_\ |_|    |_____|_| \_|_|     \____/
 #
 
-
-#' Get the communication protocol version
+#' Test connectivity to the database and get the communication protocol version.
 #'
-#' This function queries the RDF endpoint for information about the protocol version.
+#' This function tests the connectivity to the graph database function. If there
+#' is no connectivity it will return FALSE. If there is connectivity it will return
+#' the protocol version as a numeric.
 #'
-#' @param options           a list returned by \code{create_server_options}.
+#' @param options   a list, containing the graph database connectivity options,
+#'                  returned by the helper function \code{create_server_options}.
 #'
-#' @return a string, the protocol version.
+#' @return          FALSE, if there is no connectivity
+#'                  a numeric, containing the protocol version if connectivity is OK
 #'
 #' @examples
-#' \dontrun{get_protocol_version(options)}
+#' \dontrun{ get_protocol_version( options ) }
 #'
+#' @export
 get_protocol_version = function( options  ) {
   if ( options$authentication == "basic_http" ) {
-    RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE, userpwd = options$userpwd, httpauth = 1L)
+    request_url = paste( options$server_url, "/protocol", sep = "" )
+    r = httr::GET( request_url , authenticate( "obkms", "1obkms", "basic"), verbose() )
+    #RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE, userpwd = options$userpwd, httpauth = 1L)
   }
   else { #API-KEY Authentication
     RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE )
@@ -28,8 +34,10 @@ get_protocol_version = function( options  ) {
 }
 
 # Gets the list of repositories
+
 # Parameters:
 # options        should be an object returned by create_server_options
+#' @export
 get_repositories = function( options ) {
   endpoint = "/repositories"
   header = c(Accept = "application/sparql-results+xml, */*;q=0.5")
@@ -41,25 +49,25 @@ get_repositories = function( options ) {
     r = RCurl::getURL( paste( options$server_url, endpoint, sep = ""), verbose = FALSE, httpheader = header)
   }
   cols = c("uri", "id", "title", "readable", "writable")
-  d = xmlTreeParse(r, asText = TRUE, useInternalNodes = TRUE)
+  d = XML::xmlTreeParse(r, asText = TRUE, useInternalNodes = TRUE)
 
-  ns = getNodeSet(d, "//x:results/x:result/x:binding[@name = 'uri']/x:uri", "x")
-  uri = sapply (ns, xmlValue)
+  ns = XML::getNodeSet(d, "//x:results/x:result/x:binding[@name = 'uri']/x:uri", "x")
+  uri = sapply (ns, XML::xmlValue)
 
-  ns = getNodeSet(d, "//x:results/x:result/x:binding[@name = 'id']/x:literal", "x")
-  id = sapply (ns, xmlValue)
+  ns = XML::getNodeSet(d, "//x:results/x:result/x:binding[@name = 'id']/x:literal", "x")
+  id = sapply (ns, XML::xmlValue)
 
-  ns = getNodeSet(d, "//x:results/x:result/x:binding[@name = 'title']/x:literal", "x")
-  title = sapply (ns, xmlValue)
+  ns = XML::getNodeSet(d, "//x:results/x:result/x:binding[@name = 'title']/x:literal", "x")
+  title = sapply (ns, XML::xmlValue)
 
-  ns = getNodeSet(d, "//x:results/x:result/x:binding[@name = 'title']/x:literal", "x")
-  title = sapply (ns, xmlValue)
+  ns = XML::getNodeSet(d, "//x:results/x:result/x:binding[@name = 'title']/x:literal", "x")
+  title = sapply (ns, XML::xmlValue)
 
-  ns = getNodeSet(d, "//x:results/x:result/x:binding[@name = 'readable']/x:literal", "x")
-  readable = sapply (ns, xmlValue)
+  ns = XML::getNodeSet(d, "//x:results/x:result/x:binding[@name = 'readable']/x:literal", "x")
+  readable = sapply (ns, XML::xmlValue)
 
-  ns = getNodeSet(d, "//x:results/x:result/x:binding[@name = 'writable']/x:literal", "x")
-  writable = sapply (ns, xmlValue)
+  ns = XML::getNodeSet(d, "//x:results/x:result/x:binding[@name = 'writable']/x:literal", "x")
+  writable = sapply (ns, XML::xmlValue)
 
   data.frame(uri, id, title, readable, writable)
 }

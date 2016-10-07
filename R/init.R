@@ -25,7 +25,7 @@
 #' @examples
 #' \dontrun{options = create_server_options(protocol = "http://", server_add = "213.191.204.69:7777/graphdb", authentication = "basic_http", userpwd = "deliberately_changed_username:fake_password")}
 #' \dontrun{options = create_server_options(protocol = "https://", server_add = "rdf.s4.ontotext.com/4937448214/OBKMS", authentication = "api", api_key = "wrong_api_key", secret = "no_secret"  )}
-
+#' @export
 
 create_server_options = function ( protocol, server_add, authentication = "basic_http", userpwd, api_key, secret ) {
   if ( authentication == "basic_http" ) {

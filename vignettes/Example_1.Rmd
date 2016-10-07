@@ -24,6 +24,9 @@ The first step when working with the package is to create an `options` list, whi
 
 ```{r options}
 options = create_server_options(protocol = "https://", server_add = "rdf.s4.ontotext.com/4937448214/OBKMS", authentication = "api", api_key = "s4i0k6o7v6l0", secret = "9k03ah49e3da607"  )
+
+eucases_secret = read.table( file = "./secrets/eucases.txt", header = TRUE , stringsAsFactors = FALSE)
+options2 = create_server_options(protocol = eucases_secret[1, "protocol"], server_add = eucases_secret[1, "server_add"], authentication = eucases_secret[1, "authentication"], userpwd = eucases_secret[1, "userpwd"])
 ```
 
 ## Quering for the protocol version
@@ -50,6 +53,8 @@ FROM <http://www.ontotext.com/implicit>
 WHERE {
    ?s ?p ?o .
 }"
+
+
 ```
 
 ## Submitting a query via GET

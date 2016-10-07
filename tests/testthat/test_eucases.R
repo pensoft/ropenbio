@@ -12,7 +12,8 @@ WHERE {
 
 context( paste( "EU-CAESES (Basic Auth) ", paste( rep( "=", 80 - nchar( "EU-CAESES (Basic Auth) " ) ) , collapse = ""), "\n", sep = "" ) )
 
-options = create_server_options(protocol = "http://", server_add = "213.191.204.69:7777/graphdb", authentication = "basic_http", userpwd = "obkms:1obkms")
+eucases_secret = read.table( file = "../../secrets/eucases.txt", header = TRUE , stringsAsFactors = FALSE)
+options = create_server_options(protocol = eucases_secret[1, "protocol"], server_add = eucases_secret[1, "server_add"], authentication = eucases_secret[1, "authentication"], userpwd = eucases_secret[1, "userpwd"])
 
 test_that("getting protocol version returns a number between 0 and 9...",
           {

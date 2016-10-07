@@ -12,9 +12,7 @@ POST_query(options, repo_id, query, results_format = "CSV",
 
 \item{repo_id}{a string holding the repository id as returned by \code{get_repositories}.}
 
-\item{results_format}{a string, indicating the type of results required. Currently supported: "XML", "CSV".
-If "XML" is specified, the return value is an XML string, ready to be parsed as a document.
-If "CSV" is specified, the return variable is already parsed as a data.frame.}
+\item{results_format}{a string, indicating the type of results required. Currently supported: "XML", "CSV".}
 
 \item{infer}{a boolean, indicating whether we want to use inference.}
 
@@ -23,6 +21,10 @@ If "CSV" is specified, the return variable is already parsed as a data.frame.}
 \item{timeout}{currently unused}
 
 \item{query_language}{a string: "SPARQL" or "SERQL" (untested)}
+}
+\value{
+If \code{results_format} is "XML", the return value is an XML string containing the output of the , ready to be parsed as a document.
+                           If "CSV" is specified, the return variable is already parsed as a data.frame.
 }
 \description{
 This function is very similar to \code{GET_query}; the difference is that

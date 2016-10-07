@@ -30,6 +30,7 @@
 #' @examples
 #' \dontrun{r = GET_query( options, "plazi", query, "CSV" )}
 #' \dontrun{r = GET_query( options, "plazi", query, "XML" )}
+#' @export
 
 GET_query = function ( options, repo_id, query, results_format = "CSV",  query_ln = "sparql", infer = TRUE, varbindings = "", timeout = "" ) {
   if ( results_format == "CSV" ) {
@@ -78,6 +79,7 @@ GET_query = function ( options, repo_id, query, results_format = "CSV",  query_l
 #' @examples
 #' \dontrun{r = POST_query( options, "plazi", query, "CSV" )}
 #' \dontrun{r = POST_query( options, "plazi", query, "XML" )}
+#' @export
 
 POST_query = function ( options , repo_id, query, results_format = "CSV", query_ln = "SPARQL", infer = TRUE, varbindings, timeout = "" ) {
   # need to construct a POST query, here is how to do it with curl
