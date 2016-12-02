@@ -5,7 +5,7 @@
 \title{Create an object with the settings needed to access the server}
 \usage{
 create_server_options(protocol, server_add, authentication = "basic_http",
-  userpwd, api_key, secret)
+  userpwd, api_key, secret, repository = "")
 }
 \arguments{
 \item{protocol}{a string, either "http://" or "https://". Will be prepended to the endpoint URL.}
@@ -21,6 +21,8 @@ In the case of "api", you are further required to supply an API key and the asso
 \item{api_key}{a string, the API key used for API-style authentication.}
 
 \item{secret}{a string, the secret string corresponding to the API key needed for API-style authentication.}
+
+\item{repository}{a string, an optional parameter specifying the repository in the graph database that we will be accessing}
 }
 \description{
 This function is used to create an \code{options} variable, containing all the configuration
@@ -28,7 +30,7 @@ needed to access the RDF4J endpoint: protocol, server address, authentication me
 credentials.
 }
 \examples{
-\dontrun{options = create_server_options(protocol = "http://", server_add = "213.191.204.69:7777/graphdb", authentication = "basic_http", userpwd = "deliberately_changed_username:fake_password")}
+\dontrun{options = create_server_options(protocol = "http://", server_add = "213.191.204.69:7777/graphdb", authentication = "basic_http", userpwd = "deliberately_changed_username:fake_password"), repository = "OBKMS"}
 \dontrun{options = create_server_options(protocol = "https://", server_add = "rdf.s4.ontotext.com/4937448214/OBKMS", authentication = "api", api_key = "wrong_api_key", secret = "no_secret"  )}
 }
 

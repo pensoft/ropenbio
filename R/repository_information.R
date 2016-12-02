@@ -8,15 +8,16 @@
 
 #' Test connectivity to the database and get the communication protocol version.
 #'
-#' This function tests the connectivity to the graph database function. If there
-#' is no connectivity it will return FALSE. If there is connectivity it will return
-#' the protocol version as a numeric.
+#' This function tests the connectivity to the graph database function.
+#' If there is connectivity it will return
+#' the protocol version as a numeric.If there
+#' is no connectivity it will return an error
 #'
 #' @param options   a list, containing the graph database connectivity options,
 #'                  returned by the helper function \code{create_server_options}.
 #'
-#' @return          FALSE, if there is no connectivity
-#'                  a numeric, containing the protocol version if connectivity is OK
+#' @return        a numeric, containing the protocol version if connectivity is OK
+#'                some error, otherwise
 #'
 #' @examples
 #' \dontrun{ get_protocol_version( options ) }
@@ -25,11 +26,16 @@
 get_protocol_version = function( options  ) {
   if ( options$authentication == "basic_http" ) {
     request_url = paste( options$server_url, "/protocol", sep = "" )
-    r = httr::GET( request_url , authenticate( "obkms", "1obkms", "basic"), verbose() )
+    username = strsplit( options$userpwd, ":" )[[1]][1]
+    password = strsplit( options$userpwd, ":" )[[1]][2]
+    r = httr::GET( request_url , httr::authenticate( username, password, "basic"))
+    return ( httr::content (r ) )
     #RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE, userpwd = options$userpwd, httpauth = 1L)
   }
   else { #API-KEY Authentication
-    RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE )
+    r = httr::GET( paste( options$server_url, "/protocol", sep = "" ) )
+    return ( httr::content ( r ) )
+    #RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE )
   }
 }
 
@@ -38,6 +44,7 @@ get_protocol_version = function( options  ) {
 # Parameters:
 # options        should be an object returned by create_server_options
 #' @export
+#'
 get_repositories = function( options ) {
   endpoint = "/repositories"
   header = c(Accept = "application/sparql-results+xml, */*;q=0.5")

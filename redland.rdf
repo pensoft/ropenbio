@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="http://id.pensoft.net/pensoft-publishers">
+    <ns0:type xmlns:ns0="rdf:">foaf:Agent</ns0:type>
+  </rdf:Description>
+</rdf:RDF>

@@ -104,7 +104,7 @@ POST_query = function ( options , repo_id, query, results_format = "CSV", query_
 
   r = RCurl::postForm( endpoint, query = query, curl = curl,  style = "POST")
   if ( results_format == "CSV") {
-    data = read.csv( textConnection( r ) )
+    data = read.csv( textConnection( r ) , stringsAsFactors = FALSE)
     return ( data )
   }
   else { #XML case
@@ -112,3 +112,23 @@ POST_query = function ( options , repo_id, query, results_format = "CSV", query_
     }
 }
 
+#' Add data to a repository
+#' @param server_access_options the access details to an RDF4J store, created by
+#' \code{create_server_options}
+#' @param repository the name of the repository, where to add data to
+#' @param data the RDF data containing the triples to be submitted
+#' @param data_format data format, one of {"application/x-trig"}
+#' @export
+
+add_data = function( server_access_options, repository, data,
+             data_format = "application/x-trig")
+{
+  endpoint = paste( server_access_options$server_url, "/repositories/",
+                    repository, "/statements", sep = "")
+  user = strsplit( server_access_options$userpwd, ":" )[[1]][1]
+  password = strsplit( server_access_options$userpwd, ":" )[[1]][2]
+  if ( server_access_options$authentication == "basic_http") {
+    httr::POST( url = endpoint, httr::content_type(data_format),
+                httr::authenticate(user, password, type = "basic"), body = data )
+  }
+}

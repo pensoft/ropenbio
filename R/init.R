@@ -22,17 +22,20 @@
 #' @param api_key         a string, the API key used for API-style authentication.
 #' @param secret          a string, the secret string corresponding to the API key needed for API-style authentication.
 #'
+#' @param repository      a string, an optional parameter specifying the repository in the graph database that we will be accessing
+#'
 #' @examples
-#' \dontrun{options = create_server_options(protocol = "http://", server_add = "213.191.204.69:7777/graphdb", authentication = "basic_http", userpwd = "deliberately_changed_username:fake_password")}
+#' \dontrun{options = create_server_options(protocol = "http://", server_add = "213.191.204.69:7777/graphdb", authentication = "basic_http", userpwd = "deliberately_changed_username:fake_password"), repository = "OBKMS"}
 #' \dontrun{options = create_server_options(protocol = "https://", server_add = "rdf.s4.ontotext.com/4937448214/OBKMS", authentication = "api", api_key = "wrong_api_key", secret = "no_secret"  )}
 #' @export
 
-create_server_options = function ( protocol, server_add, authentication = "basic_http", userpwd, api_key, secret ) {
+create_server_options = function ( protocol, server_add, authentication = "basic_http", userpwd, api_key, secret, repository = "" ) {
   if ( authentication == "basic_http" ) {
     return ( list(
       server_url = paste( protocol, server_add, sep = "" ),
       authentication = authentication,
-      userpwd = userpwd
+      userpwd = userpwd,
+      repository = repository
     ) )
   }
   else {
@@ -40,7 +43,19 @@ create_server_options = function ( protocol, server_add, authentication = "basic
       server_url = paste( protocol, api_key, ":", secret, "@", server_add, sep = ""),
       authentication = "api",
       api_key = api_key,
-      secret = secret
+      secret = secret,
+      repository = repository
     ))
   }
+}
+
+
+#' Creates the server options from a YAML file and the environment
+#'
+#' @export
+#'
+create_server_options_env = function( filename ) {
+  obkms_options = yaml::yaml.load_file( filename )
+  obkms_options$userpwd = Sys.getenv("OBKMS_SECRET")
+  return (obkms_options)
 }

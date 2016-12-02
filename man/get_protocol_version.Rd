@@ -2,21 +2,26 @@
 % Please edit documentation in R/repository_information.R
 \name{get_protocol_version}
 \alias{get_protocol_version}
-\title{Get the communication protocol version}
+\title{Test connectivity to the database and get the communication protocol version.}
 \usage{
 get_protocol_version(options)
 }
 \arguments{
-\item{options}{a list returned by \code{create_server_options}.}
+\item{options}{a list, containing the graph database connectivity options,
+returned by the helper function \code{create_server_options}.}
 }
 \value{
-a string, the protocol version.
+a numeric, containing the protocol version if connectivity is OK
+               some error, otherwise
 }
 \description{
-This function queries the RDF endpoint for information about the protocol version.
+This function tests the connectivity to the graph database function.
+If there is connectivity it will return
+the protocol version as a numeric.If there
+is no connectivity it will return an error
 }
 \examples{
-\dontrun{get_protocol_version(options)}
+\dontrun{ get_protocol_version( options ) }
 
 }
 
