@@ -1,42 +1,46 @@
-#   _____  ______ _____   ____   _____ _____ _______ ____  _______     __  _____ _   _ ______  ____
-#  |  __ \|  ____|  __ \ / __ \ / ____|_   _|__   __/ __ \|  __ \ \   / / |_   _| \ | |  ____ / __ \
-#  | |__) | |__  | |__) | |  | | (___   | |    | | | |  | | |__) \ \_/ /    | | |  \| | |__  | |  | |
-#  |  _  /|  __| |  ___/| |  | |\___ \  | |    | | | |  | |  _  / \   /     | | | . ` |  __| | |  | |
-#  | | \ \| |____| |    | |__| |____) |_| |_   | | | |__| | | \ \  | |     _| |_| |\  | |    | |__| |
-#  |_|  \_\______|_|     \____/|_____/|_____|  |_|  \____/|_|  \_\ |_|    |_____|_| \_|_|     \____/
-#
+                      #' REPOSITORY INFORMATION
 
-#' Test connectivity to the database and get the communication protocol version.
+#' Test connectivity to the graph database and get the communication protocol
+#' version.
 #'
-#' This function tests the connectivity to the graph database function.
-#' If there is connectivity it will return
-#' the protocol version as a numeric.If there
-#' is no connectivity it will return an error
+#' This function tests the connectivity to the graph database. If there is
+#' connectivity it will return the protocol version as a numeric.
+#' If there is no connectivity, an error condition will be set.
 #'
 #' @param options   a list, containing the graph database connectivity options,
-#'                  returned by the helper function \code{create_server_options}.
+#'                returned by the helper function \code{create_server_options}.
 #'
-#' @return        a numeric, containing the protocol version if connectivity is OK
-#'                some error, otherwise
+#' @return    a numeric, containing the protocol version if connectivity is OK.
 #'
 #' @examples
+#'
 #' \dontrun{ get_protocol_version( options ) }
 #'
 #' @export
+
 get_protocol_version = function( options  ) {
+
   if ( options$authentication == "basic_http" ) {
+
     request_url = paste( options$server_url, "/protocol", sep = "" )
     username = strsplit( options$userpwd, ":" )[[1]][1]
     password = strsplit( options$userpwd, ":" )[[1]][2]
     r = httr::GET( request_url , httr::authenticate( username, password, "basic"))
+    response = httr::content( r, as = "text" )
     return ( httr::content (r ) )
     #RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE, userpwd = options$userpwd, httpauth = 1L)
-  }
-  else { #API-KEY Authentication
+
+  } else { # API-KEY Authentication or No authentication
+
     r = httr::GET( paste( options$server_url, "/protocol", sep = "" ) )
-    return ( httr::content ( r ) )
     #RCurl::getURL( paste( options$server_url, "/protocol", sep = "" ), verbose = FALSE )
   }
+
+  # match if the response is constructed of a number (more than one digit and
+  # nothing else ):
+  response = httr::content( r, as = "text" )
+  stopifnot( grepl( "^\\d+^", response ) )
+  return ( as.numeric( response ) )
 }
 
 # Gets the list of repositories
