@@ -29,7 +29,7 @@
 #' \dontrun{options = create_server_options(protocol = "https://", server_add = "rdf.s4.ontotext.com/4937448214/OBKMS", authentication = "api", api_key = "wrong_api_key", secret = "no_secret"  )}
 #' @export
 
-create_server_options = function ( protocol, server_add, authentication = "basic_http", userpwd, api_key, secret, repository = "" ) {
+create_server_options = function ( protocol = "http://", server_add, authentication = FALSE, userpwd, api_key, secret, repository = "" ) {
   if ( authentication == "basic_http" ) {
     return ( list(
       server_url = paste( protocol, server_add, sep = "" ),
@@ -38,7 +38,7 @@ create_server_options = function ( protocol, server_add, authentication = "basic
       repository = repository
     ) )
   }
-  else {
+  else if (authentication == "api") {
     return ( list (
       server_url = paste( protocol, api_key, ":", secret, "@", server_add, sep = ""),
       authentication = "api",
@@ -46,6 +46,12 @@ create_server_options = function ( protocol, server_add, authentication = "basic
       secret = secret,
       repository = repository
     ))
+  }
+  else if (authentication == FALSE ) {
+    return ( list (
+    authentication  = "no" ,
+    server_url = paste( protocol, server_add, sep = "" ) ,
+    repository = repository ) )
   }
 }
 
