@@ -1,0 +1,11660 @@
+pensoft:Nomenclature {
+
+pensoft:9a585cf0-fcbb-4380-929c-2358d62fd9c7
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:0643c727-5a9a-48f0-8b22-aa5f61487f01
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:2d0bc53b-9562-488f-8b25-b44bb3508d55
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:633dae7c-6681-4566-8698-b4caf1e205e3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:bd49c44d-f824-42c2-a594-22ed988435d1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:633dae7c-6681-4566-8698-b4caf1e205e3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:bd49c44d-f824-42c2-a594-22ed988435d1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:cfd36e30-dc9f-4539-9914-c9ca8cca32e6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Epilachninae"
+;
+	
+dwc:rank
+ 
+"subfamily"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:cfd36e30-dc9f-4539-9914-c9ca8cca32e6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Epilachninae"
+;
+	
+dwc:rank
+ 
+"subfamily"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:cfd36e30-dc9f-4539-9914-c9ca8cca32e6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Epilachninae"
+;
+	
+dwc:rank
+ 
+"subfamily"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:e0c35984-6b94-47d9-87f3-c960fb546308
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:bd49c44d-f824-42c2-a594-22ed988435d1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:2afd1483-2316-44f0-a4be-cc80049fe7b3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:86c7cced-bfb8-4837-a985-08bd69d5b089
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"atrocincta"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:1350a28a-a1f1-417b-a2a9-59d35d2acbe6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:62121ec1-ceac-4ada-b586-2273d48571e8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Neda paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Neda"
+. }
+pensoft:Nomenclature {
+
+pensoft:67436d1a-139f-4f86-8397-c8bc3e29741c
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:0ce44619-fea6-43fe-b2a1-d565818fe544
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis cerasicolor"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"cerasicolor"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:23f7b065-b024-4c4b-8737-264802304e92
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis aterrima"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"aterrima"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+_base:leis-papuensis
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:59245cc5-1b84-4d03-915e-8be559c4e91a
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis var. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:5b086b82-c719-415f-9ad6-dd86b252df58
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Animalia"
+;
+	
+dwc:rank
+ 
+"kingdom"
+. }
+pensoft:Nomenclature {
+
+pensoft:12eb35c0-015a-4268-97a8-32d1fe2f893d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Arthropoda"
+;
+	
+dwc:rank
+ 
+"phylum"
+. }
+pensoft:Nomenclature {
+
+pensoft:91a24eea-18d6-4c5a-a4a5-8ce671413326
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Insecta"
+;
+	
+dwc:rank
+ 
+"class"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:b7d89a3e-97af-4678-afd8-107c13141f2a
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:633dae7c-6681-4566-8698-b4caf1e205e3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:fb5112f3-0877-4c38-aab1-88bb84ef9453
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Callineda decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Callineda"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:0bcd48e1-7e4b-4c97-b539-60243d38796f
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"C. decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"C."
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:e0c35984-6b94-47d9-87f3-c960fb546308
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:d9754082-17db-4e6b-ba49-7d0ba666b748
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia incognita"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"incognita"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:97b5dc50-e1f9-4001-a40a-2d2fdbf5e44c
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"suffusa"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:379ed2ae-d01a-4520-81c8-3b6d235e8d49
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"L. papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"L."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:94479d73-a49b-4175-a5bd-520985b87337
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:3e7bbdc6-aed2-488c-a4f1-4d9aa99a0285
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"L. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"suffusa"
+;
+	
+dwc:genus
+ 
+"L."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:3e7bbdc6-aed2-488c-a4f1-4d9aa99a0285
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"L. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"suffusa"
+;
+	
+dwc:genus
+ 
+"L."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:2afd1483-2316-44f0-a4be-cc80049fe7b3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:86c7cced-bfb8-4837-a985-08bd69d5b089
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"atrocincta"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:1350a28a-a1f1-417b-a2a9-59d35d2acbe6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:62121ec1-ceac-4ada-b586-2273d48571e8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Neda paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Neda"
+. }
+pensoft:Nomenclature {
+
+pensoft:67436d1a-139f-4f86-8397-c8bc3e29741c
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:0ce44619-fea6-43fe-b2a1-d565818fe544
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis cerasicolor"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"cerasicolor"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:23f7b065-b024-4c4b-8737-264802304e92
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis aterrima"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"aterrima"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+_base:leis-papuensis
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:59245cc5-1b84-4d03-915e-8be559c4e91a
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis var. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:2afd1483-2316-44f0-a4be-cc80049fe7b3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:86c7cced-bfb8-4837-a985-08bd69d5b089
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"atrocincta"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:1350a28a-a1f1-417b-a2a9-59d35d2acbe6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:62121ec1-ceac-4ada-b586-2273d48571e8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Neda paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Neda"
+. }
+pensoft:Nomenclature {
+
+pensoft:67436d1a-139f-4f86-8397-c8bc3e29741c
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:0ce44619-fea6-43fe-b2a1-d565818fe544
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis cerasicolor"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"cerasicolor"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:23f7b065-b024-4c4b-8737-264802304e92
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis aterrima"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"aterrima"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+_base:leis-papuensis
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:59245cc5-1b84-4d03-915e-8be559c4e91a
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis var. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:633dae7c-6681-4566-8698-b4caf1e205e3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:bd49c44d-f824-42c2-a594-22ed988435d1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:633dae7c-6681-4566-8698-b4caf1e205e3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:bd49c44d-f824-42c2-a594-22ed988435d1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:cfd36e30-dc9f-4539-9914-c9ca8cca32e6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Epilachninae"
+;
+	
+dwc:rank
+ 
+"subfamily"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:cfd36e30-dc9f-4539-9914-c9ca8cca32e6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Epilachninae"
+;
+	
+dwc:rank
+ 
+"subfamily"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:03f20f6c-184b-4f0d-9c5c-04f24de427da
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellini"
+;
+	
+dwc:rank
+ 
+"tribe"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:cfd36e30-dc9f-4539-9914-c9ca8cca32e6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Epilachninae"
+;
+	
+dwc:rank
+ 
+"subfamily"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:e0c35984-6b94-47d9-87f3-c960fb546308
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:bd49c44d-f824-42c2-a594-22ed988435d1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:2afd1483-2316-44f0-a4be-cc80049fe7b3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:86c7cced-bfb8-4837-a985-08bd69d5b089
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"atrocincta"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:1350a28a-a1f1-417b-a2a9-59d35d2acbe6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:62121ec1-ceac-4ada-b586-2273d48571e8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Neda paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Neda"
+. }
+pensoft:Nomenclature {
+
+pensoft:67436d1a-139f-4f86-8397-c8bc3e29741c
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:0ce44619-fea6-43fe-b2a1-d565818fe544
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis cerasicolor"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"cerasicolor"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:23f7b065-b024-4c4b-8737-264802304e92
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis aterrima"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"aterrima"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+_base:leis-papuensis
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:59245cc5-1b84-4d03-915e-8be559c4e91a
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis var. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:5b086b82-c719-415f-9ad6-dd86b252df58
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Animalia"
+;
+	
+dwc:rank
+ 
+"kingdom"
+. }
+pensoft:Nomenclature {
+
+pensoft:12eb35c0-015a-4268-97a8-32d1fe2f893d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Arthropoda"
+;
+	
+dwc:rank
+ 
+"phylum"
+. }
+pensoft:Nomenclature {
+
+pensoft:91a24eea-18d6-4c5a-a4a5-8ce671413326
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Insecta"
+;
+	
+dwc:rank
+ 
+"class"
+. }
+pensoft:Nomenclature {
+
+pensoft:65a97fc1-f06e-4f2e-b22c-e31c4f8c5b05
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coleoptera"
+;
+	
+dwc:rank
+ 
+"order"
+;
+	
+dwc:order
+ 
+"Coleoptera"
+. }
+pensoft:Nomenclature {
+
+pensoft:fe970ccb-987e-476a-bf1d-2e4d340fdad8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Coccinellidae"
+;
+	
+dwc:rank
+ 
+"family"
+;
+	
+dwc:family
+ 
+"Coccinellidae"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:b7d89a3e-97af-4678-afd8-107c13141f2a
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:633dae7c-6681-4566-8698-b4caf1e205e3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:a256a22a-6416-487a-a8ff-ccfb39f35ef8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia"
+;
+	
+dwc:rank
+ 
+"genus"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:fb5112f3-0877-4c38-aab1-88bb84ef9453
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Callineda decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Callineda"
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:0bcd48e1-7e4b-4c97-b539-60243d38796f
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"C. decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"C."
+. }
+pensoft:Nomenclature {
+
+pensoft:6ef33abb-eced-410c-91fe-def021385dd1
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia decussata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"decussata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:e0c35984-6b94-47d9-87f3-c960fb546308
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia flavomarginata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"flavomarginata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:d9754082-17db-4e6b-ba49-7d0ba666b748
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia incognita"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"incognita"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:97b5dc50-e1f9-4001-a40a-2d2fdbf5e44c
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"suffusa"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:379ed2ae-d01a-4520-81c8-3b6d235e8d49
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"L. papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"L."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:94479d73-a49b-4175-a5bd-520985b87337
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:3e7bbdc6-aed2-488c-a4f1-4d9aa99a0285
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"L. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"suffusa"
+;
+	
+dwc:genus
+ 
+"L."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:3e7bbdc6-aed2-488c-a4f1-4d9aa99a0285
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"L. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"suffusa"
+;
+	
+dwc:genus
+ 
+"L."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:594e500e-5172-4d48-9996-a1ab8b7e870b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:9c6dfc3e-a5ee-4862-9b72-af32de4d0046
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:4071684c-1a33-4885-99ad-16588cb492fa
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"H. manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"H."
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:2afd1483-2316-44f0-a4be-cc80049fe7b3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:86c7cced-bfb8-4837-a985-08bd69d5b089
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"atrocincta"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:1350a28a-a1f1-417b-a2a9-59d35d2acbe6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:62121ec1-ceac-4ada-b586-2273d48571e8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Neda paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Neda"
+. }
+pensoft:Nomenclature {
+
+pensoft:67436d1a-139f-4f86-8397-c8bc3e29741c
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:0ce44619-fea6-43fe-b2a1-d565818fe544
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis cerasicolor"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"cerasicolor"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:23f7b065-b024-4c4b-8737-264802304e92
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis aterrima"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"aterrima"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+_base:leis-papuensis
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:59245cc5-1b84-4d03-915e-8be559c4e91a
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis var. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:9f9078a1-6400-4fff-a417-a745c5649e2e
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:aa0ede60-0c3a-416f-9269-aec8f03288cc
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia dimidiata"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dimidiata"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:01c15ceb-53b3-42bc-9817-f16c3c549e0d
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Harmonia manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Harmonia"
+. }
+pensoft:Nomenclature {
+
+pensoft:2afd1483-2316-44f0-a4be-cc80049fe7b3
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria manillana"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"manillana"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:86c7cced-bfb8-4837-a985-08bd69d5b089
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"atrocincta"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:1350a28a-a1f1-417b-a2a9-59d35d2acbe6
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"atrocincta"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+""
+;
+	
+dwc:genus
+ 
+""
+. }
+pensoft:Nomenclature {
+
+pensoft:62121ec1-ceac-4ada-b586-2273d48571e8
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Neda paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Neda"
+. }
+pensoft:Nomenclature {
+
+pensoft:67436d1a-139f-4f86-8397-c8bc3e29741c
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Caria paulinae"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"paulinae"
+;
+	
+dwc:genus
+ 
+"Caria"
+. }
+pensoft:Nomenclature {
+
+pensoft:9efa31ef-b755-4a88-b891-ced3c044c19b
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis dunlopi"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"dunlopi"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:0ce44619-fea6-43fe-b2a1-d565818fe544
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis cerasicolor"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"cerasicolor"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:23f7b065-b024-4c4b-8737-264802304e92
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis aterrima"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"aterrima"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+_base:leis-papuensis
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }
+pensoft:Nomenclature {
+
+pensoft:59245cc5-1b84-4d03-915e-8be559c4e91a
+ 
+rdf:type
+ 
+trt:ScientificName
+;
+	
+skos:prefLabel
+ 
+"Leis papuensis var. suffusa"
+;
+	
+dwc:rank
+ 
+"species"
+;
+	
+dwc:species
+ 
+"papuensis"
+;
+	
+dwc:genus
+ 
+"Leis"
+. }

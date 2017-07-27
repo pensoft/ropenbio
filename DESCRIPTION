@@ -1,13 +1,14 @@
-Package: rdf4jr
+Package: ropenbio
 Type: Package
-Title: RDF4J Access to a Graph Database/ Triple Store
-Version: 0.1.1
+Title: R Package of the Open Biodiveristy Knowledge Management System
+Version: 0.2.0
 Date: 2016-08-02
-Authors@R: c( person("Viktor", "Senderov", email = "vsenderov@gmail.com", role = c("aut", "cre")), person("Scott", "Chamberlain", role = c("rev")) )
-Description: This package contains a collection of R-functions, abstracting
-    access to an RDF4J API. Using it, you may programatically communicate with
-    an RDF database (triple store/ quad store) that supports RDF4J. RDF4J was
-    formerly known as Sesame. This package has been tested to work with GraphDB.
+Authors@R: c( person( "Viktor", "Senderov", email = "vsenderov@gmail.com", role = c( "aut", "cre" ) ), person("Scott", "Chamberlain", role = c("rev" ) ) )
+Description: This package contains a collection of R functions, abstracting
+    access to an RDF4J API. Also, it contains function for converting various
+    sources (TaxPub XML, DwC-A, etc.) into RDF modeled with the OpenBiodiv 
+    ontology. There are also specialized functions that faciliate the work,
+    administration, and debugging of an OpenBiodiv installation.
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
@@ -19,4 +20,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
