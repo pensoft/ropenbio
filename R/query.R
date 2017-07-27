@@ -83,17 +83,13 @@ GET_query = function ( options, repo_id, query, results_format = "CSV",  query_l
 #' \dontrun{r = POST_query( options, "plazi", query, "XML" )}
 #' @export
 
-POST_query = function ( options , repo_id, query, results_format = "CSV", query_ln = "SPARQL", infer = TRUE, varbindings, timeout = "", update = FALSE ) {
+POST_query = function ( options , repo_id, query, results_format = "CSV", query_ln = "SPARQL", infer = TRUE, varbindings, timeout = "" ) {
   # need to construct a POST query, here is how to do it with curl
   # curl -u obkms:1obkms -X POST --header "Accept:application/sparql-results+xml" --data   "query=SELECT%20(COUNT(*)%20as%20?count)%0AFROM%20%3Chttp://www.ontotext.com/implicit%3E%0AWHERE%20%7B%0A%20%20%20?s%20?p%20?o%20.%0A%7D" http://213.191.204.69:7777/graphdb/repositories/OBKMS
   # many issues here, see http://stackoverflow.com/questions/5797688/post-request-using-rcurl ,  more specifically comments by Duncan
 
-  if ( update ) {
-    endpoint = paste( options$server_url, "/repositories/", repo_id, "/statements", sep = "")
-  }
-  else {
-    endpoint = paste( options$server_url, "/repositories/", repo_id, sep = "")
-  }
+  endpoint = paste( options$server_url, "/repositories/", repo_id, sep = "")
+
 
   if ( results_format == "CSV" ) {
     header = c(Accept = "text/csv, */*;q=0.5")
@@ -132,12 +128,18 @@ POST_query = function ( options , repo_id, query, results_format = "CSV", query_
 #' @export
 
 add_data = function( server_access_options, repository, data,
-             data_format = "application/x-trig")
+             data_format = "application/x-trig", update = FALSE)
 {
 
   endpoint = paste( server_access_options$server_url, "/repositories/",
                     repository, "/statements", sep = "")
 
+  if ( update ) {
+    endpoint = paste( server_access_options$server_url, "/repositories/",
+                      repository, "/statements?update=", URLencode(data, reserved = TRUE), sep = "")
+    data = ""
+    data_format = "application/rdf+xml"
+  }
   if ( server_access_options$authentication == "basic_http") {
 
     user = strsplit( server_access_options$userpwd, ":" )[[1]][1]
