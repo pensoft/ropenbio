@@ -5,20 +5,21 @@
 \title{Initialize package parameters upon loading.}
 \usage{
 init_env(server_access_options,
-  dbpedia_access_options = paste0(path.package("obkms"), "/",
-  "dbpedia_access_options.yml"), prefix_db = paste0(path.package("obkms"),
-  "/", "prefix_db.yml"), properties_db = paste0(path.package("obkms"), "/",
-  "properties_db.yml"), classes_db = paste0(path.package("obkms"), "/",
-  "classes_db.yml"), parameters_db = paste0(path.package("obkms"), "/",
-  "parameters_db.yml"), literals_db_xpath = paste0(path.package("obkms"), "/",
-  "literals_db_xpath.yml"),
-  non_literals_db_xpath = paste0(path.package("obkms"), "/",
+  dbpedia_access_options = paste0(path.package("ropenbio"), "/",
+  "dbpedia_access_options.yml"), prefix_db = paste0(path.package("ropenbio"),
+  "/", "prefix_db.yml"), properties_db = paste0(path.package("ropenbio"), "/",
+  "properties_db.yml"), classes_db = paste0(path.package("ropenbio"), "/",
+  "classes_db.yml"), parameters_db = paste0(path.package("ropenbio"), "/",
+  "parameters_db.yml"), literals_db_xpath = paste0(path.package("ropenbio"),
+  "/", "literals_db_xpath.yml"),
+  non_literals_db_xpath = paste0(path.package("ropenbio"), "/",
   "non_literals_db_xpath.yml"),
-  initial_dump_configuration = paste0(path.package("obkms"), "/",
+  initial_dump_configuration = paste0(path.package("ropenbio"), "/",
   "initial_dump_configuration.yml"),
-  authors_db_xpath = paste0(path.package("obkms"), "/",
-  "authors_db_xpath.yml"), keywords_db_xpath = paste0(path.package("obkms"),
-  "/", "keywords_db_xpath.yml"), xml_source = "file", xml_type = "taxpub",
+  authors_db_xpath = paste0(path.package("ropenbio"), "/",
+  "authors_db_xpath.yml"),
+  keywords_db_xpath = paste0(path.package("ropenbio"), "/",
+  "keywords_db_xpath.yml"), xml_source = "file", xml_type = "taxpub",
   iteration = NA)
 }
 \arguments{

@@ -1,7 +1,14 @@
-#' Dumps all of the BDJ up to the present date in a predefined directory
+#' Article Dumper
+#'
+#' @param journal the alias of the journal that is to be dumped.
+#'   allowable are "BDJ", "ZooKeys", "PhytoKeys". if missing dumps BDJ
+#' @param fromdate from which date on. If missing starts from 1.jan.2010
+#'
+#' @return vector of new files that have been dumped
 #' @export
-bdj_dumper = function ( journal = "BDJ", fromdate ) {
-  if ( missing( fromdate ) ) fromdate = c( "01/01/2010" )
+article_dumper = function ( journal = "BDJ", fromdate = "01/01/2010")
+{
+
   archive = paste0( obkms$initial_dump_configuration$initial_dump_directory, "archive.zip")
   rdata = paste0( obkms$initial_dump_configuration$initial_dump_directory, ".Rdata")
   if ( journal == "BDJ" ) {
@@ -10,6 +17,10 @@ bdj_dumper = function ( journal = "BDJ", fromdate ) {
   }
   else if ( journal == "ZooKeys" ) {
     command = paste0( obkms$initial_dump_configuration$zookeys_endpoint, "&date=", URLencode( fromdate ) )
+    response = httr::GET( command )
+  }
+  else if ( journal == "PhytoKeys" ) {
+    command = paste0( obkms$initial_dump_configuration$phytokeys_endpoint, "&date=", URLencode( fromdate ) )
     response = httr::GET( command )
   }
 
@@ -62,16 +73,16 @@ bdj_dumper = function ( journal = "BDJ", fromdate ) {
 #'
 #' @export
 init_env = function ( server_access_options,
-                      dbpedia_access_options = paste0( path.package ( 'obkms' ) , "/", "dbpedia_access_options.yml" ) ,
-                      prefix_db = paste0( path.package ( 'obkms' ) , "/", "prefix_db.yml" ),
-                      properties_db =  paste0( path.package ( 'obkms' ) , "/", "properties_db.yml" ),
-                      classes_db =  paste0( path.package ( 'obkms' ) , "/", "classes_db.yml" ),
-                      parameters_db =  paste0( path.package ( 'obkms' ) , "/", "parameters_db.yml" ),
-                      literals_db_xpath = paste0( path.package ( 'obkms' ) , "/", "literals_db_xpath.yml" ),
-                      non_literals_db_xpath = paste0( path.package ( 'obkms' ) , "/", "non_literals_db_xpath.yml" ),
-                      initial_dump_configuration = paste0( path.package ( 'obkms' ) , "/", "initial_dump_configuration.yml") ,
-                      authors_db_xpath = paste0( path.package ( 'obkms' ) , "/", "authors_db_xpath.yml" ),
-                      keywords_db_xpath = paste0( path.package ( 'obkms' ) , "/", "keywords_db_xpath.yml" ) ,
+                      dbpedia_access_options = paste0( path.package ( 'ropenbio' ) , "/", "dbpedia_access_options.yml" ) ,
+                      prefix_db = paste0( path.package ( 'ropenbio' ) , "/", "prefix_db.yml" ),
+                      properties_db =  paste0( path.package ( 'ropenbio' ) , "/", "properties_db.yml" ),
+                      classes_db =  paste0( path.package ( 'ropenbio' ) , "/", "classes_db.yml" ),
+                      parameters_db =  paste0( path.package ( 'ropenbio' ) , "/", "parameters_db.yml" ),
+                      literals_db_xpath = paste0( path.package ( 'ropenbio' ) , "/", "literals_db_xpath.yml" ),
+                      non_literals_db_xpath = paste0( path.package ( 'ropenbio' ) , "/", "non_literals_db_xpath.yml" ),
+                      initial_dump_configuration = paste0( path.package ( 'ropenbio' ) , "/", "initial_dump_configuration.yml") ,
+                      authors_db_xpath = paste0( path.package ( 'ropenbio' ) , "/", "authors_db_xpath.yml" ),
+                      keywords_db_xpath = paste0( path.package ( 'ropenbio' ) , "/", "keywords_db_xpath.yml" ) ,
                       xml_source = "file",
                       xml_type = "taxpub" ,
                       iteration = NA)
@@ -444,3 +455,5 @@ comp_func_stats = function ( fname, Log  )
   names( return_value )[1] = do.call( paste, as.list( fname ) )
   return (  return_value )
 }
+
+

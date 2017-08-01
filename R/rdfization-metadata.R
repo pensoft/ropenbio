@@ -37,7 +37,7 @@ xml2rdf = function( resource_locator,
 
   # Call the top-level extractors depending on the type
   if ( resource_format == "TAXPUB" ) {
-    triples = taxpub_extractor( xml ) # will return a triples object (TODO S3 or S4??)
+    triples = taxonomic_article_extractor( xml ) # will return a triples object (TODO S3 or S4??)
     # serialize
     serialization = c()
     if (serialization_format == "Turtle") {
@@ -54,155 +54,110 @@ xml2rdf = function( resource_locator,
   return ( do.call(paste, as.list( serialization )))
 }
 
-#' Top Level Extractor from TaxPub to Triples
+#' Top Level (Metadata) Extractor for a Taxnomic Article
 #'
-#' @param xml an XML document (as parsed by the `xml2` package)
-#' @param xlit XPATH locations of atoms (literals) of a TaxPub document
-#' @param xdoco XPATH locations of document entities, parts of the document that are not atoms and are identifiers
-#' @return TODO write what is returned
+#' First this function finds all of the atoms that are belong to the metadata
+#' of a taxonomic paper and creates triples for it. Then, it chops up the paper
+#' XML into smaller parts that are sent to lower-level extractors to get
+#' triples for them. After all of this everything is concattenated and returned.
+#'
+#' @param xml an XML document object (as parsed by the `xml2` package) containg
+#'   a taxonomic paper
+#' @param xlit a vector of XPATH locations of the atoms (literals) of the metadata
+#'   of a taxonomic document
+#' @param xdoco a vector of XPATH locations of where other objects are to be
+#'   found which need to be processed recursively and attached to the paper
+#'
+#' @return triples
 #'
 #' @export
-taxpub_extractor = function( xml, xlit = yaml::yaml.load_file( obkms$config$literals_db_xpath ),
-                             xdoco = yaml::yaml.load_file( obkms$config$non_literals_db_xpath ) )
+taxonomic_article_extractor =
+  function( xml,
+            xlit = yaml::yaml.load_file( obkms$config$literals_db_xpath ),
+            xdoco = yaml::yaml.load_file( obkms$config$non_literals_db_xpath ) )
 {
-                          ## Atom Processing ##
+  metadata = as.list( find_literals( xml, xlit ) )
+  class( metadata ) = "Taxonomic Article"
 
-  literals = as.list( find_literals( xml, xlit ) ) # literals is a vector of strings (the individual atoms)
+  # `get_or_set_obkms_id` only looks in the XML, does not do any db lookup
+  metadata[['article_id']] =
+    qname( get_or_set_obkms_id( xml , fullname = TRUE ) )
 
-  # Document component entities (sub-article level entities )
-  doco = find_document_component_entities ( xml, xdoco )
+  paper_label = paste0( "paper", metadata$doi )
+  metadata[['paper_id']] =
+    qname ( lookup_id( label = paper_label,
+                       article_id = metadata[['article_id']] ) )
+  # the paper is the "work" of an article
 
-  # There are two types of identifiers:
-  # - identifiers for document entities (previously known as local entities), e.g. figure
-  # - identifiers for abstract entities (external, or non-local), e.g. scientific name
-  # For document entities we use `get_or_set_obkms_id` that only works on the XML, and does not require any lookup
+  metadata[['publisher_id']] =
+    qname ( lookup_id( metadata$publisher_name,
+                       language = obkms$parameters$Language$English) )
+  # looks up the publishers by its label
 
-  identifier = list()
-  identifier[['article']] = qname( get_or_set_obkms_id( xml , fullname = TRUE ) )
+  metadata[['journal_id']] =
+    qname ( lookup_id( metadata$journal_title,
+                       language = obkms$parameters$Language$English ))
 
-  paper_label = paste0( "paper", literals$doi )
-  identifier[['paper']] = qname ( lookup_id( label = paper_label,
-                                             article_id = identifier$article ) ) # the paper is the "work" of an article
+  metadata_triples = list (
 
-  identifier[['publisher']] = qname ( lookup_id( literals$publisher_name , language = obkms$parameters$Language$English) ) # looks up the publishers by its label
-  #identifier[['publisher_role']] = qname( lookup_id () ) # creates a new identifier for the publisher role
+    triple2( metadata$journal_id, qname( obkms$properties$type$uri ),                qname ( obkms$classes$Journal$uri ) ),
+    triple2( metadata$journal_id, qname( obkms$properties$preferred_label$uri ),     squote ( metadata$journal_title, language = obkms$parameters$Language$English ) ),
+    triple2( metadata$journal_id, qname( obkms$properties$alternate_label$uri ),     squote ( metadata$abbrev_journal_title, language = obkms$parameters$Language$English ) ),
+    triple2( metadata$journal_id, qname( obkms$properties$issn$uri ),                squote ( metadata$issn ) ),
+    triple2( metadata$journal_id, qname( obkms$properties$eissn$uri ),               squote ( metadata$eissn ) ),
+    triple2( metadata$journal_id, qname( obkms$properties$sub_endeavour_id$uri ),    metadata$journal_id),
 
-  identifier[['journal']] = qname ( lookup_id( literals$journal_title , language = obkms$parameters$Language$English )) # looks up the journal by its name
+    triple2( metadata$article_id, qname( obkms$properties$type$uri ),                qname( obkms$classes$Article$uri ) ),
+    triple2( metadata$article_id, qname( obkms$properties$preferred_label$uri ),     squote( metadata$doi ) ) ,
+    triple2( metadata$article_id, qname( obkms$properties$title$uri ),               squote( metadata$article_title, language = obkms$parameters$Language$English ) ) ,
+    triple2( metadata$article_id, qname( obkms$properties$doi$uri ),                 squote( metadata$doi ) ) ,
+    triple2( metadata$article_id, qname( obkms$properties$publisher$uri ),           squote( metadata$publisher_name , language = obkms$parameters$Language$English ) ), # the publisher of an article is clear
+    triple2( metadata$article_id, qname( obkms$properties$publication_year$uri ),    squote( metadata$pub_year, literal_type = obkms$parameters$literal_type$year ) ),
+    triple2( metadata$article_id, qname( obkms$properties$publication_date$uri ),    squote( paste( metadata$pub_year, metadata$pub_month, metadata$pub_day, sep = "-") , literal_type = obkms$parameters$literal_type$date ) ),
+    triple2( metadata$article_id, qname( obkms$properties$publisher_id$uri ),        metadata$publisher_id ) ,
+    triple2( metadata$article_id, qname( obkms$properties$realization_of$uri ),      metadata$paper_id ) , # TODO check whether the inverse is being materialized by the ontology
 
-  #local[['article']] = qname ( get_nodeid ( literals$doi ) )
-  #local[['front_matter']] = qname ( get_nodeid(  ) )
-  #local[['title']] = qname ( get_nodeid() )
-  #local[['abstract']] = qname ( get_nodeid() )
+    triple2(  metadata$paper_id,  qname( obkms$properties$type$uri) ,                qname( obkms$classes$Paper$uri ) ) ,
+    triple2(  metadata$paper_id,  qname( obkms$properties$alternate_label$uri ),     squote( paper_label ) ) ,
 
-  # For abstract entities, we need to do a look-up in the database.
-  # We used to use the function get_nodeit, but now we use `lookup_id` that
-  # works roughly in the same way but is more flexible. It first looks
-  # in OBKMS for an identifier of a (labeled) entity, and if it finds one
-  # (or many depending on the usage options), returns it (them). If nothing
-  # is found, and an option is set, a new one is generated.
+    triple2( metadata$publisher_id,  qname( obkms$properties$type$uri ),             qname( obkms$classes$Publisher$uri ) ),
+    triple2( metadata$publisher_id,  qname( obkms$properties$preferred_label$uri ),  squote( metadata$publisher_name, language = obkms$parameters$Language$English ) ) )
 
-  triples = list (
-    # first : what can we tell about the journal
-    # note the publisher of the journal need not be fixed, therefore it should
-    # be expressed as a roleintime. however the publisher of a given article
-    # is fixed. so the relationships (roles) between journals and publishers can be
-    # inferred based on the articles they have published TODO
+  # 2nd part of the function Document component entities (sub-article level entities )
+  article_component = document_components ( xml, xdoco )
 
-    triple2( identifier$journal,    qname( obkms$properties$type$uri ),                qname ( obkms$classes$Journal$uri ) ),
-    triple2( identifier$journal,    qname( obkms$properties$preferred_label$uri ),     squote ( literals$journal_title, language = obkms$parameters$Language$English ) ),
-    triple2( identifier$journal,    qname( obkms$properties$alternate_label$uri ),     squote ( literals$abbrev_journal_title, language = obkms$parameters$Language$English ) ),
-    triple2( identifier$journal,    qname( obkms$properties$issn$uri ),                squote ( literals$issn ) ),
-    triple2( identifier$journal,    qname( obkms$properties$eissn$uri ),               squote ( literals$eissn ) ),
-    triple2( identifier$journal,    qname( obkms$properties$sub_endeavour_id$uri ),    identifier$article),
-
-    triple2( identifier$article,    qname( obkms$properties$type$uri ),                qname( obkms$classes$Article$uri ) ),
-    triple2( identifier$article,    qname( obkms$properties$preferred_label$uri ),     squote( literals$doi ) ) ,
-    triple2( identifier$article,    qname( obkms$properties$title$uri ),               squote( literals$article_title, language = obkms$parameters$Language$English ) ) ,
-    triple2( identifier$article,    qname( obkms$properties$doi$uri ),                 squote( literals$doi ) ) ,
-    triple2( identifier$article,    qname( obkms$properties$publisher$uri ),           squote( literals$publisher_name , language = obkms$parameters$Language$English ) ), # the publisher of an article is clear
-    triple2( identifier$article,    qname( obkms$properties$publication_year$uri ),         squote( literals$pub_year, literal_type = obkms$parameters$literal_type$year ) ),
-    triple2( identifier$article,    qname( obkms$properties$publication_date$uri ),         squote( paste( literals$pub_year, literals$pub_month, literals$pub_day, sep = "-") , literal_type = obkms$parameters$literal_type$date ) ),
-    triple2( identifier$article,    qname( obkms$properties$publisher_id$uri ),              identifier$publisher ) ,
-    triple2( identifier$article,    qname( obkms$properties$realization_of$uri ),            identifier$paper ) , # TODO check whether the inverse is being materialized by the ontology
-
-    triple2(  identifier$paper,     qname( obkms$properties$type$uri) ,        qname( obkms$classes$Paper$uri ) ) ,
-    triple2(  identifier$paper,      qname( obkms$properties$alternate_label$uri ),       squote( paper_label ) ) ,
-
-    triple2( identifier$publisher,  qname( obkms$properties$type$uri ),                     qname( obkms$classes$Publisher$uri ) ),
-    triple2( identifier$publisher,  qname( obkms$properties$preferred_label$uri ),          squote( literals$publisher_name, language = obkms$parameters$Language$English ) ) )
-
-  # now go thru the sub-component level things that can repeat, e.g. authors
-  # TODO first author, second author and so on
-  # before we do author processing, we need to update the authors database in
-  # memory
-
-  for ( a in doco$authors ) {
-    triples = c ( triples,  author_extractor( identifier$paper , identifier$article, a$xml, document = xml) )
+  for ( a in article_component$authors ) {
+    triples = c ( metadata_triples,  author_extractor( metadata$paper_id , metadata$article_id, a$xml, document = xml) )
   }
 
   # keyword processing
-  Subject_Classification.Triples = unlist( lapply ( c( doco$subject_classification, doco$zookeys_keywords), function ( keyword_group_node) {
-    extract_keywords( XML = list( node = keyword_group_node$xml ),
-                      Identifier = identifier,
+  # TODO : broke extract_keywords
+  subject_triples = unlist( lapply ( c( article_component$subject_classification, article_component$zookeys_keywords), function ( keyword_group_node) {
+    keyword_extractor( XML = list( node = keyword_group_node$xml ),
+                      metadata = metadata,
                       keyword_scheme = obkms$parameters$Vocabularies$Subject_Classification_Terms )
   }), recursive = FALSE)
 
-  Taxon_Classification.Triples = unlist( lapply (  doco$taxon_classification, function ( keyword_group_node) {
-    extract_keywords( XML = list( node = keyword_group_node$xml ),
-                      Identifier = identifier,
+  taxon_triples = unlist( lapply (  article_component$taxon_classification, function ( keyword_group_node) {
+    keyword_extractor( XML = list( node = keyword_group_node$xml ),
+                      metadata = metadata,
                       keyword_scheme = obkms$parameters$Vocabularies$Taxon_Classification_Terms )
   }), recursive = FALSE)
 
-  Geographic_Representation.Triples = unlist( lapply (  doco$geographic_classification, function ( keyword_group_node) {
-    extract_keywords( XML = list( node = keyword_group_node$xml ),
-                      Identifier = identifier,
+  geographic_triples = unlist( lapply (  article_component$geographic_classification, function ( keyword_group_node) {
+    keyword_extractor( XML = list( node = keyword_group_node$xml ),
+                      metadata = metadata,
                       keyword_scheme = obkms$parameters$Vocabularies$Geographic_Classification_Terms )
   }), recursive = FALSE)
 
-
-  triples = c( triples, Subject_Classification.Triples, Taxon_Classification.Triples, Geographic_Representation.Triples)
-
+  # TODO maybe add publisher role
 
 
+  front_matter_extractor( article_components$front_matter[[1]],
+                          article_component$title[[1]],
+                          article_components$abstract[[1]],
+                          metadata )
 
-  return ( triples )
-
-  # TODO: YAML nesting is not making things easier. better create functions to extract domainsincludings and comments from the ontology
-
-  # TODO commented everything from here on, needs reworking
-
-#   local_xml = list()
-#
-#   # Triples
-#   # we have several contexts: article related triples
-#   # and nomenclature_triples
-#   #nomenclature_triples = list()
-#   attach(obkms, warn.conflicts = FALSE)
-#   triples = list(
-#     #publisher
-#     triple( local$publisher,      entities$a,                   entities$agent ),
-#     triple( local$publisher,      entities$pref_label,          squote ( literals$publisher_name ) ) ,
-#     triple( local$publisher,      entities$holds_role_in_time,  local$publisher_role ),
-#     triple( local$publisher_role, entities$a,                   entities$role_in_time ),
-#     triple( local$publisher_role, entities$with_role,           entities$publisher ),
-#     triple( local$publisher_role, entities$relates_to_document, local$journal ),
-# 	#journal
-#     triple( local$journal,        entities$a,                   entities$journal ),
-#     triple( local$journal,        entities$pref_label,          squote ( literals$journal_title ) ),
-#     triple( local$journal,        entities$alt_label,           squote ( literals$abbrev_journal_title ) ),
-#     triple( local$journal,        entities$issn,                squote ( literals$issn ) ),
-#     triple( local$journal,        entities$eissn,               squote ( literals$eissn ) ),
-#     triple( local$journal,        entities$dcpublisher,         squote ( literals$publisher_name ) ),
-#     triple( local$journal,        entities$frbr_haspart,        local$article ),
-#     #TODO fabio:hasSubjectTerm
-#     #TODO fabio:hasDiscipline
-#     #TODO dcterms:creator
-# 	# article
-#     triple( local$article,        entities$a,                   entities$journal_article ),
-#     triple( local$article,        entities$pref_label,          squote( literals$doi ) ),
-#     triple( local$article,        entities$prism_doi,           squote( literals$doi ) ),
-#     triple( local$article,        entities$has_publication_year, squote( literals$pub_date, "^^xsd:gYear" ) ) ,
-#     triple( local$article,        entities$title,               squote(literals$article_title, "@en-us")),
 #     triple( local$article,           entities$contains, doco$front_matter[[1]]$id),
 # 	triple( local$article,           entities$contains, doco$body[[1]]$id),
 # 	triple( local$article,           entities$contains, doco$back_matter[[1]]$id),
@@ -374,6 +329,13 @@ taxpub_extractor = function( xml, xlit = yaml::yaml.load_file( obkms$config$lite
 #   triples = list(article = triples )
 #
 #   return(  triples )
+
+  triples = c( metadata_triples, subject_triples, taxon_triples, geographic_triples)
+
+
+
+
+  return ( triples )
 }
 
 #' Extract Author Information from XML
@@ -635,17 +597,7 @@ extract_single_scientific_name = function ( t ) {
 }
 
 
-#' Find literals
-#' @export
-find_literals = function( xml, x  ) {
-  r =
-    sapply( names(x), function( l ) {
-      ns = xml2::xml_find_all( xml, x[[l]] )
-      # ns is a list
-      if ( length( ns ) == 0) return ( NA )
-      else return ( trim_label ( xml2::xml_text( ns , trim = TRUE) ) )
-    })
-}
+
 
 #' Finds the XML nodes corresponding to semantic entities
 #' @param xml \emph{XML2} resource to look at
@@ -661,11 +613,21 @@ find_local_xml = function ( xml, local_entities, local_entities_xpath ) {
   }
 }
 
-#' Finds document components id and xml nodes
+#' Break Down a XML object into its Components
+#'
+#' Takes a top-level XML object (e.g. a paper) and a vector of XPATH locations,
+#' indicating where its subcomponents are.
+#' This function returns a list of XML objects that are found at the XPATH
+#' locations (that can later be processed by lower-level extractors) with their
+#' IDs.
+#'
 #' @param xml the xml resource
 #' @param document_component_xpath datapase of xpaths where the document components
 #' are found in the corresponding XML schema
-find_document_component_entities = function ( xml, document_component_xpath ) {
+#' @return a list of XML nodes and ID's corresponding to each of the elements
+#'   in the `document_component_xpath` vector
+#'
+document_components = function ( xml, document_component_xpath ) {
   doco = list()
   for ( name in names( document_component_xpath ) ) {
     xml_nodeset = xml2::xml_find_all( xml, document_component_xpath[[ name ]] )
@@ -879,50 +841,4 @@ retrieve_affiliation_string_from_author =
   }
 
 
-
-
-
-#' Extract Keywords from a Keyword Group
-#'
-#' Takes care of the language as well.
-#'
-#' @param XML a list containing the XMl-node of the keyword-group.
-#'   The following fields need to be present: `node`, `document`
-#' @param Identifier a list of identifiers used in the triple generation
-#'   The following fields need to be present: `paper`
-#' @param XPath a list containing the locations of literals. Has default.
-#' @param keyword_scheme the classification scheme in which the keyword is.
-#'   Has default.
-#'
-#' @return triples pertaining to the keyword
-#' @export
-extract_keywords = function( XML,
-                             Identifier,
-                             XPath = yaml::yaml.load_file( obkms$config$keywords_db_xpath ),
-                             keyword_scheme = obkms$parameters$Vocabularies$Subject_Classification_Terms)
-{
-  Literal = as.list ( find_literals( XML$node, XPath ) )
-  Language = list( semantic_code = Literal$language )
-  if ( is.na ( Literal$language ) ) { Language =  obkms$parameters$Language$English }
-
-  triples = list()
-
-  return( unlist(lapply(  Literal$keyword, function( keyword  )  {
-    dbpedia_id = qname ( dbpedia_lookup( keyword, language = Language ) )
-    subject_term_id = qname( lookup_id ( keyword, resource_type = obkms$classes$Subject_Term,
-                                         language = Language, in_scheme = keyword_scheme) )
-
-
-    triples = list (
-      triple2( subject_term_id, qname( obkms$properties$type$uri ), qname( obkms$classes$Subject_Term$uri  ) ),
-      triple2( subject_term_id, qname( obkms$properties$label$uri ), squote( keyword, language = Language ) ) ,
-      triple2( subject_term_id, qname( obkms$properties$belongs_to_scheme$uri ), qname ( keyword_scheme$uri ) ),
-      triple2( subject_term_id, qname ( obkms$properties$exact_match$uri), dbpedia_id ) ,
-
-      triple2( Identifier$paper, qname ( obkms$properties$keywords$uri ), squote ( keyword, language = Language ) ),
-      triple2( Identifier$paper, qname ( obkms$properties$subject_term$uri ), subject_term_id  ) )
-
-    return ( triples )
-  }), recursive = FALSE) )
-}
 

@@ -189,8 +189,8 @@ get_protocol_version = function( options  ) {
   # match if the response is constructed of a number (more than one digit and
   # nothing else ):
   response = httr::content( r, as = "text" )
-  stopifnot( grepl( "^\\d+^", response ) )
-  return ( as.numeric( response ) )
+
+  return ( response )
 }
 
 # Gets the list of repositories
