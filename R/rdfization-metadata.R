@@ -153,9 +153,9 @@ taxonomic_article_extractor =
   # TODO maybe add publisher role
 
 
-  front_matter_extractor( article_components$front_matter[[1]],
+  front_triples = front_matter_extractor( article_component$front_matter[[1]],
                           article_component$title[[1]],
-                          article_components$abstract[[1]],
+                          article_component$abstract[[1]],
                           metadata )
 
 #     triple( local$article,           entities$contains, doco$front_matter[[1]]$id),
@@ -330,7 +330,7 @@ taxonomic_article_extractor =
 #
 #   return(  triples )
 
-  triples = c( metadata_triples, subject_triples, taxon_triples, geographic_triples)
+  triples = c( metadata_triples, subject_triples, taxon_triples, geographic_triples, front_triples )
 
 
 
@@ -634,7 +634,7 @@ document_components = function ( xml, document_component_xpath ) {
     doco[[name]] = list()
     j = 1
     for ( xml_node in xml_nodeset ) {
-      obkms_id = get_or_set_obkms_id( xml_node )
+      obkms_id = get_or_set_obkms_id( xml_node, fullname = TRUE )
       doco[[name]][[j]] = list( id = obkms_id, xml = xml_node )
       j = j + 1
     }
@@ -662,40 +662,7 @@ triple = function(S, P, O, blank = FALSE) {
   else return ( c(S,P,O))
 }
 
-#' Ensure Correctness of a Triple
-#'
-#' @param S the \emph{subject} of the triple
-#' @param P \emph{predicate}
-#' @param O \emph{object}
-#'
-#' @param blank if it is a blank (anononymous node)
-#'
-#' @return if the triple is correct, returns a triple S, P,O - a simple
-#'   character vector if there are no blank nodes, or a list if the object
-#'   contains a blank node; otherwise
-#'   returns NULL. For example, if some of the nodes is NA or NULL, etc.
-#'
-#' @export
-triple2 = function(S, P, O, blank = FALSE) {
-  if ( blank == TRUE ) {
-    S = c("")
-    if ( is.null( P ) || is.null( O ) || is.na( P ) || is.na( O ) ) return ( NULL )
-    if ( is.list ( O ) ) return ( list( S, P, O ) )
-    else return ( c( S,P,O ) )
-  }
 
-  if ( is.null( S ) ||
-       is.null( P ) ||
-       is.null( O ) ||
-       S == "" ||
-       P == "" ||
-       O == "" ||
-       is.na(S) ||
-       is.na(P) ||
-       is.na(O) ) return ( NULL )
-  if ( is.list ( O ) ) return( list( S, P, O ) )
-  else return ( c(S,P,O))
-}
 
 #      _ _   _ _   _ _  __
 #   | | | | | \ | | |/ /

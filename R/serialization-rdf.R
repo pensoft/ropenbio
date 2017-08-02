@@ -1,4 +1,68 @@
 
+
+#' Triple Constructor
+#'
+#' A triple is a single sentence in RDF. The subject of a triple can be a
+#' blank node ("") or a resource (an IRI encoded as character). The predicate
+#' of the triple must necessarily be a resource. The object of the triple can
+#' be a resource, a literal (character), or a list of triples,
+#' all of which are blank.
+#'
+#' @param S Subject
+#' @param P Predicate
+#' @param O Object
+#'
+#' @param blank Logical: if it is a blank (anononymous node)
+#'
+#' @return NULL if something went wrong, a triple object otherwise.
+#    The structure of a triple object can either be a character vector
+#'   (if the object is a resource or a literal), or a list (if the object is
+#'   a list).
+#'
+#' @export
+#'
+triple2 = function( S, P, O, blank = FALSE )
+{
+  # some error checking
+  if( !blank &&
+       ( is.null( S ) || is.null( P ) || is.null( O ) ||
+         S == "" || P == "" || O == "" ||
+         is.na( S ) || is.na( P ) || is.na( O ) ) )
+  {
+    return( NULL )
+  } else
+  {
+    if( blank && ( is.null( P ) || is.null( O ) || is.na( P ) || is.na( O ) ) )
+    {
+      return( NULL )
+    }
+  }
+
+  triple = list( subject = NULL, predicate = NULL, object = NULL )
+
+  if( blank == TRUE )
+  {
+    S = c("")
+  }
+
+  triple$subject = S
+  triple$predicate = P
+  triple$object = O
+
+  if( is.list ( O ) )
+  {
+    # do nothing triple is a list
+  } else # convert triple to character
+  {
+    triple = as.character( triple )
+  }
+
+  class( triple ) = "triple"
+
+  return( triple )
+}
+
+
 #' Minimizes a URI to a Qname.
 #'
 #' E.g. qname("http://openbiodiv.net/leis-papuensis") minimizes to
@@ -89,7 +153,7 @@ strip_angle = function ( uri , reverse = FALSE ) {
 #'
 #' @param literal the string that needs to be quoted
 #' @param language the language (needs to be a list having the element `semantic_code`)
-#'   If left missing, no language will be assumed.
+#'   If left missing or NA, no language will be assumed.
 #' @param literal_type for non-strings such as year, date, etc. (one of the names in
 #'     obkms$parameters$literal_type). The default is empty, i.e. string.
 #'
@@ -102,23 +166,36 @@ strip_angle = function ( uri , reverse = FALSE ) {
 #' squote("2017", Year)
 #'
 #' @export
-squote = function ( literal, language, literal_type = "" )
+squote = function ( literal, language, literal_type = "")
 {
-  if ( !missing( language ) && !is.null( language)  && literal_type != "" ) {
-    stop("Language is set and literal_type is not empty.")
-  }
   if ( !missing ( literal_type ) ) {
-    stopifnot ( literal_type %in%  unlist( obkms$parameters$literal_type ) )
+    if( !( literal_type %in%  unlist( obkms$parameters$literal_type ) ) ) {
+      #browser()
+      #warning( "unsupported literal type, assuming string" )
+      literal_type = ""
+    }
   }
-  if ( !missing(language) && !is.null( language )) {
-    stopifnot ( language$label %in% sapply( obkms$parameters$Language , '[[', i = "label" ) )
-  }
-  if ( is.null ( literal ) || is.na(literal) || literal == "") return ( NULL )
 
+  supported_language = sapply( obkms$parameters$Language , '[[', i = "label" )
+
+  if ( !missing(language) && is.list( language ) && !is.null ( language$label ) && !is.na( language$label ) && language$label %in% supported_language ) {
+    # everything is OK
+  }
+  else {
+    language = obkms$parameters$Language$English
+  }
+
+  if ( is.null ( literal ) || is.na(literal) || literal == "") {
+    #browser()
+    #warning( "Literal is malformed, returning NULL")
+    return ( NULL )
+  }
+
+  # remove slashes from literal
   literal = gsub("\"", "", literal  )
   literal = gsub("\\\\", "", literal  )
 
-  if ( !missing( language ) && !is.null( language) ) { postfix = paste0("@", language$semantic_code ) }
+  if ( !missing( language ) ) { postfix = paste0("@", language$semantic_code ) }
   else { postfix = literal_type }
 
   paste0 ("\"", literal, "\"", postfix)
