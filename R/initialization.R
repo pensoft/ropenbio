@@ -1,3 +1,9 @@
+
+
+
+
+
+
 #' Article Dumper
 #'
 #' @param journal the alias of the journal that is to be dumped.
@@ -39,6 +45,9 @@ article_dumper = function ( journal = "BDJ", fromdate = "01/01/2010")
 
 
 
+
+
+
 #' Initialize package parameters upon loading.
 #'
 #' The package contains a database of semantic web prefixes, stored in a yaml
@@ -56,6 +65,8 @@ article_dumper = function ( journal = "BDJ", fromdate = "01/01/2010")
 #' TODO: the parameter vocabulary can probably be made as instances of something in RDF
 #'
 #' TODO: literals and non_literals (including keywords) probably need not be here
+#'
+#' TODO: put every xpath (for a given schema) in a single file
 #'
 #' @param server_access_options list with graphdb access configuration as needed by the 'rdf4j' package, can be loaded from yaml
 #' @param dbpedia_access_options access options for dbpedia, has default
@@ -83,6 +94,7 @@ init_env = function ( server_access_options,
                       initial_dump_configuration = paste0( path.package ( 'ropenbio' ) , "/", "initial_dump_configuration.yml") ,
                       authors_db_xpath = paste0( path.package ( 'ropenbio' ) , "/", "authors_db_xpath.yml" ),
                       keywords_db_xpath = paste0( path.package ( 'ropenbio' ) , "/", "keywords_db_xpath.yml" ) ,
+                      taxpub_xpath = paste0( path.package ( 'ropenbio' ) , "/", "taxpub_xpath.yml" ) ,
                       xml_source = "file",
                       xml_type = "taxpub" ,
                       iteration = NA)
@@ -105,6 +117,7 @@ init_env = function ( server_access_options,
   obkms$classes = yaml::yaml.load_file ( classes_db )
 
   obkms$parameters = yaml::yaml.load_file ( parameters_db )
+  obkms$xpath$taxpub = yaml::yaml.load_file ( taxpub_xpath )
 
   obkms$config = list()
   obkms$config['literals_db_xpath'] = literals_db_xpath

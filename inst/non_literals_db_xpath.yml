@@ -21,3 +21,5 @@ geographic_classification: /article/front/article-meta/article-categories/subj-g
 
 
 zookeys_keywords: /article/front/article-meta/kwd-group
+
+taxonomic_name_usage: .//tp:taxon-name

@@ -158,6 +158,12 @@ taxonomic_article_extractor =
                           article_component$abstract[[1]],
                           metadata )
 
+
+  tnu_extractor ( article_component$taxonomic_name_usage[[1]],
+                                   metadata )
+
+
+
 #     triple( local$article,           entities$contains, doco$front_matter[[1]]$id),
 # 	triple( local$article,           entities$contains, doco$body[[1]]$id),
 # 	triple( local$article,           entities$contains, doco$back_matter[[1]]$id),
@@ -613,34 +619,6 @@ find_local_xml = function ( xml, local_entities, local_entities_xpath ) {
   }
 }
 
-#' Break Down a XML object into its Components
-#'
-#' Takes a top-level XML object (e.g. a paper) and a vector of XPATH locations,
-#' indicating where its subcomponents are.
-#' This function returns a list of XML objects that are found at the XPATH
-#' locations (that can later be processed by lower-level extractors) with their
-#' IDs.
-#'
-#' @param xml the xml resource
-#' @param document_component_xpath datapase of xpaths where the document components
-#' are found in the corresponding XML schema
-#' @return a list of XML nodes and ID's corresponding to each of the elements
-#'   in the `document_component_xpath` vector
-#'
-document_components = function ( xml, document_component_xpath ) {
-  doco = list()
-  for ( name in names( document_component_xpath ) ) {
-    xml_nodeset = xml2::xml_find_all( xml, document_component_xpath[[ name ]] )
-    doco[[name]] = list()
-    j = 1
-    for ( xml_node in xml_nodeset ) {
-      obkms_id = get_or_set_obkms_id( xml_node, fullname = TRUE )
-      doco[[name]][[j]] = list( id = obkms_id, xml = xml_node )
-      j = j + 1
-    }
-  }
-  return ( doco )
-}
 
 #' Ensure correctness of a triple
 #' @param S \emph{character} subject
@@ -764,31 +742,6 @@ extract.metadata = function( xml, xlit ) {
 
 
 
-#' Get the OBKMS Id of an XML node, if not set, set it
-#'
-#' Does not do any database lookups. Is exported.
-#'
-#' @param node the XML node from which to take the ID; cannot be missing!
-#' @param fullname if TRUE, returns a URI with the OBKMS base prefix
-#'
-#' @export
-get_or_set_obkms_id = function ( node, fullname = FALSE )
-{
-
-    if ( is.na( xml2::xml_attr( node, "obkms_id" ) ) )
-    {
-      xml2::xml_attr( node, "obkms_id" ) = uuid::UUIDgenerate()
-    }
-    obkms_id = xml2::xml_attr( node, "obkms_id" )
-
-
-  if ( fullname )
-  {
-    return (  paste0( strip_angle( obkms$prefixes$`_base`) , obkms_id ) )
-  }
-
-  else return ( obkms_id )
-}
 
 #' Help function
 #' TODO shouldn't be exported
