@@ -1,0 +1,6 @@
+
+taxonomic_name_usage:
+  unkranked: ./
+  link: ./object-id
+  following_sibling: ./following-sibling::*
+  second_following_sibling: ./following-sibling::*/following-sibling::*
