@@ -98,7 +98,9 @@ taxonomic_article_extractor =
     qname ( lookup_id( metadata$journal_title,
                        language = obkms$parameters$Language$English ))
 
-  metadata_triples = list (
+  triples = list()
+
+  triples[["metadata"]] = list (
 
     triple2( metadata$journal_id, qname( obkms$properties$type$uri ),                qname ( obkms$classes$Journal$uri ) ),
     triple2( metadata$journal_id, qname( obkms$properties$preferred_label$uri ),     squote ( metadata$journal_title, language = obkms$parameters$Language$English ) ),
@@ -127,24 +129,24 @@ taxonomic_article_extractor =
   article_component = document_components ( xml, xdoco )
 
   for ( a in article_component$authors ) {
-    triples = c ( metadata_triples,  author_extractor( metadata$paper_id , metadata$article_id, a$xml, document = xml) )
+    triples[["author"]] = c ( triples[["author"]],  author_extractor( metadata$paper_id , metadata$article_id, a$xml, document = xml) )
   }
 
   # keyword processing
   # TODO : broke extract_keywords
-  subject_triples = unlist( lapply ( c( article_component$subject_classification, article_component$zookeys_keywords), function ( keyword_group_node) {
+  triples[["subject"]] = unlist( lapply ( c( article_component$subject_classification, article_component$zookeys_keywords), function ( keyword_group_node) {
     keyword_extractor( XML = list( node = keyword_group_node$xml ),
                       metadata = metadata,
                       keyword_scheme = obkms$parameters$Vocabularies$Subject_Classification_Terms )
   }), recursive = FALSE)
 
-  taxon_triples = unlist( lapply (  article_component$taxon_classification, function ( keyword_group_node) {
+  triples[["taxon"]] = unlist( lapply (  article_component$taxon_classification, function ( keyword_group_node) {
     keyword_extractor( XML = list( node = keyword_group_node$xml ),
                       metadata = metadata,
                       keyword_scheme = obkms$parameters$Vocabularies$Taxon_Classification_Terms )
   }), recursive = FALSE)
 
-  geographic_triples = unlist( lapply (  article_component$geographic_classification, function ( keyword_group_node) {
+  triples[["geography"]] = unlist( lapply (  article_component$geographic_classification, function ( keyword_group_node) {
     keyword_extractor( XML = list( node = keyword_group_node$xml ),
                       metadata = metadata,
                       keyword_scheme = obkms$parameters$Vocabularies$Geographic_Classification_Terms )
@@ -153,14 +155,16 @@ taxonomic_article_extractor =
   # TODO maybe add publisher role
 
 
-  front_triples = front_matter_extractor( article_component$front_matter[[1]],
+  triples[["front"]] = front_matter_extractor( article_component$front_matter[[1]],
                           article_component$title[[1]],
                           article_component$abstract[[1]],
                           metadata )
 
 
-  tnu_extractor ( article_component$taxonomic_name_usage[[1]],
-                                   metadata )
+  triples[["TNU"]] = unlist( lapply (  article_component$taxonomic_name_usage, function ( TNU ) {
+     taxonomic_name_usage_extractor ( TNU,
+                                      metadata )
+  } ))
 
 
 
@@ -336,10 +340,7 @@ taxonomic_article_extractor =
 #
 #   return(  triples )
 
-  triples = c( metadata_triples, subject_triples, taxon_triples, geographic_triples, front_triples )
-
-
-
+  triples = do.call( c, triples )
 
   return ( triples )
 }

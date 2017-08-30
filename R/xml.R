@@ -100,6 +100,46 @@ generic_xml_constructor = function( xml, atoms, id, parent_id, obj_class )
 
 
 
+#' Generic Document Component Constructor
+#'
+#'
+#' Creates a document component of specified class given a list of XPATH
+#' atom locations. Id and parent ID are extracted from the XML.
+#'
+#'
+#' @param node the XML node that will be converted to an object
+#' @param atom_location a vector of XPATH where the objects will be sought after
+#' @param component_class the class that will be assigned to the object
+#'
+#' @return an object of class \code{component_class}
+#'
+#' @export
+#'
+generic_document_component = function( node, atom_location, component_class )
+{
+  atom = find_literals( node, atom_location )
+  object = vector( mode = "list", length = length( atom_location ) + 2 )
+  object[ 1:length( atom_location) ] = as.list ( atom )
+  names( object ) = c(names( atom ), "id", "parent_id" )
+
+  object$id = get_or_set_obkms_id( node, fullname = TRUE)
+  object$parent_id = parent_id( node, fullname = TRUE)
+
+  class( object ) = component_class
+
+  return( object )
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

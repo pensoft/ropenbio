@@ -1,6 +1,6 @@
-
 taxonomic_name_usage:
-  unkranked: ./
+  name_part: ./tp:taxon-name-part[@taxon-name-part-type!="authority" and @taxon-name-part-type!="infraspecific-rank"]
+  verbatim_rank: ./tp:taxon-name-part[last()]/@taxon-name-part-type
   link: ./object-id
-  following_sibling: ./following-sibling::*
-  second_following_sibling: ./following-sibling::*/following-sibling::*
+  authority: ./following-sibling::tp:taxon-authority | ../following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type="authority"]
+  verbatim_taxonomic_status: ./following-sibling::tp:taxon-status | ../following-sibling::tp:taxon-authority

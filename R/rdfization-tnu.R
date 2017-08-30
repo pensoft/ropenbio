@@ -4,35 +4,37 @@
 #'
 #' Extracts knowledge from a TNU comp
 #'
-#' @param tnu_comp a component (list of an XML2 node and an id
+#' @param TNU_component a component (list of an XML2 node and an id
 #'  vector) containing the taxonomic name usage
 #' @param metadata A journal article object. You need this because a TNU is part
 #'   the paper as well as of the journal
 #'
 #' @return triples
 #'
-tnu_extractor = function ( tnu_comp,
+taxonomic_name_usage_extractor = function ( TNU_component,
                                     metadata )
 {
-  tnu =  tnu_constructor(node =  tnu_comp$xml,
-                          id = tnu_comp$id,
-                          parent_id = tnu_comp$parent_id )
+  TNU =  generic_document_component( node =  TNU_component$xml,
+                          obkms$xpath$taxpub$taxonomic_name_usage,
+                          "taxonomic_name_usage" )
 
+  normalized_rank = map2rank( TNU$verbatim_rank )
+  normalized_status = map2status ( TNU$verbatim_status )
 
+  print(TNU)
+ # rdf = list(
+#    triple2( qname ( metadata$article_id ), qname( obkms$properties$contains$uri ), qname( front_matter$id ) ),
 
-  rdf = list(
-    triple2( qname ( metadata$article_id ), qname( obkms$properties$contains$uri ), qname( front_matter$id ) ),
+#    triple2( qname( front_matter$id ), qname( obkms$properties$type$uri ), qname ( obkms$classes$FrontMatter$uri ) ),
+#    triple2( qname( front_matter$id ), qname( obkms$properties$contains$uri ), qname ( title$id ) ),
+#    triple2( qname( front_matter$id ), qname( obkms$properties$contains$uri ), qname ( abstract$id ) ),
 
-    triple2( qname( front_matter$id ), qname( obkms$properties$type$uri ), qname ( obkms$classes$FrontMatter$uri ) ),
-    triple2( qname( front_matter$id ), qname( obkms$properties$contains$uri ), qname ( title$id ) ),
-    triple2( qname( front_matter$id ), qname( obkms$properties$contains$uri ), qname ( abstract$id ) ),
+#    triple2( qname( title$id ), qname( obkms$properties$type$uri ), qname ( obkms$classes$Title$uri ) ),
+#    triple2( qname( title$id ), qname( obkms$properties$character_content$uri ), squote( title$content, language = title$language ) ),
 
-    triple2( qname( title$id ), qname( obkms$properties$type$uri ), qname ( obkms$classes$Title$uri ) ),
-    triple2( qname( title$id ), qname( obkms$properties$character_content$uri ), squote( title$content, language = title$language ) ),
-
-    triple2( qname( abstract$id ), qname( obkms$properties$type$uri ), qname( obkms$classes$Abstract$uri ) ),
-    triple2( qname( abstract$id ), qname( obkms$properties$character_content$uri ), squote( abstract$content, language = abstract$language ) )
-  )
+#    triple2( qname( abstract$id ), qname( obkms$properties$type$uri ), qname( obkms$classes$Abstract$uri ) ),
+#    triple2( qname( abstract$id ), qname( obkms$properties$character_content$uri ), squote( abstract$content, language = abstract$language ) )
+#  )
   #triple( metadata$article_id, qname( obkms$properties$contains$uri ), front_matter$id ),
   #triple( front_matter$id,     qname( obkms$properties$type$uri ),  qname ( obkms$classes$FrontMatter$uri ) ) ,
   #triple( front_matter$id,     qname( entities$contains, doco$title[[1]]$id),
@@ -71,23 +73,19 @@ tnu_extractor = function ( tnu_comp,
 #' As TNU's have info in more than one XML node they need a specialized
 #' constructor
 #'
-#' @seealso generic_xml_constructor
-#'
 #' @param node the XML node that will be converted to an object
-#' @param id you can pass an ID for the object; default is NA
-#' @param parent_id the id of the parent object (if present)
 #'
 #' @return an object of class \code{obj_class}
 #'
 #' @export
 #'
 
-tnu_constructor = function( node, id, parent_id )
+TNU_constructor = function( node, id, parent_id )
 {
-  if ( !missing( atoms ) ) {
-    object = as.environment ( find_literals( xml, obkms$xpath$taxpub$taxonomic_name_usage ) )
+  if ( !missing( node ) ) {
+    object = as.list ( find_literals( node, obkms$xpath$taxpub$taxonomic_name_usage ) )
   }  else {
-    object = new.env()
+    object = list()
   }
 
   class( object ) = "taxonomic_name_usage"
@@ -105,9 +103,7 @@ tnu_constructor = function( node, id, parent_id )
   }
 
   object$language = NA
-  object$content  = xml2::xml_text( xml )
-
-
+  object$content  = xml2::xml_text( node )
 
   return( object )
 }
