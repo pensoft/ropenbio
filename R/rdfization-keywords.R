@@ -26,8 +26,8 @@ keyword_extractor = function( XML,
   triples = list()
 
   return( unlist(lapply(  keyword_group$keyword, function( keyword  )  {
-
-    dbpedia_id = qname ( dbpedia_lookup( keyword, language = language ) )
+    #browser()
+    #dbpedia_id = qname ( dbpedia_lookup( keyword, language = language ) )
     subject_term_id = qname( lookup_id ( keyword, resource_type = obkms$classes$Subject_Term,
                                          language = language, in_scheme = keyword_scheme) )
 
@@ -35,7 +35,7 @@ keyword_extractor = function( XML,
       triple2( subject_term_id, qname( obkms$properties$type$uri ), qname( obkms$classes$Subject_Term$uri  ) ),
       triple2( subject_term_id, qname( obkms$properties$label$uri ), squote( keyword, language = language ) ) ,
       triple2( subject_term_id, qname( obkms$properties$belongs_to_scheme$uri ), qname ( keyword_scheme$uri ) ),
-      triple2( subject_term_id, qname ( obkms$properties$exact_match$uri), dbpedia_id ) ,
+      #triple2( subject_term_id, qname ( obkms$properties$exact_match$uri), dbpedia_id ) ,
 
       triple2( metadata$paper_id, qname ( obkms$properties$keywords$uri ), squote ( keyword, language = language ) ),
       triple2( metadata$paper_id, qname ( obkms$properties$subject_term$uri ), subject_term_id  ) )

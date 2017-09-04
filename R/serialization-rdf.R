@@ -63,61 +63,6 @@ triple2 = function( S, P, O, blank = FALSE )
 }
 
 
-#' Minimizes a URI to a Qname.
-#'
-#' E.g. qname("http://openbiodiv.net/leis-papuensis") minimizes to
-#' ":leis-papuensis". The special case here is the `_base` prefixes, as
-#' it minimizes to nothing.
-#'
-#' if the prefix is _base, it is shortened to :
-#'
-#' @param uri        the full URI to minimize
-#' @export
-qname = function( uri )
-{
-  if ( missing (uri) || is.null( uri ) ) return ( NA )
-
-  unlist ( sapply( uri, function( uri)  {
-
-    if ( is.na( uri ) ) return( NA )
-
-    if ( grepl( "^#" , uri )  ) {
-      log_event( "URI will be forced to null", "qname", uri )
-      return ( NULL ) # clean-up dbpedia shit
-    }
-    if ( grepl( ",", uri )) {
-      # if the thing has a comma, it cannot be shortened, as it will
-      # break turtle, so just put angle brackets
-      return ( strip_angle( uri, reverse = TRUE ) )
-    }
-    if ( missing (uri) || is.null( uri ) || uri == "" ) return (NULL)
-    stopifnot( exists( 'obkms', mode = 'environment' ))
-    # strip brackets from the uri and from the OBKMS databases of prefixes
-    uri = strip_angle ( uri )
-    stripped_prefixes = sapply ( obkms$prefixes, strip_angle )
-
-    # try each of the prefixes, r is logical vector of where the beginning of the
-    # uri matches any of the prefix
-    r = sapply( stripped_prefixes , function ( p ) {
-      grepl( paste0( "^",  p  ) , uri )
-    } )
-    # if found, replace the beginning of the uri with the prefix
-    if ( sum( r ) > 0) {
-      p = stripped_prefixes[r]
-
-      n = names(stripped_prefixes)[r]
-      if ( names(p) == "_base")  # special case of the "_base"
-      {
-        uri = gsub( paste0("^", p), ":" , uri )
-      }
-      else {
-        uri = gsub( paste0("^", p), paste0( n, ":" ), uri )
-      }
-    }
-    return (uri)
-  }) )
-
-}
 
 #' @export
 expand_qname = function ( shortname ) {

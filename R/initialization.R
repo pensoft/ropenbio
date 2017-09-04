@@ -95,6 +95,8 @@ init_env = function ( server_access_options,
                       authors_db_xpath = paste0( path.package ( 'ropenbio' ) , "/", "authors_db_xpath.yml" ),
                       keywords_db_xpath = paste0( path.package ( 'ropenbio' ) , "/", "keywords_db_xpath.yml" ) ,
                       taxpub_xpath = paste0( path.package ( 'ropenbio' ) , "/", "taxpub_xpath.yml" ) ,
+                      rank_db = paste0( path.package ( 'ropenbio' ) , "/vocabulary/", "taxonomic-rank.csv" ),
+                      status_db = paste0( path.package ( 'ropenbio' ) , "/vocabulary/", "taxonomic-status.yml" ),
                       xml_source = "file",
                       xml_type = "taxpub" ,
                       iteration = NA)
@@ -118,6 +120,9 @@ init_env = function ( server_access_options,
 
   obkms$parameters = yaml::yaml.load_file ( parameters_db )
   obkms$xpath$taxpub = yaml::yaml.load_file ( taxpub_xpath )
+
+  obkms$vocabulary$rank = read.csv( rank_db )
+  obkms$vocabulary$status = yaml::yaml.load_file( status_db )
 
   obkms$config = list()
   obkms$config['literals_db_xpath'] = literals_db_xpath

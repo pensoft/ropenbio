@@ -18,10 +18,9 @@ taxonomic_name_usage_extractor = function ( TNU_component,
                           obkms$xpath$taxpub$taxonomic_name_usage,
                           "taxonomic_name_usage" )
 
-  normalized_rank = map2rank( TNU$verbatim_rank )
-  normalized_status = map2status ( TNU$verbatim_status )
-
-  print(TNU)
+  TNU$normalized_rank = taxonomic_rank( TNU$verbatim_rank )
+  TNU$normalized_status = taxonomic_status( TNU$verbatim_taxonomic_status )
+  browser()
  # rdf = list(
 #    triple2( qname ( metadata$article_id ), qname( obkms$properties$contains$uri ), qname( front_matter$id ) ),
 
