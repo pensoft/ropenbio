@@ -1,6 +1,17 @@
-taxonomic_name_usage:
-  name_part: ./tp:taxon-name-part[@taxon-name-part-type!="authority" and @taxon-name-part-type!="infraspecific-rank"]
-  verbatim_rank: ./tp:taxon-name-part[last()]/@taxon-name-part-type
-  link: ./object-id
-  authority: ./following-sibling::tp:taxon-authority | ../following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type="authority"]
-  verbatim_taxonomic_status: ./following-sibling::tp:taxon-status | ../following-sibling::tp:taxon-authority
+"http://openbiodiv.net/TaxonomicNameUsage":
+  "http://rs.tdwg.org/dwc/terms/kingdom": ./tp:taxon-name-part[@taxon-name-part-type="kingdom" or @taxon-name-part-type="Kingdom" or @taxon-name-part-type="divisio" or @taxon-name-part-type="Divisio" or @taxon-name-part-type="division" or @taxon-name-part-type="Division"]
+  "http://rs.tdwg.org/dwc/terms/phylum": ./tp:taxon-name-part[@taxon-name-part-type="phylum" or @taxon-name-part-type="Phylum" or @taxon-name-part-type="regnum" or @taxon-name-part-type="Regnum"]
+  "http://rs.tdwg.org/dwc/terms/class": ./tp:taxon-name-part[@taxon-name-part-type="class" or @taxon-name-part-type="Class" or @taxon-name-part-type="classis" or @taxon-name-part-type="Classis"]
+  "http://rs.tdwg.org/dwc/terms/order": ./tp:taxon-name-part[@taxon-name-part-type="order" or @taxon-name-part-type="Order" or @taxon-name-part-type="ordo" or @taxon-name-part-type="Ordo"]
+  "http://rs.tdwg.org/dwc/terms/family": ./tp:taxon-name-part[@taxon-name-part-type="family" or @taxon-name-part-type="Family" or @taxon-name-part-type="familia" or @taxon-name-part-type="Familia" or @taxon-name-part-type="famil" or @taxon-name-part-type="Famil"]
+  "http://rs.tdwg.org/dwc/terms/genus": ./tp:taxon-name-part[@taxon-name-part-type="genus" or @taxon-name-part-type="Genus" or @taxon-name-part-type="genera" or @taxon-name-part-type="Genera"]
+  "http://rs.tdwg.org/dwc/terms/subgenus": ./tp:taxon-name-part[@taxon-name-part-type="subgenus" or @taxon-name-part-type="Subgenus" or @taxon-name-part-type="subgenera" or @taxon-name-part-type="Subgenera"]
+  "http://rs.tdwg.org/dwc/terms/specificEpithet": ./tp:taxon-name-part[@taxon-name-part-type="Species" or @taxon-name-part-type="species"]
+  "http://rs.tdwg.org/dwc/terms/infraspecificEpithet": ./tp:taxon-name-part[@taxon-name-part-type="Subspecies" or @taxon-name-part-type="subspecies" or @taxon-name-part-type="Variety" or @taxon-name-part-type="variety" or @taxon-name-part-type="varietas" or @taxon-name-part-type="Varietas" or @taxon-name-part-type="variation" or @taxon-name-part-type="Variation" or @taxon-name-part-type="subvariety" or @taxon-name-part-type="Subvariety" or @taxon-name-part-type="subvarietas" or @taxon-name-part-type="Subvarietas" or @taxon-name-part-type="subvariation" or @taxon-name-part-type="Subvariation"  or @taxon-name-part-type="Form" or @taxon-name-part-type="form" or @taxon-name-part-type="forma" or @taxon-name-part-type="Forma" or @taxon-name-part-type="aberration" or @taxon-name-part-type="Aberration" or @taxon-name-part-type="race" or @taxon-name-part-type="Race" or @taxon-name-part-type="Subform" or @taxon-name-part-type="subform" or @taxon-name-part-type="subforma" or @taxon-name-part-type="Subforma" or @taxon-name-part-type="subaberation" or @taxon-name-part-type="Subaberation" or @taxon-name-part-type="subrace" or @taxon-name-part-type="Subrace" ]
+  "http://rs.tdwg.org/dwc/terms/verbatimTaxonRank": ./tp:taxon-name-part[last()]/@taxon-name-part-type
+  "http://rs.tdwg.org/dwc/terms/taxonID": ./object-id
+  "http://rs.tdwg.org/dwc/terms/scientificNameAuthorship": ./following-sibling::tp:taxon-authority | ../following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type="authority"]
+  "http://rs.tdwg.org/dwc/terms/taxonomicStatus": ./following-sibling::tp:taxon-status | ../following-sibling::tp:taxon-authority
+  pub_year: /article/front/article-meta/pub-date/year
+  pub_day: /article/front/article-meta/pub-date/day
+  pub_month: /article/front/article-meta/pub-date/month
