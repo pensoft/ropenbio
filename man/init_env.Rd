@@ -19,7 +19,11 @@ init_env(server_access_options,
   authors_db_xpath = paste0(path.package("ropenbio"), "/",
   "authors_db_xpath.yml"),
   keywords_db_xpath = paste0(path.package("ropenbio"), "/",
-  "keywords_db_xpath.yml"), xml_source = "file", xml_type = "taxpub",
+  "keywords_db_xpath.yml"), taxpub_xpath = paste0(path.package("ropenbio"),
+  "/", "taxpub_xpath.yml"), rank_db = paste0(path.package("ropenbio"),
+  "/vocabulary/", "taxonomic-rank.csv"),
+  status_db = paste0(path.package("ropenbio"), "/vocabulary/",
+  "taxonomic-status.yml"), xml_source = "file", xml_type = "taxpub",
   iteration = NA)
 }
 \arguments{
@@ -57,4 +61,6 @@ Initialize OpenBiodiv Environment
 TODO: the parameter vocabulary can probably be made as instances of something in RDF
 
 TODO: literals and non_literals (including keywords) probably need not be here
+
+TODO: put every xpath (for a given schema) in a single file
 }

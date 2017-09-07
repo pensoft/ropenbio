@@ -123,7 +123,8 @@ squote = function ( literal, language, literal_type = "")
 
   supported_language = sapply( obkms$parameters$Language , '[[', i = "label" )
 
-  if ( !missing(language) && is.list( language ) && !is.null ( language$label ) && !is.na( language$label ) && language$label %in% supported_language ) {
+  # if we have an explicit type, we don't need a language
+  if ( literal_type != "" || !missing(language) && is.list( language ) && !is.null ( language$label ) && !is.na( language$label ) && language$label %in% supported_language ) {
     # everything is OK
   }
   else {

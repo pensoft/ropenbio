@@ -10,7 +10,7 @@ squote(literal, language, literal_type = "")
 \item{literal}{the string that needs to be quoted}
 
 \item{language}{the language (needs to be a list having the element `semantic_code`)
-If left missing, no language will be assumed.}
+If left missing or NA, no language will be assumed.}
 
 \item{literal_type}{for non-strings such as year, date, etc. (one of the names in
 obkms$parameters$literal_type). The default is empty, i.e. string.}

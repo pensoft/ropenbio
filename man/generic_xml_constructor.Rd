@@ -4,7 +4,7 @@
 \alias{generic_xml_constructor}
 \title{A Generic Object Constructor}
 \usage{
-generic_xml_constructor(xml, atoms, id, obj_class)
+generic_xml_constructor(xml, atoms, id, parent_id, obj_class)
 }
 \arguments{
 \item{xml}{the XML node that will be converted to an object}
@@ -13,12 +13,14 @@ generic_xml_constructor(xml, atoms, id, obj_class)
 
 \item{id}{you can pass an ID for the object; default is NA}
 
+\item{parent_id}{the id of the parent object (if present)}
+
 \item{obj_class}{the class that will be assigned to the object}
 }
 \value{
 an object of class \code{obj_class}
 }
-\description{
+\details{
 A wrapper to \code{find_literals} that can be used to create all kinds
 of objects. It also sets the contents of node. It's better to use
 environments for objects than lists for objects because objects are

@@ -27,8 +27,3 @@ of the triple must necessarily be a resource. The object of the triple can
 be a resource, a literal (character), or a list of triples,
 all of which are blank.
 }
-\details{
-TODO: In the future, we may change the structure of the returned object
- to an environment, but this will require to change the couplet functions,
- which are highly complex.
-}

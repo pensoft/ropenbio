@@ -15,3 +15,6 @@
   pub_year: /article/front/article-meta/pub-date/year
   pub_day: /article/front/article-meta/pub-date/day
   pub_month: /article/front/article-meta/pub-date/month
+
+"http://openbiodiv.net/NomenclatureHeadading":
+  this: /article/body/sec/tp:taxon-treatment/tp:nomenclature

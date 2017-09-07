@@ -1,3 +1,58 @@
+#' Convert an XML Document to RDF
+#'
+#' The function ought to work on different types of XML documents. It tackes
+#' care of error checking and calling the correct top-level extractor.
+#'
+#' This function is exported and can be called from the user.
+#'
+#' @author Viktor Senderov
+#' @param resource_locator
+#'        locator, e.g. file path or URL, of the XML resource
+#' @param locator_type
+#'        type of the locator; one of c("FILE", "URL"); default is "FILE"
+#' @param resource_format
+#'        XML schema of the XML resource; one of c( "TAXPUB", "PLAZI" );
+#'        default is "TAXPUB"
+#' @param serialization_format
+#'        output serialization format for the RDF; one of c( "TURTLE" );
+#'        default is "TURTLE"
+#'
+#' @export
+xml2rdf = function( resource_locator,
+                    resource_type = "FILE",
+                    resource_format = "TAXPUB",
+                    serialization_format = "Turtle")
+{
+  # checks, if not FILE, cannot write back
+  stopifnot ( is.character(resource_type), resource_type == "FILE" )
+  stopifnot ( is.character(resource_format), resource_format %in%
+                c( "TAXPUB", "REFBANK_XML" ) )
+  stopifnot (
+    is.character(serialization_format), serialization_format == "Turtle" )
+
+  # load the XML document
+  xml = xml2::read_xml( resource_locator , options = c()) # both a document and a node
+  # fetch or set the id for the XML document
+  context = qname(  get_or_set_obkms_id( xml , fullname = TRUE ) )
+
+  # Call the top-level extractors depending on the type
+  if ( resource_format == "TAXPUB" ) {
+    triples = TaxonomicArticle_extractor( xml ) # will return a triples object (TODO S3 or S4??)
+    # serialize
+    serialization = c()
+    if (serialization_format == "Turtle") {
+      serialization = turtle_prepend_prefixes()
+      serialization = c ( serialization, triples2turtle2 ( context, triples ), "\n\n" )
+      #serialization = c ( serialization, triples2turtle2 ( context, triples$article ), "\n\n" )
+      # serialization = c( serialization, triples2turtle2( "pensoft:Nomenclature", triples$nomenclature))
+    }
+    # context need to be cleared
+    clear_context( context )
+    # return the return string as a string
+    xml2::write_xml( xml, resource_locator )
+  }
+  return ( do.call(paste, as.list( serialization )))
+}
 
 
 
@@ -10,18 +65,27 @@
 #'
 #' @param xml the XML node
 #' @param x xpath expressions
+#' @param quoted if TRUE, will run squote with needed params on the arguments
 #'
 #' @return a vector of atoms
 #'
 #' @export
 #'
-find_literals = function( xml, x  ) {
+find_literals = function( xml, x, quoted = FALSE  ) {
   r =
     sapply( names(x), function( l ) {
       ns = xml2::xml_find_all( xml, x[[l]] )
       # ns is a list
       if ( length( ns ) == 0) return ( NA )
-      else return ( trim_label ( xml2::xml_text( ns , trim = TRUE) ) )
+      else {
+        if (quoted) {
+          return( paste0("\"", trim_label ( xml2::xml_text( ns , trim = TRUE) ) , "\"") )
+        }
+        else {
+          return ( trim_label ( xml2::xml_text( ns , trim = TRUE) ) )
+        }
+
+      }
     })
 }
 
@@ -100,37 +164,6 @@ generic_xml_constructor = function( xml, atoms, id, parent_id, obj_class )
 
 
 
-#' Generic Document Component Constructor
-#'
-#'
-#' Creates a document component of specified class given a list of XPATH
-#' atom locations. Id and parent ID are extracted from the XML.
-#'
-#'
-#' @param node the XML node that will be converted to an object
-#' @param atom_location a vector of XPATH where the objects will be sought after
-#' @param component_class the class that will be assigned to the object
-#'
-#' @return an object of class \code{component_class}
-#'
-#' @export
-#'
-generic_document_component = function( node, atom_location, component_class )
-{
-  atom = find_literals( node, atom_location )
-  object = vector( mode = "list", length = length( atom_location ) + 2 )
-  object[ 1:length( atom_location) ] = as.list ( atom )
-  names( object ) = c(names( atom ), "id", "parent_id" )
-
-  object$id = get_or_set_obkms_id( node, fullname = TRUE)
-  object$parent_id = parent_id( node, fullname = TRUE)
-
-  class( object ) = component_class
-
-  return( object )
-}
-
-
 
 
 
@@ -201,6 +234,8 @@ parent_id = function ( node, document, fullname = FALSE )
 
 
 
+
+
 #' Break Down a XML object into its Components
 #'
 #' Takes a top-level XML object (e.g. a paper) and a vector of XPATH locations,
@@ -241,3 +276,29 @@ document_components = function ( xml, document_component_xpath ) {
   return ( doco )
 }
 
+
+
+#' Is the current XML node a child of nomenclature heading?
+#'
+#' @param node XML
+
+in_nomenclature_heading =
+function( node ) {
+  location = xml2::xml_path( node )
+  print(location)
+
+  # TODO following check should come from the scheme (taxpub)
+  # checke here is wrong "/article/body/sec[3]/tp:taxon-treatment/tp:nomenclature"
+
+  ffffffff
+  while ( location != obkms$xpath$taxpub$"http://openbiodiv.net/NomenclatureHeadading"$this && location != "/" ) {
+    node = xml2::xml_parent(  node  )
+    location = xml2::xml_path( node )
+    print(location)
+  }
+
+  if (location == obkms$xpath$taxpub$"http://openbiodiv.net/NomenclatureHeadading"$this) {
+    return( TRUE )
+  }
+  else return ( FALSE )
+}
