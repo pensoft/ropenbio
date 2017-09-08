@@ -108,3 +108,8 @@ Subject_Term:
   uri: <http://purl.org/spar/fabio/SubjectTerm>
   comment: every keyword is in instance of subject term in some of the vocabularies
 
+LatinName:
+  uri: <http://openbiodiv.net/LatinName>
+
+TaxonomicConceptLabel:
+  uri: <http://openbiodiv.net/TaxonomicConceptLabel>

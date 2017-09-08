@@ -184,6 +184,9 @@ family:
   uri: http://rs.tdwg.org/dwc/terms/family
   comment: has family
 
+name_according_to:
+  uri: http://rs.tdwg.org/dwc/iri/nameAccordingTo
+
 # OBKMS & Treatment
 #reference: doco:Reference
 #tnu: trt:TaxonNameUsage

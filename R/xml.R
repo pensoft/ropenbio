@@ -285,20 +285,51 @@ document_components = function ( xml, document_component_xpath ) {
 in_nomenclature_heading =
 function( node ) {
   location = xml2::xml_path( node )
-  print(location)
 
+  # obtains the word after the last / in the location xpath
+  last_part = function( location ) {
+    x = unlist( strsplit( location, "/" ) )
+    x[ length( x) ]
+  }
   # TODO following check should come from the scheme (taxpub)
   # checke here is wrong "/article/body/sec[3]/tp:taxon-treatment/tp:nomenclature"
+  # just need to compare to the last component
 
-  ffffffff
-  while ( location != obkms$xpath$taxpub$"http://openbiodiv.net/NomenclatureHeadading"$this && location != "/" ) {
+  while ( last_part( location ) != "tp:nomenclature" && location != "/" ) {
     node = xml2::xml_parent(  node  )
     location = xml2::xml_path( node )
-    print(location)
   }
 
-  if (location == obkms$xpath$taxpub$"http://openbiodiv.net/NomenclatureHeadading"$this) {
+  if ( last_part( location ) == "tp:nomenclature" ) {
+
     return( TRUE )
   }
   else return ( FALSE )
 }
+
+
+
+#' Taxonomic Name Usage Extractor
+#'
+#'
+#' Extracts knowledge from an XML node containing a taxonomic name usage.
+#' Extracts also names.
+#'
+#' @param comp an XML componennt containing a taxonomic name usage
+#'
+#' @return triples of RDF
+TaxonomicNameUsage_extractor = function ( comp )
+{
+  TNU = TaxonomicNameUsage( comp$xml )
+
+  # construct a taxonomic name from the taxonomic name usage
+  #taxonomic_name = TaxonomicName( TNU )
+
+  rdf = list()
+
+  # this will convert the TNU itself to
+  rdf$TNU = as.rdf ( TNU )
+
+
+}
+
