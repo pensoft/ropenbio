@@ -320,10 +320,14 @@ function( node ) {
 #' @return triples of RDF
 TaxonomicNameUsage_extractor = function ( comp )
 {
-  TNU = TaxonomicNameUsage( comp$xml )
+  browser()
+  a_TaxonomicNameUsage = TaxonomicNameUsage( comp$xml )
 
   # construct a taxonomic name from the taxonomic name usage
   #taxonomic_name = TaxonomicName( TNU )
+
+  a_TaxonomicName = as.TaxonomicName(a_TaxonomicNameUsage)
+
 
   rdf = list()
 
