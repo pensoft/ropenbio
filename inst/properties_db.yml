@@ -1,8 +1,10 @@
 # Object Properties
 
-
-
-
+mentions:
+  uri: <http://proton.semanticweb.org/protonkm#mentions>
+  domain_includes: <http://openbiodiv.net/TaxonomicNameUsage>
+  range_includes: <http://openbiodiv.net/TaxonomicName>
+  comments: comments document components that mention something to the thing that they mention
 
 exact_match:
   uri: <http://www.w3.org/2008/05/skos#exactMatch>
@@ -126,6 +128,10 @@ relates_to_document:
 
 contains:
   uri: http://www.essepuntato.it/2008/12/pattern#contains
+  comment: From SPAR - A structured element contains another generic element. In our model relationship of containment between two DocumentComponents.
+  domain_includes: <http://openbiodiv.net/DocumentComponent>
+  range_includes: <http://openbiodiv.net/DocumentComponent>
+
 
 realization_of:
   uri: http://purl.org/vocab/frbr/core#realizationOf
@@ -186,6 +192,16 @@ family:
 
 name_according_to:
   uri: http://rs.tdwg.org/dwc/iri/nameAccordingTo
+
+name_according_to_id:
+  uri: http://rs.tdwg.org/dwc/terms/nameAccordingToId
+
+secundum_literal:
+  uri: http://openbiodiv.net/nameAccordingToId
+
+
+secundum:
+  uri: http://openbiodiv.net/nameAccordingTo
 
 # OBKMS & Treatment
 #reference: doco:Reference

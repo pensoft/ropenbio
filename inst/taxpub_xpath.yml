@@ -13,10 +13,14 @@ TaxonomicNameUsage:
   authorship: ./following-sibling::tp:taxon-authority | ../following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type="authority"]
   taxonomic_status: ./following-sibling::tp:taxon-status | ../following-sibling::tp:taxon-authority
 
-  genus.reg: ./tp:taxon-name-part[@taxon-name-part-type="genus" or @taxon-name-part-type="Genus" or @taxon-name-part-type="genera" or @taxon-name-part-type="Genera"]
+  genus.reg: ./tp:taxon-name-part[@taxon-name-part-type="genus" or @taxon-name-part-type="Genus" or @taxon-name-part-type="genera" or @taxon-name-part-type="Genera"]/@reg
   pub_year: /article/front/article-meta/pub-date/year
   pub_day: /article/front/article-meta/pub-date/day
   pub_month: /article/front/article-meta/pub-date/month
 
 NomenclatureHeadading:
   uri: /article/body//tp:taxon-treatment/tp:nomenclature
+
+Treatment:
+  first_taxonomic_name_usage: ./tp:nomenclature/tp:taxon-name
+

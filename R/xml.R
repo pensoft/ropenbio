@@ -57,6 +57,8 @@ xml2rdf = function( resource_locator,
 
 
 
+
+
 #' Finds the atoms in an xml node
 #'
 #'
@@ -96,86 +98,6 @@ find_literals = function( xml, x, quoted = FALSE  ) {
 
 
 
-#' A Generic Object Constructor
-#'
-#'
-#'
-#'
-#'
-#' A wrapper to \code{find_literals} that can be used to create all kinds
-#' of objects. It also sets the contents of node. It's better to use
-#' environments for objects than lists for objects because objects are
-#' key-value pairs (probably there are cases where not true).
-#'
-#' @seealso find_literals
-#'
-#' @param xml the XML node that will be converted to an object
-#' @param atoms a vector of XPATH where the objects will be sought after
-#' @param id you can pass an ID for the object; default is NA
-#' @param parent_id the id of the parent object (if present)
-#' @param obj_class the class that will be assigned to the object
-#'
-#' @return an object of class \code{obj_class}
-#'
-#' @export
-#'
-
-generic_xml_constructor = function( xml, atoms, id, parent_id, obj_class )
-{
-  if ( !missing( atoms ) ) {
-    object = as.environment ( find_literals( xml, atoms ) )
-  }
-  else {
-    object = new.env()
-  }
-
-  if ( !missing( id) && !is.na( id ) && is.character( id ) && length ( id ) > 0 ) {
-    object$id = id
-  }
-  else {
-    object$id = NA
-  }
-
-  if ( !missing( parent_id ) && !is.na( parent_id ) && is.character( parent_id ) && length ( parent_id ) > 0 ) {
-    object$parent_id = parent_id
-  }
-  else {
-    object$parent_id = NA
-  }
-
-  object$language = list( semantic_code = xml2::xml_text( xml2::xml_find_first( x = xml, "@xml:lang") ) )
-  object$content = xml2::xml_text( xml )
-
-  class( object ) = obj_class
-
-  return( object )
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #' Get the OBKMS Id of an XML node, if not set, set it
 #'
 #' Does not do any database lookups. Is exported.
@@ -201,6 +123,10 @@ get_or_set_obkms_id = function ( node, fullname = FALSE )
 
   else return ( obkms_id )
 }
+
+
+
+
 
 
 #' Get the Parent OBKS Id for an XML Node
@@ -230,6 +156,7 @@ parent_id = function ( node, document, fullname = FALSE )
 
   else return ( obkms_id )
 }
+
 
 
 
@@ -278,62 +205,9 @@ document_components = function ( xml, document_component_xpath ) {
 
 
 
-#' Is the current XML node a child of nomenclature heading?
-#'
-#' @param node XML
-
-in_nomenclature_heading =
-function( node ) {
-  location = xml2::xml_path( node )
-
-  # obtains the word after the last / in the location xpath
-  last_part = function( location ) {
-    x = unlist( strsplit( location, "/" ) )
-    x[ length( x) ]
-  }
-  # TODO following check should come from the scheme (taxpub)
-  # checke here is wrong "/article/body/sec[3]/tp:taxon-treatment/tp:nomenclature"
-  # just need to compare to the last component
-
-  while ( last_part( location ) != "tp:nomenclature" && location != "/" ) {
-    node = xml2::xml_parent(  node  )
-    location = xml2::xml_path( node )
-  }
-
-  if ( last_part( location ) == "tp:nomenclature" ) {
-
-    return( TRUE )
-  }
-  else return ( FALSE )
-}
 
 
 
-#' Taxonomic Name Usage Extractor
-#'
-#'
-#' Extracts knowledge from an XML node containing a taxonomic name usage.
-#' Extracts also names.
-#'
-#' @param comp an XML componennt containing a taxonomic name usage
-#'
-#' @return triples of RDF
-TaxonomicNameUsage_extractor = function ( comp )
-{
-  browser()
-  a_TaxonomicNameUsage = TaxonomicNameUsage( comp$xml )
-
-  # construct a taxonomic name from the taxonomic name usage
-  #taxonomic_name = TaxonomicName( TNU )
-
-  a_TaxonomicName = as.TaxonomicName(a_TaxonomicNameUsage)
 
 
-  rdf = list()
-
-  # this will convert the TNU itself to
-  rdf$TNU = as.rdf ( TNU )
-
-
-}
 

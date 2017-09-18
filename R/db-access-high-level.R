@@ -1,14 +1,3 @@
-#     ____    _    _   ______   _____   __     __
-#    / __ \  | |  | | |  ____| |  __ \  \ \   / /
-#   | |  | | | |  | | | |__    | |__) |  \ \_/ /
-#   | |  | | | |  | | |  __|   |  _  /    \   /
-#   | |__| | | |__| | | |____  | | \ \     | |
-#    \___\_\  \____/  |______| |_|  \_\    |_|
-#
-#
-# OBKMS Query Functions
-#
-
 #' Given a label, tries to get the GUID of the node that has that label in OBKMS
 #'
 #' We need a helper function to get or create an node (id) for the network given a preferred label (`skos:prefLabel`)
@@ -56,6 +45,13 @@ get_nodeid = function( label = "", explicit_node_id = "", allow_multiple = FALSE
   #detach ( obkms )
   return ( paste( "http://id.pensoft.net/", uuid::UUIDgenerate() , sep = "") )
 }
+
+
+
+
+
+
+
 
 
 #' Lookup an Identifier (URI) for a Resource in OBKMS
@@ -144,6 +140,11 @@ lookup_id = function( label,
   }
 }
 
+
+
+
+
+
 #' Gets the graph name of an article of it exists
 #' TODO needs review
 #' @param doi the DOI of the article the context of which we are looking for
@@ -170,6 +171,202 @@ get_context_of = function ( doi ) {
   # we couldn't match label or label was FALSE, generate a new node
   #detach ( obkms )
   return ( paste( "http://id.pensoft.net/", uuid::UUIDgenerate() , sep = "") )
+}
+
+
+
+
+
+
+
+
+
+#' Lookup Identifier of Taxonomic Name Used in a Taxonomic Name Usage
+#'
+#' For the given TNU, locate (or create if non-existant) an URI in the system,
+#' corresponding to the Latinized n name that TNU mentions.
+#'
+#' @param a_TaxonomicNameUsage
+#'
+#' @return Character. The URI of
+#'
+#' @export
+lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, generate_on_fail = TRUE) {
+
+  # First, we need a query.
+  query = "
+  SELECT DISTINCT ?id
+  WHERE {
+  ?id rdf:type %resource_type .
+  %1
+  %2
+  %3
+  %4
+  }"
+
+  query2 = "
+  SELECT DISTINCT ?id
+  WHERE {
+  ?id rdf:type %resource_type .
+  %1
+  %2
+  %3
+  %4
+  %5
+  }
+  "
+
+  if ( has_meaningful_value(a_TaxonomicNameUsage$author) ) {
+    query2 = gsub( "%5", paste0("?id", " <http://rs.tdwg.org/dwc/terms/scientificNameAuthorship> ", a_TaxonomicNameUsage$authorship , "."), query  )
+    can_do_query2 = TRUE
+  }
+  else{
+    query2 = gsub( "%5", "", query2  )
+    can_do_query2 = FALSE
+
+  }
+
+
+  # 4 - taxonomic concept label
+  if ( a_TaxonomicNameUsage$TaxonomicName_type() == "TaxonomicConceptLabel" ) {
+    query = gsub( "%4", paste0("?id", " <http://rs.tdwg.org/dwc/terms/nameAccordingToID> ", a_TaxonomicNameUsage$name_according_to_id, "."), query  )
+    query2 = gsub( "%4", paste0("?id", " <http://rs.tdwg.org/dwc/terms/nameAccordingToID> ", a_TaxonomicNameUsage$name_according_to_id, "."), query2  )
+  }
+  else{
+    query = gsub( "%4", "", query  )
+    query2 = gsub( "%4", "", query2  )
+  }
+
+  # replace %resource_type (i.e. a Latinized name or a taxonomic c. label)
+  query = gsub( "%resource_type", obkms$classes[[a_TaxonomicNameUsage$TaxonomicName_type()]]$uri, query  )
+  query2 = gsub( "%resource_type", obkms$classes[[a_TaxonomicNameUsage$TaxonomicName_type()]]$uri, query2  )
+
+  # replace 2 and 3 with epithets or empty
+  if ( !is.na(a_TaxonomicNameUsage$subspecies) ) {
+    query = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraspecificEpithet> ", a_TaxonomicNameUsage$subspecies , "."), query  )
+    query2 = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraspecificEpithet> ", a_TaxonomicNameUsage$subspecies , "."), query2  )
+  }
+  else {
+    query = gsub( "%3", "", query  )
+    query2 = gsub( "%3", "", query  )
+  }
+
+  if ( !is.na(a_TaxonomicNameUsage$species) ) {
+    query = gsub( "%2", paste0("?id", " <http://rs.tdwg.org/dwc/terms/specificEpithet> ", a_TaxonomicNameUsage$species , "."), query  )
+    query2 = gsub( "%2", paste0("?id", " <http://rs.tdwg.org/dwc/terms/specificEpithet> ", a_TaxonomicNameUsage$species , "."), query  )
+  }
+  else {
+    query = gsub( "%2", "", query  )
+    query2 = gsub( "%2", "", query  )
+  }
+
+  # replace 1 with the most senior taxon
+  senior_ranks = c(  "kingdom",
+                     "phylum",
+                     "class",
+                     "order",
+                     "family",
+                     "genus",
+                     "subgenus")
+
+  i  = 7
+  while( grepl("%1", query) && i > 0 ) {
+    if ( !is.na(a_TaxonomicNameUsage[[senior_ranks[i]]]) ) {
+      query = gsub( "%1", paste0("?id", " dwc:", senior_ranks[i], " ", a_TaxonomicNameUsage[[senior_ranks[i]]] , "."), query  )
+      query2 = gsub( "%1", paste0("?id", " dwc:", senior_ranks[i], " ", a_TaxonomicNameUsage[[senior_ranks[i]]] , "."), query2  )
+    }
+    i = i - 1
+  }
+
+  #just kill %1 if we didn't fid anything (could be the case if only infraspecific
+  #epithet is provided in the XML)
+  if (grepl("%1", query)) {
+    query = gsub( "%1", "", query )
+  }
+  if (grepl("%1", query2)) {
+    query2 = gsub( "%1", "", query2 )
+  }
+
+  query = c( turtle_prepend_prefixes(t = "SPARQL"), query )
+  query2 = c( turtle_prepend_prefixes(t = "SPARQL"), query2 )
+
+  # execute query...
+
+  query = do.call ( paste0, as.list(query))
+  query2 = do.call ( paste0, as.list(query2))
+
+  res = rdf4jr::POST_query( obkms$server_access_options , obkms$server_access_options$repository, query, "CSV" )
+  res2 = rdf4jr::POST_query( obkms$server_access_options , obkms$server_access_options$repository, query2, "CSV" )
+
+  if ( is.data.frame( res ) && nrow ( res ) == 1 )
+  {
+    id = res$id[1]
+    log_event ( "successful lookup", "TaxonomicName_id", id )
+
+  }
+  else if(  is.data.frame( res2 ) && nrow ( res2 ) == 1 ) {
+    id = res2$id[1]
+  }
+  else if ( is.data.frame( res2 ) && nrow ( res2 ) > 1 )
+  {
+    id = res$id
+    log_event ( "successful lookup", "TaxonomicName_id", id )
+
+  }
+  else if ( is.data.frame( res ) && nrow ( res ) > 1 )
+  {
+    id = res$id
+    log_event ( "successful lookup", "TaxonomicName_id", id )
+
+  }
+  else {
+    id = qname(paste0(strip_angle(obkms$prefixes$`_base`), uuid::UUIDgenerate()))
+  }
+
+  return( id )
+}
+
+
+
+#' Lookup the Identifier of the Taxonomic Concept Given the Identifier of its
+#'   Taxonomic Concept Label
+#'
+#' For the given TNU, locate (or create if non-existant) an URI in the system,
+#' corresponding to the Latinized n name that TNU mentions.
+#'
+#' @param tcl_id Character. The Identifier of a taxonomic concept label.
+#'
+#' @return Character. The id of the taxonomic concept with the given label,
+#'
+#' @export
+lookup_TaxonomicConcept_id = function(tcl_id) {
+
+  # First, we need a query.
+  query = "
+  SELECT DISTINCT ?id
+  WHERE {
+    ?id :taxonomicConceptLabel %tcl_id .
+  }"
+
+  query = gsub("%tcl_id", strip_angle(add_prefix(tcl_id), reverse = TRUE), query)
+
+  query = c(turtle_prepend_prefixes(t = "SPARQL"), query)
+
+  # execute query...
+  query = do.call ( paste0, as.list(query))
+
+  res = rdf4jr::POST_query(obkms$server_access_options, obkms$server_access_options$repository, query, "CSV")
+
+  # TODO we probably need some kind of error/exception if more than one result
+  if (is.data.frame(res) && nrow (res) > 0)
+  {
+    id = res$id[1]
+    log_event ( "successful lookup", "TaxonomicConceptLabel_id", id )
+  }
+  else {
+    id = NA
+  }
+  return( id )
 }
 
 
@@ -724,7 +921,7 @@ institution_rule2 = function( affiliation )
   potential_institution = paste0("\\\\\"", potential_institution, "\\\\\"")
 
   lucene_query[2] = do.call( paste , as.list( c( "label:", potential_institution )))
-  # TODO make this an OBKMS parameter
+  # TODO make a_TaxonomicNameUsage an OBKMS parameter
   lucene_connector[2] = "<http://www.ontotext.com/connectors/lucene/instance#PhraseSearch>"
 
   query = "SELECT ?entity ?score ?label

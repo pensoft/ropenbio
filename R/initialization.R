@@ -4,6 +4,7 @@
 
 
 
+
 #' Article Dumper
 #'
 #' @param journal the alias of the journal that is to be dumped.
@@ -14,20 +15,19 @@
 #' @export
 article_dumper = function ( journal = "BDJ", fromdate = "01/01/2010")
 {
-
   archive = paste0( obkms$initial_dump_configuration$initial_dump_directory, "archive.zip")
   rdata = paste0( obkms$initial_dump_configuration$initial_dump_directory, ".Rdata")
   if ( journal == "BDJ" ) {
-    command = paste0( obkms$initial_dump_configuration$bdj_endpoint, "&date=", URLencode( fromdate ) )
-    response = httr::GET( command )
+    command = paste0(obkms$initial_dump_configuration$bdj_endpoint, "&date=", URLencode(fromdate))
+    response = httr::GET(command)
   }
-  else if ( journal == "ZooKeys" ) {
-    command = paste0( obkms$initial_dump_configuration$zookeys_endpoint, "&date=", URLencode( fromdate ) )
-    response = httr::GET( command )
+  else if (journal == "ZooKeys") {
+    command = paste0(obkms$initial_dump_configuration$zookeys_endpoint, "&date=", URLencode(fromdate))
+    response = httr::GET(command)
   }
-  else if ( journal == "PhytoKeys" ) {
-    command = paste0( obkms$initial_dump_configuration$phytokeys_endpoint, "&date=", URLencode( fromdate ) )
-    response = httr::GET( command )
+  else if (journal == "PhytoKeys") {
+    command = paste0(obkms$initial_dump_configuration$phytokeys_endpoint, "&date=", URLencode(fromdate))
+    response = httr::GET(command)
   }
 
   zip = httr::content(response, "raw")
