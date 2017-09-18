@@ -1,0 +1,213 @@
+# probably vocabulary items as instances and not classes should be named (available-name)
+
+AvailableName:
+ - genus bona
+ - comb. n., re-instated
+ - comb. r.
+ - comb. rest.
+ - comb. restored
+ - comb. rev.
+ - gen. rev.
+ - gen. reval.
+ - nom. rest.
+ - nom. resurr.
+ - reestablished
+ - reinstated
+ - re-instated
+ - rest. stat.
+ - revalidated
+ - resurrected combination
+ - revalidated, comb. n.
+ - stat. n.
+ - restored name
+ - stat. res.
+ - stat. restit.
+ - stat rev.
+ - stat. rev.
+ - stat. rev., stat. n.
+ - status resurrected
+ - valid sp.
+ - sp. rev.
+ - spec. rev.
+ - nom. cons.
+ - nomen protectum
+ - nom. et orth. cons.
+
+NewOccurrenceRecord:
+  - male
+  - female
+  - New .* Record
+  - new .* record
+  - new country record
+  - new data on first .* record
+  - new data on first .* records
+  - new data supporting first records for
+  - new record
+  - new record for
+  - new record from
+  - new to
+  - New to the fauna of
+  - redescription
+
+ReplacementName:
+ - comb. et stat. nov.
+ - comb. et. stat. nov.
+ - (comb. n.)
+ - comb. n.
+ - comb.n.
+ - comb. n. (misplaced)
+ - comb. nov.
+ - comb. n., re-instated
+ - comb. n.
+ - comb. n., stat. rev.
+ - comb. r.
+ - comb. rest.
+ - comb. restored
+ - comb. rev.
+ - comb. r., stat. r. & stat. n.
+ - comb. & stat. nov.
+ - gen. n., comb. n.
+ - new combination
+ - new comb., new subfamily assignment
+ - resurrected combination
+ - revalidated, comb. n.
+ - stat. & comb. nov.
+ - stat. prom. & comb. n.
+ - comb. et stat. nov.
+ - comb. et. stat. nov.
+ - comb. n., stat. rev.
+ - comb. r., stat. r. & stat. n.
+ - comb. & stat. nov.
+ - new comb., new subfamily assignment
+ - new familial and subfamilial assignment
+ - new family assignment
+ - new rank
+ - new status
+ - NEW STATUS
+ - new subfamilial assignment
+ - new subfamily assignment
+ - new subgeneric assignment
+ - nom. n. et stat. rev.
+ - nom. n. & stat. rev.
+ - revised status
+ - rev. placement
+ - rev. stat.
+ - rev. status
+ - stat. & comb. nov.
+ - stat. n.
+ - stat. n.
+ - invalid genus
+ - stat. nov.
+ - stat. n.
+ - restored name
+ - stat. prom.
+ - stat. prom. & comb. n.
+ - stat. rev., stat. n.
+ - emended
+ - (name emended by .*)
+ - nomen novum
+ - nomen revivisco
+ - nom. n.
+ - nom. n. et stat. rev.
+ - nom. nov.
+ - nom. n. & stat. rev.
+ - replacement name
+
+TaxonomicDiscovery:
+ - sp. n.
+ - subsp. n.
+ - subsp. nov.
+ - ssp. n.
+ - ssp.n.
+ - subtrib. n.
+ - subtr. n.
+ - sp. n.
+ - gen. et sp. n.
+ - gen et sp. nov.
+ - gen. n. and sp. n.
+ - gen. n., comb. n.
+ - gen. n., sp. n.
+ - n. sp.
+ - p. n.
+ - spec. nov.
+ - sp .n.
+ - sp. n.
+ - sp.n.
+ - sp. nov.
+ - sp.nov.
+ - sp. n., variety
+ - subgen. n.
+ - subg. n.
+ - subg. nov.
+ - en. n.
+ - gen. et sp. n.
+ - gen et sp. nov.
+ - gen n.
+ - gen. n.
+ - gen. n. and sp. n.
+ - gen nov.
+ - gen. nov.
+ - gen. n., sp. n.
+ - subfam. n.
+ - var. nov.
+ - fam. n.
+ - new clade
+ - hybr. nov.
+ - sect. nov.
+ - subordo n.
+ - subsect. nov.
+ - trib. n.
+
+TaxonomicUncertainty:
+ - incertae sedis
+ - Incertae Sedis
+ - indet.
+ - indeterminate
+ - (?) genus indet.
+ - ^spp.$
+ - spp. (unidentified .*)
+ - sp. (unidentified .*)
+ - ^sp.$
+ - species A
+ - species group
+ - sp. female
+ - sp indet
+ - sp. indet.
+ - subsp.
+
+TypeSpecies:
+  - type species
+
+TypeSpecimenDesignation:
+ - lectotype designation
+ - revised status, lectotype designation
+
+UnavailableName:
+ - nomen dubium
+ - (nomen dubium)
+ - nomen dubium, synonym
+ - nomen inquirendum
+ - nomen nudum
+ - nomen nudum .*, incorrect subsequent spelling
+ - species dubia
+ - species inquirenda
+ - nomen dubium
+ - (nomen dubium)
+ - nomen dubium
+ - nom. inval.
+ - species dubia
+ - species inquirenda
+ - subspecies inquirenda
+ - unavailable
+ - unavailable name
+ - undescribed species
+ - undescribed species (near adustus)
+ - unresolved
+ - junior synonym of
+ - syn. n.
+ - syn. nov.
+ - synonym of
+ - incorrect subsequent spelling
+ - invalid
+ - ex parte
+ - subjective junior synonym
