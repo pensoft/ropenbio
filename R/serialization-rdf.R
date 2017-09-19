@@ -91,16 +91,26 @@ strip_angle = function ( uri , reverse = FALSE ) {
   else return( gsub( "^(.*)$", "<\\1>", uri ) )
 }
 
-#' Properly Quote Literals for use in RDF Serializations
+
+
+
+
+
+
+
+
+
+
+#' Quote Characters to USE in RDF Serializations
 #'
 #' Information:
 #'   http://iswc2011.semanticweb.org/fileadmin/iswc/Papers/Workshops/SSWS/Emmons-et-all-SSWS2011.pdf
 #'
-#' @param literal the string that needs to be quoted
-#' @param language the language (needs to be a list having the element `semantic_code`)
-#'   If left missing or NA, no language will be assumed.
-#' @param literal_type for non-strings such as year, date, etc. (one of the names in
-#'     obkms$parameters$literal_type). The default is empty, i.e. string.
+#' @param literal Character. The string that needs to be quoted.
+#' @param language Character with the language code or list with the code as
+#'   attribute named `semantic_code`
+#' @param literal_type Character. The type. Look at the webpage in the description.
+#'   If string, just leave missing.
 #'
 #' @examples
 #'
@@ -111,41 +121,42 @@ strip_angle = function ( uri , reverse = FALSE ) {
 #' squote("2017", Year)
 #'
 #' @export
-squote = function ( literal, language, literal_type = "")
+squote = function (literal, language, literal_type)
 {
-  if ( !missing ( literal_type ) ) {
-    if( !( literal_type %in%  unlist( obkms$parameters$literal_type ) ) ) {
-      #browser()
-      #warning( "unsupported literal type, assuming string" )
-      literal_type = ""
-    }
+  if (!has_meaningful_value(literal)) {
+    #Literal is malformed, returning NULL
+    return (NULL)
   }
 
-  supported_language = sapply( obkms$parameters$Language , '[[', i = "label" )
-
-  # if we have an explicit type, we don't need a language
-  if ( !missing(language) && is.list( language ) && !is.null ( language$label ) && !is.na( language$label ) && language$label %in% supported_language ) {
-    # everything is OK
-  }
-  else if (!missing(language)) {
-    language = obkms$parameters$Language$English
-  }
-
-  if ( is.null ( literal ) || is.na(literal) || literal == "") {
-    #browser()
-    #warning( "Literal is malformed, returning NULL")
-    return ( NULL )
+  # For compatibility
+  if (!missing(language) && is.list(language)) {
+    language = language$semantic_code
   }
 
   # remove slashes from literal
   literal = gsub("\"", "", literal  )
   literal = gsub("\\\\", "", literal  )
 
-  if ( !missing( language ) ) { postfix = paste0("@", language$semantic_code ) }
-  else { postfix = literal_type }
+  if(!missing(literal_type) && has_meaningful_value(literal_type)) {
+    postfix = paste0("^^", literal_type)
+  }
+  else if (!missing(language) && has_meaningful_value(language)) {
+    postfix = paste0("@", language)
+  }
+  else {
+    postfix = ""
+  }
 
   paste0 ("\"", literal, "\"", postfix)
 }
+
+
+
+
+
+
+
+
 
 #' Use the prefix database to create Turtle statements
 #' @param t the syntax

@@ -52,3 +52,16 @@ generic_xml_constructor = function( xml, atoms, id, parent_id, obj_class )
 
   return( object )
 }
+
+
+
+#' Gets the RDF Label (rdfs:label) of an Object
+#'
+#' @seealso get_label.LatinName
+#' @param x Object of which we need the label for.
+#'
+#' @return Character. The RDF label of the object
+#' @export
+get_label = function (x, ...) {
+  UseMethod("get_label", x)
+}

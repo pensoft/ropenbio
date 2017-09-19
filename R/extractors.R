@@ -109,9 +109,8 @@ TaxonomicArticle_extractor =
 
   triples[["TNU"]] = unlist( lapply ( article_component$taxonomic_name_usage,
     function ( TNU ) {
-      TaxonomicNameUsage_extractor ( TNU )
-    } ), recursive = FALSE )
-
+      TaxonomicNameUsage_extractor(TNU, metadata)
+    } ), recursive = FALSE)
 
   triples[["treatment"]] = unlist(lapply(article_component$treatment,
     function (t) {
@@ -225,11 +224,12 @@ author_extractor = function ( paper_id ,
 #' Extracts also names.
 #'
 #' @param comp an XML componennt containing a taxonomic name usage
+#' @param metadata The metadata of the article. Needed to get the context.
 #'
 #' @return triples of RDF
-TaxonomicNameUsage_extractor = function ( comp )
+TaxonomicNameUsage_extractor = function (comp, metadata)
 {
-
+  browser()
   a_TaxonomicNameUsage = TaxonomicNameUsage( comp$xml )
 
   # construct a taxonomic name from the taxonomic name usage
@@ -242,7 +242,7 @@ TaxonomicNameUsage_extractor = function ( comp )
   rdf = list() # TODO preallocate it
 
   # this will convert the TNU itself to
-  rdf$TNU = as.rdf ( a_TaxonomicNameUsage )
+  rdf$TNU = as.rdf(a_TaxonomicNameUsage)
   rdf$TNU_connect = list(
     triple2(qname(a_TaxonomicNameUsage$parent_id), qname(obkms$properties$contains$uri), qname(a_TaxonomicNameUsage$id))
   )
@@ -252,8 +252,13 @@ TaxonomicNameUsage_extractor = function ( comp )
   )
 
   #TODO RDF must be submitted immediately because next stage depends on it
+  browser()
 
-  #cat(triples2turtle2("d", unlist(rdf, recursive = FALSE)))
+
+  rdf = unlist(rdf, recursive = FALSE)
+  serialization = c(turtle_prepend_prefixes(), triples2turtle2(metadata$article_id, rdf))
+  result = add_data(obkms$server_access_options, obkms$server_access_options$repository, serialization)
+
   cat(".")
 
   return(unlist(rdf, recursive = FALSE))

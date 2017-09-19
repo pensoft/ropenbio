@@ -10,11 +10,22 @@
 #' @return RDF
 #' @export
 as.rdf = function( x ) {
-  properties = setdiff( names( x ), c( "this", "id", "parent_id" ) )
+  properties = setdiff( names( x ), c( "this", "id", "parent_id", "node" ) )
 
   rdf = lapply( properties, function( p ) {
     lapply( x[[p]], function( value ) {
-      triple2( qname (x$id), qname( obkms$properties[[p]]$uri ), value )
+      if(p == "publication_year") browser()
+      if (has_meaningful_value(obkms$properties[[p]]$type) && obkms$properties[[p]]$type == "object") {
+        triple2(qname(x$id), qname(obkms$properties[[p]]$uri), value)
+      }
+      else if(has_meaningful_value(obkms$properties[[p]]$type)) {
+        triple2(qname(x$id), qname(obkms$properties[[p]]$uri), squote(value, literal_type = obkms$properties[[p]]$type))
+      }
+      else {
+        # just a string
+        # TODO add language processing
+        triple2(qname(x$id), qname(obkms$properties[[p]]$uri), squote(value))
+      }
     })
   })
 

@@ -20,10 +20,13 @@
 #'
 DocumentComponent = function( node, atom_location, component_class )
 {
-  object = as.environment( as.list(find_literals( node, atom_location, quoted = TRUE ) ))
+  object = as.environment( as.list(find_literals( node, atom_location, quoted = FALSE ) ))
+
+  object$node = node
 
   object$id = get_or_set_obkms_id( node, fullname = TRUE)
   object$parent_id = parent_id( node, fullname = TRUE)
+  object$root_id = root_id(node, fullname = TRUE)
 
   object$type = strip_angle( paste0(strip_angle(obkms$prefixes$`_base`), component_class), reverse = TRUE)
 

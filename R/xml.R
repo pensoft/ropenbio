@@ -161,6 +161,26 @@ parent_id = function ( node, document, fullname = FALSE )
 
 
 
+#' Get the Root (Article) OBKMS Id for an XML Node
+#'
+#' Does not do any database lookups - only looks at XML
+#'
+#' @param node
+#' @param fullname
+#'
+#' @export
+root_id = function(node, fullname = FALSE)
+{
+  obkms_id = xml2::xml_text( xml2::xml_find_all(node, "/article/@obkms_id"))
+
+  if (fullname) {
+    return (paste0( strip_angle( obkms$prefixes$`_base`) , obkms_id))
+  }
+
+  else return (obkms_id)
+}
+
+
 
 
 #' Break Down a XML object into its Components

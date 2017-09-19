@@ -19,6 +19,7 @@ belongs_to_scheme:
 type:
   uri: <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
   comment: the type of a resource
+  type: object
 
 creator:
   uri: http://purl.org/dc/terms/creator
@@ -117,6 +118,7 @@ role_type:
   uri: http://purl.org/spar/pro/withRole
   comment: has role type
 
+
 # Document properties
 
 character_content:
@@ -153,10 +155,12 @@ eissn:
 publication_year:
   uri: http://purl.org/spar/fabio/hasPublicationYear
   comment: has publication year
+  type: 'xsd:year'
 
 publication_date:
   uri: http://prismstandard.org/namespaces/basic/2.0/publicationDate
   comment: The date on which a resource is published or disclosed
+  type: 'xsd:date'
 
 #The date on which a document or entity is published. The date can be expressed in three different formats:
 #
@@ -192,6 +196,7 @@ family:
 
 name_according_to:
   uri: http://rs.tdwg.org/dwc/iri/nameAccordingTo
+  type: object
 
 name_according_to_id:
   uri: http://rs.tdwg.org/dwc/terms/nameAccordingToId
@@ -199,9 +204,9 @@ name_according_to_id:
 secundum_literal:
   uri: http://openbiodiv.net/nameAccordingToId
 
-
 secundum:
   uri: http://openbiodiv.net/nameAccordingTo
+  type: object
 
 # OBKMS & Treatment
 #reference: doco:Reference

@@ -18,9 +18,8 @@ TaxonomicNameUsage = function(node) {
   this$taxonomic_status = taxonomic_status( this$taxonomic_status )
 
   # add date, same as the metadata
-  this$publication_year = squote( this$pub_year, literal_type = obkms$parameters$literal_type$year )
-  this$publication_date =  squote( paste( this$pub_year, this$pub_month, this$pub_day, sep = "-" ),
-            literal_type = obkms$parameters$literal_type$date )
+  this$publication_year = this$pub_year
+  this$publication_date = paste(this$pub_year, this$pub_month, this$pub_day, sep = "-")
 
   if ( in_nomenclature_heading ( node ) ) {
     # TODO really bad usage of parent.frame, needs fix
@@ -105,7 +104,52 @@ in_nomenclature_heading =
 
 
 
+#' Transform a TaxonomicNameUsage to a TaxonomicName
+#'
+#' @param TNU TaxonomicNameUsage
+#'
+#' @return TaxonomicName of the appropriate sub-class
+#'
+#' @export
+as.TaxonomicName.TaxonomicNameUsage = function(TNU) {
+  argument = list(id = lookup_TaxonomicName_id(TNU, root_id(TNU$node, TRUE), TRUE),
+                  kingdom = TNU$kingdom,
+                  phylum = TNU$phylum,
+                  class = TNU$class,
+                  order = TNU$order,
+                  family = TNU$family,
+                  genus = TNU$genus,
+                  subgenus = TNU$subgenus,
+                  species = TNU$species,
+                  subspecies = TNU$subspecies,
+                  verbatim_rank = TNU$verbatim_rank,
+                  rank = TNU$rank,
+                  taxonomic_status = TNU$taxonomic_status,
+                  authorship = TNU$authorship,
+                  secundum_literal = TNU$name_according_to_id,
+                  secundum = TNU$name_according_to)
+
+  if(TNU$TaxonomicName_type() == "TaxonomicConceptLabel") {
+    this = do.call(TaxonomicConceptLabel, argument)
+  }
+  else if(TNU$TaxonomicName_type() == "LatinName") {
+    # don't want the last two arguments as only applicable to TCL
+    this = do.call(LatinName, argument[1:14])
+  }
+  return(this)
+}
 
 
 
+#' Gets the Label of the Taxonomic Name Mentioned by the Taxonomic Name Usage
+#'
+#' @param x Taxonomic name usage.
+#'
+#' @return Character. The label of the mentioned name
+#' @export
+get_label.TaxonomicNameUsage = function(x) {
+  return(get_label_TaxonomicName( x$kingdom, x$phylum, x$class, x$order,
+                                  x$family, x$genus, x$subgenus, x$species, x$subspecies, x$authorship,
+                                  x$secundum_literal))
+}
 

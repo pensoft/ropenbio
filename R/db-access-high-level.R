@@ -84,7 +84,7 @@ get_nodeid = function( label = "", explicit_node_id = "", allow_multiple = FALSE
 #' @export
 lookup_id = function( label,
                       article_id = "?context",
-                      language = NULL,
+                      language,
                       resource_type = obkms$classes$Thing,
                       ignore_case = FALSE,
                       generate_on_fail = TRUE,
@@ -107,7 +107,13 @@ lookup_id = function( label,
         }
     }"
 
-  query = gsub( "%label", squote( label, language = language ), query  )
+  if(!missing(language)) {
+    query = gsub("%label", squote( label, language = language ), query)
+  }
+  else {
+    query = gsub("%label", squote(label), query)
+  }
+
   query = gsub( "%concept_type", resource_type$uri, query )
   query = gsub( "%context", article_id, query )
   if ( !is.na( in_scheme ) ) {
@@ -187,11 +193,14 @@ get_context_of = function ( doi ) {
 #' corresponding to the Latinized n name that TNU mentions.
 #'
 #' @param a_TaxonomicNameUsage
+#' @param article_id URI. The article (context) where the TNU is mentioned.
+#' @param generate_on_fail Logical. What do to do if everything else fails.
 #'
 #' @return Character. The URI of
 #'
 #' @export
-lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, generate_on_fail = TRUE) {
+lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on_fail = TRUE) {
+
 
   # First, we need a query.
   query = "
@@ -217,7 +226,7 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, generate_on_fail = TRUE
   "
 
   if ( has_meaningful_value(a_TaxonomicNameUsage$author) ) {
-    query2 = gsub( "%5", paste0("?id", " <http://rs.tdwg.org/dwc/terms/scientificNameAuthorship> ", a_TaxonomicNameUsage$authorship , "."), query  )
+    query2 = gsub( "%5", paste0("?id", " <http://rs.tdwg.org/dwc/terms/scientificNameAuthorship> ", squote(a_TaxonomicNameUsage$authorship) , "."), query  )
     can_do_query2 = TRUE
   }
   else{
@@ -229,8 +238,8 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, generate_on_fail = TRUE
 
   # 4 - taxonomic concept label
   if ( a_TaxonomicNameUsage$TaxonomicName_type() == "TaxonomicConceptLabel" ) {
-    query = gsub( "%4", paste0("?id", " <http://rs.tdwg.org/dwc/terms/nameAccordingToID> ", a_TaxonomicNameUsage$name_according_to_id, "."), query  )
-    query2 = gsub( "%4", paste0("?id", " <http://rs.tdwg.org/dwc/terms/nameAccordingToID> ", a_TaxonomicNameUsage$name_according_to_id, "."), query2  )
+    query = gsub( "%4", paste0("?id", " <http://rs.tdwg.org/dwc/terms/nameAccordingToID> ", squote(a_TaxonomicNameUsage$name_according_to_id), "."), query  )
+    query2 = gsub( "%4", paste0("?id", " <http://rs.tdwg.org/dwc/terms/nameAccordingToID> ", squote(a_TaxonomicNameUsage$name_according_to_id), "."), query2  )
   }
   else{
     query = gsub( "%4", "", query  )
@@ -243,8 +252,8 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, generate_on_fail = TRUE
 
   # replace 2 and 3 with epithets or empty
   if ( !is.na(a_TaxonomicNameUsage$subspecies) ) {
-    query = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraspecificEpithet> ", a_TaxonomicNameUsage$subspecies , "."), query  )
-    query2 = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraspecificEpithet> ", a_TaxonomicNameUsage$subspecies , "."), query2  )
+    query = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraspecificEpithet> ", squote(a_TaxonomicNameUsage$subspecies), "."), query  )
+    query2 = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraspecificEpithet> ", squote(a_TaxonomicNameUsage$subspecies), "."), query2  )
   }
   else {
     query = gsub( "%3", "", query  )
@@ -252,8 +261,8 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, generate_on_fail = TRUE
   }
 
   if ( !is.na(a_TaxonomicNameUsage$species) ) {
-    query = gsub( "%2", paste0("?id", " <http://rs.tdwg.org/dwc/terms/specificEpithet> ", a_TaxonomicNameUsage$species , "."), query  )
-    query2 = gsub( "%2", paste0("?id", " <http://rs.tdwg.org/dwc/terms/specificEpithet> ", a_TaxonomicNameUsage$species , "."), query  )
+    query = gsub( "%2", paste0("?id", " <http://rs.tdwg.org/dwc/terms/specificEpithet> ", squote(a_TaxonomicNameUsage$species), "."), query  )
+    query2 = gsub( "%2", paste0("?id", " <http://rs.tdwg.org/dwc/terms/specificEpithet> ", squote(a_TaxonomicNameUsage$species), "."), query  )
   }
   else {
     query = gsub( "%2", "", query  )
@@ -272,8 +281,8 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, generate_on_fail = TRUE
   i  = 7
   while( grepl("%1", query) && i > 0 ) {
     if ( !is.na(a_TaxonomicNameUsage[[senior_ranks[i]]]) ) {
-      query = gsub( "%1", paste0("?id", " dwc:", senior_ranks[i], " ", a_TaxonomicNameUsage[[senior_ranks[i]]] , "."), query  )
-      query2 = gsub( "%1", paste0("?id", " dwc:", senior_ranks[i], " ", a_TaxonomicNameUsage[[senior_ranks[i]]] , "."), query2  )
+      query = gsub( "%1", paste0("?id", " dwc:", senior_ranks[i], " ", squote(a_TaxonomicNameUsage[[senior_ranks[i]]]), "."), query  )
+      query2 = gsub( "%1", paste0("?id", " dwc:", senior_ranks[i], " ", squote(a_TaxonomicNameUsage[[senior_ranks[i]]]), "."), query2  )
     }
     i = i - 1
   }
@@ -320,7 +329,10 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, generate_on_fail = TRUE
 
   }
   else {
-    id = qname(paste0(strip_angle(obkms$prefixes$`_base`), uuid::UUIDgenerate()))
+    # if all has failed to lookup based on the label and the context
+    browser()
+    label = get_label(a_TaxonomicNameUsage)
+    id = lookup_id(label, article_id = qname(article_id), generate_on_fail = generate_on_fail)
   }
 
   return( id )

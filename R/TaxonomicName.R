@@ -28,6 +28,7 @@ LatinName = function(id, kingdom, phylum, class, order, family, genus, subgenus,
 
   class(this) = c("LatinName", "TaxonomicName")
   this$type = obkms$classes$LatinName$uri
+  this$label = get_label(this)
 
   return (this)
 }
@@ -81,6 +82,7 @@ TaxonomicConceptLabel = function(id, kingdom, phylum, class, order, family,
 
   class(this) = c("TaxonomicConceptLabel", class(this))
   this$type = obkms$classes$TaxonomicConceptLabel$uri
+  this$label = get_label(this)
 
   return(this)
 }
@@ -114,43 +116,6 @@ as.TaxonomicName = function (x, ...) {
 
 
 
-#' Transform a TaxonomicNameUsage to a TaxonomicName
-#'
-#' @param TNU TaxonomicNameUsage
-#'
-#' @return TaxonomicName of the appropriate sub-class
-#'
-#' @export
-as.TaxonomicName.TaxonomicNameUsage = function(TNU) {
-  argument = list(id = lookup_TaxonomicName_id(TNU),
-                  kingdom = TNU$kingdom,
-                  phylum = TNU$phylum,
-                  class = TNU$class,
-                  order = TNU$order,
-                  family = TNU$family,
-                  genus = TNU$genus,
-                  subgenus = TNU$subgenus,
-                  species = TNU$species,
-                  subspecies = TNU$subspecies,
-                  verbatim_rank = TNU$verbatim_rank,
-                  rank = TNU$rank,
-                  taxonomic_status = TNU$taxonomic_status,
-                  authorship = TNU$authorship,
-                  secundum_literal = TNU$name_according_to_id,
-                  secundum = TNU$name_according_to)
-
-  if(TNU$TaxonomicName_type() == "TaxonomicConceptLabel") {
-    this = do.call(TaxonomicConceptLabel, argument)
-  }
-  else if(TNU$TaxonomicName_type() == "LatinName") {
-    # don't want the last two arguments as only applicable to TCL
-    this = do.call(LatinName, argument[1:14])
-  }
-  return(this)
-}
-
-
-
 
 
 
@@ -168,4 +133,98 @@ print.TaxonomicName = function(obj) {
   {
     print(paste(n, "=", obj[[n]]))
   }
+}
+
+
+
+
+
+
+
+#' Gets the Label of a Latinized Name
+#'
+#' @param x Latininzed name (LatinName).
+#'
+#' @return Character. The label of the Latinized name.
+#'
+#' @export
+get_label.TaxonomicName = function(x) {
+  return(get_label_TaxonomicName( x$kingdom, x$phylum, x$class, x$order,
+            x$family, x$genus, x$subgenus, x$species, x$subspecies, x$authorship,
+            x$secundum_literal))
+}
+
+
+
+
+#' Get the Label (Monimial, Bionomial, or Trinomial) from Taxonomic Name Atoms
+#'
+#' @param kingdom
+#' @param phylum
+#' @param class
+#' @param order
+#' @param family
+#' @param genus
+#' @param subgenus
+#' @param species
+#' @param subspecies
+#' @param authorship
+#' @param secundum_literal
+#'
+#' @return the correct way to use the name
+#'
+#' @export
+get_label_TaxonomicName = function(kingdom, phylum, class, order,
+                         family, genus, subgenus, species, subspecies, authorship,
+                         secundum_literal) {
+  label = "%1 %2 %3 %4 %5 "
+  # do we have authorship?
+  if (has_meaningful_value(authorship)) {
+    label = gsub(pattern = "%4", replacement = authorship, label)
+  }
+  else {
+    label = gsub(pattern = "%4 ", replacement = "", label)
+  }
+
+  # 4 - taxonomic concept label
+  if (has_meaningful_value(secundum_literal)) {
+    label = gsub(pattern = "%5", replacement = paste("sec.", secundum_literal), label)
+  }
+  else{
+    label = gsub(pattern = "%5 ", replacement = "", label)
+  }
+
+  # replace 2 and 3 with epithets or empty
+  if (has_meaningful_value(subspecies)) {
+    label = gsub("%3", subspecies, label)
+  }
+  else {
+    label = gsub("%3 ", "", label )
+  }
+
+  if (has_meaningful_value(species)) {
+    label = gsub("%2", species, label)
+  }
+  else {
+    label = gsub("%2 ", "", label)
+  }
+
+  # replace 1 with the most senior taxon
+  senior_ranks = c("kingdom", "phylum", "class", "order", "family", "genus", "subgenus")
+
+  i  = 7
+  while(grepl("%1", label) && i > 0 ) {
+    if (has_meaningful_value(get(senior_ranks[i]))) {
+      label = gsub("%1", get(senior_ranks[i]), label)
+    }
+    i = i - 1
+  }
+
+  #just kill %1 if we didn't fid anything (could be the case if only infraspecific
+  #epithet is provided in the XML)
+  if (grepl("%1 ", label)) {
+    label = gsub("%1 ", "", label)
+  }
+  label = trimws(label)
+  return(label)
 }
