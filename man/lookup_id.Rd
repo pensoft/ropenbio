@@ -4,7 +4,7 @@
 \alias{lookup_id}
 \title{Lookup an Identifier (URI) for a Resource in OBKMS}
 \usage{
-lookup_id(label, article_id = "?context", language = NULL,
+lookup_id(label, article_id = "?context", language,
   resource_type = obkms$classes$Thing, ignore_case = FALSE,
   generate_on_fail = TRUE, trim = TRUE, show_query = FALSE,
   in_scheme = NA)

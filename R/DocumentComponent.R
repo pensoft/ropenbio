@@ -20,19 +20,26 @@
 #'
 DocumentComponent = function( node, atom_location, component_class )
 {
-  object = as.environment( as.list(find_literals( node, atom_location, quoted = FALSE ) ))
+  # sanity check
+  if (is.null(node)) {
+    return (NULL)
+  }
 
+  # Initialization
+  object = as.environment(as.list(find_literals(node, atom_location, quoted = FALSE)))
+  class( object ) = c(component_class, "DocumentComponent")
+
+  # private fields
   object$node = node
-
   object$id = get_or_set_obkms_id( node, fullname = TRUE)
   object$parent_id = parent_id( node, fullname = TRUE)
   object$root_id = root_id(node, fullname = TRUE)
+  object$language = list(semantic_code = xml2::xml_text( xml2::xml_find_first( x = node, "@xml:lang")))
 
-  object$type = strip_angle( paste0(strip_angle(obkms$prefixes$`_base`), component_class), reverse = TRUE)
+  # property fields
+  object$type = obkms$classes[[component_class]]$uri
 
-  class( object ) = c(component_class, "DocumentComponent")
-
-  return( object )
+  return(object)
 }
 
 

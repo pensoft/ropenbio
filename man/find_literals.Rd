@@ -4,12 +4,14 @@
 \alias{find_literals}
 \title{Finds the atoms in an xml node}
 \usage{
-find_literals(xml, x)
+find_literals(xml, x, quoted = FALSE)
 }
 \arguments{
 \item{xml}{the XML node}
 
 \item{x}{xpath expressions}
+
+\item{quoted}{if TRUE, will run squote with needed params on the arguments}
 }
 \value{
 a vector of atoms

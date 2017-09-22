@@ -177,7 +177,7 @@ get_label.TaxonomicName = function(x) {
 get_label_TaxonomicName = function(kingdom, phylum, class, order,
                          family, genus, subgenus, species, subspecies, authorship,
                          secundum_literal) {
-  label = "%1 %2 %3 %4 %5 "
+  label = "%1 %15 %2 %3 %4 %5 "
   # do we have authorship?
   if (has_meaningful_value(authorship)) {
     label = gsub(pattern = "%4", replacement = authorship, label)
@@ -207,6 +207,13 @@ get_label_TaxonomicName = function(kingdom, phylum, class, order,
   }
   else {
     label = gsub("%2 ", "", label)
+  }
+
+  if (has_meaningful_value(subgenus)) {
+    label = gsub("%15", paste0("(", species, ")"), label)
+  }
+  else {
+    label = gsub("%15 ", "", label)
   }
 
   # replace 1 with the most senior taxon

@@ -14,7 +14,7 @@ as.rdf = function( x ) {
 
   rdf = lapply( properties, function( p ) {
     lapply( x[[p]], function( value ) {
-      if(p == "publication_year") browser()
+
       if (has_meaningful_value(obkms$properties[[p]]$type) && obkms$properties[[p]]$type == "object") {
         triple2(qname(x$id), qname(obkms$properties[[p]]$uri), value)
       }

@@ -218,10 +218,11 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
   WHERE {
   ?id rdf:type %resource_type .
   %1
+  %15 # subgenus
   %2
-  %3
-  %4
-  %5
+  %3  # Infraspecific epithet
+  %4  # sec.
+  %5  # Name authorship
   }
   "
 
@@ -238,8 +239,8 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
 
   # 4 - taxonomic concept label
   if ( a_TaxonomicNameUsage$TaxonomicName_type() == "TaxonomicConceptLabel" ) {
-    query = gsub( "%4", paste0("?id", " <http://rs.tdwg.org/dwc/terms/nameAccordingToID> ", squote(a_TaxonomicNameUsage$name_according_to_id), "."), query  )
-    query2 = gsub( "%4", paste0("?id", " <http://rs.tdwg.org/dwc/terms/nameAccordingToID> ", squote(a_TaxonomicNameUsage$name_according_to_id), "."), query2  )
+    query = gsub( "%4", paste0("?id", " :nameAccordingToId ", squote(a_TaxonomicNameUsage$name_according_to_id), "."), query  )
+    query2 = gsub( "%4", paste0("?id", " :nameAccordingToId ", squote(a_TaxonomicNameUsage$name_according_to_id), "."), query2  )
   }
   else{
     query = gsub( "%4", "", query  )
@@ -252,12 +253,13 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
 
   # replace 2 and 3 with epithets or empty
   if ( !is.na(a_TaxonomicNameUsage$subspecies) ) {
-    query = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraspecificEpithet> ", squote(a_TaxonomicNameUsage$subspecies), "."), query  )
-    query2 = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraspecificEpithet> ", squote(a_TaxonomicNameUsage$subspecies), "."), query2  )
+    query = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraSpecificEpithet> ", squote(a_TaxonomicNameUsage$subspecies), "."), query  )
+    query2 = gsub( "%3", paste0("?id", " <http://rs.tdwg.org/dwc/terms/infraSpecificEpithet> ", squote(a_TaxonomicNameUsage$subspecies), "."), query2  )
   }
   else {
-    query = gsub( "%3", "", query  )
-    query2 = gsub( "%3", "", query  )
+    # this is needed because we don't want to get lower-level taxa matches if not specified
+    query = gsub( "%3", "FILTER NOT EXISTS{ ?id <http://rs.tdwg.org/dwc/terms/infraSpecificEpithet> ?x .}", query  )
+    query2 = gsub( "%3", "FILTER NOT EXISTS{ ?id <http://rs.tdwg.org/dwc/terms/infraSpecificEpithet> ?x .}", query  )
   }
 
   if ( !is.na(a_TaxonomicNameUsage$species) ) {
@@ -265,8 +267,17 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
     query2 = gsub( "%2", paste0("?id", " <http://rs.tdwg.org/dwc/terms/specificEpithet> ", squote(a_TaxonomicNameUsage$species), "."), query  )
   }
   else {
-    query = gsub( "%2", "", query  )
-    query2 = gsub( "%2", "", query  )
+    query = gsub( "%2", "FILTER NOT EXISTS{ ?id <http://rs.tdwg.org/dwc/terms/specificEpithet> ?x .}", query  )
+    query2 = gsub( "%2", "FILTER NOT EXISTS{ ?id <http://rs.tdwg.org/dwc/terms/specificEpithet> ?x .}", query  )
+  }
+
+  if ( !is.na(a_TaxonomicNameUsage$subgenus) ) {
+    query = gsub( "%15", paste0("?id", " <http://rs.tdwg.org/dwc/terms/subgenus> ", squote(a_TaxonomicNameUsage$subgenus), "."), query  )
+    query2 = gsub( "%15", paste0("?id", " <http://rs.tdwg.org/dwc/terms/subgenus> ", squote(a_TaxonomicNameUsage$subgenus), "."), query  )
+  }
+  else {
+    query = gsub( "%15", "FILTER NOT EXISTS{ ?id <http://rs.tdwg.org/dwc/terms/subgenus> ?x .}", query  )
+    query2 = gsub( "%15", "FILTER NOT EXISTS{ ?id <http://rs.tdwg.org/dwc/terms/subgenus> ?x .}", query  )
   }
 
   # replace 1 with the most senior taxon
@@ -330,7 +341,7 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
   }
   else {
     # if all has failed to lookup based on the label and the context
-    browser()
+
     label = get_label(a_TaxonomicNameUsage)
     id = lookup_id(label, article_id = qname(article_id), generate_on_fail = generate_on_fail)
   }
@@ -376,7 +387,7 @@ lookup_TaxonomicConcept_id = function(tcl_id) {
     log_event ( "successful lookup", "TaxonomicConceptLabel_id", id )
   }
   else {
-    id = NA
+    id = qname( paste0( strip_angle( obkms$prefixes$`_base` ), uuid::UUIDgenerate( ) ) )
   }
   return( id )
 }

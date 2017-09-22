@@ -2,18 +2,18 @@
 % Please edit documentation in R/serialization-rdf.R
 \name{squote}
 \alias{squote}
-\title{Properly Quote Literals for use in RDF Serializations}
+\title{Quote Characters to USE in RDF Serializations}
 \usage{
-squote(literal, language, literal_type = "")
+squote(literal, language, literal_type)
 }
 \arguments{
-\item{literal}{the string that needs to be quoted}
+\item{literal}{Character. The string that needs to be quoted.}
 
-\item{language}{the language (needs to be a list having the element `semantic_code`)
-If left missing or NA, no language will be assumed.}
+\item{language}{Character with the language code or list with the code as
+attribute named `semantic_code`}
 
-\item{literal_type}{for non-strings such as year, date, etc. (one of the names in
-obkms$parameters$literal_type). The default is empty, i.e. string.}
+\item{literal_type}{Character. The type. Look at the webpage in the description.
+If string, just leave missing.}
 }
 \description{
 Information:

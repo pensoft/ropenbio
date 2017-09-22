@@ -38,6 +38,7 @@ xml2rdf = function( resource_locator,
   # Call the top-level extractors depending on the type
   if ( resource_format == "TAXPUB" ) {
     triples = TaxonomicArticle_extractor( xml ) # will return a triples object (TODO S3 or S4??)
+
     # serialize
     serialization = c()
     if (serialization_format == "Turtle") {

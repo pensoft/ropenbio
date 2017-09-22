@@ -102,10 +102,7 @@ TaxonomicArticle_extractor =
 
   # TODO maybe add publisher role
 
-  triples[["front"]] = front_matter_extractor( article_component$front_matter[[1]],
-                          article_component$title[[1]],
-                          article_component$abstract[[1]],
-                          metadata )
+  triples[["front"]] = FrontMatter_extractor(article_component$front_matter, metadata )
 
   triples[["TNU"]] = unlist( lapply ( article_component$taxonomic_name_usage,
     function ( TNU ) {
@@ -229,12 +226,13 @@ author_extractor = function ( paper_id ,
 #' @return triples of RDF
 TaxonomicNameUsage_extractor = function (comp, metadata)
 {
-  browser()
+
   a_TaxonomicNameUsage = TaxonomicNameUsage( comp$xml )
 
+  # TODO add subgenus functionality
   # construct a taxonomic name from the taxonomic name usage
   #taxonomic_name = TaxonomicName( TNU )
-  if(a_TaxonomicNameUsage$TaxonomicName_type() == "TaxonomicConceptLabel") {
+  if(has_meaningful_value(a_TaxonomicNameUsage$subspecies)) {
 
   }
   a_TaxonomicName = as.TaxonomicName(a_TaxonomicNameUsage)
@@ -252,16 +250,15 @@ TaxonomicNameUsage_extractor = function (comp, metadata)
   )
 
   #TODO RDF must be submitted immediately because next stage depends on it
-  browser()
+
 
 
   rdf = unlist(rdf, recursive = FALSE)
   serialization = c(turtle_prepend_prefixes(), triples2turtle2(metadata$article_id, rdf))
   result = add_data(obkms$server_access_options, obkms$server_access_options$repository, serialization)
 
-  cat(".")
 
-  return(unlist(rdf, recursive = FALSE))
+  return(rdf)
 }
 
 
@@ -280,32 +277,71 @@ TaxonomicNameUsage_extractor = function (comp, metadata)
 #'
 #' @return RDF
 Treatment_extractor = function(node, xml_schema) {
-  browser()
+
   a_Treatment = Treatment(node$xml)
   a_TaxonomicNameUsage_node = xml2::xml_find_first(node$xml,
                     obkms$xpath[[xml_schema]]$Treatment$first_taxonomic_name_usage)
   a_TaxonomicNameUsage = TaxonomicNameUsage(a_TaxonomicNameUsage_node)
-  a_TaxonomicConceptLabel_id = lookup_TaxonomicName_id(a_TaxonomicNameUsage) # don't generate?
+  a_TaxonomicConceptLabel_id = lookup_TaxonomicName_id(a_TaxonomicNameUsage, a_Treatment$root_id) # don't generate?
   a_TaxonomicConcept_id = lookup_TaxonomicConcept_id(a_TaxonomicConceptLabel_id)
+
+  # need to getthe nodes that are in the nomenclatural section
+  b_TaxonomicNameUsage_nodes = xml2::xml_find_all(node$xml, obkms$xpath[[xml_schema]]$Treatment$nomenclatural_TNU)
+
+  # for each of the XML nodes, we need to extract the TNU and get the ID of the name the TNU is pointing at
+  b_TaxonomicName_id = sapply(b_TaxonomicNameUsage_nodes, function(node) {
+    lookup_TaxonomicName_id(TaxonomicNameUsage(node), a_Treatment$root_id)
+  })
+
+
+  rdf = list()
+
+  #Now we want to say that id of the TCL is related to the IDs of the
+  rdf$related_names = lapply(b_TaxonomicName_id, function(x) {
+    triple2(qname(a_TaxonomicConceptLabel_id), qname(obkms$properties$related_name$uri), qname(x))
+  })
 
   rdf$treatment = as.rdf(a_Treatment)
   rdf$connect = list(
     triple2(qname(a_Treatment$parent_id), qname(obkms$properties$contains$uri), qname(a_Treatment$id)),
     triple2(qname(a_Treatment$id), qname(obkms$properties$mentions$uri), qname(a_TaxonomicConceptLabel_id)),
-    triple2(qname(a_TaxonomicConcept_id), qname(obkms$properties$taxonomicConceptLabek$uri), qname(a_TaxonomicConceptLabel_id)),
+    triple2(qname(a_TaxonomicConcept_id), qname(obkms$properties$taxonomicConceptLabek$uri), qname(a_TaxonomicConceptLabel_id))
   )
 
+  rdf = unlist(rdf, recursive = FALSE)
   return(rdf)
 }
 
 
 
 
-#' Extracts a TaxonomicNameUsage XML Node from a Treatment Node
-#'
-#' @param node XML node. Contains a treamtnet.
-#'
-#' @return XML node containing the TaxonomicNameUsage in the nomenclature heading.
-extract_TaxonomicNameUsage_node_from_Treatment_node = function(node) {
 
+#' Front Matter Extractor
+#'
+#' Extracts the front matter as RDF from a list of components
+#'
+#' @param comp A list of components containing the front matter.
+#' @param article a journal article object
+#'
+#' @return triples
+#'
+FrontMatter_extractor = function (comp, article)
+{
+
+  comp = unlist(comp, recursive = FALSE)
+
+  # process the front matter itself
+  front_matter = DocumentComponent(comp$xml, obkms$xpath$taxpub$FrontMatter, c("FrontMatter"))
+
+  # find sub-components
+  component_xpath = list(Abstract = obkms$xpath$taxpub$Abstract$character_content,
+                         Title = obkms$xpath$taxpub$Title$character_content)
+  subcomponent = document_components(comp$xml, component_xpath)
+
+  title        = DocumentComponent(unlist(subcomponent$Title, recursive = FALSE)$xml, obkms$xpath$taxpub$Title, "Title" )
+
+  abstract     = DocumentComponent(unlist(subcomponent$Abstract, recursive = FALSE)$xml, obkms$xpath$taxpub$Abstract, "Abstract")
+
+  return(c(as.rdf(front_matter), as.rdf(title), as.rdf(abstract)))
 }
+

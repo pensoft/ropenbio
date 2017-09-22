@@ -1,5 +1,9 @@
 # Object Properties
 
+related_name:
+  uri: <http://openbiodiv.net/relatedName>
+  type: object
+
 mentions:
   uri: <http://proton.semanticweb.org/protonkm#mentions>
   domain_includes: <http://openbiodiv.net/TaxonomicNameUsage>
@@ -182,9 +186,17 @@ genus:
   uri: http://rs.tdwg.org/dwc/terms/genus
   comment: has genus
 
+subgenus:
+  uri: http://rs.tdwg.org/dwc/terms/subgenus
+  comment: has subgenus
+
 species:
   uri: http://rs.tdwg.org/dwc/terms/specificEpithet
   comment: has specific epithet
+
+subspecies:
+  uri: http://rs.tdwg.org/dwc/terms/infraSpecificEpithet
+  comment: has infra-specific epithet
 
 order:
   uri: http://rs.tdwg.org/dwc/terms/order
