@@ -26,12 +26,12 @@ Treatment:
   nomenclatural_TNU: ./tp:nomenclature/tp:nomenclature-citation-list//tp:taxon-name
 
 FrontMatter:
-  character_content: /article/front
+  character_content: .
 
 Title:
-  character_content: /article/front/article-meta/title-group/article-title
+  character_content: .
 
 Abstract:
-  character_content: /article/front/article-meta/abstract
+  character_content: .
 
 

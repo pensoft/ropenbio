@@ -124,6 +124,7 @@ init_env = function ( server_access_options,
   obkms$vocabulary$rank = read.csv( rank_db )
   obkms$vocabulary$status = yaml::yaml.load_file( status_db )
 
+
   obkms$config = list()
   obkms$config['literals_db_xpath'] = literals_db_xpath
   obkms$config['non_literals_db_xpath'] = non_literals_db_xpath
@@ -136,6 +137,7 @@ init_env = function ( server_access_options,
   obkms$xml_source = xml_source
   obkms$xml_type = xml_type
 
+  obkms$xdoco = yaml::yaml.load_file( obkms$config$non_literals_db_xpath )
 
   # options to be used with the xml2::read_xml funciton
   obkms$xml_options = c()

@@ -327,21 +327,27 @@ Treatment_extractor = function(node, xml_schema) {
 #'
 FrontMatter_extractor = function (comp, article)
 {
-
   comp = unlist(comp, recursive = FALSE)
 
   # process the front matter itself
   front_matter = DocumentComponent(comp$xml, obkms$xpath$taxpub$FrontMatter, c("FrontMatter"))
 
   # find sub-components
-  component_xpath = list(Abstract = obkms$xpath$taxpub$Abstract$character_content,
-                         Title = obkms$xpath$taxpub$Title$character_content)
+  # this needs to use the absolute paths again
+  component_xpath = list(Abstract = obkms$xdoco$Abstract,
+                         Title = obkms$xdoco$Title)
   subcomponent = document_components(comp$xml, component_xpath)
 
   title        = DocumentComponent(unlist(subcomponent$Title, recursive = FALSE)$xml, obkms$xpath$taxpub$Title, "Title" )
 
-  abstract     = DocumentComponent(unlist(subcomponent$Abstract, recursive = FALSE)$xml, obkms$xpath$taxpub$Abstract, "Abstract")
+  # potentiall multiple abstracts in different languages
+  abstract     = lapply(subcomponent$Abstract, function(a) {
+    DocumentComponent(a$xml, obkms$xpath$taxpub$Abstract, "Abstract")
+  })
 
-  return(c(as.rdf(front_matter), as.rdf(title), as.rdf(abstract)))
+
+  rdf = list(as.rdf(front_matter), as.rdf(title), unlist(lapply(abstract, as.rdf), recursive =FALSE))
+
+  return(unlist(rdf, recursive = FALSE))
 }
 

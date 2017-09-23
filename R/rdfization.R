@@ -10,8 +10,8 @@
 #' @return RDF
 #' @export
 as.rdf = function( x ) {
-  properties = setdiff( names( x ), c( "this", "id", "parent_id", "node" ) )
-
+  properties = setdiff( names( x ), c( "this", "id", "parent_id", "node", "language", "root_id" ) )
+  language = x$language
   rdf = lapply( properties, function( p ) {
     lapply( x[[p]], function( value ) {
 
@@ -24,7 +24,7 @@ as.rdf = function( x ) {
       else {
         # just a string
         # TODO add language processing
-        triple2(qname(x$id), qname(obkms$properties[[p]]$uri), squote(value))
+        triple2(qname(x$id), qname(obkms$properties[[p]]$uri), squote(value,  language = language))
       }
     })
   })
