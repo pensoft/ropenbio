@@ -21,7 +21,7 @@
 #'
 #' @export
 LatinName = function(id, kingdom, phylum, class, order, family, genus, subgenus,
-           species, subspecies, verbatim_rank, rank, taxonomic_status, authorship)
+           species, subspecies, taxonomic_rank, taxonomic_status, verbatim_rank, verbatim_status, authorship)
 {
   # get this environment
   this = environment()
@@ -69,13 +69,12 @@ LatinName = function(id, kingdom, phylum, class, order, family, genus, subgenus,
 #' @export
 TaxonomicConceptLabel = function(id, kingdom, phylum, class, order, family,
                                  genus, subgenus, species, subspecies,
-                                 verbatim_rank, rank, taxonomic_status, authorship,
+                                 taxonomic_rank, taxonomic_status, verbatim_rank, verbatim_status, authorship,
                                  secundum_literal, secundum)
 {
-
+  # TODO : bad call based on positions!!!
   this = LatinName(id, kingdom, phylum, class, order, family, genus,
-                   subgenus, species, subspecies, verbatim_rank,
-                   rank, taxonomic_status, authorship)
+                   subgenus, species, subspecies,  taxonomic_rank, taxonomic_status, verbatim_rank, verbatim_status,  authorship)
 
   this$secundum_literal = secundum_literal
   this$secundum = secundum

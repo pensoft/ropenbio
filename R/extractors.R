@@ -229,13 +229,18 @@ TaxonomicNameUsage_extractor = function (comp, metadata)
 
   a_TaxonomicNameUsage = TaxonomicNameUsage( comp$xml )
 
+
   # TODO add subgenus functionality
   # construct a taxonomic name from the taxonomic name usage
   #taxonomic_name = TaxonomicName( TNU )
-  if(has_meaningful_value(a_TaxonomicNameUsage$subspecies)) {
 
-  }
+  # TODO: probably need to include name parts that are not DwC compatible as part of at least the label
   a_TaxonomicName = as.TaxonomicName(a_TaxonomicNameUsage)
+
+  if(length(lookup_TaxonomicName_id(a_TaxonomicNameUsage, a_TaxonomicNameUsage$root_id)) > 1) {
+    browser()
+    stop("multiple taxonomic names per name usage")
+  }
 
   rdf = list() # TODO preallocate it
 

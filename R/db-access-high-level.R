@@ -192,6 +192,8 @@ get_context_of = function ( doi ) {
 #' For the given TNU, locate (or create if non-existant) an URI in the system,
 #' corresponding to the Latinized n name that TNU mentions.
 #'
+#' TODO This function is overly complex, needs simplification
+#'
 #' @param a_TaxonomicNameUsage
 #' @param article_id URI. The article (context) where the TNU is mentioned.
 #' @param generate_on_fail Logical. What do to do if everything else fails.
@@ -201,6 +203,8 @@ get_context_of = function ( doi ) {
 #' @export
 lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on_fail = TRUE) {
 
+  # this will remain FALSE if we cannot do any sensible substititons
+  valid = FALSE
 
   # First, we need a query.
   query = "
@@ -208,6 +212,7 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
   WHERE {
   ?id rdf:type %resource_type .
   %1
+  %15
   %2
   %3
   %4
@@ -294,56 +299,57 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
     if ( !is.na(a_TaxonomicNameUsage[[senior_ranks[i]]]) ) {
       query = gsub( "%1", paste0("?id", " dwc:", senior_ranks[i], " ", squote(a_TaxonomicNameUsage[[senior_ranks[i]]]), "."), query  )
       query2 = gsub( "%1", paste0("?id", " dwc:", senior_ranks[i], " ", squote(a_TaxonomicNameUsage[[senior_ranks[i]]]), "."), query2  )
+      valid = TRUE
     }
     i = i - 1
   }
 
-  #just kill %1 if we didn't fid anything (could be the case if only infraspecific
-  #epithet is provided in the XML)
-  if (grepl("%1", query)) {
-    query = gsub( "%1", "", query )
-  }
-  if (grepl("%1", query2)) {
-    query2 = gsub( "%1", "", query2 )
-  }
 
-  query = c( turtle_prepend_prefixes(t = "SPARQL"), query )
-  query2 = c( turtle_prepend_prefixes(t = "SPARQL"), query2 )
-
-  # execute query...
-
-  query = do.call ( paste0, as.list(query))
-  query2 = do.call ( paste0, as.list(query2))
-
-  res = rdf4jr::POST_query( obkms$server_access_options , obkms$server_access_options$repository, query, "CSV" )
-  res2 = rdf4jr::POST_query( obkms$server_access_options , obkms$server_access_options$repository, query2, "CSV" )
-
-  if ( is.data.frame( res ) && nrow ( res ) == 1 )
-  {
-    id = res$id[1]
-    log_event ( "successful lookup", "TaxonomicName_id", id )
-
-  }
-  else if(  is.data.frame( res2 ) && nrow ( res2 ) == 1 ) {
-    id = res2$id[1]
-  }
-  else if ( is.data.frame( res2 ) && nrow ( res2 ) > 1 )
-  {
-    id = res$id
-    log_event ( "successful lookup", "TaxonomicName_id", id )
-
-  }
-  else if ( is.data.frame( res ) && nrow ( res ) > 1 )
-  {
-    id = res$id
-    log_event ( "successful lookup", "TaxonomicName_id", id )
-
+  #if it is impossible to do a valid query, just look up by label
+  if(!valid) {
+    return(NULL)
+    # we were unable to obtain meaningful information
+    # TODO use the name parts to at least construct a label
   }
   else {
-    # if all has failed to lookup based on the label and the context
+    query = c( turtle_prepend_prefixes(t = "SPARQL"), query )
+    query2 = c( turtle_prepend_prefixes(t = "SPARQL"), query2 )
 
-    label = get_label(a_TaxonomicNameUsage)
-    id = lookup_id(label, article_id = qname(article_id), generate_on_fail = generate_on_fail)
+    # execute query...
+
+    query = do.call ( paste0, as.list(query))
+    query2 = do.call ( paste0, as.list(query2))
+
+    res = rdf4jr::POST_query( obkms$server_access_options , obkms$server_access_options$repository, query, "CSV" )
+    res2 = rdf4jr::POST_query( obkms$server_access_options , obkms$server_access_options$repository, query2, "CSV" )
+
+    if ( is.data.frame( res ) && nrow ( res ) == 1 )
+    {
+      id = res$id[1]
+      log_event ( "successful lookup", "TaxonomicName_id", id )
+
+    }
+    else if(  is.data.frame( res2 ) && nrow ( res2 ) == 1 ) {
+      id = res2$id[1]
+    }
+    else if ( is.data.frame( res2 ) && nrow ( res2 ) > 1 )
+    {
+      id = res$id
+      log_event ( "successful lookup", "TaxonomicName_id", id )
+
+    }
+    else if ( is.data.frame( res ) && nrow ( res ) > 1 )
+    {
+      id = res$id
+      log_event ( "successful lookup", "TaxonomicName_id", id )
+
+    }
+    else {
+      # if all has failed to lookup based on the label and the context
+
+      label = get_label(a_TaxonomicNameUsage)
+      id = lookup_id(label, article_id = qname(article_id), generate_on_fail = generate_on_fail)
+    }
   }
 
   return( id )

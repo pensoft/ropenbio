@@ -114,5 +114,8 @@ LatinName:
 TaxonomicConceptLabel:
   uri: <http://openbiodiv.net/TaxonomicConceptLabel>
 
+TaxonomicNameUsage:
+  uri: <http://openbiodiv.net/TaxonomicNameUsage>
+
 Treatment:
   uri: <http://openbiodiv.net/Treatment>

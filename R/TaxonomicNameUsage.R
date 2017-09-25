@@ -14,8 +14,8 @@ TaxonomicNameUsage = function(node) {
                            "TaxonomicNameUsage")
 
   # normalize rank and status (verbatim rank is kept)
-  this$taxonomic_rank = taxonomic_rank( this$verbatim_rank )
-  this$taxonomic_status = taxonomic_status( this$taxonomic_status )
+  this$taxonomic_rank = taxonomic_rank(this$verbatim_rank)
+  this$taxonomic_status = taxonomic_status(this$verbatim_status)
 
   # add date, same as the metadata
   this$publication_year = this$pub_year
@@ -123,7 +123,8 @@ as.TaxonomicName.TaxonomicNameUsage = function(TNU) {
                   species = TNU$species,
                   subspecies = TNU$subspecies,
                   verbatim_rank = TNU$verbatim_rank,
-                  rank = TNU$rank,
+                  verbatim_status = TNU$verbatim_status,
+                  taxonomic_rank = TNU$taxonomic_rank,
                   taxonomic_status = TNU$taxonomic_status,
                   authorship = TNU$authorship,
                   secundum_literal = TNU$name_according_to_id,

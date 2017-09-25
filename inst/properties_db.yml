@@ -1,4 +1,4 @@
-# Object Properties
+# Properties of TaxonomicName and TaxonomicNameUsage
 
 related_name:
   uri: <http://openbiodiv.net/relatedName>
@@ -178,9 +178,28 @@ scientific_name:
   uri: http://rs.tdwg.org/dwc/iri/scientificName
   comment: has scientific name
 
-rank:
-  uri: http://rs.tdwg.org/dwc/terms/taxonRank
+# TaxonomicName and TaxonomicNameUsage properties
+# TODO split this property in two parts (object and literal)
+taxonomic_rank:
+  uri: http://rs.tdwg.org/dwc/iri/taxonRank
   comment: has taxonomic rank
+  type: object
+
+taxonomic_status:
+  uri: http://rs.tdwg.org/dwc/iri/taxonomicStatus
+  comment: has taxonomic status
+  type: object
+
+verbatim_rank:
+  uri:  http://rs.tdwg.org/dwc/terms/verbatimTaxonRank
+  comment: rank
+
+
+verbatim_status:
+  uri: http://rs.tdwg.org/dwc/terms/taxonomicStatus
+  comment: status
+
+
 
 genus:
   uri: http://rs.tdwg.org/dwc/terms/genus

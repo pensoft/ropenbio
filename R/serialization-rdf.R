@@ -127,6 +127,11 @@ squote = function (literal, language, literal_type)
     #Literal is malformed, returning NULL
     return (NULL)
   }
+  # TODO: undo this "hack"
+
+  if(length(literal) > 1) {
+    literal = literal[1]
+  }
 
   # For compatibility
   if (!missing(language) && is.list(language)) {

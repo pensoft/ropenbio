@@ -11,7 +11,7 @@ TaxonomicNameUsage:
   verbatim_rank: ./tp:taxon-name-part[last()]/@taxon-name-part-type
   external_taxonomic_name_id: ./object-id
   authorship: ./following-sibling::tp:taxon-authority | ../following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type="authority"]
-  taxonomic_status: ./following-sibling::tp:taxon-status | ../following-sibling::tp:taxon-authority
+  verbatim_status: ./following-sibling::tp:taxon-status | ../following-sibling::tp:taxon-authority
 
   genus.reg: ./tp:taxon-name-part[@taxon-name-part-type="genus" or @taxon-name-part-type="Genus" or @taxon-name-part-type="genera" or @taxon-name-part-type="Genera"]/@reg
   pub_year: /article/front/article-meta/pub-date/year

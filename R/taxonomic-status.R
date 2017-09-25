@@ -9,7 +9,6 @@
 
 taxonomic_status = function ( verbatim_status ) {
   # normalize the verbatim_rank
-  verbatim_status = gsub("[[:punct:]]", " ", verbatim_status)
   verbatim_status = trimws( tolower( verbatim_status ) )
 
   status_check = as.logical(  lapply( obkms$vocabulary$status, function (status ) {
@@ -28,7 +27,7 @@ taxonomic_status = function ( verbatim_status ) {
 
     class(status) = c( class(status), "TaxonomicStatus", "VocabularyItem" )
   }
-  else status = verbatim_status
+  else status = NA
 
   return(status)
 }
