@@ -226,27 +226,15 @@ author_extractor = function ( paper_id ,
 #' @return triples of RDF
 TaxonomicNameUsage_extractor = function (comp, metadata)
 {
-
+  browser()
   a_TaxonomicNameUsage = TaxonomicNameUsage( comp$xml )
-
-
-  # TODO add subgenus functionality
-  # construct a taxonomic name from the taxonomic name usage
-  #taxonomic_name = TaxonomicName( TNU )
-
-  # TODO: probably need to include name parts that are not DwC compatible as part of at least the label
   a_TaxonomicName = as.TaxonomicName(a_TaxonomicNameUsage)
 
-  if(length(lookup_TaxonomicName_id(a_TaxonomicNameUsage, a_TaxonomicNameUsage$root_id)) > 1) {
-    browser()
-    stop("multiple taxonomic names per name usage")
-  }
+  rdf = list()
 
-  rdf = list() # TODO preallocate it
-
-  # this will convert the TNU itself to
   rdf$TNU = as.rdf(a_TaxonomicNameUsage)
-  rdf$TNU_connect = list(
+  # potentially may be connected to multiple names
+  rdf$TNU_connect =   list(
     triple2(qname(a_TaxonomicNameUsage$parent_id), qname(obkms$properties$contains$uri), qname(a_TaxonomicNameUsage$id))
   )
   rdf$name = as.rdf(a_TaxonomicName)
@@ -343,7 +331,11 @@ FrontMatter_extractor = function (comp, article)
                          Title = obkms$xdoco$Title)
   subcomponent = document_components(comp$xml, component_xpath)
 
+
+
   title        = DocumentComponent(unlist(subcomponent$Title, recursive = FALSE)$xml, obkms$xpath$taxpub$Title, "Title" )
+
+  contains = list(triple2(qname(front_matter$id), qname(obkms$properties$contains$uri), qname(title$id)))
 
   # potentiall multiple abstracts in different languages
   abstract     = lapply(subcomponent$Abstract, function(a) {
@@ -351,8 +343,15 @@ FrontMatter_extractor = function (comp, article)
   })
 
 
-  rdf = list(as.rdf(front_matter), as.rdf(title), unlist(lapply(abstract, as.rdf), recursive =FALSE))
+  contains = c(
+    list(triple2(qname(front_matter$id), qname(obkms$properties$contains$uri), qname(title$id))),
+    lapply(abstract, function(a) {
+    triple2(qname(front_matter$id), qname(obkms$properties$contains$uri), qname(a$id))
+  }))
+  #containment
 
-  return(unlist(rdf, recursive = FALSE))
+  rdf = c(as.rdf(front_matter), as.rdf(title), unlist(lapply(abstract, as.rdf), recursive = FALSE))
+
+  return(c(rdf, contains))
 }
 

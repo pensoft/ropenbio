@@ -11,7 +11,7 @@ mentions:
   comments: comments document components that mention something to the thing that they mention
 
 exact_match:
-  uri: <http://www.w3.org/2008/05/skos#exactMatch>
+  uri: <http://www.w3.org/2008/05/skos#exactMatch>auhhor
   comment: exact match between two concepts
 
 belongs_to_scheme:
@@ -123,6 +123,7 @@ role_type:
   comment: has role type
 
 
+
 # Document properties
 
 character_content:
@@ -178,8 +179,17 @@ scientific_name:
   uri: http://rs.tdwg.org/dwc/iri/scientificName
   comment: has scientific name
 
-# TaxonomicName and TaxonomicNameUsage properties
-# TODO split this property in two parts (object and literal)
+
+
+
+
+
+
+# TaxonomicName
+
+authorship:
+  uri: http://rs.tdwg.org/dwc/terms/scientificNameAuthorship
+
 taxonomic_rank:
   uri: http://rs.tdwg.org/dwc/iri/taxonRank
   comment: has taxonomic rank
@@ -194,7 +204,6 @@ verbatim_rank:
   uri:  http://rs.tdwg.org/dwc/terms/verbatimTaxonRank
   comment: rank
 
-
 verbatim_status:
   uri: http://rs.tdwg.org/dwc/terms/taxonomicStatus
   comment: status
@@ -205,6 +214,7 @@ genus:
   uri: http://rs.tdwg.org/dwc/terms/genus
   comment: has genus
 
+# TODO: check this with TDWG DwC terms
 subgenus:
   uri: http://rs.tdwg.org/dwc/terms/subgenus
   comment: has subgenus

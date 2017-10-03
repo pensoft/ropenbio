@@ -206,7 +206,7 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
   # this will remain FALSE if we cannot do any sensible substititons
   valid = FALSE
 
-  # First, we need a query.
+  # First, we need a query.  TODO: figure out how to simplify this with only 1 query
   query = "
   SELECT DISTINCT ?id
   WHERE {
@@ -248,8 +248,9 @@ lookup_TaxonomicName_id = function(a_TaxonomicNameUsage, article_id, generate_on
     query2 = gsub( "%4", paste0("?id", " :nameAccordingToId ", squote(a_TaxonomicNameUsage$name_according_to_id), "."), query2  )
   }
   else{
-    query = gsub( "%4", "", query  )
-    query2 = gsub( "%4", "", query2  )
+    # Here we are actually forcing to not look up taxonomic concept labels! TODO analyze
+    query = gsub( "%4", "FILTER NOT EXISTS{ ?id :nameAccordingToId ?x .}", query  )
+    query2 = gsub( "%4", "FILTER NOT EXISTS{ ?id :nameAccordingToId ?x .}", query2  )
   }
 
   # replace %resource_type (i.e. a Latinized name or a taxonomic c. label)

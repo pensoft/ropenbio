@@ -36,7 +36,7 @@ TaxonomicNameUsage = function(node) {
 
   # Does the TNU mention a simple Latin name or a taxonomic concept label?
   this$TaxonomicName_type = function() {
-    if ( !is.null ( this$name_according_to  ) )
+    if ( !is.null(this$name_according_to) || !is.null(this$name_according_to_id))
       return( "TaxonomicConceptLabel" )
     else {
       return( "LatinName" )
@@ -123,9 +123,9 @@ as.TaxonomicName.TaxonomicNameUsage = function(TNU) {
                   species = TNU$species,
                   subspecies = TNU$subspecies,
                   verbatim_rank = TNU$verbatim_rank,
-                  verbatim_status = TNU$verbatim_status,
+                  verbatim_status = NA,
                   taxonomic_rank = TNU$taxonomic_rank,
-                  taxonomic_status = TNU$taxonomic_status,
+                  taxonomic_status = NA,
                   authorship = TNU$authorship,
                   secundum_literal = TNU$name_according_to_id,
                   secundum = TNU$name_according_to)

@@ -37,7 +37,12 @@ xml2rdf = function( resource_locator,
 
   # Call the top-level extractors depending on the type
   if ( resource_format == "TAXPUB" ) {
-    triples = TaxonomicArticle_extractor( xml ) # will return a triples object (TODO S3 or S4??)
+    # will return a triples object (TODO S3 or S4??)
+    triples = tryCatch(TaxonomicArticle_extractor(xml) ,
+                       error = function(e) {
+                         log_event(eventName = "Extractor Failure", callingFunction = "TaxonomicArticle_extractor")
+                         NULL
+                       })
 
     # serialize
     serialization = c()
