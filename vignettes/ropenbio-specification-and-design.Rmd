@@ -68,9 +68,9 @@ adds a list of triples to an existing RDF object
 adds a triple to an existing RDF object
 
 #### triple(subject, predicate, object)
-subject: an Identifier object
-predicate: an Indetifier object
-object: an Identifier or a Literal or an anonymous triple
+- subject: an Identifier object
+- predicate: an Indetifier object
+- object: an Identifier or a Literal or an anonymous triple
 
 #### anon_triple(predicate, object)
 
