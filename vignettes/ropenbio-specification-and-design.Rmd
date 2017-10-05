@@ -148,6 +148,8 @@ author_extractor(xml)
 
 ## Challenges
 
+What to consider before publishing the code? Is this design sensible for one library (two libraries)?
+
 ### Performance
 
 - code is slow: how best to profile?
