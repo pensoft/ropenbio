@@ -145,3 +145,19 @@ Extractors
 author_extractor(xml)
 # returns RDF
 ```
+
+## Challenges
+
+### Performance
+
+- profiling
+- analyzing a log
+
+### Robustness
+
+- often the XML is mangled and errors are thrown
+- use tryCatch
+
+### Complexity
+
+- code is too complex, hard time to find the correct function
