@@ -32,7 +32,7 @@ add_data("PREFIX owl: http://#... \n http://openbiodiv.net/sample_id a owl:Thing
 ```
 
 ### Function constructors to create custom queries
-#### query_function_constructor
+#### query_function_constructor(server_access_options, paramerized_query, prefix_list)
 ```
 lookup_pquery = "SELECT *
          WHERE {
