@@ -115,11 +115,13 @@ side effect: issue XML id attributes to these components
 #### parent_id(node)
 #### root_id(node)
 
-## Mechanism to read and parse files
+## Mechanism to read and parse files and a logging system
 
 #### xml2rdf(filename, upper_level_extractor)
 
 upper_level_extractor is a function that takes in a XML node and returns RDF
+
+#### log_event
 
 ## Extractors and Objects for OpenBiodiv
 
