@@ -62,12 +62,13 @@ Here `openbiodiv_lookup_id` will execute the query
 constucts an RDF object
 
 #### add_triples(rdf_obj, triples_list)
-adds a list of triples to an existing RDF object
+side effect: adds a list of triples to rdf_obj
 
-#### add_triplee(rdf_obj, triple)
-adds a triple to an existing RDF object
+#### add_triple(rdf_obj, triple)
+side effect: adds a triple to rdf_obj
 
 #### Triple(subject, predicate, object)
+Constructor
 - subject: an Identifier object
 - predicate: an Indetifier object
 - object: an Identifier or a Literal or an anonymous triple
