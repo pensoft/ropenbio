@@ -67,12 +67,12 @@ adds a list of triples to an existing RDF object
 #### add_triplee(rdf_obj, triple)
 adds a triple to an existing RDF object
 
-#### triple(subject, predicate, object)
+#### Triple(subject, predicate, object)
 - subject: an Identifier object
 - predicate: an Indetifier object
 - object: an Identifier or a Literal or an anonymous triple
 
-#### anon_triple(predicate, object)
+#### AnonymousTriple(predicate, object)
 
 #### seralize(rdf_obj)
 Creates a Turtle string
