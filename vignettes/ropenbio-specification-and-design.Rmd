@@ -10,6 +10,66 @@ vignette: >
 ---
 
 
+## Mechanism to interface with a triple store
+
+### Low-level access
+
+```
+# Create a "connection"
+s = ServerAccessOptions(url, authentication, repository_id, prefix_list, ...)
+
+# Get the protocal version
+get_protocol_version(s)
+
+# Submit a raw query via POST
+POST_query("SELECT * #...", s)
+
+# Submit a raw query via GET
+GET_query("SELECT * #...", s) 
+
+# Adds Seralized data to store
+add_data("PREFIX owl: http://#... \n http://openbiodiv.net/sample_id a owl:Thing.", s)
+```
+
+### Function constructors to create custom queries
+#### query_function_constructor
+```
+lookup_pquery = "SELECT *
+         WHERE {
+          ?id rdfs:label %label
+          }"
+
+openbiodiv_lookup_id = query_function_constructor(s, lookup_pquery)
+
+openbiodiv_lookup_id(label = "Teodor Georgiev") 
+```
+
+Here `openbiodiv_lookup_id` will execute the query 
+
+```
+"SELECT *
+ WHERE {
+       ?id rdfs:label "Teodor Georgiev"
+}
+```
+
+#### add_statements_function_constructor(server_access_options)
+#### clear_context_function_constuctor(server_access_options)
+
+## RDF
+
+#### RDF(triples_list)
+constucts an RDF object
+
+#### add_triples(rdf_obj, triples_list)
+adds a list of triples to an existing RDF object
+
+#### add_triplee(rdf_obj, triple)
+adds a triple to an existing RDF object
+ 
+#### seralize(rdf_obj, sao)
+
+
 
 ## More Examples
 
