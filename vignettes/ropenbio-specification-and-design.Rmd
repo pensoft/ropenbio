@@ -150,14 +150,14 @@ author_extractor(xml)
 
 ### Performance
 
-- profiling
-- analyzing a log
+- code is slow: how best to profile?
+
 
 ### Robustness
 
-- often the XML is mangled and errors are thrown
-- use tryCatch
+- graceful degradation: often the XML is mangled and errors are generated and execution stops: how to handle? use tryCatch?
+- correctness: how to analyze the correctness of the code? use the logging system?
 
 ### Complexity
 
-- code is too complex, hard time to find the correct function
+- code is too complex, hard time to find the correct function: is S4 a good solution?
