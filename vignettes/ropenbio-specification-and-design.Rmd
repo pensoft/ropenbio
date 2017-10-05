@@ -56,7 +56,7 @@ Here `openbiodiv_lookup_id` will execute the query
 #### add_statements_function_constructor(server_access_options)
 #### clear_context_function_constuctor(server_access_options)
 
-## RDF
+## Mechanism to create and serialize RDF
 
 #### RDF(triples_list)
 constucts an RDF object
@@ -66,20 +66,79 @@ adds a list of triples to an existing RDF object
 
 #### add_triplee(rdf_obj, triple)
 adds a triple to an existing RDF object
- 
-#### seralize(rdf_obj, sao)
 
+#### triple(subject, predicate, object)
+subject: an Identifier object
+predicate: an Indetifier object
+object: an Identifier or a Literal or an anonymous triple
 
+#### anon_triple(predicate, object)
 
-## More Examples
+#### seralize(rdf_obj)
+Creates a Turtle string
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+## Mechanism to create Identifiers
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+#### Identifier(label, sao)
+basically a lookup function for that label
+
+#### qname(id)
+returns the QNAME, i.e. openbiodiv:something
+
+#### uri(id, angle)
+returns the full URI, i.e. "http://openbiodiv.net/something" or "<http://openbiodiv.net/something>" if angle is set
+
+## Mechanism to create Literals
+
+#### Literal(chars, type, lang)
+constructor
+
+#### squote(lit)
+returns text to be used in a Turtle serialization such as \"Sample sentence\"@en
+
+## Mechanism to process XML
+
+#### find_atoms(xml_node, atom_locations)
+returns a list of literals or identifiers at the atom_locations `
+
+Example 
+```
+#atom_locations = 
+#  author:
+#    xpath: /author
+#    type: id or literal
+
+author_atoms = find_atoms(xml, atom_locations)
 ```
 
-Also a quote using `>`:
+#### break_up_xml(xml_node, component_locations)
+retunrn a list of XML nodes found at component_locations
+side effect: issue XML id attributes to these components
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+#### get_or_set_id(node)
+#### parent_id(node)
+#### root_id(node)
+
+## Mechanism to read and parse files
+
+#### xml2rdf(filename, upper_level_extractor)
+
+upper_level_extractor is a function that takes in a XML node and returns RDF
+
+## Extractors and Objects for OpenBiodiv
+
+Constructors for the various objects in the OpenBiodiv model
+```
+a = Author(author_atoms)
+```
+
+RDFizers for the various obejct
+```
+as.rdf(a)
+```
+
+Extractors
+```
+author_extractor(xml)
+# returns RDF
+```
