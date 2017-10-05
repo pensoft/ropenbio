@@ -16,7 +16,7 @@ vignette: >
 
 ```
 # Create a "connection"
-s = ServerAccessOptions(url, authentication, repository_id, ...)
+s = ServerAccessOptions(url, authentication, repository_id, base_prefix, ...)
 
 # Get the protocal version
 get_protocol_version(s)
@@ -79,8 +79,8 @@ Creates a Turtle string
 
 ## Mechanism to create Identifiers
 
-#### Identifier(label, sao)
-basically a lookup function for that label
+#### Identifier(label, sao, generate_on_fail)
+basically a lookup function for that label, if lookup fails, generates a UUID with the base prefix
 
 #### qname(id)
 returns the QNAME, i.e. openbiodiv:something
