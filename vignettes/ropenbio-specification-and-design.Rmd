@@ -103,12 +103,7 @@ returns a list of literals or identifiers at the atom_locations `
 
 Example 
 ```
-#atom_locations = 
-#  author:
-#    xpath: /author
-#    type: id or literal
-
-author_atoms = find_atoms(xml, atom_locations)
+author_atoms = find_atoms(xml, list(atom = "/author"))
 ```
 
 #### break_up_xml(xml_node, component_locations)
