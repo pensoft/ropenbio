@@ -121,7 +121,12 @@ side effect: issue XML id attributes to these components
 
 upper_level_extractor is a function that takes in a XML node and returns RDF
 
-#### log_event
+#### log_event(filename, datetime, event)
+Logs an event during the processing of filename at datetime.
+should probably use a poratable SQL database for this.
+
+### log_statistics
+displays statistics from the log
 
 ## Extractors and Objects for OpenBiodiv
 
