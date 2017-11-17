@@ -1,58 +1,165 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "`ropenbio` Specification and Design"
+author: "Viktor Senderov"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{ropenbio specification and design}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+## Mechanism to interface with a triple store
 
-## Vignette Info
+### Low-level access
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+```
+# Create a "connection"
+s = ServerAccessOptions(url, authentication, repository_id, base_prefix, ...)
 
-## Styles
+# Get the protocal version
+get_protocol_version(s)
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+# Submit a raw query via POST
+POST_query("SELECT * #...", s)
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+# Submit a raw query via GET
+GET_query("SELECT * #...", s) 
 
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+# Adds Seralized data to store
+add_data("PREFIX owl: http://#... \n http://openbiodiv.net/sample_id a owl:Thing.", s)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+### Function constructors to create custom queries
+#### query_function_constructor(server_access_options, paramerized_query, prefix_list)
+```
+lookup_pquery = "SELECT *
+         WHERE {
+          ?id rdfs:label %label
+          }"
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+openbiodiv_lookup_id = query_function_constructor(s, lookup_pquery, prefix_list)
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+openbiodiv_lookup_id(label = "Teodor Georgiev") 
 ```
 
-Also a quote using `>`:
+Here `openbiodiv_lookup_id` will execute the query 
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+```
+"SELECT *
+ WHERE {
+       ?id rdfs:label "Teodor Georgiev"
+}
+```
+
+#### add_statements_function_constructor(server_access_options, prefix_list)
+#### clear_context_function_constuctor(server_access_options, prefix_list)
+
+## Mechanism to create and serialize RDF
+
+#### RDF(triples_list)
+constucts an RDF object
+
+#### add_triples(rdf_obj, triples_list)
+side effect: adds a list of triples to rdf_obj
+
+#### add_triple(rdf_obj, triple)
+side effect: adds a triple to rdf_obj
+
+#### Triple(subject, predicate, object)
+Constructor
+- subject: an Identifier object
+- predicate: an Indetifier object
+- object: an Identifier or a Literal or an anonymous triple
+
+#### AnonymousTriple(predicate, object)
+
+#### seralize(rdf_obj)
+Creates a Turtle string
+
+## Mechanism to create Identifiers
+
+#### Identifier(label, sao, generate_on_fail)
+basically a lookup function for that label, if lookup fails, generates a UUID with the base prefix
+
+#### qname(id)
+returns the QNAME, i.e. openbiodiv:something
+
+#### uri(id, angle)
+returns the full URI, i.e. "http://openbiodiv.net/something" or "<http://openbiodiv.net/something>" if angle is set
+
+## Mechanism to create Literals
+
+#### Literal(chars, type, lang)
+constructor
+
+#### squote(lit)
+returns text to be used in a Turtle serialization such as \"Sample sentence\"@en
+
+## Mechanism to process XML
+
+#### find_atoms(xml_node, atom_locations)
+returns a list of literals or identifiers at the atom_locations `
+
+Example 
+```
+author_atoms = find_atoms(xml, list(atom = "/author"))
+```
+
+#### break_up_xml(xml_node, component_locations)
+retunrn a list of XML nodes found at component_locations
+side effect: issue XML id attributes to these components
+
+#### get_or_set_id(node)
+#### parent_id(node)
+#### root_id(node)
+
+## Mechanism to read and parse files and a logging system
+
+#### xml2rdf(filename, upper_level_extractor)
+
+upper_level_extractor is a function that takes in a XML node and returns RDF
+
+#### log_event(filename, datetime, event)
+Logs an event during the processing of filename at datetime.
+should probably use a poratable SQL database for this.
+
+### log_statistics
+displays statistics from the log
+
+## Extractors and Objects for OpenBiodiv
+
+Constructors for the various objects in the OpenBiodiv model
+```
+a = Author(author_atoms)
+```
+
+RDFizers for the various obejct
+```
+as.rdf(a)
+```
+
+Extractors
+```
+author_extractor(xml)
+# returns RDF
+```
+
+## Challenges
+
+What to consider before publishing the code? Is this design sensible for one library (two libraries)?
+
+### Performance
+
+- code is slow: how best to profile?
+
+
+### Robustness
+
+- graceful degradation: often the XML is mangled and errors are generated and execution stops: how to handle? use tryCatch?
+- correctness: how to analyze the correctness of the code? use the logging system?
+
+### Complexity
+
+- code is too complex, hard time to find the correct function: is S4 a good solution?
