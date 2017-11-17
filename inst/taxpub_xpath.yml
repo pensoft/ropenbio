@@ -1,4 +1,11 @@
+RegularizedPartialTaxonomicNameUsage:
+  markup: ./@reg
+
+PartialTaxonomicNameUsage:
+  markup: tp:taxon-name-part
+
 TaxonomicNameUsage:
+  markup: tp:taxon-name
   kingdom: ./tp:taxon-name-part[@taxon-name-part-type="kingdom" or @taxon-name-part-type="Kingdom" or @taxon-name-part-type="divisio" or @taxon-name-part-type="Divisio" or @taxon-name-part-type="division" or @taxon-name-part-type="Division"]
   phylum: ./tp:taxon-name-part[@taxon-name-part-type="phylum" or @taxon-name-part-type="Phylum" or @taxon-name-part-type="regnum" or @taxon-name-part-type="Regnum"]
   class: ./tp:taxon-name-part[@taxon-name-part-type="class" or @taxon-name-part-type="Class" or @taxon-name-part-type="classis" or @taxon-name-part-type="Classis"]

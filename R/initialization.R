@@ -1,50 +1,82 @@
-
-
-
-
-
-
-
-#' Article Dumper
+#' What is the publication date of a scholarly article?
 #'
-#' @param journal the alias of the journal that is to be dumped.
-#'   allowable are "BDJ", "ZooKeys", "PhytoKeys". if missing dumps BDJ
-#' @param fromdate from which date on. If missing starts from 1.jan.2010
+#' @param xml_document XML2 document containing the article
+#' @param day_path the XPATH expression containing the day of publication
+#' TODO : pass these as some sort of schema's (for refactoring)
 #'
-#' @return vector of new files that have been dumped
+#' @return date of publication as string
 #' @export
-article_dumper = function ( journal = "BDJ", fromdate = "01/01/2010")
-{
-  archive = paste0( obkms$initial_dump_configuration$initial_dump_directory, "archive.zip")
-  rdata = paste0( obkms$initial_dump_configuration$initial_dump_directory, ".Rdata")
-  if ( journal == "BDJ" ) {
-    command = paste0(obkms$initial_dump_configuration$bdj_endpoint, "&date=", URLencode(fromdate))
-    response = httr::GET(command)
-  }
-  else if (journal == "ZooKeys") {
-    command = paste0(obkms$initial_dump_configuration$zookeys_endpoint, "&date=", URLencode(fromdate))
-    response = httr::GET(command)
-  }
-  else if (journal == "PhytoKeys") {
-    command = paste0(obkms$initial_dump_configuration$phytokeys_endpoint, "&date=", URLencode(fromdate))
-    response = httr::GET(command)
-  }
+article_publication_date = function(xml_document,
+                                    day_path = "//article-meta/pub-date/day",
+                                    month_path = "//article-meta/pub-date/month",
+                                    year_path = "//article-meta/pub-date/year") {
+  xparams = c(year_path, month_path, day_path)
 
-  zip = httr::content(response, "raw")
-  writeBin( zip, archive)
-  unzip(archive, exdir = obkms$initial_dump_configuration$initial_dump_directory )
-  dump_list = unzip(archive, exdir = obkms$initial_dump_configuration$initial_dump_directory, list = TRUE )$Name
-  dump_list = paste( obkms$initial_dump_configuration$initial_dump_directory, dump_list, sep = "/")
-  dump_date = as.character( format( Sys.Date(), "%d/%m/%Y" ) )
-  save( dump_date, dump_list, file = rdata )
-  log_event ( "found new files", "bdj_dumper", paste( "found", length( dump_list ), "new files" ) )
-  file.remove ( archive )
-  return( dump_list )
-  # TODO but this doesnot work save( Sys.Date(), file = date_file )
+  datevec = lapply(xparams,
+    function(xpath) {
+      xml2::xml_text(xml2::xml_find_first(xml_document, xpath))
+    })
+
+
+
+  pastedash = pasteconstr("-")
+
+  do.call(pastedash, datevec)
+}
+
+#' Paste Constructor
+#' @param sep the separator that you want
+#' @retun a pasting function
+#' @export
+pasteconstr = function(sep) {
+  function(...) {
+    paste(sep = sep, ...)
+  }
+}
+
+#' Strip Extension From a Filename
+#'
+#' @param filename filename
+#' @return the filename without the extension
+#' @export
+strip_filename_extension = function(filename) {
+  gsub(".[a-zA-Z0-9]+$", "", filename)
+}
+
+#' What is the publication date of a scholarly article?
+#'
+#' @param filename filename with XML2 document
+#' @param ... additional parameter to pass to the extractor (like XML schema)
+#'
+#' @return publication date of the article as a string
+#' @export
+article_publication_date.filename = function(filename, ...) {
+  tryCatch({
+    article_publication_date(xml2::read_xml(filename), ...)
+  }, error = function(e) {
+    return(NA)
+  }
+  )
 }
 
 
 
+
+
+#' New Pensoft Articles
+#'
+#' @param journal endpoint from which to dump. if missing dumps BDJ
+#' @param fromdate from which date on. If missing starts from 1.jan.2010. Date needs to be a Date object
+#'
+#' @return ZIP file as a binary object that can be written in the filesystem
+#' @export
+new_pensoft_articles = function (endpoint = "http://bdj.pensoft.net/lib/journal_archive.php?journal=bdj", fromdate = as.Date("2010-01-01"))
+{
+  command = paste0(endpoint, "&date=", format.Date(fromdate, format = "%d/%m/%Y"))
+  response = httr::GET(URLencode(command))
+  zip = httr::content(response, "raw")
+  return(zip)
+}
 
 
 
@@ -168,6 +200,9 @@ init_env = function ( server_access_options,
 }
 
 
+
+
+
 #' @export
 init_cluster = function ()
 {
@@ -178,6 +213,18 @@ init_cluster = function ()
   obkms$cluster <- makeCluster(no_cores)
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 #' Loads a package database from a yaml file
 #' TODO needs review
@@ -228,6 +275,11 @@ init_authors_db = function() {
   obkms$authors = retval[ !duplicated( retval ), ]
 }
 
+
+
+
+
+
 #' Updates Local Authors Store
 #'
 #' @param aId author URI
@@ -247,6 +299,12 @@ update_authors_db = function ( frame_row ) {
     obkms$authors = rbind ( frame_row, obkms$authors )
     }
 }
+
+
+
+
+
+
 
 #' Initializes the educational institutions gazetteer from dbpedia
 #'
@@ -417,6 +475,9 @@ OPTIONAL { ?institution                         dbo:city ?cityid .
 
  }
 }
+
+
+
 
 
 # Turtle generation
