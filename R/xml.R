@@ -233,68 +233,6 @@ document_components = function ( xml, document_component_xpath ) {
 
 
 
-#' Convert an XML File to Plain Text NaCTeM Format
-#'
-#' Possible side effect: file gets modified on disk!
-#'
-#' @param xml_filename the filename (one file) to convert to NaCTeM plain text
-#' @param xml_schema a list with mark-up information for taxonomic names in the XML schema
-#' @param modify_xml if TRUE, the function has a side-effect and modifies the XML on disk
-#'
-#' @return plain text to write as NaCTeM format
-#' @export
-xml2nactem = function(xml_filename, xml_schema, modify_xml = FALSE) {
-  xml_doc = xml2::read_xml(xml_filename)
-  regnames = regularize_taxonomic_names(xml_doc, xml_schema)
-  underscored_names = underscore_taxonomic_names(xml_doc, xml_schema)
-  plain_text = remove_all_tags(xml_doc)
-  if (modify_xml == TRUE) {
-    xml2::write_xml(xml_doc, xml_filename)
-  }
-  return(list(names = underscored_names, text = plain_text))
-}
-
-
-#' Regularize Taxonomic Names in an XML Document
-#'
-#' Side-effect: modifies the XML object by regularizing taxonimic names!
-#'
-#' @param xmldoc the taxonomic article as a XML2 document
-#' @param schema a list with mark-up information for taxonomic names in the XML schema
-#'
-#' @return a vector of regularized name parts
-#' @export
-regularize_taxonomic_names = function(xmldoc, schema) {
-  sapply(xml_find_all(xmldoc, xpath = paste0("//", schema$PartialTaxonomicNameUsage$markup)), function(ptnu) {
-    regtext = xml_text(xml_find_first(ptnu, xpath = paste0("./", schema$RegularizedPartialTaxonomicNameUsage$markup)))
-    if (!is.na(regtext)) {
-      xml2::xml_text(ptnu) = regtext
-    }
-    return(xml2::xml_text(ptnu))
-  })
-}
-
-
-#' Underscore Taxonimic Names in an XML Document Object
-#'
-#' Side-effect: modifies the XML object by underscoring taxonimic names
-#'
-#' @param xmldoc an XML2 object in which to underscore the names
-#' @param schema the properties of the XML schema as a list
-#'
-#' @return a vector of underscored names
-#' @export
-underscore_taxonomic_names = function(xmldoc, schema) {
-  sapply(xml_find_all(xmldoc, xpath = paste0("//", schema$TaxonomicNameUsage$markup)), function(tnu) {
-    # text nodes including partent in children, in their order
-    uname = do.call(pasteconstr("_"), xml_find_all(tnu, xpath = ".//text()[normalize-space()]"))
-    # do it again if some node contained a space in it
-    uname = do.call(pasteconstr("_"), as.list(unlist(strsplit(uname, " "))))
-    xml_remove(xml_children(tnu))
-    xml_text(tnu) = uname
-    return(uname)
-  })
-}
 
 #' Strips all XML tags
 #'

@@ -40,7 +40,7 @@ pasteconstr = function(sep) {
 #' @return the filename without the extension
 #' @export
 strip_filename_extension = function(filename) {
-  gsub(".[a-zA-Z0-9]+$", "", filename)
+  gsub("\\.[^.]+$", "", filename)
 }
 
 #' What is the publication date of a scholarly article?
