@@ -1,3 +1,5 @@
+
+
 #' Convert an XML Document to RDF
 #'
 #' The function ought to work on different types of XML documents. It tackes

@@ -491,6 +491,7 @@ process_dump_list = function ( dump_list ) {
     filename = paste0( obkms$initial_dump_configuration$turtle_directory, "/", filename, ".ttl" )
     log_event( "new context", "process_dump_list", filename )
     turtle = xml2rdf( d )
+    browser()
     writeLines( turtle,  filename )
     r = rdf4jr::add_data( obkms$server_access_options, obkms$server_access_options$repository, turtle )
     log_event(  "submission to server", "process_dump_list", httr::content(r, as = 'text') )

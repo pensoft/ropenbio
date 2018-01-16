@@ -226,7 +226,7 @@ author_extractor = function ( paper_id ,
 #' @return triples of RDF
 TaxonomicNameUsage_extractor = function (comp, metadata)
 {
-  browser()
+
   a_TaxonomicNameUsage = TaxonomicNameUsage( comp$xml )
   a_TaxonomicName = as.TaxonomicName(a_TaxonomicNameUsage)
 
