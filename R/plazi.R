@@ -8,7 +8,8 @@
 #' @return PlaziFeed, xml_document, the Plazi Feed.
 #'
 #' @examples
-#' a_PlaziFeed <- PlaziFeed()
+#' a_PlaziFeed = PlaziFeed()
+#' xml2::write_xml(a_PlaziFeed, file = "~/tmp/plazi_feed.xml")
 #'
 #' @export
 PlaziFeed =
@@ -37,18 +38,17 @@ function(feed_url = "http://tb.plazi.org/GgServer/xml.rss.xml")
 #' @return data.frame
 #'
 #' @examples
-#' a_PlaziFeed <- PlaziFeed()
-#' plazi_infotable <- as.data.frame(a_PlaziFeed)
+#' a_PlaziFeed = PlaziFeed("~/tmp/plazi_feed.xml")
+#' plazi_infotable = as.data.frame(a_PlaziFeed)
 #'
 #' @export
 as.data.frame.PlaziFeed =
 function(a_PlaziFeed)
 {
-  uri <- xml2::xml_text(xml2::xml_find_all(a_PlaziFeed, "/rss/channel/item/link"))
-  id <- last_token(uri, "/")
+  link <- xml2::xml_text(xml2::xml_find_all(a_PlaziFeed, "/rss/channel/item/link"))
+  id <- last_token(link, "/")
   pub_date <- xml2::xml_text(xml2::xml_find_all(a_PlaziFeed, "/rss/channel/item/pubDate"))
-  taxonx <- paste0("http://tb.plazi.org/GgServer/taxonx/", id)
-  return(data.frame(taxonx, id, pub_date, stringsAsFactors = FALSE))
+  return(data.frame(id, pub_date, stringsAsFactors = FALSE))
 }
 
 
@@ -59,46 +59,50 @@ function(a_PlaziFeed)
 
 
 
-#' Plazi Treatment Downloader
+#' Constructs an `aria2c` Input File
 #'
-#' Retrieves and writes to disk Plazi treatments.
-#' Requires `aria2c` command line utility.
+#' Constructs the input file to be supplied to `aria2c` to download required
+#' treatments.
 #'
-#' @param uri character, URI's of the XML of treatments to download.
 #' @param id character, the URI's of treatments corresponding to the URI's.
-#' @param directory string, directory to store the downloaded files.
-#' @param logdir string, directory to store the logs.
-#'
-#' @return doesn't return anything. pure procedure.
+
+#' @return character, `aria2c` input file.
 #'
 #' @examples
 #' a_PlaziFeed = PlaziFeed()
 #' plazi_infotable = as.data.frame(a_PlaziFeed)
-#' download_plazi_treatments(uri = plazi_infotable$taxonx[1:10], id = plazi_infotable$id[1:10], dir = "/home/viktor2/tmp", logdir = "/home/viktor2/tmp")
+#' aria_input_file = AriaInputFile(plazi_infotable$id)
+#' writeLines(aria_input_file, "~/tmp/aria-input.txt")
 #'
 #' @export
-download_plazi_treatments =
-function(uri, id, directory, logdir)
+AriaInputFile =
+function(id)
 {
-  input_file_constructor = function(uri, id) {
-    stopifnot(length(uri) == length(id))
-    input_file_text = character(length = 2*length(uri))
-    j = 1
-    for (i in 1:length(uri)) {
-      input_file_text[j] = uri[i]
-      input_file_text[j + 1] = paste0("  out=", id[i], ".xml")
-      j = j + 2
-    }
-    return(input_file_text)
-  }
+  taxonx_prefix = "http://tb.plazi.org/GgServer/taxonx/"
+  plazi_internal_prefix = "http://tb.plazi.org/GgServer/xml/"
 
-  ctime = format(Sys.time(), "%y%m%d%H%M")
-  input_file = paste0(logdir, "/download-", ctime, ".input")
-  writeLines(input_file_constructor(uri, id), input_file)
-  log_file = paste0(logdir, "/download-", ctime, ".log")
-  command = paste0('aria2c ', '--input-file=', input_file, " --log=", log_file, ' --split=16 ', '--dir=', directory)
-  system(command)
+  a = unlist(lapply(id, function(i)
+  {
+    c(paste0(taxonx_prefix, i), paste0("  out=", i, ".xml"), paste0(plazi_internal_prefix, i), paste0("  out=", i, ".plazixml"))
+  }))
+  class(a) = c(class(a), "AriaInputFile")
+  return(a)
 }
+
+
+
+
+
+
+
+
+
+  # ctime = format(Sys.time(), "%y%m%d%H%M")
+  # input_file = paste0(logdir, "/download-", ctime, ".input")
+  # writeLines(input_file_constructor(uri, id), input_file)
+  # log_file = paste0(logdir, "/download-", ctime, ".log")
+  # command = paste0('aria2c ', '--input-file=', input_file, " --log=", log_file, ' --split=16 ', '--dir=', directory)
+  # system(command)
 
 
 
