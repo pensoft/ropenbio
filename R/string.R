@@ -34,3 +34,53 @@ last_token = function(x, split, ...) {
 last = function(x) {
   return(x[length(x)])
 }
+
+
+#' Paste Constructor
+#' @param sep the separator that you want
+#' @retun a pasting function
+#' @export
+pasteconstr = function(sep) {
+  function(...) {
+    paste(sep = sep, ...)
+  }
+}
+
+
+
+
+
+#' Paste If
+#'
+#' Pastes something only if the condition is met. Uses paste0.
+#'
+#' @param ... one or more R objects, to be passed to paste0 if cond is TRUE.
+#' @param cond boolean, condition to be true.
+#'
+#' @return string
+#' @example
+#' pasteif("1", "st", cond = (3 < 2))
+#'
+#' @export
+pasteif =
+function(..., cond) {
+  if (cond) {
+    paste0(...)
+  }
+  else {
+    return("")
+  }
+}
+
+
+
+
+#' Strip Extension From a Filename
+#'
+#' @param filename filename
+#' @return the filename without the extension
+#' @export
+strip_filename_extension = function(filename) {
+  gsub("\\.[^.]+$", "", filename)
+}
+

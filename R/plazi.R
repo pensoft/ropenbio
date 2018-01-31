@@ -1,23 +1,25 @@
-#' Constructs a PlaziFeed Object
+#' Plazi Feed Constructor
 #'
-#' Obtains information about all published Plazi treatments from the Plazi feed
-#' URL.
+#' Constructs a Plazi Feed Object from the Plazi Feed URL
 #'
 #' @param feed_url string, the URL of the Plazi feed. A default is present.
 #'
-#' @return PlaziFeed, xml_document, the Plazi Feed.
+#' @return plazi_feed, xml_document, the Plazi feed, as a local object.
 #'
 #' @examples
-#' a_PlaziFeed = PlaziFeed()
-#' xml2::write_xml(a_PlaziFeed, file = "~/tmp/plazi_feed.xml")
+#' todays_plazi_feed = plazi_feed()
+#' xml2::write_xml(todays_plazi_feed, file = "~/tmp/plazi_feed.xml")
+#' todays_plazi_feed = plazi_feed("~/tmp/plazi_feed.xml")
 #'
 #' @export
-PlaziFeed =
+plazi_feed =
 function(feed_url = "http://tb.plazi.org/GgServer/xml.rss.xml")
 {
-  cat("This function takes a while to complete.")
-  feed = httr::content(httr::GET(feed_url))
-  class(feed) = c(class(feed), "PlaziFeed")
+  start_time = Sys.time()
+  feed = xml2::read_xml(feed_url)
+  class(feed) = append(class(feed), "plazi_feed")
+  print("Plazi feed constructor running time:")
+  print(Sys.time() - start_time)
   return(feed)
 }
 
@@ -29,26 +31,57 @@ function(feed_url = "http://tb.plazi.org/GgServer/xml.rss.xml")
 
 
 
-#' Convert a PlaziFeed to a Dataframe
+#' Plazi Feed to Dataframe Converter
 #'
-#' Converts the PlaziFeed XML to a dataframe with interesting columns.
+#' Converts the Plazi feed XML to a data frame with interesting columns.
 #'
-#' @param feed PlaziFeed, xml_document, the Plazi feed.
+#' @param feed plazi_feed, xml_document, the Plazi feed.
 #'
-#' @return data.frame
+#' @return a `data.frame` and a `plazi_infotable` object containing tabular
+#'   information about Plazi treatments
 #'
 #' @examples
-#' a_PlaziFeed = PlaziFeed("~/tmp/plazi_feed.xml")
-#' plazi_infotable = as.data.frame(a_PlaziFeed)
+#' a_plazi_feed = plazi_feed()
+#' xml2::write_xml(a_plazi_feed, file = "~/tmp/plazi_feed.xml")
+#' b_plazi_feed = plazi_feed("/home/viktor2/tmp/plazi_feed.xml")
+#' plazi_info = as.data.frame(b_plazi_feed)
 #'
 #' @export
-as.data.frame.PlaziFeed =
-function(a_PlaziFeed)
+as.data.frame.plazi_feed =
+function(feed)
 {
-  link <- xml2::xml_text(xml2::xml_find_all(a_PlaziFeed, "/rss/channel/item/link"))
-  id <- last_token(link, "/")
-  pub_date <- xml2::xml_text(xml2::xml_find_all(a_PlaziFeed, "/rss/channel/item/pubDate"))
-  return(data.frame(id, pub_date, stringsAsFactors = FALSE))
+  atoms = find_atoms(feed, plazi_feed_schema$atoms)
+  atoms$id = last_token(atoms$link, "/")
+  return(data.frame(atoms, stringsAsFactors = FALSE))
+}
+
+
+
+
+#' Check Download Status of Plazi Treatment
+#'
+#' Looks in a Plazi corpus directory and updates a Plazi information frame
+#' with it. Tells you which treatments have been downloaded.
+#'
+#' In description below, "string" refers to a character vector of length 1.
+#'
+#' @param plazi_id character vector, with Plazi ID's whose status ought to be checked
+#' @param corpus_dir string, where the Plazi treatment files have been downloaded.
+#' @param xml_schema an object of class `xml_schema`, containing information
+#'   about the xml_schema
+#'
+#' @return logical vector
+#'
+#' @examples
+#' download_status = check_download_status(plazi_info$id,
+#'   corpus_dir = "/media/obkms/plazi-corpus-xml", xml_schema = taxonx)
+#'
+#'
+#' @export
+check_download_status =
+function(plazi_id, corpus_dir, xml_schema )
+{
+  is.element(plazi_id, strip_filename_extension(list.files(corpus_dir, pattern = xml_schema$file_pattern)))
 }
 
 
@@ -59,34 +92,39 @@ function(a_PlaziFeed)
 
 
 
-#' Constructs an `aria2c` Input File
+#' Generate `aria2c` Input
 #'
-#' Constructs the input file to be supplied to `aria2c` to download required
-#' treatments.
+#' `aria2c` is a download tool. Its advantage over 'wget' is that it is fast
+#' thanks to using multiple connections.
 #'
-#' @param id character, the URI's of treatments corresponding to the URI's.
-
-#' @return character, `aria2c` input file.
+#' This function generates an input file for `aria2c` for Plazi treatments.
+#'
+#' WILL DOWNLOAD THE ONES THAT ARE FALSE!
+#'
+#' @param id a dataframe with information about treatments
+#' @param corpus_dir
+#'
+#' @return character vector, containing the `aria2c` input file
 #'
 #' @examples
-#' a_PlaziFeed = PlaziFeed()
-#' plazi_infotable = as.data.frame(a_PlaziFeed)
-#' aria_input_file = AriaInputFile(plazi_infotable$id)
-#' writeLines(aria_input_file, "~/tmp/aria-input.txt")
 #'
 #' @export
-AriaInputFile =
-function(id)
+generate_aria2c_input =
+function(id, corpus_dir)
 {
-  taxonx_prefix = "http://tb.plazi.org/GgServer/taxonx/"
-  plazi_internal_prefix = "http://tb.plazi.org/GgServer/xml/"
+  aria2c_line =
+    function(id, prefix, extension)
+    {
+      c(paste0(prefix, id), paste0("  out=", id, extension))
+    }
 
-  a = unlist(lapply(id, function(i)
-  {
-    c(paste0(taxonx_prefix, i), paste0("  out=", i, ".xml"), paste0(plazi_internal_prefix, i), paste0("  out=", i, ".plazixml"))
-  }))
-  class(a) = c(class(a), "AriaInputFile")
-  return(a)
+  aria2c_bunch_lines =
+    function(p) # p is the xml schema (i.e. "taxonx" or "plazi_int")
+    {
+      unlist(lapply(id[!check_download_status(id, corpus_dir, p)], aria2c_line, prefix = p$prefix, extension = p$extension))
+    }
+
+  return(as.character(unlist(lapply(list(taxonx, plazi_int), aria2c_bunch_lines))))
 }
 
 

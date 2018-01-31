@@ -93,14 +93,26 @@ find_literals = function( xml, x, quoted = FALSE  ) {
         else {
           return ( trim_label ( xml2::xml_text( ns , trim = TRUE) ) )
         }
-
       }
     })
 }
 
 
-
-
+#' Finds the Atoms in a XML Node
+#'
+#' @param xml the XML node
+#' @param xpath the atom locations as a named character vector
+#'
+#' @return list
+#'
+#' @export
+find_atoms =
+function(xml, xpath) {
+  lapply(xpath, function(p)
+  {
+    xml2::xml_text(xml2::xml_find_all(xml, p))
+  })
+}
 
 
 

@@ -24,24 +24,6 @@ article_publication_date = function(xml_document,
   do.call(pastedash, datevec)
 }
 
-#' Paste Constructor
-#' @param sep the separator that you want
-#' @retun a pasting function
-#' @export
-pasteconstr = function(sep) {
-  function(...) {
-    paste(sep = sep, ...)
-  }
-}
-
-#' Strip Extension From a Filename
-#'
-#' @param filename filename
-#' @return the filename without the extension
-#' @export
-strip_filename_extension = function(filename) {
-  gsub("\\.[^.]+$", "", filename)
-}
 
 #' What is the publication date of a scholarly article?
 #'
