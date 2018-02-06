@@ -84,3 +84,39 @@ strip_filename_extension = function(filename) {
   gsub("\\.[^.]+$", "", filename)
 }
 
+
+#' Gets the filenmae extension
+#'
+#' @param filename
+#'
+#' @return extension
+#'
+#' @examples
+#' get_filename_extension("https://zenodo.org/record/1163869/files/figure.png")
+#'
+#' @export
+get_filename_extension = function(filename)
+{
+  m = regexec("\\.[^.]+$", filename)
+  unlist(regmatches(filename, m))
+}
+
+
+#' Strip Trailing Slash If Present
+#'
+#' Works only on UNIX.
+#'
+#' @param x character vector.
+#'
+#' @return x without the trailing slash, if present
+#'
+#' @examples
+#' strip_trailing_slash("/media/obkms/plazi-corpus-xml/")
+#'
+#'
+#' @export
+strip_trailing_slash =
+function(x) {
+  sub("/$", "", x)
+}
+

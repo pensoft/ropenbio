@@ -4,10 +4,10 @@
 \alias{plazi_images}
 \title{Retrieve Links for Images of a Given Treatment}
 \usage{
-plazi_images(treatments)
+plazi_images(id, directory)
 }
 \arguments{
-\item{treatment_link}{character(n) of links to treatment XML's}
+\item{directory}{}
 }
 \value{
 character(n) of links to images

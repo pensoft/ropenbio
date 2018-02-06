@@ -135,46 +135,37 @@ function(id, corpus_dir)
 
 
 
-  # ctime = format(Sys.time(), "%y%m%d%H%M")
-  # input_file = paste0(logdir, "/download-", ctime, ".input")
-  # writeLines(input_file_constructor(uri, id), input_file)
-  # log_file = paste0(logdir, "/download-", ctime, ".log")
-  # command = paste0('aria2c ', '--input-file=', input_file, " --log=", log_file, ' --split=16 ', '--dir=', directory)
-  # system(command)
-
-
-
-
-
-
-
-
-
 #' Get Plazi Treatment Language
 #'
-#' @param id character. treatment id's.
-#' @param directory string. where the treatments are stored.
+#' This is a parallelized funciton.
 #'
-#' @return character, languages. NA if file cannot be read.
+#' @param id a character vector of Plazi treatment ID's.
+#' @param directory a string, location of treatments.
+#'
+#' @return a named character vector where each entry corresponds to an
+#'   individual treatment's language.
 #'
 #' @examples
-#' a_PlaziFeed = PlaziFeed()
-#' plazi_infotable = as.data.frame(a_PlaziFeed)
-#' download_plazi_treatments(uri = plazi_infotable$taxonx[1:100], id = plazi_infotable$id[1:100], dir = "/home/viktor2/tmp", logdir = "/home/viktor2/tmp")
-#' get_plazi_treatment_language(id = plazi_infotable$id[1:100], directory = "/home/viktor2/tmp")
+#'
+#' lang = treatment_language(sort(treatments$id)[1:40], directory = "/home/viktor2/tmp")
 #'
 #' @export
-get_plazi_treatment_language=
+treatment_language =
 function(id, directory) {
-  sapply(id, function(a) {
+  no_cores = parallel::detectCores() - 1
+  cl = parallel::makeCluster(no_cores, type = "FORK")
+  r = parallel::parSapply(cl, id, function(i) {
     tryCatch(
-      xml_text(xml2::xml_find_first(xml2::read_xml(paste0(directory, "/", a, ".xml")), "/document/@docLanguage")),
-      error = function(e) {
-        return (NA)
-      }
+      xml2::xml_text(xml2::xml_find_first(xml2::read_xml(paste0(directory, "/", i, plazi_int$extension)), plazi_int$atoms["lang"])),
+      error = function(e) {as.character(NA)}
     )
   })
+  parallel::stopCluster(cl)
+  return(r)
 }
+
+
+
 
 
 
@@ -183,7 +174,8 @@ function(id, directory) {
 
 #' Retrieve Links for Images of a Given Treatment
 #'
-#' @param treatment_link character(n) of links to treatment XML's
+#' @param id
+#' @param directory
 #'
 #' @return character(n) of links to images
 #'
@@ -191,22 +183,56 @@ function(id, directory) {
 #' plazi_images("http://tb.plazi.org/GgServer/xml/F58CB27430C0CCBD272770124C31BFF8")
 #'
 #' @export
-plazi_images = function(treatments) {
-  unique(unlist(lapply(treatments, function(t) {
-    lapply(xml2::xml_find_all(tryCatch({
-      httr::content(httr::GET(t))
+plazi_images = function(id, directory) {
+  #unique(unlist(lapply(treatments, function(t) {
+  sapply(id, function(t) {
+    unlist(lapply(xml2::xml_find_all(tryCatch({
+      xml2::read_xml(paste0(directory, "/", t, plazi_int$extension))
       }, error = function(e) {
         warning(t)
         return(xml2::read_xml("<xml>Error</xml>"))
       }), "//figureCitation") , function(f) {
-      n = names(xml_attrs(f))
+      n = names(xml2::xml_attrs(f))
       lapply(n[grep("httpUri", n)], function(a) {
         xml2::xml_text(xml2::xml_find_first(f, paste0("./@", a)))
       })
-    })
-  })), recursive = TRUE)
+    }))
+  })
+  #})), recursive = TRUE)
 }
 
 
 
+
+
+
+
+
+#' Generate Aria Input For Images
+#'
+#' @param image_list named list of links to images
+#'
+#' @return character vector; `aria2c` input file
+#'
+#' @examples
+#' generate_aria2c_input_images(plazi_images(treatments$id, directory = plazi_corpus_dir))
+#'
+#' @export
+generate_aria2c_input_images = function(image_list)
+{ # NOTE Don't like the score-indexing and the is.null hack
+  # maybe I could write a helper function instead of 1:length(x) that would
+  # take care of the case is.null(x)
+  process_one_treatment = function(id, links)
+  {
+    if (is.null(links)) {
+      return(character(0))
+    }
+    sapply(1:length(links), function(i) {
+      c(links[i], paste0("  out=", id, "-", i, get_filename_extension(links[i])))
+    })
+  }
+  unlist(sapply(1:length(image_list), function(i) {
+    process_one_treatment(names(image_list)[i], image_list[[i]])
+  }))
+}
 

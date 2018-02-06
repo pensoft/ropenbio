@@ -49,7 +49,8 @@ plazi_int =
 XmlSchema$new(schema_name = "plazi_int",
               file_pattern = ".*\\.plazixml",
               extension =  ".plazixml",
-              prefix = "http://tb.plazi.org/GgServer/xml/")
+              prefix = "http://tb.plazi.org/GgServer/xml/",
+              atoms = c(lang = "/document/@docLanguage"))
 
 #' Plazi Feed
 #'
