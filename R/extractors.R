@@ -76,6 +76,10 @@ TaxonomicArticle_extractor =
   # 2nd part of the function Document component entities (sub-article level entities )
   article_component = document_components ( xml, xdoco )
 
+  for (cc in article_component$collection_code_usage) {
+    triples[["collection_code"]] = c(triples[["collection_code"]], collection_code_extractor(metadata$paper_id, cc$xml, metadata$article_id))
+  }
+
   for ( a in article_component$authors ) {
     triples[["author"]] = c ( triples[["author"]],  author_extractor( metadata$paper_id , metadata$article_id, a$xml, document = xml) )
   }
@@ -120,6 +124,32 @@ TaxonomicArticle_extractor =
 }
 
 
+
+
+#' Extract Collection Code
+#'
+#'
+#' @param paper_id URI of the `fabio:ResearchPaper` of the paper
+#' @param cc_xml XML2 node of the collection code usage
+
+#' @return list of triples
+#'
+#' @export
+collection_code_extractor = function(paper_id, cc_xml, article_id)
+{
+  cc = as.list( find_literals( cc_xml, list(collection_code = ".") ) )
+  id = lookup_id(cc$collection_code)
+  triples = list(
+      triple2(qname(paper_id),      qname(obkms$properties$mentions_collection_code$uri), qname(id)),
+      triple2(qname(id),    qname(obkms$properties$label$uri),            squote(cc$collection_code)),
+      triple2(qname(id),    qname(obkms$properties$type$uri),            qname(obkms$classes$Collection$uri)))
+
+  serialization = c(turtle_prepend_prefixes(), triples2turtle2(article_id, triples), "\n\n" )
+
+  add_data(server_access_options = obkms$server_access_options, repository = obkms$server_access_options$repository, data = serialization)
+
+  return ( triples )
+}
 
 
 

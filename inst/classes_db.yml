@@ -2,6 +2,10 @@
 # list all properties of all classes - this could probably be extracted
 # from the ontology
 
+Collection:
+  uri: <http://openbiodiv.net/Collection>
+  comment: a collection
+
 Thing:
   uri: <http://www.w3.org/2002/07/owl#Thing>
   comment: something

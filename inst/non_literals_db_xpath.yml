@@ -23,3 +23,6 @@ subject_classification: /article/front/article-meta/article-categories/subj-grou
 geographic_classification: /article/front/article-meta/article-categories/subj-group[@subj-group-type='Geographical classification']
 #zookeys_keywords: /article/front/article-meta/kwd-group
 taxonomic_name_usage: .//tp:taxon-name
+
+# collection code usages
+collection_code_usage: //named-content[@content-type='dwc:institutional_code']

@@ -1,3 +1,9 @@
+# Collection Code
+
+mentions_collection_code:
+  uri: <http://openbiodiv.net/mentions_collection>
+  type: object
+
 # Properties of TaxonomicName and TaxonomicNameUsage
 
 related_name:
