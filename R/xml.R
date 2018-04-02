@@ -1,64 +1,55 @@
-
-
-#' Convert an XML Document to RDF
+#' RDF-ization of a Single XML File
 #'
-#' The function ought to work on different types of XML documents. It tackes
-#' care of error checking and calling the correct top-level extractor.
+#' @param filename locator, e.g. file path or URL, of the XML resource
+#' @param xml_schema
+#'        XML schema of the XML resource; one of
+#'        taxpub taxonx or plazi_int
+#' @param access_options endpoint to database to which to submit
+#' @param serialization_dir directory where to dump intermediate serializations
+#' @param serialization_format default is "turtle"
+#' @param reprocess a character vector of which extractors should be reprocessed
 #'
-#' This function is exported and can be called from the user.
+#' @return logical. TRUE if everything went OK. FALSE if there was a problem
 #'
-#' @author Viktor Senderov
-#' @param resource_locator
-#'        locator, e.g. file path or URL, of the XML resource
-#' @param locator_type
-#'        type of the locator; one of c("FILE", "URL"); default is "FILE"
-#' @param resource_format
-#'        XML schema of the XML resource; one of c( "TAXPUB", "PLAZI" );
-#'        default is "TAXPUB"
-#' @param serialization_format
-#'        output serialization format for the RDF; one of c( "TURTLE" );
-#'        default is "TURTLE"
+#'
 #' @export
-xml2rdf = function( resource_locator,
-                    resource_type = "FILE",
-                    resource_format = "TAXPUB",
-                    serialization_format = "Turtle")
+xml2rdf = function(
+  filename,
+  xml_schema = taxonx,
+  access_options,
+  serialization_dir,
+  serialization_format = "turtle",
+  reporcess = c("root_extractor")
+  )
 {
-  # checks, if not FILE, cannot write back
-  stopifnot ( is.character(resource_type), resource_type == "FILE" )
-  stopifnot ( is.character(resource_format), resource_format %in%
-                c( "TAXPUB", "REFBANK_XML" ) )
-  stopifnot (
-    is.character(serialization_format), serialization_format == "Turtle" )
+  tryCatch(
+    {
+      xml = xml2::read_xml(filename)
+      context = qname(get_or_set_obkms_id(xml, fullname = TRUE))
 
-  # load the XML document
-  xml = xml2::read_xml( resource_locator , options = c()) # both a document and a node
-  # fetch or set the id for the XML document
-  context = qname(  get_or_set_obkms_id( xml , fullname = TRUE ) )
+      triples = ResourceDescriptionFramework$new(context) # the context comes in the initialization
+      triples = root_extractor(
+        xml,
+        triples,
+        access_options = access_options,
+        xml_schema = xml_schema,
+        reprocess = reprocess
+        )
 
-  # Call the top-level extractors depending on the type
-  if ( resource_format == "TAXPUB" ) {
-    # will return a triples object (TODO S3 or S4??)
-    triples = tryCatch(TaxonomicArticle_extractor(xml) ,
-                       error = function(e) {
-                         log_event(eventName = "Extractor Failure", callingFunction = "TaxonomicArticle_extractor")
-                         NULL
-                       })
+      serialization = triples$serialize() # prefixes come automatically from
+       # serializer (extracter from the identifier objects)
+      add_data(triples, access_options = access_options)
 
-    # serialize
-    serialization = c()
-    if (serialization_format == "Turtle") {
-      serialization = turtle_prepend_prefixes()
-      serialization = c ( serialization, triples2turtle2 ( context, triples ), "\n\n" )
-      #serialization = c ( serialization, triples2turtle2 ( context, triples$article ), "\n\n" )
-      # serialization = c( serialization, triples2turtle2( "pensoft:Nomenclature", triples$nomenclature))
-    }
-    # context need to be cleared
-    clear_context( context )
-    # return the return string as a string
-    xml2::write_xml( xml, resource_locator )
-  }
-  return ( do.call(paste, as.list( serialization )))
+      xml2::write_xml(xml, resource_locator)
+      writeLines(serialization)
+
+      return(TRUE)
+    },
+    error = function(e)
+    {
+      warning(e)
+      return(FALSE)
+    })
 }
 
 
