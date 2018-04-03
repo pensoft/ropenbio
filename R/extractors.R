@@ -5,27 +5,41 @@
 #' XML into smaller parts that are sent to lower-level extractors to get
 #' triples for them. After all of this everything is concattenated and returned.
 #'
-#' TODO Note: this function does a little more than it should: it is also a
-#' constructor
-#' and rdfi-zer of TaxonomicArticle. Also it works with the paper object.
+#' @inheritParams xml2rdf
+#' @param triples the RDF object where the newly created triples will be
+#'   stored (note this is a side-effect/pass by reference)
 #'
-#' @param xml an XML document object (as parsed by the `xml2` package) containg
-#'   a taxonomic paper
-#' @param xlit a vector of XPATH locations of the atoms (literals) of the metadata
-#'   of a taxonomic document
-#' @param xdoco a vector of XPATH locations of where other objects are to be
-#'   found which need to be processed recursively and attached to the paper
-#'
-#' @return triples
+#' @return ResourceDescriptionFormat - returns the \code{rdf_object} but
+#'   you don't have to
 #'
 #' @export
-TaxonomicArticle_extractor =
-  function( xml,
-            xlit = yaml::yaml.load_file( obkms$config$literals_db_xpath ),
-            xdoco = yaml::yaml.load_file( obkms$config$non_literals_db_xpath ) )
+root_extractor = function(xml, xml_schema, reprocess, triples, access_options)
 {
-  metadata = as.list( find_literals( xml, xlit ) )
-  class( metadata ) = "Taxonomic Article"
+  # 1. Find obkms_id of node. Set the context in the rdf_object. Create
+  # the obvious triple(s) that id is ...article.
+  # The first mentioning of the openbiodiv prefix will make it available
+  # to the triples object for subsequent lookups (we will stay DRY)
+  root_id = identifier(
+    id = get_or_set_obkms_id(xml),
+    prefix = c(openbiodiv = get_namespace(access_options$prefix, "_base"))
+  )
+
+  triples$set_context(root_id)
+  triples$add_triple(subject = root_it, predicate = rdfs_label, object = journal_article)
+
+  browser()
+
+  # 2. Find the processing status of the node.
+  # 3. If the processing status is FALSE, or reprocess for root is present
+  #   Find literals
+  #   call paper and/or article construcs ---> actually these can be subclasses of ResourceDescriptionFramework, initialized with literals and access_options
+  #   add the RDF subobjects via big RDF object via add_list or similar
+  # 4. Find subcomponets (indicated in the xml_schema)
+  # 5. Foreach subcomponent, execute its extractor (also part of the xml_schema) will get the triples object passed on for the side effects
+  # 6. return the triples even though it is not necessary
+
+  metadata = find_literals(xml, xml_schema$atoms)
+  class(metadata) = "Taxonomic Article"
 
   # `get_or_set_obkms_id` only looks in the XML, does not do any db lookup
   metadata[['article_id']] =

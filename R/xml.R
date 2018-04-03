@@ -18,30 +18,36 @@ xml2rdf = function(
   xml_schema = taxonx,
   access_options,
   serialization_dir,
-  serialization_format = "turtle",
   reporcess = c("root_extractor")
   )
 {
   tryCatch(
     {
       xml = xml2::read_xml(filename)
-      context = qname(get_or_set_obkms_id(xml, fullname = TRUE))
 
-      triples = ResourceDescriptionFramework$new(context) # the context comes in the initialization
-      triples = root_extractor(
+      triples = ResourceDescriptionFramework$new()
+
+      root_extractor(
         xml,
-        triples,
-        access_options = access_options,
         xml_schema = xml_schema,
-        reprocess = reprocess
+        reprocess = reprocess,
+        rdf_object = triples,
+        access_options = access_options
+      )
+
+      serialization = triples$serialize()
+
+      add_data(serialization, access_options = access_options)
+
+      xml2::write_xml(xml, filenames)
+
+      writeLines(
+        serialization,
+        con = paste0(
+          serialization_dir,
+          last_token(filename, split = "/")
         )
-
-      serialization = triples$serialize() # prefixes come automatically from
-       # serializer (extracter from the identifier objects)
-      add_data(triples, access_options = access_options)
-
-      xml2::write_xml(xml, resource_locator)
-      writeLines(serialization)
+      )
 
       return(TRUE)
     },
@@ -108,30 +114,23 @@ function(xml, xpath) {
 
 
 
-#' Get the OBKMS Id of an XML node, if not set, set it
+#' Get the OBKMS Id of an XML node, if not set, set it.
 #'
-#' Does not do any database lookups. Is exported.
+#' Does not do any database lookups.
 #'
 #' @param node the XML node from which to take the ID; cannot be missing!
-#' @param fullname if TRUE, returns a URI with the OBKMS base prefix
+#'
+#' @return the local id (not an identifier object)
 #'
 #' @export
-get_or_set_obkms_id = function ( node, fullname = FALSE )
+get_or_set_obkms_id = function (node)
 {
-
-  if ( is.na( xml2::xml_attr( node, "obkms_id" ) ) )
+  if (is.na(xml2::xml_attr(node, "obkms_id")))
   {
-    xml2::xml_attr( node, "obkms_id" ) = uuid::UUIDgenerate()
-  }
-  obkms_id = xml2::xml_attr( node, "obkms_id" )
-
-
-  if ( fullname )
-  {
-    return (  paste0( strip_angle( obkms$prefixes$`_base`) , obkms_id ) )
+    xml2::xml_attr(node, "obkms_id") = uuid::UUIDgenerate()
   }
 
-  else return ( obkms_id )
+  xml2::xml_attr(node, "obkms_id")
 }
 
 
