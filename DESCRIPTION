@@ -14,7 +14,8 @@ LazyData: TRUE
 Imports:
     httr,
     RCurl,
-    XML
+    XML,
+    rdf4r
 Suggests:
     testthat,
     knitr,

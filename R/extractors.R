@@ -1,41 +1,33 @@
-#' Top Level (Metadata) Extractor for a Taxnomic Article
+#' Node Extractor
 #'
-#' First this function finds all of the atoms that are belong to the metadata
-#' of a taxonomic paper and creates triples for it. Then, it chops up the paper
-#' XML into smaller parts that are sent to lower-level extractors to get
-#' triples for them. After all of this everything is concattenated and returned.
+#' Given an XML2 object, and an \code{ResourceDescriptionFramework} object, which
+#' are both mutable, the \code{ResourceDescriptionFramework} object is
+#' mutated into containing the triples extracted from the XML2 object,
+#' while the XML2 object is possibly mutated into containing some annotations
+#' allowing the faster reprocessing.
 #'
 #' @inheritParams xml2rdf
 #' @param triples the RDF object where the newly created triples will be
 #'   stored (note this is a side-effect/pass by reference)
 #'
-#' @return ResourceDescriptionFormat - returns the \code{rdf_object} but
-#'   you don't have to
+#' @return \code{ResourceDescriptionFramework} containing all the triples from
+#'   the article
 #'
 #' @export
-root_extractor = function(xml, xml_schema, reprocess, triples, access_options)
+node_extractor = function(node, xml_schema, reprocess, triples, access_options)
 {
-  # 1. Find obkms_id of node. Set the context in the rdf_object. Create
-  # the obvious triple(s) that id is ...article.
-  # The first mentioning of the openbiodiv prefix will make it available
-  # to the triples object for subsequent lookups (we will stay DRY)
-  root_id = identifier(
-    id = get_or_set_obkms_id(xml),
-    prefix = c(openbiodiv = get_namespace(access_options$prefix, "_base"))
-  )
 
-  triples$set_context(root_id)
-  triples$add_triple(subject = root_it, predicate = rdfs_label, object = journal_article)
+  if (processing_status(node) == FALSE || reprocess == TRUE) {
+    # whatever node we are currently processing, the xml_schema must have
+    # a constructor for it
+    atoms = find_atoms(node, xml_schema$atoms)
+    new_triples = xml_schema$constructor(atoms)
+    browser()
 
-  browser()
-
-  # 2. Find the processing status of the node.
-  # 3. If the processing status is FALSE, or reprocess for root is present
-  #   Find literals
-  #   call paper and/or article construcs ---> actually these can be subclasses of ResourceDescriptionFramework, initialized with literals and access_options
-  #   add the RDF subobjects via big RDF object via add_list or similar
+  }
+  # go into recursion
   # 4. Find subcomponets (indicated in the xml_schema)
-  # 5. Foreach subcomponent, execute its extractor (also part of the xml_schema) will get the triples object passed on for the side effects
+  # 5. Foreach subcomponent, execute the recursive call
   # 6. return the triples even though it is not necessary
 
   metadata = find_literals(xml, xml_schema$atoms)

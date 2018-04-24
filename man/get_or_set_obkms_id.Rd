@@ -2,15 +2,16 @@
 % Please edit documentation in R/xml.R
 \name{get_or_set_obkms_id}
 \alias{get_or_set_obkms_id}
-\title{Get the OBKMS Id of an XML node, if not set, set it}
+\title{Get the OBKMS Id of an XML node, if not set, set it.}
 \usage{
-get_or_set_obkms_id(node, fullname = FALSE)
+get_or_set_obkms_id(node)
 }
 \arguments{
 \item{node}{the XML node from which to take the ID; cannot be missing!}
-
-\item{fullname}{if TRUE, returns a URI with the OBKMS base prefix}
+}
+\value{
+the local id (not an identifier object)
 }
 \description{
-Does not do any database lookups. Is exported.
+Does not do any database lookups.
 }

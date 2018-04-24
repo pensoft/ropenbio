@@ -4,7 +4,7 @@
 \alias{parent_id}
 \title{Get the Parent OBKS Id for an XML Node}
 \usage{
-parent_id(node, document, fullname = FALSE)
+parent_id(node, fullname = FALSE)
 }
 \arguments{
 \item{node}{the XML node from which to take the ID; cannot be missing!}

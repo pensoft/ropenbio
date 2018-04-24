@@ -5,7 +5,7 @@
 \title{RDF-ization of a Single XML File}
 \usage{
 xml2rdf(filename, xml_schema = taxonx, access_options, serialization_dir,
-  serialization_format = "turtle", reporcess = c("root_extractor"))
+  reporcess = c("root_extractor"))
 }
 \arguments{
 \item{filename}{locator, e.g. file path or URL, of the XML resource}
@@ -19,11 +19,12 @@ taxpub taxonx or plazi_int}
 
 \item{serialization_format}{default is "turtle"}
 
-\item{reprocess}{a character vector of which extractors should be reprocessed}
+\item{reprocess}{\code{logical}}
 }
 \value{
-logical. TRUE if everything went OK. FALSE if there was a problem
+\code{logical}. TRUE if everything went OK. FALSE if there was a problem
 }
 \description{
-RDF-ization of a Single XML File
+Converts an XML file to RDF and submits it to a triple store. Writes
+the serialization in a file in the file system.
 }

@@ -18,15 +18,17 @@ R6::R6Class("xml_schema",
     extension = NULL,
     prefix = NULL,
     atoms = NULL,
+    constructor = NULL,
 
     initialize =
-    function(schema_name = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA)
+    function(schema_name = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA, constructor = NULL)
     {
       self$schema_name = schema_name
       self$file_pattern = file_pattern
       self$extension = extension
       self$prefix = prefix
       self$atoms = atoms
+      self$constructor = constructor
     }
   )
 )
@@ -36,10 +38,23 @@ R6::R6Class("xml_schema",
 #'
 #' @export
 taxonx =
-XmlSchema$new(schema_name = "taxonx",
-              file_pattern = ".*\\.xml",
-              extension = ".xml",
-              prefix = "http://tb.plazi.org/GgServer/taxonx/")
+XmlSchema$new(
+  schema_name = "taxonx",
+  file_pattern = ".*\\.xml",
+  extension = ".xml",
+  prefix = "http://tb.plazi.org/GgServer/taxonx/",
+  atoms = c(
+    article_id = "/@obkms_id",
+    title = "/mods:title"
+    ),
+
+  constructor = function(atoms)
+  {
+    t = ResourceDescriptionFramework$new()
+    t$add(subject = atoms$article_id, rdf_type, Article)
+    t$add(subject = atoms$article_id, rdfs_label, atoms$title)
+  }
+)
 
 
 #' Plazi Internal
