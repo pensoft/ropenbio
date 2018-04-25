@@ -4,12 +4,17 @@
 \alias{find_atoms}
 \title{Finds the Atoms in a XML Node}
 \usage{
-find_atoms(xml, xpath)
+find_atoms(xml, xpath, atom_types, atom_lang)
 }
 \arguments{
 \item{xml}{the XML node}
 
 \item{xpath}{the atom locations as a named character vector}
+
+\item{atom_types}{the type (explicitly stated, not as xpath) of the atom}
+
+\item{atom_lang}{the language (as xpath), if the xpath fails, will set to
+en (if string)}
 }
 \value{
 list

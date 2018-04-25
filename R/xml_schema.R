@@ -1,10 +1,18 @@
-#' R6 Class for XML Schemas
+#' @include metadata.R
+#' XML Node Schema
+#'
+#' Defines the XML schema of a node.
 #'
 #' @field schema_name the name of the schema
 #' @field file_pattern regular expression pattern matching the file-name extension
 #' @field extension the file-name extension
 #' @field prefix the prefix that these documents have in the URI
-#' @atoms named character vector of xpath locations
+#' @field atoms named character vector of xpath locations
+#' @field constructor an RDF constructor function that can be called on
+#'   a list of atoms extractor from a node in the schema
+#' @field components a list of \code{XmlSchema} object containing the nested
+#'   components in the node
+#'
 #'
 #' @examples
 #' taxonx = XmlSchema$new(schema_name = "taxonx", file_pattern = ".*\\.xml")
@@ -18,16 +26,21 @@ R6::R6Class("xml_schema",
     extension = NULL,
     prefix = NULL,
     atoms = NULL,
+    atom_types = NULL,
+    atom_lang = NULL,
     constructor = NULL,
+    components = NULL,
 
     initialize =
-    function(schema_name = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA, constructor = NULL)
+    function(schema_name = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA, atom_types = NULL, atom_lang = NA, constructor = NULL)
     {
       self$schema_name = schema_name
       self$file_pattern = file_pattern
       self$extension = extension
       self$prefix = prefix
       self$atoms = atoms
+      self$atom_lang = atom_lang
+      self$atom_types = atom_types
       self$constructor = constructor
     }
   )
@@ -44,16 +57,21 @@ XmlSchema$new(
   extension = ".xml",
   prefix = "http://tb.plazi.org/GgServer/taxonx/",
   atoms = c(
-    article_id = "/@obkms_id",
-    title = "/mods:title"
+    title = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:titleInfo/mods:title",
+    date = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:part/mods:date"
     ),
 
-  constructor = function(atoms)
-  {
-    t = ResourceDescriptionFramework$new()
-    t$add(subject = atoms$article_id, rdf_type, Article)
-    t$add(subject = atoms$article_id, rdfs_label, atoms$title)
-  }
+  atom_lang = c(
+    title = NA,
+    lang = NA
+  ),
+
+  atom_types = list(
+    title = rdf4r::xsd_string,
+    date = rdf4r::xsd_date
+  ),
+
+  constructor = metadata
 )
 
 

@@ -18,6 +18,9 @@
 #' @export
 xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_dir, reporcess = c("root_extractor"))
 {
+  # generate lookup functions
+
+
   tryCatch(
     {
       xml = xml2::read_xml(filename)
@@ -124,16 +127,31 @@ processing_status = function(node)
 #'
 #' @param xml the XML node
 #' @param xpath the atom locations as a named character vector
+#' @param atom_types the type (explicitly stated, not as xpath) of the atom
+#' @param atom_lang the language (as xpath), if the xpath fails, will set to
+#'   en (if string)
 #'
 #' @return list
 #'
 #' @export
-find_atoms = function(xml, xpath)
+find_atoms = function(xml, xpath, atom_types, atom_lang)
 {
-    lapply(xpath, function(p)
+  lapply(
+    names(xpath), function(p)
     {
-      xml2::xml_text(xml2::xml_find_all(xml, p))
-    })
+      lapply(xml2::xml_text(xml2::xml_find_all(xml, xpath[p])), function(l)
+      {
+        browser()
+        literal(l, xsd_type = atom_types$p, lang = atom_lang[p])
+      })
+    }
+  )
+
+
+  lapply(xpath, function(p)
+  {
+    xml2::xml_text(xml2::xml_find_all(xml, p))
+  })
 }
 
 

@@ -18,11 +18,12 @@ node_extractor = function(node, xml_schema, reprocess, triples, access_options)
 {
 
   if (processing_status(node) == FALSE || reprocess == TRUE) {
-    # whatever node we are currently processing, the xml_schema must have
-    # a constructor for it
-    atoms = find_atoms(node, xml_schema$atoms)
-    new_triples = xml_schema$constructor(atoms)
+    nid = identifier(get_or_set_obkms_id(node), access_options$prefix["openbiodiv"])
+    pid = identifier(parent_id(node), access_options$prefix["openbiodiv"])
     browser()
+    atoms = find_atoms(node, xml_schema$atoms, xml_schema$atom_types, xml_schema$atom_lang)
+
+    new_triples = xml_schema$constructor(atoms, nid = nid, pid = pid, access_options = access_options)
 
   }
   # go into recursion

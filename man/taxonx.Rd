@@ -4,7 +4,7 @@
 \name{taxonx}
 \alias{taxonx}
 \title{TaxonX}
-\format{An object of class \code{xml_schema} (inherits from \code{R6}) of length 9.}
+\format{An object of class \code{xml_schema} (inherits from \code{R6}) of length 12.}
 \usage{
 taxonx
 }
