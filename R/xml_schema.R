@@ -58,17 +58,24 @@ XmlSchema$new(
   prefix = "http://tb.plazi.org/GgServer/taxonx/",
   atoms = c(
     title = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:titleInfo/mods:title",
-    date = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:part/mods:date"
+    date = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:part/mods:date",
+    doi = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:identifier[@type='DOI']",
+    zenodo = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:identifier[@type='Zenodo-Dep']",
+    zoobank = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:identifier[@type='ZooBank']"
     ),
 
   atom_lang = c(
     title = NA,
-    lang = NA
+    date = NA,
+    doi = NA,
+    zenodo = NA
   ),
 
   atom_types = list(
     title = rdf4r::xsd_string,
-    date = rdf4r::xsd_date
+    date = rdf4r::xsd_date,
+    doi = rdf4r::xsd_string,
+    zenodo = rdf4r::xsd_string
   ),
 
   constructor = metadata

@@ -2,20 +2,23 @@
 % Please edit documentation in R/xml.R
 \name{find_literals}
 \alias{find_literals}
-\title{Finds the atoms in an xml node}
+\title{Finds the Atoms in a XML Node}
 \usage{
-find_literals(xml, x, quoted = FALSE)
+find_literals(xml, xml_schema)
 }
 \arguments{
 \item{xml}{the XML node}
 
-\item{x}{xpath expressions}
+\item{xpath}{the atom locations as a named character vector}
 
-\item{quoted}{if TRUE, will run squote with needed params on the arguments}
+\item{atom_types}{the type (explicitly stated, not as xpath) of the atom}
+
+\item{atom_lang}{the language (as xpath), if the xpath fails, will set to
+en (if string)}
 }
 \value{
-a vector of atoms
+list
 }
 \description{
-Finds the atoms in an xml node
+Finds the Atoms in a XML Node
 }

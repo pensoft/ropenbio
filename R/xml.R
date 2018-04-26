@@ -134,31 +134,42 @@ processing_status = function(node)
 #' @return list
 #'
 #' @export
-find_atoms = function(xml, xpath, atom_types, atom_lang)
+find_literals = function(xml, xml_schema)
 {
-  lapply(
-    names(xpath), function(p)
-    {
-      lapply(xml2::xml_text(xml2::xml_find_all(xml, xpath[p])), function(l)
-      {
-        browser()
-        literal(l, xsd_type = atom_types$p, lang = atom_lang[p])
-      })
-    }
-  )
-
-
-  lapply(xpath, function(p)
+  rr = vector(mode = 'list', length = length(xml_schema$atoms))
+  names(rr) = names(xml_schema$atoms)
+  for (nn in names(xml_schema$atoms))
   {
-    xml2::xml_text(xml2::xml_find_all(xml, p))
-  })
+    #inside a particular name
+    literals = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
+    languages = tryCatch(
+      xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atom_lang[nn])),
+      error = function(e) {
+        NA
+      }
+    )
+
+    rr[[nn]] = lapply(seq(along.with = literals), function(i)
+    {
+      literal(literals[i], xsd_type = xml_schema$atom_types[[nn]] ,lang = languages[i])
+    }
+    )
+  }
+  return(rr)
 }
 
 
 
 
-
-
+#'
+#find_identifiers = function(node, xml_schema)
+#{
+#  lapply(xml_schmea$, function(p)
+#  {
+#    xml2::xml_text(xml2::xml_find_all(xml, p))
+#  })
+#
+#}
 
 
 
@@ -195,37 +206,6 @@ parent_id = function (node, fullname = FALSE )
 
 
 
-
-#' Finds the atoms in an xml node
-#'
-#'
-#'
-#'
-#'
-#' @param xml the XML node
-#' @param x xpath expressions
-#' @param quoted if TRUE, will run squote with needed params on the arguments
-#'
-#' @return a vector of atoms
-#'
-#' @export
-#'
-find_literals = function( xml, x, quoted = FALSE  ) {
-  r =
-    sapply( names(x), function( l ) {
-      ns = xml2::xml_find_all( xml, x[[l]] )
-      # ns is a list
-      if ( length( ns ) == 0) return ( NA )
-      else {
-        if (quoted) {
-          return( paste0("\"", trim_label ( xml2::xml_text( ns , trim = TRUE) ) , "\"") )
-        }
-        else {
-          return ( trim_label ( xml2::xml_text( ns , trim = TRUE) ) )
-        }
-      }
-    })
-}
 
 
 
