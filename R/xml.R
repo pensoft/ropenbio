@@ -41,10 +41,10 @@ xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_
         access_options = access_options
       )
 
-      xml2::write_xml(xml, filenames)
+    #  xml2::write_xml(xml, filenames)
 
       serialization = triples$serialize()
-
+      browser()
       add_data(serialization, access_options = access_options)
 
       writeLines(

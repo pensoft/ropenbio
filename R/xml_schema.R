@@ -61,21 +61,42 @@ XmlSchema$new(
     date = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:part/mods:date",
     doi = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:identifier[@type='DOI']",
     zenodo = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:identifier[@type='Zenodo-Dep']",
-    zoobank = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:identifier[@type='ZooBank']"
+    zoobank = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:identifier[@type='ZooBank']",
+    publisher = NA,
+    journal = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:titleInfo/mods:title",
+    issn = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:identifier[@type='ISSN']",
+    issue = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:part/mods:detail[@type='issue']/mods:number",
+    volume = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:part/mods:detail[@type='volume']/mods:number",
+    starting_page = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:part/mods:extent[@unit='page']/mods:start",
+    ending_page = "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:relatedItem/mods:part/mods:extent[@unit='page']/mods:end"
     ),
 
   atom_lang = c(
     title = NA,
     date = NA,
     doi = NA,
-    zenodo = NA
+    zenodo = NA,
+    publisher = NA,
+    journal = NA,
+    issn = NA,
+    issue = NA,
+    volume = NA,
+    starting_page = NA,
+    ending_page = NA
   ),
 
   atom_types = list(
     title = rdf4r::xsd_string,
     date = rdf4r::xsd_date,
     doi = rdf4r::xsd_string,
-    zenodo = rdf4r::xsd_string
+    zenodo = rdf4r::xsd_string,
+    publisher = rdf4r::xsd_string,
+    journal = rdf4r::xsd_string,
+    issn = rdf4r::xsd_string,
+    issue = rdf4r::xsd_integer,
+    volume = rdf4r::xsd_integer,
+    starting_page = rdf4r::xsd_integer,
+    ending_page = rdf4r::xsd_integer
   ),
 
   constructor = metadata

@@ -76,6 +76,29 @@ Paper = rdf4r::identifier(
   prefix = c(fabio = "http://purl.org/spar/fabio/")
 )
 
+#' Issn property
+#' @export
+issn = rdf4r::identifier(
+  id = "issn",
+  prefix = c(fabio = "http://purl.org/spar/fabio/")
+)
+
+#' e-Issn property
+#' @export
+eissn = rdf4r::identifier(
+  id = "eIssn",
+  prefix = c(fabio = "http://purl.org/spar/fabio/")
+)
+
+#' e-Issn property
+#' @export
+frbr_part = rdf4r::identifier(
+  id = "part",
+  prefix = c(frbr = "http://purl.org/vocab/frbr/core#")
+)
+
+
+
 # Abstract:
 #   uri: <http://salt.semanticauthoring.org/ontologies/sro#Abstract>
 # comment: an abstract of a science article

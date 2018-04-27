@@ -16,16 +16,18 @@
 #' @export
 node_extractor = function(node, xml_schema, reprocess, triples, access_options)
 {
-
   if (processing_status(node) == FALSE || reprocess == TRUE) {
-    nid = identifier(get_or_set_obkms_id(node), access_options$prefix["openbiodiv"])
-    pid = identifier(parent_id(node), access_options$prefix["openbiodiv"])
-    browser()
     atoms = find_literals(node, xml_schema)
-
-    new_triples = xml_schema$constructor(atoms, nid = nid, pid = pid, access_options = access_options)
-
+    triples$add_triples(xml_schema$constructor(
+      atoms,
+      identifiers = list(
+        nid = identifier(get_or_set_obkms_id(node), access_options$prefix["openbiodiv"]),
+        pid = identifier(parent_id(node), access_options$prefix["openbiodiv"])
+      ),
+      access_options = access_options
+    ))
   }
+  return(triples)
   # go into recursion
   # 4. Find subcomponets (indicated in the xml_schema)
   # 5. Foreach subcomponent, execute the recursive call
