@@ -1,3 +1,60 @@
+#' XML Node Schema
+#'
+#' Defines the XML schema of a node.
+#'
+#' @field schema_name the name of the schema
+#' @field file_pattern regular expression pattern matching the file-name extension
+#' @field extension the file-name extension
+#' @field prefix the prefix that these documents have in the URI
+#' @field atoms named character vector of xpath locations
+#' @field constructor an RDF constructor function that can be called on
+#'   a list of atoms extractor from a node in the schema
+#' @field components a list of \code{XmlSchema} object containing the nested
+#'   components in the node
+#'
+#'
+#' @examples
+#' taxonx = XmlSchema$new(schema_name = "taxonx", file_pattern = ".*\\.xml")
+#'
+#' @export
+XmlSchema =
+  R6::R6Class("xml_schema",
+              public = list(
+                schema_name = NULL,
+                xpath = NA,
+                file_pattern = NULL,
+                extension = NULL,
+                prefix = NULL,
+                atoms = NULL,
+                atom_types = NULL,
+                atom_lang = NULL,
+                constructor = NULL,
+                components = NULL,
+
+                initialize =
+                  function(schema_name = NA, xpath = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA, atom_types = NULL, atom_lang = NA, constructor = NULL, components = NULL)
+                  {
+                    self$schema_name = schema_name
+                    self$xpath = xpath
+                    self$file_pattern = file_pattern
+                    self$extension = extension
+                    self$prefix = prefix
+                    self$atoms = atoms
+                    self$atom_lang = atom_lang
+                    self$atom_types = atom_types
+                    self$constructor = constructor
+                    self$components = components
+                  }
+              )
+  )
+
+
+
+
+
+
+
+
 #' RDF-ization of a Single XML File
 #'
 #' Converts an XML file to RDF and submits it to a triple store. Writes
@@ -16,7 +73,7 @@
 #'
 #'
 #' @export
-xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_dir, reporcess = c("root_extractor"))
+xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_dir, reprocess = FALSE)
 {
   # generate lookup functions
 
@@ -27,8 +84,8 @@ xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_
 
       triples = ResourceDescriptionFramework$new()
       root_id = identifier(
-        id = get_or_set_obkms_id(xml),
-        prefix = c(access_options$prefix["openbiodiv"])
+        root_id(xml, access_options),
+        access_options$prefix["openbiodiv"]
       )
 
       triples$set_context(root_id)
@@ -36,22 +93,21 @@ xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_
       triples = node_extractor(
         node = xml,
         xml_schema = xml_schema,
-        reprocess = TRUE,
+        reprocess = reprocess,
         triples = triples,
         access_options = access_options
       )
 
-    #  xml2::write_xml(xml, filenames)
+      xml2::write_xml(xml, filename)
 
       serialization = triples$serialize()
-      browser()
-      add_data(serialization, access_options = access_options)
+     # add_data(serialization, access_options = access_options)
 
-      writeLines(
+      cat(
         serialization,
-        con = paste0(
-          serialization_dir,
-          last_token(filename, split = "/")
+        file = paste0(
+          serialization_dir, "/",
+          paste0(strip_filename_extension(last_token(filename, split = "/")), ".ttl")
         )
       )
 
@@ -217,74 +273,53 @@ parent_id = function (node, fullname = FALSE )
 
 
 
-
-
-
-
-
-
-
 #' Get the Root (Article) OBKMS Id for an XML Node
 #'
 #' Does not do any database lookups - only looks at XML
 #'
 #' @param node
-#' @param fullname
 #'
 #' @export
-root_id = function(node, fullname = FALSE)
+root_id = function(node, access_options)
 {
-  obkms_id = xml2::xml_text( xml2::xml_find_all(node, "/article/@obkms_id"))
+  # Is the root id set?
+  root_node = xml2::xml_find_all(node, xpath = "/*")
 
-  if (fullname) {
-    return (paste0( strip_angle( obkms$prefixes$`_base`) , obkms_id))
+  if (is.na(xml2::xml_attr(root_node, "obkms_id"))) {
+    ltitle <- literal(
+      xml2::xml_text( xml2::xml_find_all(node, "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:titleInfo/mods:title"))[1],
+      xsd_type = rdf4r::xsd_string,
+      lang = NA
+    )
+
+    opebiodiv_id_via_label_lookup = identifier_factory(
+      fun = list(
+        query_factory(
+          p_query = qlookup_by_label,
+          access_options = access_options
+        )
+      ),
+      prefixes = access_options$prefix,
+      def_prefix = access_options$prefix["openbiodiv"]
+    )
+
+    root_id = opebiodiv_id_via_label_lookup(list(ltitle))
+
+    xml2::xml_attr(root_node, "obkms_id") = root_id$id
   }
 
-  else return (obkms_id)
+  xml2::xml_attr(root_node, "obkms_id")
 }
 
 
 
 
-#' Break Down a XML object into its Components
-#'
-#' Takes a top-level XML object (e.g. a paper) and a vector of XPATH locations,
-#' indicating where its subcomponents are.
-#' This function returns a list of XML objects that are found at the XPATH
-#' locations (that can later be processed by lower-level extractors) with their
-#' IDs.
-#'
-#' @param xml the xml resource
-#' @param document_component_xpath datapase of xpaths where the document components
-#' are found in the corresponding XML schema
-#' @return a list of XML nodes and ID's corresponding to each of the elements
-#'   in the `document_component_xpath` vector
-#'
-document_components = function ( xml, document_component_xpath ) {
-  doco = list()
-  for ( name in names( document_component_xpath ) ) {
-    xml_nodeset = xml2::xml_find_all( xml, document_component_xpath[[ name ]] )
-    doco[[name]] = list()
-    j = 1
-    for ( xml_node in xml_nodeset ) {
-      obkms_id = get_or_set_obkms_id( xml_node, fullname = TRUE )
-      doco[[name]][[j]] = list( id = obkms_id, xml = xml_node )
-      j = j + 1
-    }
-  }
-  # after the first pass is done and id's have been assigned, need to look for
-  # parent id's
-  for ( name in names( document_component_xpath ) ) {
-    xml_nodeset = xml2::xml_find_all( xml, document_component_xpath[[ name ]] )
-    j = 1
-    for ( xml_node in xml_nodeset ) {
-      parent_id = parent_id( xml_node, xml )
-      doco[[name]][[j]]$parent_id = parent_id
-      j = j + 1
-    }
-  }
-  return ( doco )
-}
+
+
+
+
+
+
 
 
 

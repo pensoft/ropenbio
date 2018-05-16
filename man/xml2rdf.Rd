@@ -5,7 +5,7 @@
 \title{RDF-ization of a Single XML File}
 \usage{
 xml2rdf(filename, xml_schema = taxonx, access_options, serialization_dir,
-  reporcess = c("root_extractor"))
+  reprocess = FALSE)
 }
 \arguments{
 \item{filename}{locator, e.g. file path or URL, of the XML resource}
@@ -17,9 +17,9 @@ taxpub taxonx or plazi_int}
 
 \item{serialization_dir}{directory where to dump intermediate serializations}
 
-\item{serialization_format}{default is "turtle"}
-
 \item{reprocess}{\code{logical}}
+
+\item{serialization_format}{default is "turtle"}
 }
 \value{
 \code{logical}. TRUE if everything went OK. FALSE if there was a problem
