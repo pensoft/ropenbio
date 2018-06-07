@@ -69,6 +69,15 @@ Article = rdf4r::identifier(
   prefix = c(fabio = "http://purl.org/spar/fabio/")
 )
 
+
+#' Keyword Group
+#' @export
+KeywordGroup = rdf4r::identifier(
+  id = "KeywordGroup",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
 #' Treatment Section
 #' @export
 Treatment = rdf4r::identifier(
@@ -447,6 +456,20 @@ has_taxonomic_status = rdf4r::identifier(
   prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
 )
 
+#' Dwc IRI Status
+#' @export
+has_taxonomic_status_id = rdf4r::identifier(
+  id = "taxonomicStatus",
+  prefix = c(dwciri = "http://rs.tdwg.org/dwc/iri/")
+)
+
+#' Dwc IRI Rank
+#' @export
+has_taxonomic_rank_id = rdf4r::identifier(
+  id = "taxonRank",
+  prefix = c(dwciri = "http://rs.tdwg.org/dwc/iri/")
+)
+
 
 #' Dwc Authorshiop
 #' @export
@@ -470,6 +493,42 @@ has_scientific_name = rdf4r::identifier(
   id = "scientificName",
   prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
 )
+
+
+#' Has Keyword
+#' @export
+has_keyword = rdf4r::identifier(
+  id = "keyword",
+  prefix = c(prism = "http://prismstandard.org/namespaces/basic/2.0/")
+)
+
+
+#' Has Issue
+#' @export
+has_issue = rdf4r::identifier(
+  id = "number",
+  prefix = c(prism = "http://prismstandard.org/namespaces/basic/2.0/")
+)
+
+
+#' Has Affiliation
+#' @export
+has_affiliation = rdf4r::identifier(
+  id = "affiliation",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+
+#' Has email
+#' @export
+has_email = rdf4r::identifier(
+  id = "mbox",
+  prefix = c(faof = "http://xmlns.com/foaf/0.1/")
+)
+
+
+
 
 
 #

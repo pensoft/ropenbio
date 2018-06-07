@@ -35,3 +35,4 @@ Collate:
     'sparql.R'
     'xml.R'
     'taxonx.R'
+    'taxpub.R'

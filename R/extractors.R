@@ -16,25 +16,28 @@
 #' @export
 node_extractor = function(node, xml_schema, reprocess, triples, access_options)
 {
-  if (processing_status(node) == FALSE || reprocess == TRUE) {
-    atoms = find_literals(node, xml_schema)
-    new_triples = xml_schema$constructor(
-      atoms,
-      identifiers = list(
-        nid = identifier(get_or_set_obkms_id(node), access_options$prefix["openbiodiv"]),
-        pid = identifier(parent_id(node), access_options$prefix["openbiodiv"]),
-        root_id = identifier(root_id(node, access_options), access_options$prefix["openbiodiv"])
-      ),
-      access_options = access_options)
+    if (processing_status(node) == FALSE || reprocess == TRUE) {
+      atoms = find_literals(node, xml_schema)
+      new_triples = xml_schema$constructor(
+        atoms,
+        identifiers = list(
+          nid = identifier(get_or_set_obkms_id(node), access_options$prefix["openbiodiv"]),
+          pid = identifier(parent_id(node), access_options$prefix["openbiodiv"]),
+          root_id = identifier(root_id(node, access_options), access_options$prefix["openbiodiv"])
+        ),
+        access_options = access_options)
 
-    new_triples$set_context(triples$context)
-    serialization = new_triples$serialize()
-    add_data(serialization, access_options = access_options)
 
-    xml2::xml_attr(node, "obkms_process") = "TRUE"
 
-    triples$add_triples(new_triples)
-  }
+
+      new_triples$set_context(triples$context)
+      serialization = new_triples$serialize()
+      add_data(serialization, access_options = access_options)
+
+      xml2::xml_attr(node, "obkms_process") = "TRUE"
+
+      triples$add_triples(new_triples)
+    }
     # add processing status
 
 
@@ -45,7 +48,9 @@ node_extractor = function(node, xml_schema, reprocess, triples, access_options)
         node_extractor(n, c, reprocess = reprocess, triples = triples, access_options = access_options)
       }
     }
-  return(triples)
+    return(triples)
+
+
 }
 
 

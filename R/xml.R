@@ -84,7 +84,7 @@ xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_
 
       triples = ResourceDescriptionFramework$new()
       root_id = identifier(
-        root_id(xml, access_options),
+        root_id(xml, access_options, xml_schema),
         access_options$prefix["openbiodiv"]
       )
 
@@ -280,14 +280,14 @@ parent_id = function (node, fullname = FALSE )
 #' @param node
 #'
 #' @export
-root_id = function(node, access_options)
+root_id = function(node, access_options, xml_schema = NULL)
 {
   # Is the root id set?
   root_node = xml2::xml_find_all(node, xpath = "/*")
 
   if (is.na(xml2::xml_attr(root_node, "obkms_id"))) {
     ltitle <- literal(
-      xml2::xml_text( xml2::xml_find_all(node, "/tax:taxonx/tax:taxonxHeader/mods:mods/mods:titleInfo/mods:title"))[1],
+      xml2::xml_text( xml2::xml_find_all(node, xml_schema$atoms["title"]))[1],
       xsd_type = rdf4r::xsd_string,
       lang = NA
     )

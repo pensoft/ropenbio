@@ -4,7 +4,7 @@
 \alias{root_id}
 \title{Get the Root (Article) OBKMS Id for an XML Node}
 \usage{
-root_id(node, access_options)
+root_id(node, access_options, xml_schema = NULL)
 }
 \arguments{
 \item{node}{}

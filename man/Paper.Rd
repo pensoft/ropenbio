@@ -3,12 +3,14 @@
 \docType{data}
 \name{Paper}
 \alias{Paper}
-\title{the informational content of an article}
+\title{Paper
+the informational content of an article}
 \format{An object of class \code{identifier} of length 4.}
 \usage{
 Paper
 }
 \description{
+Paper
 the informational content of an article
 }
 \keyword{datasets}
