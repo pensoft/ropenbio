@@ -5,7 +5,7 @@
 \alias{plazi_feed_schema}
 \alias{plazi_feed_schema}
 \title{Plazi Feed}
-\format{An object of class \code{xml_schema} (inherits from \code{R6}) of length 13.}
+\format{An object of class \code{xml_schema} (inherits from \code{R6}) of length 14.}
 \usage{
 plazi_feed_schema
 

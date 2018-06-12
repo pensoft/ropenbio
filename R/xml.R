@@ -29,10 +29,11 @@ XmlSchema =
                 atom_types = NULL,
                 atom_lang = NULL,
                 constructor = NULL,
+                injector = NULL,
                 components = NULL,
 
                 initialize =
-                  function(schema_name = NA, xpath = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA, atom_types = NULL, atom_lang = NA, constructor = NULL, components = NULL)
+                  function(schema_name = NA, xpath = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA, atom_types = NULL, atom_lang = NA, constructor = NULL, injector = NULL, components = NULL)
                   {
                     self$schema_name = schema_name
                     self$xpath = xpath
@@ -43,6 +44,7 @@ XmlSchema =
                     self$atom_lang = atom_lang
                     self$atom_types = atom_types
                     self$constructor = constructor
+                    self$injector = injector
                     self$components = components
                   }
               )
@@ -73,7 +75,7 @@ XmlSchema =
 #'
 #'
 #' @export
-xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_dir, reprocess = FALSE)
+xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_dir, reprocess = FALSE, dry = FALSE)
 {
   # generate lookup functions
 
@@ -81,6 +83,8 @@ xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_
   tryCatch(
     {
       xml = xml2::read_xml(filename)
+
+      #xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), split = "/"), xml)
 
       triples = ResourceDescriptionFramework$new()
       root_id = identifier(
@@ -95,7 +99,9 @@ xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_
         xml_schema = xml_schema,
         reprocess = reprocess,
         triples = triples,
-        access_options = access_options
+        access_options = access_options,
+        dry = dry,
+        filename = filename
       )
 
       xml2::write_xml(xml, filename)
@@ -346,5 +352,45 @@ remove_all_tags = function(xmldoc) {
 #' @return string without the escape characters
 #' @export
 unescape_html <- function(str){
-  xml2::xml_text(xml2::read_html(paste0("<x>", str, "</x>")))
+  xml2::xml_text(xml2::read_html(paste0("<x>", str, "</x>"
+
+                                        )))
 }
+
+
+
+
+
+#' Simpler version of find literals
+#'
+#' Finds the Atoms in a XML Node
+#'
+#' @param xml the XML node
+#' @param xpath the atom locations as a named character vector
+#'
+#' @return list
+#'
+#' @export
+find_atoms =
+  function(xml, xpath) {
+    lapply(xpath, function(p)
+    {
+      xml2::xml_text(xml2::xml_find_all(xml, p))
+    })
+  }
+
+
+
+
+#' Standard injector. Sets the id from the XPATH
+#'
+#' @param obkms_id
+#' @param xml_node
+#'
+#' @return
+#' @export
+standard_injector = function(obkms_id, xml_node)
+{
+  xml2::xml_attr(xml_node, "obkms_id") = obkms_id
+}
+

@@ -5,7 +5,7 @@
 \alias{plazi_int}
 \alias{plazi_int}
 \title{Plazi Internal}
-\format{An object of class \code{xml_schema} (inherits from \code{R6}) of length 13.}
+\format{An object of class \code{xml_schema} (inherits from \code{R6}) of length 14.}
 \usage{
 plazi_int
 

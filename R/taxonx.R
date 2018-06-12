@@ -63,6 +63,8 @@ taxonx = XmlSchema$new(
 
   constructor = metadata,
 
+  #injector = standard_injector,
+
   components = list(
     # Author
     XmlSchema$new(
@@ -108,6 +110,8 @@ taxonx = XmlSchema$new(
       atom_types = list(
         text_content =  rdf4r::xsd_string
       ),
+
+      injector = standard_injector,
 
       constructor = treatment,
 

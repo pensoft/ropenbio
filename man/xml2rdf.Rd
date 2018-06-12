@@ -5,7 +5,7 @@
 \title{RDF-ization of a Single XML File}
 \usage{
 xml2rdf(filename, xml_schema = taxonx, access_options, serialization_dir,
-  reprocess = FALSE)
+  reprocess = FALSE, dry = FALSE)
 }
 \arguments{
 \item{filename}{locator, e.g. file path or URL, of the XML resource}

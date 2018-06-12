@@ -7,8 +7,6 @@
 generate_aria2c_input(id, corpus_dir)
 }
 \arguments{
-\item{id}{a dataframe with information about treatments}
-
 \item{corpus_dir}{}
 }
 \value{

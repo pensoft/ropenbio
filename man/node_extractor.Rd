@@ -4,7 +4,8 @@
 \alias{node_extractor}
 \title{Node Extractor}
 \usage{
-node_extractor(node, xml_schema, reprocess, triples, access_options)
+node_extractor(node, xml_schema, reprocess, triples, access_options,
+  dry = FALSE, filename)
 }
 \arguments{
 \item{xml_schema}{XML schema of the XML resource; one of
@@ -16,6 +17,8 @@ taxpub taxonx or plazi_int}
 stored (note this is a side-effect/pass by reference)}
 
 \item{access_options}{endpoint to database to which to submit}
+
+\item{filename}{locator, e.g. file path or URL, of the XML resource}
 }
 \value{
 \code{ResourceDescriptionFramework} containing all the triples from
