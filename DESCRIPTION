@@ -13,9 +13,10 @@ License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
     httr,
-    RCurl,
-    XML,
-    rdf4r
+    rdf4r,
+    gsubfn,
+    uuid,
+    purrr
 Suggests:
     testthat,
     knitr,
