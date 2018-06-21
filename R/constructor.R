@@ -550,7 +550,6 @@ taxonomic_name_usage = function(atoms, identifiers, access_options)
 {
 
 
-
   atoml_to_val = function(atoml)
   {
     if (length(atoml) > 0) {

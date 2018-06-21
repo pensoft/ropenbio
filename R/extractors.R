@@ -16,6 +16,7 @@
 #' @export
 node_extractor = function(node, xml_schema, reprocess, triples, access_options, dry = FALSE, filename)
 {
+
     if (processing_status(node) == FALSE || reprocess == TRUE) {
       if (!is.null(xml_schema$injector)) {
 
