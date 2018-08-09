@@ -684,3 +684,28 @@ taxonomic_name_usage = function(atoms, identifiers, access_options)
 
   return(tt)
 }
+
+
+
+
+#'  Institution Code Usage
+#'
+#'  This creates RDF for institutional_code usages in the document.
+#'
+#' @param atoms a list of literals
+#' @param identifiers a list of identifiers
+#' @param access_options
+#'
+#' @return \code{ResourceDescriptionFramework}
+#' @export
+institution_code_usage = function(atoms, identifiers, access_options)
+{
+  tt = ResourceDescriptionFramework$new()
+  tt$add_triple(identifiers$nid, rdf_type, InstitutionalCodeUsage) # type
+  tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)   # containtment
+
+  sapply(atoms$text_content, function(i) { tt$add_triple(identifiers$nid, institutional_code, i) })
+
+  # TODO add Institions as resources
+  return(tt)
+}

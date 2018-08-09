@@ -1,13 +1,16 @@
+#' @export
 Collection = rdf4r::identifier(
   id = "Collection",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' @export
 Thing = rdf4r::identifier(
   id = "Thing",
   prefix = c(owl = "http://www.w3.org/2002/07/owl#")
 )
 
+#' @export
 Agent = rdf4r::identifier(
   id = "Agent",
   prefix = c(foaf = "http://xmlns.com/foaf/0.1/")
@@ -130,6 +133,14 @@ TaxonomicNameUsage = rdf4r::identifier(
 )
 
 
+#' TNU
+#' @export
+InstitutionalCodeUsage = rdf4r::identifier(
+  id = "InstitutionalCodeUsage",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
 #' Scientific Name
 #' @export
 ScientificName= rdf4r::identifier(
@@ -189,6 +200,7 @@ MaterialsExamined = rdf4r::identifier(
 #' Figure:
 #'  uri: <http://purl.org/spar/doco/Figure>
 #'   comment: a figure in a science article
+#' @export
 Figure = rdf4r::identifier(
   id = "Figure",
   prefix = c(doco = "http://purl.org/spar/doco/")
@@ -198,7 +210,7 @@ Figure = rdf4r::identifier(
 #' Abstract:
 #'   uri: <http://salt.semanticauthoring.org/ontologies/sro#Abstract>
 #' comment: an abstract of a science article
-#
+#' @export
 Abstract = rdf4r::identifier(
   id = "Abstract",
   prefix = c(sro = "http://salt.semanticauthoring.org/ontologies/sro#")
@@ -209,7 +221,7 @@ Abstract = rdf4r::identifier(
 #' Introduction:
 #'   uri: http://purl.org/spar/deo/Introduction>
 #' comment: an abstract of a science article
-#
+#' @export
 Introduction = rdf4r::identifier(
   id = "Introduction",
   prefix = c(deo = "http://purl.org/spar/deo/")
@@ -217,10 +229,10 @@ Introduction = rdf4r::identifier(
 
 
 
-# Title:
-#   uri: <http://purl.org/spar/doco/Title>
-#   comment: the title of an article
-#
+#' Title:
+#' uri: <http://purl.org/spar/doco/Title>
+#'   comment: the title of an article
+#' @export
 Title = rdf4r::identifier(
   id = "Title",
   prefix = c(doco = "http://purl.org/spar/doco/")
@@ -325,6 +337,14 @@ is_contained_by = rdf4r::identifier(
 has_content = rdf4r::identifier(
   id = "hasContent",
   prefix = c(c4o = "http://purl.org/spar/c4o/")
+)
+
+
+#' Institutional Code
+#' @export
+institutional_code = rdf4r::identifier(
+  id = "institutional_code",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
 )
 
 

@@ -217,7 +217,7 @@ taxpub = XmlSchema$new(
       xpath = "//sec[@sec-type='Discussion']", #rel path from treatment
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = "http://tb.plazi.org/GgServer/taxonx/",
+      prefix = NA,
       atoms = c(
         text_content = "."
       ),
@@ -503,6 +503,30 @@ taxpub = XmlSchema$new(
       ),
 
       constructor = taxonomic_name_usage,
+
+      components = NULL
+    ),
+
+    # Institution Code Usage
+    XmlSchema$new(
+      schema_name = "institution_code_usage",
+      xpath = "//named-content[@content-type='dwc:institutional_code']",
+      file_pattern = "",
+      extension = "",
+      prefix = NA,
+      atoms = c(
+        text_content = "."
+      ),
+
+      atom_lang = c(
+        text_content = NA
+      ),
+
+      atom_types = list(
+        text_content = rdf4r::xsd_string
+      ),
+
+      constructor = institution_code_usage,
 
       components = NULL
     )
