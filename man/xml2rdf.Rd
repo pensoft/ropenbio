@@ -2,29 +2,29 @@
 % Please edit documentation in R/xml.R
 \name{xml2rdf}
 \alias{xml2rdf}
-\title{Convert an XML Document to RDF}
+\title{RDF-ization of a Single XML File}
 \usage{
-xml2rdf(resource_locator, resource_type = "FILE",
-  resource_format = "TAXPUB", serialization_format = "Turtle")
+xml2rdf(filename, xml_schema = taxonx, access_options, serialization_dir,
+  reprocess = FALSE, dry = FALSE)
 }
 \arguments{
-\item{resource_locator}{locator, e.g. file path or URL, of the XML resource}
+\item{filename}{locator, e.g. file path or URL, of the XML resource}
 
-\item{resource_format}{XML schema of the XML resource; one of c( "TAXPUB", "PLAZI" );
-default is "TAXPUB"}
+\item{xml_schema}{XML schema of the XML resource; one of
+taxpub taxonx or plazi_int}
 
-\item{serialization_format}{output serialization format for the RDF; one of c( "TURTLE" );
-default is "TURTLE"}
+\item{access_options}{endpoint to database to which to submit}
 
-\item{locator_type}{type of the locator; one of c("FILE", "URL"); default is "FILE"}
+\item{serialization_dir}{directory where to dump intermediate serializations}
+
+\item{reprocess}{\code{logical}}
+
+\item{serialization_format}{default is "turtle"}
+}
+\value{
+\code{logical}. TRUE if everything went OK. FALSE if there was a problem
 }
 \description{
-The function ought to work on different types of XML documents. It tackes
-care of error checking and calling the correct top-level extractor.
-}
-\details{
-This function is exported and can be called from the user.
-}
-\author{
-Viktor Senderov
+Converts an XML file to RDF and submits it to a triple store. Writes
+the serialization in a file in the file system.
 }

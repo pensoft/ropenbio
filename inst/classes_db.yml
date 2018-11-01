@@ -1,6 +1,3 @@
-# TODO
-# list all properties of all classes - this could probably be extracted
-# from the ontology
 
 Collection:
   uri: <http://openbiodiv.net/Collection>

@@ -101,7 +101,7 @@ function(plazi_id, corpus_dir, xml_schema )
 #'
 #' WILL DOWNLOAD THE ONES THAT ARE FALSE!
 #'
-#' @param id a dataframe with information about treatments
+#' @param id
 #' @param corpus_dir
 #'
 #' @return character vector, containing the `aria2c` input file
@@ -215,24 +215,11 @@ plazi_images = function(id, directory) {
 #' @return character vector; `aria2c` input file
 #'
 #' @examples
-#' generate_aria2c_input_images(plazi_images(treatments$id, directory = plazi_corpus_dir))
+#' generate_aria2c_input_images(plazi_images(treatments$id, directory =
 #'
-#' @export
-generate_aria2c_input_images = function(image_list)
-{ # NOTE Don't like the score-indexing and the is.null hack
-  # maybe I could write a helper function instead of 1:length(x) that would
-  # take care of the case is.null(x)
-  process_one_treatment = function(id, links)
-  {
-    if (is.null(links)) {
-      return(character(0))
-    }
-    sapply(1:length(links), function(i) {
-      c(links[i], paste0("  out=", id, "-", i, get_filename_extension(links[i])))
-    })
-  }
-  unlist(sapply(1:length(image_list), function(i) {
-    process_one_treatment(names(image_list)[i], image_list[[i]])
-  }))
-}
-
+#'
+#'
+#'
+#'
+#'
+#'

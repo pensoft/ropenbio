@@ -1,11 +1,9 @@
 ---
 output: github_document
 ---
-## rdf4jr
+# ropenbio
 
-A collection of R-functions for accessing an RDF4J-compatible server via the RDF4J REST API.
-
-## Badges
+An R package for working with the OpenBiodiv knowledge system.
 
 To be determined whether I need them.
 

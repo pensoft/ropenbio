@@ -2,7 +2,7 @@
 % Please edit documentation in R/xml.R
 \name{find_atoms}
 \alias{find_atoms}
-\title{Finds the Atoms in a XML Node}
+\title{Simpler version of find literals}
 \usage{
 find_atoms(xml, xpath)
 }

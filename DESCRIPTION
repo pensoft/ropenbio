@@ -13,11 +13,27 @@ License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
     httr,
-    RCurl,
-    XML
+    rdf4r,
+    gsubfn,
+    uuid,
+    purrr
 Suggests:
     testthat,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
+Collate: 
+    'biology.R'
+    'blr-zenodo.R'
+    'constructor.R'
+    'extractors.R'
+    'nactem.R'
+    'pensoft.R'
+    'plazi.R'
+    'ropenbio.R'
+    'semantic-elements.R'
+    'sparql.R'
+    'xml.R'
+    'taxonx.R'
+    'taxpub.R'

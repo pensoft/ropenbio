@@ -4,10 +4,10 @@
 \alias{root_id}
 \title{Get the Root (Article) OBKMS Id for an XML Node}
 \usage{
-root_id(node, fullname = FALSE)
+root_id(node, access_options, xml_schema = NULL)
 }
 \arguments{
-\item{fullname}{}
+\item{node}{}
 }
 \description{
 Does not do any database lookups - only looks at XML
