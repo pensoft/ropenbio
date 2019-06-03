@@ -29,8 +29,8 @@ taxpub = XmlSchema$new(
     ending_page = NA,
     keyword = "/article/front/article-meta/kwd-group/kwd"
     #pensoft_pub = NA # becasue we skip only Pensoft pubs from Plazi
-    ),
-
+  ),
+  
   atom_lang = c(
     title = NA,
     date = NA,
@@ -51,7 +51,7 @@ taxpub = XmlSchema$new(
     #pensoft_pub = NA
     keyword = NA
   ),
-
+  
   atom_types = list(
     title = rdf4r::xsd_string,
     date = rdf4r::xsd_date,
@@ -72,9 +72,9 @@ taxpub = XmlSchema$new(
     #pensoft_pub = rdf4r::xsd_string
     keyword = rdf4r::xsd_string
   ),
-
+  mongo_key = c(article_meta = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
   constructor = metadata,
-
+  
   components = list(
     # Keyword
     XmlSchema$new(
@@ -86,17 +86,17 @@ taxpub = XmlSchema$new(
       atoms = c(
         keyword = "./kwd"
       ),
-
+      
       atom_lang = c(
         keyword = NA
       ),
-
+      
       atom_types = list(
         keyword =  rdf4r::xsd_string
       ),
-
+      mongo_key = c(keywords = "/article/front/article-meta/kwd-group"),
       constructor = keyword_group,
-
+      
       components = NULL
     ),
     # Abstract
@@ -110,22 +110,22 @@ taxpub = XmlSchema$new(
         text_content = ".",
         trans_abstract = "../trans-abstract"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         trans_abstract = "../trans-abstract/@xml:lang"
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         trans_abstract = rdf4r::xsd_string
       ),
-
+      mongo_key = c(abstract = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
       constructor = abstract,
-
+      
       components = NULL
     ),
-
+    
     # Title
     XmlSchema$new(
       schema_name = "taxpub_title",
@@ -136,20 +136,20 @@ taxpub = XmlSchema$new(
       atoms = c(
         text_content = "."
       ),
-
+      
       atom_lang = c(
         text_content = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string
       ),
-
+      mongo_key = c(article_title = "/article/front/article-meta/title-group/article-title"),
       constructor = title,
-
+      
       components = NULL
     ),
-
+    
     # Author
     XmlSchema$new(
       schema_name = "taxpub_author",
@@ -162,32 +162,39 @@ taxpub = XmlSchema$new(
         surname = "./name/surname",
         given_names = "./name/given-names",
         email = "./email",
-        aff_id = "./xref/@rid",
-        all_affiliations = "/article/front/article-meta/aff/addr-line"
-       # role = "./mods:role/mods:roleTerm"
+        aff_id = "./xref[@rid]",
+        all_affiliations_institutions = "//article/front/article-meta/aff/institution",
+        all_affiliations_cities = "//article/front/article-meta/aff/addr-line[@content-type='city']",
+        all_affiliations = NA
+        # role = "./mods:role/mods:roleTerm"
       ),
-
+      
       atom_lang = c(
         full_name = NA,
         surname = NA,
         given_names = NA,
         email = NA,
         aff_id = NA,
+        all_affiliations_institutions = NA,
+        all_affiliations_cities = NA,
         all_affiliations = NA
         #role = NA
       ),
-
+      
       atom_types = list(
         full_name = rdf4r::xsd_string,
         surname = rdf4r::xsd_string,
         given_names = rdf4r::xsd_string,
         email = rdf4r::xsd_string,
         aff_id = rdf4r::xsd_integer,
+        all_affiliations_institutions = rdf4r::xsd_string,
+        all_affiliations_cities =  rdf4r::xsd_string,
         all_affiliations = rdf4r::xsd_string
       ),
-
+      #change mongokey
+      mongo_key = c(author_name = "./name/given-names", surname = "./name/surname"),
       constructor = author,
-
+      
       components = NULL
     ),
     # Introduction
@@ -200,15 +207,15 @@ taxpub = XmlSchema$new(
       atoms = c(
         text_content = "."
       ),
-
+      
       atom_lang = c(
         text_content = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string
       ),
-
+      mongo_key = c(introduction = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
       constructor = introduction_section
     ),
     # DISCUSSION
@@ -221,15 +228,15 @@ taxpub = XmlSchema$new(
       atoms = c(
         text_content = "."
       ),
-
+      
       atom_lang = c(
         text_content = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string
       ),
-
+      mongo_key = c(discussion = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
       constructor = discussion
     ),
     # Treatment
@@ -242,17 +249,17 @@ taxpub = XmlSchema$new(
       atoms = c(
         text_content = "."
       ),
-
+      
       atom_lang = c(
         text_content = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string
       ),
-
+      mongo_key =  c(treatment = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
       constructor = treatment,
-
+      
       components = list(
         # Nomenclature
         XmlSchema$new(
@@ -264,11 +271,11 @@ taxpub = XmlSchema$new(
           atoms = c(
             text_content = "."
           ),
-
+          
           atom_lang = c(
             text_content = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string
           ),
@@ -283,21 +290,23 @@ taxpub = XmlSchema$new(
               atoms = c(
                 text_content = "."
               ),
-
+              
               atom_lang = c(
                 text_content = NA
               ),
-
+              
               atom_types = list(
                 text_content =  rdf4r::xsd_string
               ),
-
+              
               components = NULL,
-
+              mongo_key =  c(nomenclature_citations = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
+              
               constructor = nomenclature_citations
             )
           ),
-
+          mongo_key =  c(nomenclature = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
+          
           constructor = nomenclature
         ),
         # Materials Examined
@@ -310,18 +319,19 @@ taxpub = XmlSchema$new(
           atoms = c(
             text_content = "."
           ),
-
+          
           atom_lang = c(
             text_content = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string
           ),
-
+          mongo_key =  c(materials_examined = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
+          
           constructor = materials_examined
         ),
-
+        
         #Diagnosis
         XmlSchema$new(
           schema_name = "taxpub_diagnosis_section",
@@ -332,20 +342,21 @@ taxpub = XmlSchema$new(
           atoms = c(
             text_content = "."
           ),
-
+          
           atom_lang = c(
             text_content = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string
           ),
-
+          mongo_key =  c(diagnosis = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
+          
           constructor = diagnosis
         ),
-
-
-
+        
+        
+        
         # distribution
         XmlSchema$new(
           schema_name = "taxpub_distribution_section",
@@ -356,45 +367,45 @@ taxpub = XmlSchema$new(
           atoms = c(
             text_content = "."
           ),
-
+          
           atom_lang = c(
             text_content = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string
           ),
-
+          mongo_key =  c(distribution = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
           constructor = distribution
         )
-
+        
       )
     ),
-
+    
     # Taxonomic Key
     XmlSchema$new(
-        schema_name = "taxpub_taxonomic_key",
-        xpath = "/sec[@sec-type='key']",
-        file_pattern = ".*\\.xml",
-        extension = ".xml",
-        prefix = NA,
-        atoms = c(
-          text_content = "."
-        ),
-
+      schema_name = "taxpub_taxonomic_key",
+      xpath = "/sec[@sec-type='key']",
+      file_pattern = ".*\\.xml",
+      extension = ".xml",
+      prefix = NA,
+      atoms = c(
+        text_content = "."
+      ),
+      
       atom_lang = c(
         text_content = NA
       ),
-
+      
       atom_types = list(
         text_content = rdf4r::xsd_string
       ),
-
+      mongo_key =  c(taxonomic_key = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
       constructor = taxonomic_key,
-
+      
       components = NULL
     ),
-
+    
     # Figure
     XmlSchema$new(
       schema_name = "taxpub_figure",
@@ -406,22 +417,21 @@ taxpub = XmlSchema$new(
         text_content = ".",
         caption = "./caption"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         caption = NA
       ),
-
+      
       atom_types = list(
         text_content = rdf4r::xsd_string,
         caption = rdf4r::xsd_string
       ),
-
+      mongo_key = c(figure = "//fig|//fig-group"),
       constructor = figure,
-
+      
       components = NULL
     ),
-
     # Taxonomic Name Usage
     XmlSchema$new(
       schema_name = "taxpub_taxonomic_name_usage",
@@ -453,7 +463,7 @@ taxpub = XmlSchema$new(
         external_taxonomic_name_id = "./object-id",
         secundum_literal = NA
       ),
-
+      
       atom_lang = c(
         date = NA,
         pub_year = NA,
@@ -477,7 +487,7 @@ taxpub = XmlSchema$new(
         external_taxonomic_name_id = NA,
         secundum_literal = NA
       ),
-
+      
       atom_types = list(
         date = rdf4r::xsd_date,
         pub_year = rdf4r::xsd_integer,
@@ -501,36 +511,24 @@ taxpub = XmlSchema$new(
         external_taxonomic_name_id = rdf4r::xsd_string,
         secundum_literal = rdf4r::xsd_string
       ),
-
-      constructor = taxonomic_name_usage,
-
-      components = NULL
-    ),
-
-    # Institution Code Usage
-    XmlSchema$new(
-      schema_name = "institution_code_usage",
-      xpath = "//named-content[@content-type='dwc:institutional_code']",
-      file_pattern = "",
-      extension = "",
-      prefix = NA,
-      atoms = c(
-        text_content = "."
-      ),
-
-      atom_lang = c(
-        text_content = NA
-      ),
-
-      atom_types = list(
-        text_content = rdf4r::xsd_string
-      ),
-
-      constructor = institution_code_usage,
-
+      mongo_key = c(
+        kingdom = "./tp:taxon-name-part[@taxon-name-part-type='kingdom' or @taxon-name-part-type='Kingdom' or @taxon-name-part-type='divisio' or @taxon-name-part-type='Divisio' or @taxon-name-part-type='division' or @taxon-name-part-type='Division']",
+        phylum = "./tp:taxon-name-part[@taxon-name-part-type='phylum' or @taxon-name-part-type='Phylum' or @taxon-name-part-type='regnum' or @taxon-name-part-type='Regnum']",
+        class = "./tp:taxon-name-part[@taxon-name-part-type='class' or @taxon-name-part-type='Class' or @taxon-name-part-type='classis' or @taxon-name-part-type='Classis']",
+        order = "./tp:taxon-name-part[@taxon-name-part-type='order' or @taxon-name-part-type='Order' or @taxon-name-part-type='ordo' or @taxon-name-part-type='Ordo']",
+        family = "./tp:taxon-name-part[@taxon-name-part-type='family' or @taxon-name-part-type='Family' or @taxon-name-part-type='familia' or @taxon-name-part-type='Familia' or @taxon-name-part-type='famil' or @taxon-name-part-type='Famil']",
+        subfamily = "./tp:taxon-name-part[@taxon-name-part-type='subfamily' or @taxon-name-part-type='Subfamily' or @taxon-name-part-type='subfamilia' or @taxon-name-part-type='Subfamilia' or @taxon-name-part-type='subfamil' or @taxon-name-part-type='Subfamil' or @taxon-name-part-type='tribe' or @taxon-name-part-type='Tribe' or @taxon-name-part-type='tribus' or @taxon-name-part-type='Tribus' or @taxon-name-part-type='subtribe' or @taxon-name-part-type='Subtribe' or @taxon-name-part-type='subtribus' or @taxon-name-part-type='Subtribus']",
+        genus = "./tp:taxon-name-part[@taxon-name-part-type='genus' or @taxon-name-part-type='Genus' or @taxon-name-part-type='genera' or @taxon-name-part-type='Genera']",
+        subgenus = "./tp:taxon-name-part[@taxon-name-part-type='subgenus' or @taxon-name-part-type='Subgenus' or @taxon-name-part-type='subgenera' or @taxon-name-part-type='Subgenera' or @taxon-name-part-type='section' or @taxon-name-part-type='Section' or @taxon-name-part-type='sectio' or @taxon-name-part-type='Sectio']",
+        species = "./tp:taxon-name-part[@taxon-name-part-type='Species' or @taxon-name-part-type='species']",
+        subspecies = "/tp:taxon-name-part[@taxon-name-part-type='Subspecies' or @taxon-name-part-type='subspecies' or @taxon-name-part-type='Variety' or @taxon-name-part-type='variety' or @taxon-name-part-type='varietas' or @taxon-name-part-type='Varietas' or @taxon-name-part-type='variation' or @taxon-name-part-type='Variation' or @taxon-name-part-type='subvariety' or @taxon-name-part-type='Subvariety' or @taxon-name-part-type='subvarietas' or @taxon-name-part-type='Subvarietas' or @taxon-name-part-type='subvariation' or @taxon-name-part-type='Subvariation' or @taxon-name-part-type='Form' or @taxon-name-part-type='form' or @taxon-name-part-type='forma' or @taxon-name-part-type='Forma' or @taxon-name-part-type='aberration' or @taxon-name-part-type='Aberration' or @taxon-name-part-type='race' or @taxon-name-part-type='Race' or @taxon-name-part-type='Subform' or @taxon-name-part-type='subform' or @taxon-name-part-type='subforma' or @taxon-name-part-type='Subforma' or @taxon-name-part-type='subaberation' or @taxon-name-part-type='Subaberation' or @taxon-name-part-type='subrace' or @taxon-name-part-type='Subrace' ]",
+        authorship = "following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type='authority']",
+        secundum_literal = NA),
+        constructor = taxonomic_name_usage,
+      
       components = NULL
     )
-  )
+    )
 )
 
 
