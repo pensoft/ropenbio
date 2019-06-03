@@ -1,0 +1,116 @@
+#' @export
+get_author_label = function(node, mongo_key){
+  label = paste0(xml2::xml_text(xml2::xml_find_all(node, mongo_key[1])), " ", xml2::xml_text(xml2::xml_find_all(node, mongo_key[2])))
+  return(label)
+}
+
+#' @export
+get_author_orcid = function(node){
+  orcid = xml2::xml_text(xml2::xml_find_first(node, "./uri[@content-type='orcid']"))
+  orcid = gsub("^(.*)orcid.org\\/", "", orcid)
+  return(orcid)
+}
+
+#' @export
+get_taxon_label = function(node, mongo_key){
+  b=NULL
+  x = sapply(mongo_key, function(i){
+    label = xml2::xml_text(xml2::xml_find_all(node, i))
+    if(length(label) > 0 && label!="" && label!=" "){
+      b = c(b, label)
+      b
+    }
+  })
+  
+  tolit = do.call(get_scientific_name_or_tcl, x)
+  label = tolit
+  label
+}
+
+#' @export
+get_figure_label = function(node, mongo_key, id_num)
+{
+  caption_xpath = paste0("//fig[@id='",fig_number,"']","|//fig-group[@id='",fig_number,"']")
+  label = xml2::xml_text(xml2::xml_find_first(node, caption_xpath))
+  label
+}
+
+#' @export
+set_component_frame = function(label, mongo_key, type, orcid){
+  df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid)
+  df
+}
+
+#' @export
+process_author = function(node, mongo_key){
+  label = get_author_label(node, mongo_key)
+  orcid = get_author_orcid(node)
+  df = set_component_frame(label = label, mongo_key = c(author=""), type = names(mongo_key), orcid = orcid )
+  return(df)
+}
+
+#' @export
+process_tnu = function(node, mongo_key)
+{
+  label = get_taxon_label(node, mongo_key)
+  df = set_component_frame(label = label, mongo_key = c(taxonomic_name=""), type = names(mongo_key), orcid = NA )
+  return(df)
+}
+
+#' @export
+process_figure =  function(node, mongo_key)
+{
+  fig_number = xml2::xml_attr(node, "id")
+  label = get_figure_label(node, mongo_key, fig_number)
+  type = paste0(names(mongo_key), " ", fig_number)
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = type, orcid = NA )
+  return(df)
+}
+
+#' @export
+process_general_component = function(node, mongo_key){
+  label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA)
+  return(df)
+}
+
+#' @export
+process_schema_component = function(node, mongo_key)
+{
+  if (is.author(mongo_key) == TRUE){
+    df = process_author(node, mongo_key)
+  } else if (is.tnu(mongo_key) == TRUE){
+    df = process_tnu(node, mongo_key)
+  } else if (is.figure(mongo_key) == TRUE){
+    df = process_figure(node, mongo_key)
+  }
+  else{
+    df = process_general_component(node, mongo_key)
+  }
+  df
+}
+
+#' @export
+get_or_set_mongoid = function(df, schema_name, mongo_key){
+  general_collection = mongolite::mongo("new_collection")
+  
+  if (!(is.na(df$orcid))){
+    key = check_mongo_via_orcid(df$orcid, general_collection)
+    if (is.null(key) == TRUE){
+      id = paste0(schema_name,"/", names(mongo_key), "/", df$orcid)
+      save_to_mongo(key = id, value = df$label, type = df$type, collection = general_collection)
+    }
+    else
+      id = key
+  }else{
+    
+    key = check_mongo(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
+    if (is.null(key) == TRUE)
+    {
+      key = set_obkms(schema_name, df$type)
+      save_to_mongo(key = key, value = df$label, type = df$type, collection = general_collection)
+    }
+    id = key
+  }
+  return(id)
+}
