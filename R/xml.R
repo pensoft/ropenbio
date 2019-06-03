@@ -30,10 +30,11 @@ XmlSchema =
                 atom_lang = NULL,
                 constructor = NULL,
                 injector = NULL,
+                mongo_key = NULL,
                 components = NULL,
 
                 initialize =
-                  function(schema_name = NA, xpath = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA, atom_types = NULL, atom_lang = NA, constructor = NULL, injector = NULL, components = NULL)
+                  function(schema_name = NA, xpath = NA, file_pattern = NA, extension = NA, prefix = NA, atoms = NA, atom_types = NULL, atom_lang = NA, constructor = NULL, injector = NULL, mongo_key = NULL, components = NULL)
                   {
                     self$schema_name = schema_name
                     self$xpath = xpath
@@ -45,6 +46,7 @@ XmlSchema =
                     self$atom_types = atom_types
                     self$constructor = constructor
                     self$injector = injector
+                    self$mongo_key = mongo_key
                     self$components = components
                   }
               )
@@ -85,24 +87,24 @@ xml2rdf = function(filename, xml_schema = taxonx, access_options, serialization_
       xml = xml2::read_xml(filename)
 
       #xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), split = "/"), xml)
+      prefix = c(openbiodiv = "http://openbiodiv.net")
 
       triples = ResourceDescriptionFramework$new()
-      root_id = identifier(
-        root_id(xml, access_options, xml_schema),
-        access_options$prefix["openbiodiv"]
-      )
+      root_ident = root_id(node=xml, access_options=obkms, xml_schema = taxpub, xml=xml, schema_name=xml_schema$schema_name, mongo_key = c(article = "//article/front/article-meta/article-id[@pub-id-type='doi']"), prefix = prefix, blank = FALSE)
 
-      triples$set_context(root_id)
+      triples$set_context(root_ident)
 
-      triples = node_extractor(
-        node = xml,
-        xml_schema = xml_schema,
-        reprocess = reprocess,
-        triples = triples,
-        access_options = access_options,
-        dry = dry,
-        filename = filename
-      )
+     triples = node_extractor(
+	node = xml,
+	xml_schema = xml_schema,
+	reprocess = reprocess,
+	triples = triples,
+	access_options = access_options,
+	dry = dry,
+	filename = filename,
+	root_id = root_ident
+	)
+
 
       xml2::write_xml(xml, filename)
 
@@ -154,7 +156,20 @@ get_or_set_obkms_id = function (node)
 }
 
 
-
+#' Set the OBKMS ID of an XML node according to new id format
+#'
+#' Does not do any database lookups.
+#'
+#' @param schema_name the name of the xml_schema
+#' @param mongo_name the names of mongo_key
+#' @return the local id (not an identifier object)
+#'
+#' @export
+set_obkms = function(schema_name, mongo_name)
+{
+  random = uuid::UUIDgenerate()
+  id = paste0(schema_name,"/", mongo_name, "/",random)
+}
 
 
 
@@ -286,7 +301,7 @@ parent_id = function (node, fullname = FALSE )
 #' @param node
 #'
 #' @export
-root_id = function(node, access_options, xml_schema = NULL)
+root_id = function(node, access_options, xml_schema, xml, schema_name, mongo_key, prefix = NA, blank = FALSE)
 {
   # Is the root id set?
   root_node = xml2::xml_find_all(node, xpath = "/*")
@@ -297,26 +312,20 @@ root_id = function(node, access_options, xml_schema = NULL)
       xsd_type = rdf4r::xsd_string,
       lang = NA
     )
-
-    opebiodiv_id_via_label_lookup = identifier_factory(
-      fun = list(
-        query_factory(
-          p_query = qlookup_by_label,
-          access_options = access_options
-        )
-      ),
-      prefixes = access_options$prefix,
-      def_prefix = access_options$prefix["openbiodiv"]
-    )
-
-    root_id = opebiodiv_id_via_label_lookup(list(ltitle))
-
-    xml2::xml_attr(root_node, "obkms_id") = root_id$id
+   id =  identifier_new(root_node, xml, schema_name, mongo_key, prefix = NA, blank = FALSE)
+    xml2::xml_attr(root_node, "obkms_id") = id
+    #save_mongo - use ltitle as label
   }
 
-  xml2::xml_attr(root_node, "obkms_id")
-}
+  id  = xml2::xml_attr(root_node, "obkms_id")
+  uri = strip_angle(pasteif(prefix[1], "/",id, cond = (!is.na(prefix)),
+                            return_value = id), reverse = TRUE)
 
+  qname = pasteif(names(prefix)[1], id, sep = ":", cond = !is.na(prefix), return_value = uri)
+  ll = list(id = id, uri = uri, qname = qname, prefix = prefix)
+  class(ll) = "identifier"
+  ll
+}
 
 
 
