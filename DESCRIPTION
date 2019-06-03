@@ -22,15 +22,20 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Collate: 
     'biology.R'
     'blr-zenodo.R'
+    'components_checks.R'
     'constructor.R'
     'extractors.R'
+    'identifier_factory_new.R'
+    'identifier_new.R'
+    'mongo_operations.R'
     'nactem.R'
     'pensoft.R'
     'plazi.R'
+    'refactoring_fns.R'
     'ropenbio.R'
     'semantic-elements.R'
     'sparql.R'
