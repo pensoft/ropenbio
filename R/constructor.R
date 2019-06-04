@@ -555,14 +555,14 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
     atoms$genus = atoms$regularzied_genus
   }
   tnu_collection = mongolite::mongo("tnus")
-  label = label[!is.null(label)]
+  #label = label[!is.null(label)]
   paper_id = stringr::str_extract(identifiers$root_id$id, "([^\\/]*)$")
   mongo_tnu = check_mongo(paper_id, label$text_value, tnu_collection, 
                           regex = FALSE)
   if (is.null(mongo_tnu)) {
     mongo_tnu = set_obkms(schema_name, "tnu")
-    label = as.character(label$text_value)
-    save_to_mongo(key = mongo_tnu, value = paper_id, type = label, 
+    type = as.character(label$text_value)
+    save_to_mongo(key = mongo_tnu, value = paper_id, type = type, 
                   collection = tnu_collection)
   }
   tnu_id = identifier(mongo_tnu, prefix = access_options$prefix)
@@ -573,7 +573,8 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
   atoms$date = append(atoms$date, todate(atoms$pub_year, atoms$pub_month, 
                                          atoms$pub_day))
   article_id = identifiers$root_id
-  parent_element_id = identifiers$pid
+ 
+  parent_element_id = identifiers$pid #only works if the pid is set as identifier(parent_id(node))
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(tnu_id, rdf_type, TaxonomicNameUsage)
   tt$add_triple(tnu_id, mentions, taxon_id)
@@ -631,6 +632,7 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
   })
   return(tt)
 }
+
 
 
 
