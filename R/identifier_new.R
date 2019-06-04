@@ -1,3 +1,8 @@
+#' Identifier new
+#'
+#' A modification of identifier() from rdf4r (queries mongo, instead of openbiodiv)
+#'
+#' @export
 identifier_new = function (node, xml, schema_name, mongo_key, prefix = NA, blank = FALSE) 
 {
   if (blank == TRUE) {
