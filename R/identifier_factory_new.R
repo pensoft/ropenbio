@@ -1,3 +1,8 @@
+#' Identifier factory
+#'
+#' A modified fn from rdf4r
+#'
+#'@export
 identifier_factory = function (fun, prefixes, def_prefix, schema_name, mongo_key) 
 {
   function(label, generate = TRUE) {
