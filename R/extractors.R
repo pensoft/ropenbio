@@ -15,7 +15,7 @@
 #'
 #' @export
 node_extractor = function (node, xml_schema, reprocess, triples, access_options, 
-                             dry = FALSE, filename, root_id=root_ident) 
+                             dry = FALSE, filename, root_id) 
   {
     if (processing_status(node) == FALSE || reprocess == TRUE) {
       if (!is.null(xml_schema$injector)) {
@@ -25,7 +25,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, access_options,
       atoms = find_literals(node, xml_schema)
       new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key, prefix = access_options$prefix["openbiodiv"], blank = FALSE), 
                                                                      pid = parent_id(node), 
-                                                                     root_id = root_ident),
+                                                                     root_id = root_id),
                                                                      access_options = access_options, 
                                                                      schema_name = xml_schema$schema_name,
                                                                      mongo_key = xml_schema$mongo_key)
@@ -44,7 +44,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, access_options,
       for (n in nodel) {
         node_extractor(n, c, reprocess = reprocess, triples = triples, 
                        access_options = access_options, dry = dry, 
-                       filename = filename, root_id = root_ident)
+                       filename = filename, root_id = root_id)
       }
     }
     return(triples)
