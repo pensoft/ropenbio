@@ -4,7 +4,8 @@
 \alias{introduction_section}
 \title{Introduction Section Constructor}
 \usage{
-introduction_section(atoms, identifiers, access_options)
+introduction_section(atoms, identifiers, access_options, schema_name,
+  mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

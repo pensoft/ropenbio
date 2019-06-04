@@ -3,7 +3,6 @@
 \docType{data}
 \name{dwc_subspecies_ep}
 \alias{dwc_subspecies_ep}
-\alias{dwc_subspecies_ep}
 \title{Dwc genus}
 \format{An object of class \code{identifier} of length 4.}
 \usage{

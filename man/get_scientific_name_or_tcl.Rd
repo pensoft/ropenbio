@@ -5,8 +5,9 @@
 \title{Get the Label (Monimial, Bionomial, or Trinomial Name, or Taxonomic Concept Label) from Taxonomic Name Atoms}
 \usage{
 get_scientific_name_or_tcl(kingdom = NA, phylum = NA, class = NA,
-  order = NA, family = NA, subfamily = NA, genus = NA, subgenus = NA,
-  species = NA, subspecies = NA, authorship = NA, secundum_literal = NA)
+  order = NA, family = NA, subfamily = NA, genus = NA,
+  subgenus = NA, species = NA, subspecies = NA, authorship = NA,
+  secundum_literal = NA)
 }
 \arguments{
 \item{secundum_literal}{}

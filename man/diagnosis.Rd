@@ -4,7 +4,7 @@
 \alias{diagnosis}
 \title{Diagnosis Section Constructor}
 \usage{
-diagnosis(atoms, identifiers, access_options)
+diagnosis(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

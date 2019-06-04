@@ -4,7 +4,7 @@
 \alias{figure}
 \title{Figure Constructor}
 \usage{
-figure(atoms, identifiers, access_options)
+figure(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}
