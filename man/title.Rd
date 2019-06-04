@@ -4,7 +4,7 @@
 \alias{title}
 \title{Title Constructor}
 \usage{
-title(atoms, identifiers, access_options)
+title(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

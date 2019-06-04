@@ -4,7 +4,7 @@
 \alias{taxonomic_key}
 \title{Taxonomic Key Section Constructor}
 \usage{
-taxonomic_key(atoms, identifiers, access_options)
+taxonomic_key(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

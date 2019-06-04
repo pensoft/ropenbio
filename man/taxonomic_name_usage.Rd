@@ -4,7 +4,8 @@
 \alias{taxonomic_name_usage}
 \title{Taxonomic Name Usage Constructor}
 \usage{
-taxonomic_name_usage(atoms, identifiers, access_options)
+taxonomic_name_usage(atoms, identifiers, access_options, schema_name,
+  mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

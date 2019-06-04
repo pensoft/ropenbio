@@ -4,7 +4,7 @@
 \alias{abstract}
 \title{Abstract Constructor}
 \usage{
-abstract(atoms, identifiers, access_options)
+abstract(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

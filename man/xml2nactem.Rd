@@ -4,7 +4,8 @@
 \alias{xml2nactem}
 \title{Convert an XML File to Plain Text NaCTeM Format}
 \usage{
-xml2nactem(xml_filename, TNU_markup, PTNU_markup, regPTNU_markup, xmlschema)
+xml2nactem(xml_filename, TNU_markup, PTNU_markup, regPTNU_markup,
+  xmlschema)
 }
 \arguments{
 \item{xml_filename}{the filename (one XML file) to convert to NaCTeM plain text}

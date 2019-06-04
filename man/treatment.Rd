@@ -4,7 +4,7 @@
 \alias{treatment}
 \title{Treatment Constructor}
 \usage{
-treatment(atoms, identifiers, access_options)
+treatment(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}
