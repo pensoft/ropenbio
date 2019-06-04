@@ -12,7 +12,8 @@ get_author_orcid = function(node){
 }
 
 #' @export
-get_taxon_label = function(node, mongo_key){
+get_taxon_label = function(node, mongo_key)
+{
   b=NULL
   x = sapply(mongo_key, function(i){
     label = xml2::xml_text(xml2::xml_find_all(node, i))
@@ -28,47 +29,56 @@ get_taxon_label = function(node, mongo_key){
 }
 
 #' @export
-get_figure_label = function(node, mongo_key, id_num)
+get_figure_label = function (node, mongo_key, fig_number) 
 {
-  caption_xpath = paste0("//fig[@id='",fig_number,"']","|//fig-group[@id='",fig_number,"']")
+  caption_xpath = paste0("//fig[@id='", fig_number, "']", "|//fig-group[@id='", fig_number, "']")
   label = xml2::xml_text(xml2::xml_find_first(node, caption_xpath))
   label
 }
 
+
 #' @export
-set_component_frame = function(label, mongo_key, type, orcid){
+set_component_frame = function(label, mongo_key, type, orcid)
+{
   df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid)
   df
 }
 
 #' @export
-process_author = function(node, mongo_key){
+process_author = function (node, mongo_key) 
+{
   label = get_author_label(node, mongo_key)
   orcid = get_author_orcid(node)
-  df = set_component_frame(label = label, mongo_key = c(author=""), type = names(mongo_key), orcid = orcid )
+  mongo_key = c(author = "")
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = orcid)
   return(df)
 }
 
+
 #' @export
-process_tnu = function(node, mongo_key)
+process_tnu = function (node, mongo_key) 
 {
   label = get_taxon_label(node, mongo_key)
-  df = set_component_frame(label = label, mongo_key = c(taxonomic_name=""), type = names(mongo_key), orcid = NA )
+  mongo_key = c(taxonomic_name = "")
+  df = set_component_frame(label = label, mongo_key = mongo_key,type = names(mongo_key), orcid = NA)
   return(df)
 }
 
+
 #' @export
-process_figure =  function(node, mongo_key)
+process_figure =  function (node, mongo_key) 
 {
   fig_number = xml2::xml_attr(node, "id")
   label = get_figure_label(node, mongo_key, fig_number)
   type = paste0(names(mongo_key), " ", fig_number)
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = type, orcid = NA )
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = type, orcid = NA)
   return(df)
 }
 
+
 #' @export
-process_general_component = function(node, mongo_key){
+process_general_component = function(node, mongo_key)
+{
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
   df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA)
   return(df)
