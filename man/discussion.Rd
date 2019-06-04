@@ -4,7 +4,7 @@
 \alias{discussion}
 \title{Discussion Section Constructor}
 \usage{
-discussion(atoms, identifiers, access_options)
+discussion(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}
