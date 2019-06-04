@@ -16,42 +16,37 @@ metadata = function (atoms, identifiers, access_options, schema_name, mongo_key)
   if (length(atoms$pensoft_pub) > 0) {
     stop("Pensoft publication")
   }
-  
-  #query mongo for research paper
   general_collection = mongolite::mongo("new_collection")
-  # print(unlist(atoms$doi)["text_value"])
   doi = unlist(atoms$doi)["text_value"]
-  paper_key = check_mongo(value = doi, type = "research_paper", collection = general_collection, regex = FALSE)
-  if (is.null(paper_key)==TRUE){
-    #if there is no research paper id, create it and save it in the collection
+  paper_key = check_mongo(value = doi, type = "research_paper", 
+                          collection = general_collection, regex = FALSE)
+  if (is.null(paper_key) == TRUE) {
     paper_key = set_obkms("taxpub_research_paper", "research_paper")
-    save_to_mongo(key = paper_key, value = doi, type = "research_paper", collection = general_collection)
+    save_to_mongo(key = paper_key, value = doi, type = "research_paper", 
+                  collection = general_collection)
   }
-  paper_id = identifier(paper_key)
+  
+  paper_id = identifier(paper_key, access_options$prefix["openbiodiv"])
   article_id = identifiers$root_id
-  
-  
-  #query mongo for publisher id
   publisher_lit = unlist(atoms$publisher)["text_value"]
   
-  publisher_key = check_mongo(value = publisher_lit, type = "publisher", collection = general_collection, regex = FALSE)
-  if (is.null(publisher_key)==TRUE){
-    #if there is no research paper id, create it and save it in the collection
+  publisher_key = check_mongo(value = publisher_lit, type = "publisher", 
+                              collection = general_collection, regex = FALSE)
+  if (is.null(publisher_key) == TRUE) {
     publisher_key = set_obkms("taxpub_publisher", "publisher")
-    save_to_mongo(key = publisher_key, value = publisher_lit, type = "publisher", collection = general_collection)
+    save_to_mongo(key = publisher_key, value = publisher_lit, 
+                  type = "publisher", collection = general_collection)
   }
-  publisher_id = identifier(publisher_key)
-  
-  #query mongo for journal id
+  publisher_id = identifier(publisher_key, access_options$prefix["openbiodiv"])
   journal_lit = unlist(atoms$journal)["text_value"]
-  journal_key = check_mongo(value = journal_lit, type = "journal", collection = general_collection, regex = FALSE)
-  if (is.null(journal_key)==TRUE){
-    #if there is no research paper id, create it and save it in the collection
+  journal_key = check_mongo(value = journal_lit, type = "journal", 
+                            collection = general_collection, regex = FALSE)
+  if (is.null(journal_key) == TRUE) {
     journal_key = set_obkms("taxpub_journal", "journal")
-    save_to_mongo(key = journal_key, value = journal_lit, type = "journal", collection = general_collection)
+    save_to_mongo(key = journal_key, value = journal_lit, 
+                  type = "journal", collection = general_collection)
   }
-  journal_id = identifier(journal_key)
-  
+  journal_id = identifier(journal_key, access_options$prefix["openbiodiv"])
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(journal_id, rdf_type, Journal)
   sapply(atoms$journal, function(j) {
@@ -102,6 +97,7 @@ metadata = function (atoms, identifiers, access_options, schema_name, mongo_key)
   tt$add_triple(paper_id, rdf_type, Paper)
   return(tt)
 }
+
 
 
 
@@ -510,45 +506,28 @@ figure =  function (atoms, identifiers, access_options, schema_name, mongo_key)
 #' @export
 taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name, mongo_key) 
 {
-  
   taxon_id = identifiers$nid
-  # print(taxon_id)
-  atoml_to_val = function(atoml)
-  {
+  atoml_to_val = function(atoml) {
     if (length(atoml) > 0) {
       return(atoml[[1]]$text_value)
     }
     else {
-      return (NA)
+      return(NA)
     }
   }
-  
-  
-  # identifiers
-  label = literal(get_scientific_name_or_tcl(kingdom = atoml_to_val(atoms$kingdom),
-                                             phylum = atoml_to_val(atoms$phylum),
-                                             class = atoml_to_val(atoms$class),
-                                             order = atoml_to_val(atoms$order),
-                                             family = atoml_to_val(atoms$family),
-                                             subfamily = atoml_to_val(atoms$subfamily),
-                                             genus = atoml_to_val(atoms$genus),
-                                             subgenus = atoml_to_val(atoms$subgenus),
-                                             species = atoml_to_val(atoms$species),
-                                             subspecies = atoml_to_val(atoms$subspecies),
-                                             authorship = atoml_to_val(atoms$authorship),
+  label = literal(get_scientific_name_or_tcl(kingdom = atoml_to_val(atoms$kingdom), 
+                                             phylum = atoml_to_val(atoms$phylum), class = atoml_to_val(atoms$class), 
+                                             order = atoml_to_val(atoms$order), family = atoml_to_val(atoms$family), 
+                                             subfamily = atoml_to_val(atoms$subfamily), genus = atoml_to_val(atoms$genus), 
+                                             subgenus = atoml_to_val(atoms$subgenus), species = atoml_to_val(atoms$species), 
+                                             subspecies = atoml_to_val(atoms$subspecies), authorship = atoml_to_val(atoms$authorship), 
                                              secundum_literal = atoml_to_val(atoms$secundum_literal)))
-  
-  
-  if (is.null(label) && length(atoms$verbatim) >= 1)
-  {
+  if (is.null(label) && length(atoms$verbatim) >= 1) {
     label = atoms$verbatim[[1]]
   }
-  if (is.null(label))
-  {
-    
+  if (is.null(label)) {
     return(ResourceDescriptionFramework$new())
   }
-  
   if (length(atoms$verbatim_status) >= 1) {
     atoms$status = list(verbstat2openbiodiv(atoms$verbatim_status[[1]]$text_value, 
                                             def_prefix = access_options$prefix))
@@ -575,24 +554,18 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
   if (length(atoms$regularzied_genus) > 0) {
     atoms$genus = atoms$regularzied_genus
   }
-  
-  #find the tnu_id by looking at mongo collection for tnus
   tnu_collection = mongolite::mongo("tnus")
   label = label[!is.null(label)]
   paper_id = stringr::str_extract(identifiers$root_id$id, "([^\\/]*)$")
-  #HERE DO A REGEX SEARCH
-  mongo_tnu = check_mongo(paper_id, label$text_value, tnu_collection, regex = FALSE)
-  
-  #if there is no tnu there, create it and  save it
-  if (is.null(mongo_tnu)){
-    #create id and save the tnu
+  mongo_tnu = check_mongo(paper_id, label$text_value, tnu_collection, 
+                          regex = FALSE)
+  if (is.null(mongo_tnu)) {
     mongo_tnu = set_obkms(schema_name, "tnu")
     label = as.character(label$text_value)
-    save_to_mongo(key = mongo_tnu, value = paper_id , type = label, collection = tnu_collection)
+    save_to_mongo(key = mongo_tnu, value = paper_id, type = label, 
+                  collection = tnu_collection)
   }
-  #if there is id, jsut take it
-  tnu_id = identifier(mongo_tnu)
-
+  tnu_id = identifier(mongo_tnu, prefix = access_options$prefix)
   todate = function(year, month, day) {
     list(literal(paste(year[[1]]$text_value, month[[1]]$text_value, 
                        day[[1]]$text_value, sep = "-"), xsd_type = rdf4r::xsd_date))
@@ -601,7 +574,6 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
                                          atoms$pub_day))
   article_id = identifiers$root_id
   parent_element_id = identifiers$pid
-  
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(tnu_id, rdf_type, TaxonomicNameUsage)
   tt$add_triple(tnu_id, mentions, taxon_id)
@@ -652,14 +624,14 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
     tt$add_triple(taxon_id, has_verbatim_rank, i)
   })
   sapply(atoms$taxonomic_rank, function(i) {
-    tt$add_triple(taxon_id, has_taxonomic_rank_id, 
-                  i)
+    tt$add_triple(taxon_id, has_taxonomic_rank_id, i)
   })
   sapply(atoms$authorship, function(i) {
     tt$add_triple(taxon_id, dwc_authorship, i)
   })
   return(tt)
 }
+
 
 
 
