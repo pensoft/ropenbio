@@ -24,7 +24,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, access_options,
       }
       atoms = find_literals(node, xml_schema)
       new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key, prefix = access_options$prefix["openbiodiv"], blank = FALSE), 
-                                                                     pid = parent_id(node), 
+                                                                      pid = identifier(parent_id(node), access_options$prefix["openbiodiv"]), 
                                                                      root_id = root_id),
                                                                      access_options = access_options, 
                                                                      schema_name = xml_schema$schema_name,
