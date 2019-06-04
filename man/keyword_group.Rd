@@ -4,7 +4,7 @@
 \alias{keyword_group}
 \title{Keyword Group Constructor}
 \usage{
-keyword_group(atoms, identifiers, access_options)
+keyword_group(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

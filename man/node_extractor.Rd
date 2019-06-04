@@ -5,7 +5,7 @@
 \title{Node Extractor}
 \usage{
 node_extractor(node, xml_schema, reprocess, triples, access_options,
-  dry = FALSE, filename)
+  dry = FALSE, filename, root_id = root_ident)
 }
 \arguments{
 \item{xml_schema}{XML schema of the XML resource; one of

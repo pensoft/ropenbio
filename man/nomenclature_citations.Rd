@@ -4,7 +4,8 @@
 \alias{nomenclature_citations}
 \title{Nomenclature Constructor}
 \usage{
-nomenclature_citations(atoms, identifiers, access_options)
+nomenclature_citations(atoms, identifiers, access_options, schema_name,
+  mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

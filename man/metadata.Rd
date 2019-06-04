@@ -4,7 +4,7 @@
 \alias{metadata}
 \title{Metadata constructor}
 \usage{
-metadata(atoms, identifiers, access_options)
+metadata(atoms, identifiers, access_options, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}
