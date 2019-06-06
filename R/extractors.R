@@ -14,39 +14,37 @@
 #'   the article
 #'
 #' @export
-node_extractor = function (node, xml_schema, reprocess, triples, access_options, 
-                             dry = FALSE, filename, root_id) 
-  {
-    if (processing_status(node) == FALSE || reprocess == TRUE) {
-      if (!is.null(xml_schema$injector)) {
-        xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), 
-                                                         split = "/"), node)
-      }
-      atoms = find_literals(node, xml_schema)
-      new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key, prefix = access_options$prefix["openbiodiv"], blank = FALSE), 
-                                                                      pid = identifier(parent_id(node), access_options$prefix["openbiodiv"]), 
-                                                                     root_id = root_id),
-                                                                     access_options = access_options, 
-                                                                     schema_name = xml_schema$schema_name,
-                                                                     mongo_key = xml_schema$mongo_key)
-   
-      new_triples$set_context(triples$context)
-      serialization = new_triples$serialize()
-   
-      if (dry == FALSE) {
-        add_data(serialization, access_options = access_options)
-      }
-      xml2::xml_attr(node, "obkms_process") = "TRUE"
-      triples$add_triples(new_triples)
+node_extractor = function (node, xml_schema, reprocess, triples, prefix, 
+          dry = FALSE, filename, root_id) 
+{
+  if (processing_status(node) == FALSE || reprocess == TRUE) {
+    if (!is.null(xml_schema$injector)) {
+      xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), 
+                                                       split = "/"), node)
     }
-    for (c in xml_schema$components) {
-      nodel = xml2::xml_find_all(node, c$xpath)
-      for (n in nodel) {
-        node_extractor(n, c, reprocess = reprocess, triples = triples, 
-                       access_options = access_options, dry = dry, 
-                       filename = filename, root_id = root_id)
-      }
-    }
-    return(triples)
+    atoms = find_literals(node, xml_schema)
+    #TODO parent_id identifier prefix should be the actual identifier prefix
+    new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, 
+                                                                                        xml, mongo_key = xml_schema$mongo_key, 
+                                                                                        prefix = xml_schema$prefix, blank = FALSE), 
+                                                                   pid = identifier(parent_id(node), c(openbiodiv = "http://openbiodiv.net/")),  root_id = root_id), prefix = xml_schema$prefix, 
+                                         schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key)
+    new_triples$set_context(triples$context)
+    serialization = new_triples$serialize()
+    # if (dry == FALSE) {
+    #    add_data(serialization, access_options = access_options)
+    #  }
+    xml2::xml_attr(node, "obkms_process") = "TRUE"
+    triples$add_triples(new_triples)
   }
+  for (c in xml_schema$components) {
+    nodel = xml2::xml_find_all(node, c$xpath)
+    for (n in nodel) {
+      node_extractor(n, c, reprocess = reprocess, triples = triples, 
+                     prefix = c$prefix, dry = dry, filename = filename, 
+                     root_id = root_id)
+    }
+  }
+  return(triples)
+}
 
