@@ -127,15 +127,10 @@ get_or_set_mongoid= function (df, prefix)
       save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, 
                     collection = general_collection)
     }
-    id = key
+    id = rdf4r::strip_angle(key)
+    id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
   }
   return(id)
-}
-
-# escapes " char because it interferes with json query
-#' @export
-escape_special = function(string){
-  string <- gsub("\"", "\\\"", string , fixed = TRUE)
 }
 
 
