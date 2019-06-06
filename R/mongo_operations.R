@@ -6,7 +6,6 @@ check_mongo = function(value, type, collection, regex)
     query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "value", "$regex", value, "$options", "i")
   }else{
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
-    print(query)
   }
   key = collection$find(query)$key
   return(key)    
