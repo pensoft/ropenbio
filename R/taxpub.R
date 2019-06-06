@@ -8,7 +8,7 @@ taxpub = XmlSchema$new(
   xpath = "/",
   file_pattern = ".*\\.xml",
   extension = ".xml",
-  prefix = c(openbiodivArticle = "http://openbiodiv.net/resource/article"),
+  prefix = c(openbiodivArticle = "http://openbiodiv.net/resource/article/"),
   atoms = c(
     title = "/article/front/article-meta/title-group/article-title",
     date = NA,
@@ -72,7 +72,7 @@ taxpub = XmlSchema$new(
     #pensoft_pub = rdf4r::xsd_string
     keyword = rdf4r::xsd_string
   ),
-  mongo_key = c(article_meta = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
+  mongo_key = c(article = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
   constructor = metadata,
   
   components = list(
@@ -82,7 +82,7 @@ taxpub = XmlSchema$new(
       xpath = "/article/front/article-meta/kwd-group",
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivKeywordGroup = "http://openbiodiv.net/resource/keywordGroup"),
+      prefix = c(openbiodivKeywords = "http://openbiodiv.net/resource/keywordGroup/"),
       atoms = c(
         keyword = "./kwd"
       ),
@@ -132,7 +132,7 @@ taxpub = XmlSchema$new(
       xpath = "/article/front/article-meta/title-group/article-title",
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivArticleTitle = "http://openbiodiv.net/resource/articleTitle"),
+      prefix = c(openbiodivTitle = "http://openbiodiv.net/resource/articleTitle/"),
       atoms = c(
         text_content = "."
       ),
@@ -156,7 +156,7 @@ taxpub = XmlSchema$new(
       xpath = "/article/front/article-meta/contrib-group/contrib",
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivAuthor = "http://openbiodiv.net/resource/author"),
+      prefix = c(openbiodivAuthor = "http://openbiodiv.net/resource/author/"),
       atoms = c(
         full_name = NA,
         surname = "./name/surname",
@@ -203,7 +203,7 @@ taxpub = XmlSchema$new(
       xpath = "/article/body/sec[@sec-type='Introduction']",
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivIntroduction = "http://openbiodiv.net/resource/introduction"),
+      prefix = c(openbiodivIntroduction = "http://openbiodiv.net/resource/introduction/"),
       atoms = c(
         text_content = "."
       ),
@@ -224,7 +224,7 @@ taxpub = XmlSchema$new(
       xpath = "//sec[@sec-type='Discussion']", #rel path from treatment
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivDiscussion = "http://openbiodiv.net/resource/discussion"),
+      prefix = c(openbiodivDiscussion = "http://openbiodiv.net/resource/discussion/"),
       atoms = c(
         text_content = "."
       ),
@@ -245,7 +245,7 @@ taxpub = XmlSchema$new(
       xpath = "//tp:taxon-treatment",
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivTreatment = "http://openbiodiv.net/resource/treatment"),
+      prefix = c(openbiodivTreatment = "http://openbiodiv.net/resource/treatment/"),
       atoms = c(
         text_content = "."
       ),
@@ -267,7 +267,7 @@ taxpub = XmlSchema$new(
           xpath = "./tp:nomenclature", #rel path from treatment
           file_pattern = ".*\\.xml",
           extension = ".xml",
-          prefix = c(openbiodivNomenclature = "http://openbiodiv.net/resource/treatment/nomenclature"),
+          prefix = c(openbiodivNomenclature = "http://openbiodiv.net/resource/treatment/nomenclature/"),
           atoms = c(
             text_content = "."
           ),
@@ -286,7 +286,7 @@ taxpub = XmlSchema$new(
               xpath = "./tp:nomenclature-citation-list", #rel path from treatment
               file_pattern = ".*\\.xml",
               extension = ".xml",
-              prefix = c(openbiodivNomenclatureCitations = "http://openbiodiv.net/resource/treatment/nomenclatureCitations"),
+              prefix = c(openbiodivNomenclatureCit = "http://openbiodiv.net/resource/treatment/nomenclatureCitations/"),
               atoms = c(
                 text_content = "."
               ),
@@ -315,7 +315,7 @@ taxpub = XmlSchema$new(
           xpath = "./tp:treatment-sec[@sec-type='materials']", #rel path from treatment
           file_pattern = ".*\\.xml",
           extension = ".xml",
-          prefix = c(openbiodivMaterialsExamined = "http://openbiodiv.net/resource/treatment/materialsExamined"),
+          prefix = c(openbiodivMaterials = "http://openbiodiv.net/resource/treatment/materialsExamined/"),
           atoms = c(
             text_content = "."
           ),
@@ -338,7 +338,7 @@ taxpub = XmlSchema$new(
           xpath = "./tp:treatment-sec[@sec-type='Diagnosis']", #rel path from treatment
           file_pattern = ".*\\.xml",
           extension = ".xml",
-          prefix = c(openbiodivDiagnosis = "http://openbiodiv.net/resource/treatment/diagnosis"),
+          prefix = c(openbiodivDiagnosis = "http://openbiodiv.net/resource/treatment/diagnosis/"),
           atoms = c(
             text_content = "."
           ),
@@ -363,7 +363,7 @@ taxpub = XmlSchema$new(
           xpath = "./tp:treatment-sec[@sec-type='Distribution']", #rel path from treatment
           file_pattern = ".*\\.xml",
           extension = ".xml",
-          prefix = c(openbiodivDistribution = "http://openbiodiv.net/resource/treatment/distribution"),
+          prefix = c(openbiodivDistribution = "http://openbiodiv.net/resource/treatment/distribution/"),
           atoms = c(
             text_content = "."
           ),
@@ -381,14 +381,14 @@ taxpub = XmlSchema$new(
         
       )
     ),
-    
+    #TODO make the xpath work, @sec-type is not always 'key'
     # Taxonomic Key
     XmlSchema$new(
       schema_name = "taxpub_taxonomic_key",
       xpath = "/sec[@sec-type='key']",
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivTaxonomicKey = "http://openbiodiv.net/resource/treatment/taxonomicKey"),
+      prefix = c(openbiodivKey = "http://openbiodiv.net/resource/treatment/taxonomicKey/"),
       atoms = c(
         text_content = "."
       ),
@@ -412,7 +412,7 @@ taxpub = XmlSchema$new(
       xpath = "//fig|//fig-group",
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivFigure = "http://openbiodiv.net/resource/figure"),
+      prefix = c(openbiodivFigure = "http://openbiodiv.net/resource/figure/"),
       atoms = c(
         text_content = ".",
         caption = "./caption"
@@ -438,7 +438,7 @@ taxpub = XmlSchema$new(
       xpath = "//tp:taxon-name",
       file_pattern = ".*\\.xml",
       extension = ".xml",
-      prefix = c(openbiodivTaxonName = "http://openbiodiv.net/resource/taxonName"),
+      prefix = c(openbiodivTaxonName = "http://openbiodiv.net/resource/taxonName/"),
       atoms = c(
         date = NA,
         pub_year = "/article/front/article-meta/pub-date/year",
@@ -531,27 +531,20 @@ taxpub = XmlSchema$new(
   )
 )
 
-
-
-
-
-
-
-
 #' Plazi Internal
 #'
 #' @export
 plazi_int =
-XmlSchema$new(schema_name = "plazi_int",
-              file_pattern = ".*\\.plazixml",
-              extension =  ".plazixml",
-              prefix = "http://tb.plazi.org/GgServer/xml/",
-              atoms = c(lang = "/document/@docLanguage"))
+  XmlSchema$new(schema_name = "plazi_int",
+                file_pattern = ".*\\.plazixml",
+                extension =  ".plazixml",
+                prefix = "http://tb.plazi.org/GgServer/xml/",
+                atoms = c(lang = "/document/@docLanguage"))
 
 #' Plazi Feed
 #'
 #' @export
 plazi_feed_schema =
-XmlSchema$new(schema_name = "plazi_feed",
-              atoms = c(link = "/rss/channel/item/link",
-                       pub_date = "/rss/channel/item/pubDate"))
+  XmlSchema$new(schema_name = "plazi_feed",
+                atoms = c(link = "/rss/channel/item/link",
+                          pub_date = "/rss/channel/item/pubDate"))
