@@ -23,12 +23,11 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix,
                                                        split = "/"), node)
     }
     atoms = find_literals(node, xml_schema)
-    #TODO parent_id identifier prefix should be the actual identifier prefix
-    new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, 
-                                                                                        xml, mongo_key = xml_schema$mongo_key, 
-                                                                                        prefix = xml_schema$prefix, blank = FALSE), 
-                                                                   pid = identifier(parent_id(node), c(openbiodiv = "http://openbiodiv.net/")),  root_id = root_id), prefix = xml_schema$prefix, 
-                                         schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key)
+    #TODO fix parent_id prefix
+    new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = xml_schema$prefix, blank = FALSE), 
+                                                                   pid = identifier(parent_id(node), c(openbiodiv = "http://openbiodiv.net/")),  
+                                                                   root_id = root_id), 
+                                         prefix = xml_schema$prefix,schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key)
     new_triples$set_context(triples$context)
     serialization = new_triples$serialize()
     # if (dry == FALSE) {
@@ -47,4 +46,3 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix,
   }
   return(triples)
 }
-
