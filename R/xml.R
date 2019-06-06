@@ -87,10 +87,10 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       xml = xml2::read_xml(filename)
 
       #xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), split = "/"), xml)
-      prefix = c(openbiodiv = "http://openbiodiv.net")
+      #prefix = c(openbiodiv = "http://openbiodiv.net")
 
       triples = ResourceDescriptionFramework$new()
-      root_ident = root_id(node=xml, access_options=obkms, xml_schema = taxpub, xml=xml, schema_name=xml_schema$schema_name, mongo_key = c(article = "//article/front/article-meta/article-id[@pub-id-type='doi']"), prefix = prefix, blank = FALSE)
+      root_ident = root_id(node=xml, xml_schema = taxpub, xml=xml, mongo_key = xml_schema$mongo_key, prefix = xml_schema$prefix, blank = FALSE)
 
       triples$set_context(root_ident)
 
@@ -136,6 +136,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
 
 
+
+#' NOT USED ANYMORE
 #' Get the OBKMS Id of an XML node, if not set, set it.
 #'
 #' Does not do any database lookups.
@@ -156,6 +158,7 @@ get_or_set_obkms_id = function (node)
 }
 
 
+#' NOT USED ANYMORE
 #' Set the OBKMS ID of an XML node according to new id format
 #'
 #' Does not do any database lookups.
@@ -301,30 +304,12 @@ parent_id = function (node, fullname = FALSE )
 #' @param node
 #'
 #' @export
-root_id = function(node, access_options, xml_schema, xml, schema_name, mongo_key, prefix = NA, blank = FALSE)
+root_id = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE) 
 {
-  # Is the root id set?
   root_node = xml2::xml_find_all(node, xpath = "/*")
-
-  if (is.na(xml2::xml_attr(root_node, "obkms_id"))) {
-    ltitle <- literal(
-      xml2::xml_text( xml2::xml_find_all(node, xml_schema$atoms["title"]))[1],
-      xsd_type = rdf4r::xsd_string,
-      lang = NA
-    )
-   id =  identifier_new(root_node, xml, schema_name, mongo_key, prefix = NA, blank = FALSE)
-    xml2::xml_attr(root_node, "obkms_id") = id
-    #save_mongo - use ltitle as label
-  }
-
-  id  = xml2::xml_attr(root_node, "obkms_id")
-  uri = strip_angle(pasteif(prefix[1], "/",id, cond = (!is.na(prefix)),
-                            return_value = id), reverse = TRUE)
-
-  qname = pasteif(names(prefix)[1], id, sep = ":", cond = !is.na(prefix), return_value = uri)
-  ll = list(id = id, uri = uri, qname = qname, prefix = prefix)
-  class(ll) = "identifier"
-  ll
+  # ltitle <- literal(xml2::xml_text(xml2::xml_find_all(node, xml_schema$atoms["title"]))[1], xsd_type = rdf4r::xsd_string, lang = NA)
+  id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
+  id
 }
 
 
