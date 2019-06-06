@@ -77,10 +77,15 @@ process_figure =  function (node, mongo_key)
 
 
 #' @export
-process_general_component = function(node, mongo_key)
+process_general_component = function (node, mongo_key) 
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA)
+  label = escape_special(label) #escape special chars
+#  quer = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", label, "type", "type")
+#  print(quer)
+#  print(jsonlite::fromJSON(quer))
+  df = set_component_frame(label = label, mongo_key = mongo_key, 
+                           type = names(mongo_key), orcid = NA)
   return(df)
 }
 
@@ -101,26 +106,36 @@ process_schema_component = function(node, mongo_key)
 }
 
 #' @export
-get_or_set_mongoid = function(df, schema_name, mongo_key){
+get_or_set_mongoid= function (df, prefix) 
+{
   general_collection = mongolite::mongo("new_collection")
-  
-  if (!(is.na(df$orcid))){
+  if (!(is.na(df$orcid))) {
     key = check_mongo_via_orcid(df$orcid, general_collection)
-    if (is.null(key) == TRUE){
-      id = paste0(schema_name,"/", names(mongo_key), "/", df$orcid)
-      save_to_mongo(key = id, value = df$label, type = df$type, collection = general_collection)
+    if (is.null(key) == TRUE) {
+      key = df$orcid
+      save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, 
+                    collection = general_collection)
     }
-    else
-      id = key
-  }else{
+    else id = key
+  }
+  else {
     
-    key = check_mongo(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
-    if (is.null(key) == TRUE)
-    {
-      key = set_obkms(schema_name, df$type)
-      save_to_mongo(key = key, value = df$label, type = df$type, collection = general_collection)
+    key = check_mongo(value = df$label, type = df$type, collection = general_collection, 
+                      regex = FALSE)
+    if (is.null(key) == TRUE) {
+      key = uuid::UUIDgenerate()
+      save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, 
+                    collection = general_collection)
     }
     id = key
   }
   return(id)
 }
+
+# escapes " char because it interferes with json query
+#' @export
+escape_special = function(string){
+  string <- gsub("\"", "\\\"", string , fixed = TRUE)
+}
+
+
