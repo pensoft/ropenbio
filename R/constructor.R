@@ -2,11 +2,11 @@
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-metadata = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+metadata = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   pub_date = function(year, month, day) {
     literal(paste0(text_value = unlist(year)["text_value"], 
@@ -20,33 +20,35 @@ metadata = function (atoms, identifiers, access_options, schema_name, mongo_key)
   doi = unlist(atoms$doi)["text_value"]
   paper_key = check_mongo(value = doi, type = "research_paper", 
                           collection = general_collection, regex = FALSE)
+  researchPaper_prefix = c(openbiodivResearchPaper = "http://openbiodiv.net/resource/researchPaper/")
   if (is.null(paper_key) == TRUE) {
-    paper_key = set_obkms("taxpub_research_paper", "research_paper")
-    save_to_mongo(key = paper_key, value = doi, type = "research_paper", 
+    paper_key = uuid::UUIDgenerate()
+    save_to_mongo(key = identifier(paper_key, researchPaper_prefix)$uri, value = doi, type = "research_paper", 
                   collection = general_collection)
   }
-  
-  paper_id = identifier(paper_key, access_options$prefix["openbiodiv"])
+  paper_id = identifier(paper_key, researchPaper_prefix)
   article_id = identifiers$root_id
   publisher_lit = unlist(atoms$publisher)["text_value"]
   
   publisher_key = check_mongo(value = publisher_lit, type = "publisher", 
                               collection = general_collection, regex = FALSE)
+  publisher_prefix = c(openbiodivPublisher = "http://openbiodiv.net/resource/publisher/")
   if (is.null(publisher_key) == TRUE) {
-    publisher_key = set_obkms("taxpub_publisher", "publisher")
-    save_to_mongo(key = publisher_key, value = publisher_lit, 
+    publisher_key = uuid::UUIDgenerate()
+    save_to_mongo(key = identifier(publisher_key, publisher_prefix)$uri, value = publisher_lit, 
                   type = "publisher", collection = general_collection)
   }
-  publisher_id = identifier(publisher_key, access_options$prefix["openbiodiv"])
+  publisher_id = identifier(publisher_key, publisher_prefix)
   journal_lit = unlist(atoms$journal)["text_value"]
   journal_key = check_mongo(value = journal_lit, type = "journal", 
                             collection = general_collection, regex = FALSE)
+  journal_prefix = c(openbiodivJournal = "http://openbiodiv.net/resource/journal/")
   if (is.null(journal_key) == TRUE) {
-    journal_key = set_obkms("taxpub_journal", "journal")
-    save_to_mongo(key = journal_key, value = journal_lit, 
+    journal_key = uuid::UUIDgenerate()
+    save_to_mongo(key = identifier(journal_key, journal_prefix)$uri, value = journal_lit, 
                   type = "journal", collection = general_collection)
   }
-  journal_id = identifier(journal_key, access_options$prefix["openbiodiv"])
+  journal_id = identifier(journal_key, journal_prefix)
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(journal_id, rdf_type, Journal)
   sapply(atoms$journal, function(j) {
@@ -107,11 +109,11 @@ metadata = function (atoms, identifiers, access_options, schema_name, mongo_key)
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-keyword_group = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+keyword_group = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, KeywordGroup)
@@ -132,11 +134,11 @@ keyword_group = function (atoms, identifiers, access_options, schema_name, mongo
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-title = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+title = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Title)
@@ -156,11 +158,11 @@ title = function (atoms, identifiers, access_options, schema_name, mongo_key)
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-abstract = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+abstract = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Abstract)
@@ -190,11 +192,11 @@ abstract = function (atoms, identifiers, access_options, schema_name, mongo_key)
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-author = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+author = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   full_name = function(lsurname, lgiven_name) {
     if (length(lsurname) == 1 && length(lgiven_name) == 1) {
@@ -248,11 +250,11 @@ author = function (atoms, identifiers, access_options, schema_name, mongo_key)
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-introduction_section = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+introduction_section = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Introduction)
@@ -273,27 +275,29 @@ introduction_section = function (atoms, identifiers, access_options, schema_name
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-treatment = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+treatment = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
-
+  
   treatment_id = identifiers$nid
   
   #check mongo collection for treatments+tc (treatment frbf:realizationof taxonomicConcept)
-  treatment_collection = mongolite::mongo("treatment_collection")
-  key = check_mongo(value = treatment_id$id, type  = names(mongo_key), collection = treatment_collection, regex = FALSE)
-  if (is.null(key)){
+ # treatment_collection = mongolite::mongo("treatment_collection")
+ #tc_key = check_mongo(value = treatment_id$uri, type  = names(mongo_key), collection = treatment_collection, regex = FALSE)
+  #treatment_prefix = c(openbiodivTreatment = "http://openbiodiv.net/resource/treatment")
+  #tc_prefix = c(openbiodivTaxonomicConcept = "http://openbiodiv.net/resource/taxonomicConcept")
+   # if (is.null(tc_key)){
     #if there is no tc realization of the treatment, create it
-    key = set_obkms("taxonomic_concept", names(mongo_key))
-    #save it both in the treatment collection and in the general collection
-    general_collection =  mongolite::mongo("new_collection")
-    save_to_mongo(key, treatment_id$id, names(mongo_key), treatment_collection)
-    save_to_mongo(key, treatment_id$id, "taxonomic_concept", general_collection)
-  }
-  taxonomic_concept_id = identifier(id = key, prefix = prefix)
+    #key = uuid::UUIDgenerate()
+    #save it both in the treatment collection and in the
+    #general_collection =  mongolite::mongo("new_collection")
+    #save_to_mongo(treatment_id$uri, treatment_id$uri, names(mongo_key), treatment_collection)
+  #  save_to_mongo(identifier(key, tc_prefix)$uri, treatment_id$uri, "taxonomic_concept", general_collection)
+  #}
+  #taxonomic_concept_id = identifier(id = key, prefix = tc_prefix)
   
   #taxonomic_concept_id = openbiodiv_taxonomic_concept_id(list(treatment_id))
   tt = ResourceDescriptionFramework$new()
@@ -302,8 +306,8 @@ treatment = function (atoms, identifiers, access_options, schema_name, mongo_key
   sapply(atoms$text_content, function(i) {
     tt$add_triple(treatment_id, has_content, i)
   })
-  tt$add_triple(taxonomic_concept_id, rdf_type, TaxonomicConcept)
-  tt$add_triple(taxonomic_concept_id, realization, treatment_id)
+ # tt$add_triple(taxonomic_concept_id, rdf_type, TaxonomicConcept)
+#  tt$add_triple(taxonomic_concept_id, realization, treatment_id)
   return(tt)
 }
 
@@ -313,11 +317,11 @@ treatment = function (atoms, identifiers, access_options, schema_name, mongo_key
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-nomenclature = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+nomenclature = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   nomenclature_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
@@ -336,11 +340,11 @@ nomenclature = function (atoms, identifiers, access_options, schema_name, mongo_
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-nomenclature_citations = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+nomenclature_citations = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitationsList)
@@ -360,11 +364,11 @@ nomenclature_citations = function (atoms, identifiers, access_options, schema_na
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-diagnosis = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+diagnosis = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   diagnosis_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
@@ -385,11 +389,11 @@ diagnosis = function (atoms, identifiers, access_options, schema_name, mongo_key
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-discussion = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+discussion = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Discussion)
@@ -410,11 +414,11 @@ discussion = function (atoms, identifiers, access_options, schema_name, mongo_ke
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-distribution = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+distribution = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Distribution)
@@ -433,19 +437,19 @@ distribution = function (atoms, identifiers, access_options, schema_name, mongo_
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-materials_examined = function(atoms, identifiers, access_options)
+materials_examined = function(atoms, identifiers, prefix, schema_name, mongo_key)
 {
-
+  
   tt = ResourceDescriptionFramework$new()
   # Treatment
   tt$add_triple(identifiers$nid, rdf_type, MaterialsExamined) # type
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)   # containtment
   sapply(atoms$text_content, function(i) { tt$add_triple(identifiers$nid, has_content, i) })
-
+  
   return(tt)
 }
 
@@ -456,11 +460,11 @@ materials_examined = function(atoms, identifiers, access_options)
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-taxonomic_key = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+taxonomic_key = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, TaxonomicKey)
@@ -479,11 +483,11 @@ taxonomic_key = function (atoms, identifiers, access_options, schema_name, mongo
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-figure =  function (atoms, identifiers, access_options, schema_name, mongo_key) 
+figure =  function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Figure)
@@ -500,11 +504,11 @@ figure =  function (atoms, identifiers, access_options, schema_name, mongo_key)
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix  
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name, mongo_key) 
+taxonomic_name_usage = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   taxon_id = identifiers$nid
   atoml_to_val = function(atoml) {
@@ -530,7 +534,7 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
   }
   if (length(atoms$verbatim_status) >= 1) {
     atoms$status = list(verbstat2openbiodiv(atoms$verbatim_status[[1]]$text_value, 
-                                            def_prefix = access_options$prefix))
+                                            def_prefix = prefix))
   }
   rank = function(kingdom = NA, phylum = NA, class = NA, order = NA, 
                   family = NA, subfamily = NA, genus = NA, subgenus = NA, 
@@ -543,7 +547,7 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
                                               function(index) {
                                                 ifelse(has_meaningful_value(arglist[[index]]), 
                                                        index, 0)
-                                              }))], prefix = access_options$prefix)
+                                              }))], prefix = prefix)
   }
   atoms$taxonomic_rank = list(rank(kingdom = atoml_to_val(atoms$kingdom), 
                                    phylum = atoml_to_val(atoms$phylum), class = atoml_to_val(atoms$class), 
@@ -556,16 +560,26 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
   }
   tnu_collection = mongolite::mongo("tnus")
   #label = label[!is.null(label)]
-  paper_id = stringr::str_extract(identifiers$root_id$id, "([^\\/]*)$")
+  #paper_id = stringr::str_extract(identifiers$root_id$id, "([^\\/]*)$")
+  paper_id = identifiers$root_id$uri
   mongo_tnu = check_mongo(paper_id, label$text_value, tnu_collection, 
                           regex = FALSE)
+  print("mongo tnu")
+  print(mongo_tnu)
+  tnu_prefix = c(openbiodivTNU = "http://openbiodiv.net/resource/tnu/")
   if (is.null(mongo_tnu)) {
-    mongo_tnu = set_obkms(schema_name, "tnu")
+    mongo_tnu = uuid::UUIDgenerate()
     type = as.character(label$text_value)
-    save_to_mongo(key = mongo_tnu, value = paper_id, type = type, 
+    save_to_mongo(key = identifier(mongo_tnu, tnu_prefix)$uri, value = paper_id, type = type, 
                   collection = tnu_collection)
+  }else{#remove the angled brackets and the http://openbiodiv.net/resource/xxx/ part of the id
+    mongo_tnu = rdf4r::strip_angle(mongo_tnu)
+    mongo_tnu = gsub("^(.*)resource\\/(.*)\\/", "", mongo_tnu)
   }
-  tnu_id = identifier(mongo_tnu, prefix = access_options$prefix)
+ # 
+  print(mongo_tnu)
+  tnu_id = identifier(mongo_tnu, prefix = tnu_prefix)
+  print(tnu_id)
   todate = function(year, month, day) {
     list(literal(paste(year[[1]]$text_value, month[[1]]$text_value, 
                        day[[1]]$text_value, sep = "-"), xsd_type = rdf4r::xsd_date))
@@ -573,7 +587,7 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
   atoms$date = append(atoms$date, todate(atoms$pub_year, atoms$pub_month, 
                                          atoms$pub_day))
   article_id = identifiers$root_id
- 
+  
   parent_element_id = identifiers$pid #only works if the pid is set as identifier(parent_id(node))
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(tnu_id, rdf_type, TaxonomicNameUsage)
@@ -643,18 +657,18 @@ taxonomic_name_usage = function (atoms, identifiers, access_options, schema_name
 #'
 #' @param atoms a list of literals
 #' @param identifiers a list of identifiers
-#' @param access_options
+#' @param prefix
 #'
 #' @return \code{ResourceDescriptionFramework}
 #' @export
-institution_code_usage = function(atoms, identifiers, access_options)
+institution_code_usage = function(atoms, identifiers, prefix, schema_name, mongo_key)
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, InstitutionalCodeUsage) # type
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)   # containtment
-
+  
   sapply(atoms$text_content, function(i) { tt$add_triple(identifiers$nid, institutional_code, i) })
-
+  
   # TODO add Institions as resources
   return(tt)
 }
