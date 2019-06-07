@@ -70,8 +70,10 @@ process_figure =  function (node, mongo_key)
 {
   fig_number = xml2::xml_attr(node, "id")
   label = get_figure_label(node, mongo_key, fig_number)
+  label = escape_special(label)
   type = paste0(names(mongo_key), " ", fig_number)
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = type, orcid = NA)
+  df = set_component_frame(label = label, mongo_key = mongo_key, 
+                           type = type, orcid = NA)
   return(df)
 }
 
@@ -81,9 +83,6 @@ process_general_component = function (node, mongo_key)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
   label = escape_special(label) #escape special chars
-#  quer = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", label, "type", "type")
-#  print(quer)
-#  print(jsonlite::fromJSON(quer))
   df = set_component_frame(label = label, mongo_key = mongo_key, 
                            type = names(mongo_key), orcid = NA)
   return(df)
@@ -128,7 +127,8 @@ get_or_set_mongoid= function (df, prefix)
                     collection = general_collection)
     }
     id = rdf4r::strip_angle(key)
-    id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
+    id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
+   # id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
   }
   return(id)
 }
