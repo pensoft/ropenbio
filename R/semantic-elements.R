@@ -544,7 +544,7 @@ has_affiliation = rdf4r::identifier(
 #' @export
 has_email = rdf4r::identifier(
   id = "mbox",
-  prefix = c(faof = "http://xmlns.com/foaf/0.1/")
+  prefix = c(foaf = "http://xmlns.com/foaf/0.1/")
 )
 
 
