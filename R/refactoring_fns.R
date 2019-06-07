@@ -133,4 +133,7 @@ get_or_set_mongoid= function (df, prefix)
   return(id)
 }
 
-
+#' @export
+escape_special = function(string){
+  string <- gsub("\"", "\\\"", string , fixed = TRUE)
+}
