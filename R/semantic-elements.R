@@ -1,7 +1,7 @@
 #' @export
 Collection = rdf4r::identifier(
   id = "Collection",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivCollection = "http://openbiodiv.net/resource/collection/")
 )
 
 #' @export
@@ -27,7 +27,7 @@ Person = rdf4r::identifier(
 #' @export
 Publisher = rdf4r::identifier(
   id = "Publisher",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivPublisher = "http://openbiodiv.net/resource/publisher/")
 )
 
 #' Organization
@@ -77,7 +77,7 @@ Article = rdf4r::identifier(
 #' @export
 KeywordGroup = rdf4r::identifier(
   id = "KeywordGroup",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivKeywords = "http://openbiodiv.net/resource/keywordGroup/")
 )
 
 
@@ -85,7 +85,7 @@ KeywordGroup = rdf4r::identifier(
 #' @export
 Treatment = rdf4r::identifier(
   id = "Treatment",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivTreatment = "http://openbiodiv.net/resource/treatment/")
 )
 
 
@@ -103,7 +103,7 @@ Paper = rdf4r::identifier(
 #' @export
 TaxonomicConcept = rdf4r::identifier(
   id = "TaxonomicConcept",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivTC = "http://openbiodiv.net/resource/taxonomicConcept/")
 )
 
 
@@ -112,7 +112,7 @@ TaxonomicConcept = rdf4r::identifier(
 #' @export
 Nomenclature = rdf4r::identifier(
   id = "NomenclatureSection",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivNomenclature = "http://openbiodiv.net/resource/nomenclature/")
 )
 
 
@@ -121,7 +121,7 @@ Nomenclature = rdf4r::identifier(
 #' @export
 NomenclatureCitationsList = rdf4r::identifier(
   id = "NomenclatureCitationsList",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivNomenclatureCit = "http://openbiodiv.net/resource/treatment/nomenclatureCitations/")
 )
 
 
@@ -129,7 +129,7 @@ NomenclatureCitationsList = rdf4r::identifier(
 #' @export
 TaxonomicNameUsage = rdf4r::identifier(
   id = "TaxonomicNameUsage",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivTNU = "http://openbiodiv.net/resource/tnu/")
 )
 
 
@@ -145,7 +145,7 @@ InstitutionalCodeUsage = rdf4r::identifier(
 #' @export
 ScientificName= rdf4r::identifier(
   id = "ScientificName",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivScName = "http://openbiodiv.net/resource/scientificName/")
 )
 
 
@@ -154,7 +154,7 @@ ScientificName= rdf4r::identifier(
 #' @export
 Diagnosis = rdf4r::identifier(
   id = "DiagnosisSection",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivDiagnosis = "http://openbiodiv.net/resource/treatment/diagnosis/")
 )
 
 
@@ -171,7 +171,7 @@ Discussion = rdf4r::identifier(
 #' @export
 Distribution = rdf4r::identifier(
   id = "DistributionSection",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivDistribution = "http://openbiodiv.net/resource/treatment/distribution/")
 )
 
 
@@ -181,7 +181,7 @@ Distribution = rdf4r::identifier(
 #' @export
 TaxonomicKey = rdf4r::identifier(
   id = "TaxonomicKey",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivKey = "http://openbiodiv.net/resource/treatment/taxonomicKey/")
 )
 
 
@@ -191,7 +191,7 @@ TaxonomicKey = rdf4r::identifier(
 #' @export
 MaterialsExamined = rdf4r::identifier(
   id = "MaterialsExamined",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix =  c(openbiodivMaterials = "http://openbiodiv.net/resource/treatment/materialsExamined/")
 )
 
 
@@ -535,7 +535,7 @@ has_issue = rdf4r::identifier(
 #' @export
 has_affiliation = rdf4r::identifier(
   id = "affiliation",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(openbiodivAffil = "http://openbiodiv.net/property/hasAffiliation")
 )
 
 
