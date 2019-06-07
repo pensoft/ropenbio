@@ -29,7 +29,6 @@ metadata = function (atoms, identifiers, prefix, schema_name, mongo_key)
   paper_id = identifier(paper_key, researchPaper_prefix)
   article_id = identifiers$root_id
   publisher_lit = unlist(atoms$publisher)["text_value"]
-  
   publisher_key = check_mongo(value = publisher_lit, type = "publisher", 
                               collection = general_collection, regex = FALSE)
   publisher_prefix = c(openbiodivPublisher = "http://openbiodiv.net/resource/publisher/")
@@ -140,6 +139,10 @@ keyword_group = function (atoms, identifiers, prefix, schema_name, mongo_key)
 #' @export
 title = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
+
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Title)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -164,6 +167,10 @@ title = function (atoms, identifiers, prefix, schema_name, mongo_key)
 #' @export
 abstract = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
+#  trans_abstract = escape_special(atoms$trans_abstract)
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Abstract)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -256,6 +263,9 @@ author = function (atoms, identifiers, prefix, schema_name, mongo_key)
 #' @export
 introduction_section = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Introduction)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -283,6 +293,13 @@ treatment = function (atoms, identifiers, prefix, schema_name, mongo_key)
 {
   
   treatment_id = identifiers$nid
+  
+  sapply(atoms$text_content, function(x){
+    x = escape_q(x)
+    x
+  })  
+  print(atoms$text_content)
+  print(str(atoms$text_content))
   
   #check mongo collection for treatments+tc (treatment frbf:realizationof taxonomicConcept)
  # treatment_collection = mongolite::mongo("treatment_collection")
@@ -324,6 +341,9 @@ treatment = function (atoms, identifiers, prefix, schema_name, mongo_key)
 nomenclature = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   nomenclature_id = identifiers$nid
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(nomenclature_id, rdf_type, Nomenclature)
   tt$add_triple(nomenclature_id, is_contained_by, identifiers$pid)
@@ -347,6 +367,9 @@ nomenclature = function (atoms, identifiers, prefix, schema_name, mongo_key)
 nomenclature_citations = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitationsList)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   sapply(atoms$text_content, function(i) {
@@ -371,6 +394,9 @@ nomenclature_citations = function (atoms, identifiers, prefix, schema_name, mong
 diagnosis = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   diagnosis_id = identifiers$nid
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(diagnosis_id, rdf_type, Diagnosis)
   tt$add_triple(diagnosis_id, is_contained_by, identifiers$pid)
@@ -396,6 +422,9 @@ diagnosis = function (atoms, identifiers, prefix, schema_name, mongo_key)
 discussion = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
   tt$add_triple(identifiers$nid, rdf_type, Discussion)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   sapply(atoms$text_content, function(i) {
@@ -421,6 +450,9 @@ discussion = function (atoms, identifiers, prefix, schema_name, mongo_key)
 distribution = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
   tt$add_triple(identifiers$nid, rdf_type, Distribution)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   sapply(atoms$text_content, function(i) {
@@ -445,7 +477,10 @@ materials_examined = function(atoms, identifiers, prefix, schema_name, mongo_key
 {
   
   tt = ResourceDescriptionFramework$new()
-  # Treatment
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
+  
   tt$add_triple(identifiers$nid, rdf_type, MaterialsExamined) # type
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)   # containtment
   sapply(atoms$text_content, function(i) { tt$add_triple(identifiers$nid, has_content, i) })
@@ -467,6 +502,9 @@ materials_examined = function(atoms, identifiers, prefix, schema_name, mongo_key
 taxonomic_key = function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
   tt$add_triple(identifiers$nid, rdf_type, TaxonomicKey)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   sapply(atoms$text_content, function(i) {
@@ -490,6 +528,9 @@ taxonomic_key = function (atoms, identifiers, prefix, schema_name, mongo_key)
 figure =  function (atoms, identifiers, prefix, schema_name, mongo_key) 
 {
   tt = ResourceDescriptionFramework$new()
+  sapply(atoms$text_content, function(x){
+    x = escape_special(x)
+  })
   tt$add_triple(identifiers$nid, rdf_type, Figure)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   sapply(atoms$text_content, function(i) {
@@ -564,22 +605,22 @@ taxonomic_name_usage = function (atoms, identifiers, prefix, schema_name, mongo_
   paper_id = identifiers$root_id$uri
   mongo_tnu = check_mongo(paper_id, label$text_value, tnu_collection, 
                           regex = FALSE)
-  print("mongo tnu")
-  print(mongo_tnu)
+  #print("mongo tnu")
+  #print(mongo_tnu)
   tnu_prefix = c(openbiodivTNU = "http://openbiodiv.net/resource/tnu/")
   if (is.null(mongo_tnu)) {
     mongo_tnu = uuid::UUIDgenerate()
     type = as.character(label$text_value)
     save_to_mongo(key = identifier(mongo_tnu, tnu_prefix)$uri, value = paper_id, type = type, 
                   collection = tnu_collection)
-  }else{#remove the angled brackets and the http://openbiodiv.net/resource/xxx/ part of the id
+  }else{
     mongo_tnu = rdf4r::strip_angle(mongo_tnu)
     mongo_tnu = gsub("^(.*)resource\\/(.*)\\/", "", mongo_tnu)
   }
  # 
-  print(mongo_tnu)
+  #print(mongo_tnu)
   tnu_id = identifier(mongo_tnu, prefix = tnu_prefix)
-  print(tnu_id)
+  #print(tnu_id)
   todate = function(year, month, day) {
     list(literal(paste(year[[1]]$text_value, month[[1]]$text_value, 
                        day[[1]]$text_value, sep = "-"), xsd_type = rdf4r::xsd_date))
@@ -603,6 +644,10 @@ taxonomic_name_usage = function (atoms, identifiers, prefix, schema_name, mongo_
     tt$add_triple(tnu_id, has_taxonomic_status_id, i)
   })
   tt$add_triple(taxon_id, rdf_type, ScientificName)
+  ScPrefix = "http://openbiodiv.net/resource/ScientificName"
+  names(ScPrefix) = "openbiodivScName"
+  tt$prefix_list$add(ScPrefix)
+  
   tt$add_triple(taxon_id, rdfs_label, label)
   tt$add_triple(taxon_id, has_scientific_name, label)
   sapply(atoms$kingdom, function(i) {
