@@ -106,11 +106,18 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 	)
 
 
-      xml2::write_xml(xml, filename)
 
       serialization = triples$serialize()
      # add_data(serialization, access_options = access_options)
+	    #escape with backlash all the "N "W "E "S in coordinates
+	serialization = str_replace_all(serialization, "(?<=[A-Za-z0-9])[\"](?=N|E|W|S)", "\\\\\"")
 
+	    #TODO: Monitor file size and append to trig file.
+	    #TODO : Upload file from R
+	    
+	    #command = "curl -X POST -H \"Content-Type:application/x-trig\" -T /home/mid/mongo-testing-dir/new_serializations/file.trig http://192.168.90.23:7200/repositories/depl2019-test/statements"
+		#system(command)
+	    
       cat(
         serialization,
         file = paste0(
@@ -118,6 +125,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
           paste0(strip_filename_extension(last_token(filename, split = "/")), ".ttl")
         )
       )
+	    
+	xml2::write_xml(xml, filename)
+
 
       return(TRUE)
     },
