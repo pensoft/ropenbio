@@ -114,10 +114,10 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
 	    #TODO: Monitor file size and append to trig file.
 	    #TODO : Upload file from R
-	    
+
 	    #command = "curl -X POST -H \"Content-Type:application/x-trig\" -T /home/mid/mongo-testing-dir/new_serializations/file.trig http://192.168.90.23:7200/repositories/depl2019-test/statements"
 		#system(command)
-	    
+
       cat(
         serialization,
         file = paste0(
@@ -125,7 +125,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
           paste0(strip_filename_extension(last_token(filename, split = "/")), ".ttl")
         )
       )
-	    
+
 	xml2::write_xml(xml, filename)
 
 
@@ -314,11 +314,22 @@ parent_id = function (node, fullname = FALSE )
 #' @param node
 #'
 #' @export
-root_id = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE) 
+root_id = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 {
+  #look for "new style" article id:
+  new_xpath = "//article/front/article-meta/article-id[@pub-id-type='other']"
+  arpha_id = xml2::xml_text(xml2::xml_find_first(node, new_xpath))
+
   root_node = xml2::xml_find_all(node, xpath = "/*")
-  # ltitle <- literal(xml2::xml_text(xml2::xml_find_all(node, xml_schema$atoms["title"]))[1], xsd_type = rdf4r::xsd_string, lang = NA)
-  id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
+
+
+    if(is.null(arpha_id)){
+      id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
+    }else{
+      arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
+      xml2::xml_attr(root_node, "obkms_id") = arpha_id #save to xml
+      id = identifier(id = id, prefix = prefix)       #build identifier
+    }
   id
 }
 
