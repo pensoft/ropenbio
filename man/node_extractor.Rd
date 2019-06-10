@@ -4,8 +4,8 @@
 \alias{node_extractor}
 \title{Node Extractor}
 \usage{
-node_extractor(node, xml_schema, reprocess, triples, access_options,
-  dry = FALSE, filename, root_id = root_ident)
+node_extractor(node, xml_schema, reprocess, triples, prefix, dry = FALSE,
+  filename, root_id)
 }
 \arguments{
 \item{xml_schema}{XML schema of the XML resource; one of
@@ -15,8 +15,6 @@ taxpub taxonx or plazi_int}
 
 \item{triples}{the RDF object where the newly created triples will be
 stored (note this is a side-effect/pass by reference)}
-
-\item{access_options}{endpoint to database to which to submit}
 
 \item{filename}{locator, e.g. file path or URL, of the XML resource}
 }

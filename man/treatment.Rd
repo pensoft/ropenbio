@@ -4,14 +4,14 @@
 \alias{treatment}
 \title{Treatment Constructor}
 \usage{
-treatment(atoms, identifiers, access_options, schema_name, mongo_key)
+treatment(atoms, identifiers, prefix, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}
 
 \item{identifiers}{a list of identifiers}
 
-\item{access_options}{}
+\item{prefix}{}
 }
 \value{
 \code{ResourceDescriptionFramework}

@@ -4,14 +4,14 @@
 \alias{distribution}
 \title{Distribution Section Constructor}
 \usage{
-distribution(atoms, identifiers, access_options, schema_name, mongo_key)
+distribution(atoms, identifiers, prefix, schema_name, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}
 
 \item{identifiers}{a list of identifiers}
 
-\item{access_options}{}
+\item{prefix}{}
 }
 \value{
 \code{ResourceDescriptionFramework}
