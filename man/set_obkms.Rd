@@ -2,7 +2,8 @@
 % Please edit documentation in R/xml.R
 \name{set_obkms}
 \alias{set_obkms}
-\title{Set the OBKMS ID of an XML node according to new id format}
+\title{NOT USED ANYMORE
+Set the OBKMS ID of an XML node according to new id format}
 \usage{
 set_obkms(schema_name, mongo_name)
 }
