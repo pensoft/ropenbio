@@ -8,6 +8,7 @@ get_author_label = function(node, mongo_key){
 get_author_orcid = function(node){
   orcid = xml2::xml_text(xml2::xml_find_first(node, "./uri[@content-type='orcid']"))
   orcid = gsub("^(.*)orcid.org\\/", "", orcid)
+  print(orcid)
   return(orcid)
 }
 
@@ -22,14 +23,14 @@ get_taxon_label = function(node, mongo_key)
       b
     }
   })
-  
+
   tolit = do.call(get_scientific_name_or_tcl, x)
   label = tolit
   label
 }
 
 #' @export
-get_figure_label = function (node, mongo_key, fig_number) 
+get_figure_label = function (node, mongo_key, fig_number)
 {
   caption_xpath = paste0("//fig[@id='", fig_number, "']", "|//fig-group[@id='", fig_number, "']")
   label = xml2::xml_text(xml2::xml_find_first(node, caption_xpath))
@@ -45,7 +46,7 @@ set_component_frame = function(label, mongo_key, type, orcid)
 }
 
 #' @export
-process_author = function (node, mongo_key) 
+process_author = function (node, mongo_key)
 {
   label = get_author_label(node, mongo_key)
   orcid = get_author_orcid(node)
@@ -56,7 +57,7 @@ process_author = function (node, mongo_key)
 
 
 #' @export
-process_tnu = function (node, mongo_key) 
+process_tnu = function (node, mongo_key)
 {
   label = get_taxon_label(node, mongo_key)
   mongo_key = c(taxonomic_name = "")
@@ -66,24 +67,24 @@ process_tnu = function (node, mongo_key)
 
 
 #' @export
-process_figure =  function (node, mongo_key) 
+process_figure =  function (node, mongo_key)
 {
   fig_number = xml2::xml_attr(node, "id")
   label = get_figure_label(node, mongo_key, fig_number)
   label = escape_special(label)
   type = paste0(names(mongo_key), " ", fig_number)
-  df = set_component_frame(label = label, mongo_key = mongo_key, 
+  df = set_component_frame(label = label, mongo_key = mongo_key,
                            type = type, orcid = NA)
   return(df)
 }
 
 
 #' @export
-process_general_component = function (node, mongo_key) 
+process_general_component = function (node, mongo_key)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
   label = escape_special(label) #escape special chars
-  df = set_component_frame(label = label, mongo_key = mongo_key, 
+  df = set_component_frame(label = label, mongo_key = mongo_key,
                            type = names(mongo_key), orcid = NA)
   return(df)
 }
@@ -105,30 +106,33 @@ process_schema_component = function(node, mongo_key)
 }
 
 #' @export
-get_or_set_mongoid= function (df, prefix) 
+get_or_set_mongoid= function (df, prefix)
 {
   general_collection = mongolite::mongo("new_collection")
+ # print(df)
   if (!(is.na(df$orcid))) {
     key = check_mongo_via_orcid(df$orcid, general_collection)
     if (is.null(key) == TRUE) {
       key = df$orcid
-      save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, 
+      save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
                     collection = general_collection)
+      id = key
     }
     else id = key
   }
   else {
-    
-    key = check_mongo(value = df$label, type = df$type, collection = general_collection, 
+
+    key = check_mongo(value = df$label, type = df$type, collection = general_collection,
                       regex = FALSE)
     if (is.null(key) == TRUE) {
       key = uuid::UUIDgenerate()
-      save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, 
+      save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
                     collection = general_collection)
     }
     id = rdf4r::strip_angle(key)
-    id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
-   # id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
+   # id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
+   id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
+   #print(id)
   }
   return(id)
 }
