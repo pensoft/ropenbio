@@ -547,11 +547,15 @@ has_email = rdf4r::identifier(
   prefix = c(foaf = "http://xmlns.com/foaf/0.1/")
 )
 
+#' Has Zoobank
+#' @export
+has_zoobank = rdf4r::identifier(
+  id = "zoobank",
+  prefix = c(openbiodivZoobank = "http://openbiodiv.net/property/")
+)
 
 
-
-
-#
+s#
 # Table:
 #   uri: <http://purl.org/spar/doco/Table>
 #   comment: a table in a science article
