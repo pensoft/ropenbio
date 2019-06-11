@@ -554,6 +554,15 @@ has_zoobank = rdf4r::identifier(
   prefix = c(openbiodivZoobank = "http://openbiodiv.net/property/")
 )
 
+has_bin = rdf4r::identifier(
+  id = "BIN",
+  prefix = c(openbiodivBIN = "http://openbiodiv.net/property/")
+)
+
+has_bold = rdf4r::identifier(
+  id = "BOLD",
+  prefix = c(openbiodivBOLD = "http://openbiodiv.net/property/")
+)
 
 s#
 # Table:
