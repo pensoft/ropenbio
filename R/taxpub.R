@@ -28,7 +28,9 @@ taxpub = XmlSchema$new(
     volume = NA,
     starting_page = NA,
     ending_page = NA,
-    keyword = "/article/front/article-meta/kwd-group/kwd"
+    keyword = "/article/front/article-meta/kwd-group/kwd",
+    bold_id="/article/front/article-meta/bold-ids/bold-id",
+    bin="/article/front/article-meta/bins/bin"
     #pensoft_pub = NA # becasue we skip only Pensoft pubs from Plazi
   ),
 
@@ -52,7 +54,9 @@ taxpub = XmlSchema$new(
     starting_page = NA,
     ending_page = NA,
     #pensoft_pub = NA
-    keyword = NA
+    keyword = NA,
+    bold_id=NA,
+    bin=NA
   ),
 
   atom_types = list(
@@ -75,7 +79,9 @@ taxpub = XmlSchema$new(
     starting_page = rdf4r::xsd_integer,
     ending_page = rdf4r::xsd_integer,
     #pensoft_pub = rdf4r::xsd_string
-    keyword = rdf4r::xsd_string
+    keyword = rdf4r::xsd_string,
+    bold_id=rdf4r::xsd_string,
+    bin=rdf4r::xsd_string
   ),
   mongo_key = c(article = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
   constructor = metadata,
