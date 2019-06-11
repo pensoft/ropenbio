@@ -272,7 +272,7 @@ taxpub = XmlSchema$new(
           xpath = "./tp:nomenclature", #rel path from treatment
           file_pattern = ".*\\.xml",
           extension = ".xml",
-          prefix = c(openbiodivNomenclature = "http://openbiodiv.net/resource/NomenclatureSection"),
+          prefix = c(openbiodivNomenclature = "http://openbiodiv.net/resource/NomenclatureSection/"),
           atoms = c(
             text_content = "."
           ),
