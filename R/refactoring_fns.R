@@ -118,7 +118,9 @@ get_or_set_mongoid= function (df, prefix)
                     collection = general_collection)
       id = key
     }
-    else id = key
+    id = rdf4r::strip_angle(key)
+    # id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
+    id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
   }
   else {
 
@@ -128,11 +130,14 @@ get_or_set_mongoid= function (df, prefix)
       key = uuid::UUIDgenerate()
       save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
                     collection = general_collection)
+      id = key
+    }else{
+      id = rdf4r::strip_angle(key)
+      # id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
+      id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
     }
-    id = rdf4r::strip_angle(key)
-   # id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
-   id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
-   #print(id)
+
+   print(id)
   }
   return(id)
 }
