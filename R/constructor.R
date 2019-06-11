@@ -18,38 +18,28 @@ metadata = function (atoms, identifiers, prefix, schema_name, mongo_key)
   }
   general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
-  paper_key = check_mongo(value = doi, type = "research_paper",
-                          collection = general_collection, regex = FALSE)
+
+  df = set_component_frame(label = doi, mongo_key = c(paper = ""), type = "research_paper", orcid = NA)
   researchPaper_prefix = c(openbiodivResearchPaper = "http://openbiodiv.net/resource/researchPaper/")
-  if (is.null(paper_key) == TRUE) {
-    paper_key = uuid::UUIDgenerate()
-    save_to_mongo(key = identifier(paper_key, researchPaper_prefix)$uri, value = doi, type = "research_paper",
-                  collection = general_collection)
-  }
+  paper_id = get_or_set_mongoid(df, researchPaper_prefix )
+  paper_id = identifier(paper_id, researchPaper_prefix)
 
-
-  paper_id = identifier(paper_key, researchPaper_prefix)
   article_id = identifiers$root_id
   publisher_lit = unlist(atoms$publisher)["text_value"]
-  publisher_key = check_mongo(value = publisher_lit, type = "publisher",
-                              collection = general_collection, regex = FALSE)
+
+  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = ""), type = "publisher", orcid = NA)
   publisher_prefix = c(openbiodivPublisher = "http://openbiodiv.net/resource/publisher/")
-  if (is.null(publisher_key) == TRUE) {
-    publisher_key = uuid::UUIDgenerate()
-    save_to_mongo(key = identifier(publisher_key, publisher_prefix)$uri, value = publisher_lit,
-                  type = "publisher", collection = general_collection)
-  }
-  publisher_id = identifier(publisher_key, publisher_prefix)
+  publisher_id = get_or_set_mongoid(df, publisher_prefix )
+  publisher_id = identifier(publisher_id, publisher_prefix)
+
+
   journal_lit = unlist(atoms$journal)["text_value"]
-  journal_key = check_mongo(value = journal_lit, type = "journal",
-                            collection = general_collection, regex = FALSE)
+
+  df = set_component_frame(label = journal_lit, mongo_key = c(journal = ""), type = "journal", orcid = NA)
   journal_prefix = c(openbiodivJournal = "http://openbiodiv.net/resource/journal/")
-  if (is.null(journal_key) == TRUE) {
-    journal_key = uuid::UUIDgenerate()
-    save_to_mongo(key = identifier(journal_key, journal_prefix)$uri, value = journal_lit,
-                  type = "journal", collection = general_collection)
-  }
-  journal_id = identifier(journal_key, journal_prefix)
+  journal_id = get_or_set_mongoid(df, journal_prefix )
+  journal_id = identifier(journal_id, journal_prefix)
+
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(journal_id, rdf_type, Journal)
   sapply(atoms$journal, function(j) {
@@ -105,12 +95,7 @@ metadata = function (atoms, identifiers, prefix, schema_name, mongo_key)
     }
   }
 
-  print(article_zoobank)
-  #article_zoobank = atoms$article_zoobank[[2]]
-
-  print(tt$add_triple(article_id, has_zoobank, article_zoobank))
   tt$add_triple(article_id, has_zoobank, article_zoobank)
-
 
   sapply(atoms$publisher, function(i) {
     tt$add_triple(article_id, has_publisher, i)
@@ -339,8 +324,6 @@ treatment = function (atoms, identifiers, prefix, schema_name, mongo_key)
     x = escape_q(x)
     x
   })
-  print(atoms$text_content)
-  print(str(atoms$text_content))
 
   #check mongo collection for treatments+tc (treatment frbf:realizationof taxonomicConcept)
  # treatment_collection = mongolite::mongo("treatment_collection")
@@ -685,7 +668,7 @@ taxonomic_name_usage = function (atoms, identifiers, prefix, schema_name, mongo_
     tt$add_triple(tnu_id, has_taxonomic_status_id, i)
   })
   tt$add_triple(taxon_id, rdf_type, ScientificName)
-  ScPrefix = "http://openbiodiv.net/resource/ScientificName"
+  ScPrefix = "http://openbiodiv.net/resource/ScientificName/"
   names(ScPrefix) = "openbiodivScName"
   tt$prefix_list$add(ScPrefix)
 
