@@ -40,6 +40,8 @@ metadata = function (atoms, identifiers, prefix, schema_name, mongo_key)
   journal_id = get_or_set_mongoid(df, journal_prefix )
   journal_id = identifier(journal_id, journal_prefix)
 
+
+
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(journal_id, rdf_type, Journal)
   sapply(atoms$journal, function(j) {
@@ -115,6 +117,24 @@ metadata = function (atoms, identifiers, prefix, schema_name, mongo_key)
   sapply(atoms$keyword, function(i) {
     tt$add_triple(identifiers$nid, has_keyword, i)
   })
+
+
+
+  bold_prefix = "http://openbiodiv.net/property/BOLD"
+  names(bold_prefix) = "openbiodivBOLD"
+  tt$prefix_list$add(bold_prefix)
+
+  bin_prefix = "http://openbiodiv.net/property/BIN"
+  names(bin_prefix) = "openbiodivBIN"
+  tt$prefix_list$add(bin_prefix)
+
+  sapply(atoms$bold_id, function(i){
+    tt$add_triple(article_id, has_bold, i)
+  })
+  sapply(atoms$bin, function(i){
+    tt$add_triple(article_id, has_bin, i)
+  })
+
   tt$add_triple(publisher_id, rdf_type, Publisher)
   sapply(atoms$publisher, function(i) {
     tt$add_triple(publisher_id, rdfs_label, i)
