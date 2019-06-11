@@ -110,23 +110,41 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       serialization = triples$serialize()
      # add_data(serialization, access_options = access_options)
 	    #escape with backlash all the "N "W "E "S in coordinates
-	serialization = str_replace_all(serialization, "(?<=[A-Za-z0-9])[\"](?=N|E|W|S)", "\\\\\"")
+	serialization = stringr::str_replace_all(serialization, "(?<=[A-Za-z0-9])[\"](?=N|E|W|S)", "\\\\\"")
 
 	    #TODO: Monitor file size and append to trig file.
 	    #TODO : Upload file from R
+	#filename is created from systime
+	#2019-06-10 16:55:24
+
+	df <- file.info(list.files(serialization_dir, full.names = T))
+	last_modified = rownames(df)[which.max(df$mtime)]
+	file_size = file.info(last_modified)$size
+  if(file_size < 200000000){
+    #keep appending to file
+    cat(serialization, file = last_modified, append = TRUE)
+  }else{
+
+    #open new file and start appending to it
+    time = Sys.time()
+    time = gsub(":|\\s", "-", time)
+    file = paste0(serialization_dir, "/",time, ".trig")
+    print(file)
+    cat(
+      serialization,
+      file = file,
+      append = TRUE
+    )
+
+  }
 
 	    #command = "curl -X POST -H \"Content-Type:application/x-trig\" -T /home/mid/mongo-testing-dir/new_serializations/file.trig http://192.168.90.23:7200/repositories/depl2019-test/statements"
 		#system(command)
+  #now check file size
 
-      cat(
-        serialization,
-        file = paste0(
-          serialization_dir, "/",
-          paste0(strip_filename_extension(last_token(filename, split = "/")), ".ttl")
-        )
-      )
 
-	xml2::write_xml(xml, filename)
+
+#	xml2::write_xml(xml, filename)
 
 
       return(TRUE)
@@ -328,7 +346,7 @@ root_id = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE
     }else{
       arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
       xml2::xml_attr(root_node, "obkms_id") = arpha_id #save to xml
-      id = identifier(id = id, prefix = prefix)       #build identifier
+      id = identifier(id = arpha_id, prefix = prefix)       #build identifier
     }
   id
 }
