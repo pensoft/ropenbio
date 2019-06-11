@@ -84,8 +84,10 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
   tryCatch(
     {
-      xml = xml2::read_xml(filename)
+      #xml = xml2::read_xml(filename)
 
+      xml_string = process_bold(filename)
+      xml = xml2::as_xml_document(xml_string)
       #xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), split = "/"), xml)
       #prefix = c(openbiodiv = "http://openbiodiv.net")
 
