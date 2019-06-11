@@ -257,9 +257,14 @@ author = function (atoms, identifiers, prefix, schema_name, mongo_key)
     all_affs[[r]] = a
   }
 
-  affiliation_prefix = c(openbiodivAffil = "http://openbiodiv.net/property/affiliation")
+
 
   tt = ResourceDescriptionFramework$new()
+
+  affiliation_prefix = "http://openbiodiv.net/property/affiliation"
+  names(affiliation_prefix) = "openbiodivAffil"
+  tt$prefix_list$add(affiliation_prefix)
+
   tt$add_triple(paper_id, creator, author_id)
   tt$add_triple(author_id, rdf_type, Person)
   sapply(atoms$full_name, function(j) {
