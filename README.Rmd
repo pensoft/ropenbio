@@ -1,6 +1,11 @@
 ---
 output: github_document
 ---
+
+---
+permalink: /index.html
+---
+
 # ropenbio
 
 An R package for working with the OpenBiodiv knowledge system.
