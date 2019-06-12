@@ -174,7 +174,7 @@ taxpub = XmlSchema$new(
         given_names = "./name/given-names",
         email = "./email",
         aff_id = "./xref[@rid]",
-        all_affiliations_institutions = "//article/front/article-meta/aff/institution",
+        all_affiliations_institutions = "//article/front/article-meta/aff/institution | //article/front/article-meta/aff/addr-line",
         all_affiliations_cities = "//article/front/article-meta/aff/addr-line[@content-type='city']",
         all_affiliations = NA
         # role = "./mods:role/mods:roleTerm"

@@ -84,6 +84,10 @@ process_general_component = function (node, mongo_key)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
   label = escape_special(label) #escape special chars
+  if(names(mongo_key)=="treatment"){
+    print(label)
+    cat(label, file= "~/treatment-contents.txt")
+  }
   df = set_component_frame(label = label, mongo_key = mongo_key,
                            type = names(mongo_key), orcid = NA)
   return(df)
@@ -144,5 +148,10 @@ get_or_set_mongoid= function (df, prefix)
 
 #' @export
 escape_special = function(string){
-  string <- gsub("\"", "\\\"", string , fixed = TRUE)
+  string =  gsub("\"", "\\\"", string , fixed = TRUE)
+  string =  gsub("\r?\n|\r", " ", string)
+  string =  gsub("\\“", "\\\\", string , fixed = TRUE)
+  string =  gsub("\\”", "\\\\", string , fixed = TRUE)
+  string =  gsub("[-[\\]{}()*+?.,\\^$|#\\s]", "\\\\", string, fixed = TRUE)
+
 }

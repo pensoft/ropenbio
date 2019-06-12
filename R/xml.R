@@ -87,7 +87,13 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       #xml = xml2::read_xml(filename)
 
       xml_string = process_bold(filename)
-      xml = xml2::as_xml_document(xml_string)
+      if(is.null(xml_string)){
+        xml = xml2::read_xml(filename)
+      }else
+      {
+        xml = xml2::as_xml_document(xml_string)
+      }
+
       #xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), split = "/"), xml)
       #prefix = c(openbiodiv = "http://openbiodiv.net")
 
@@ -112,7 +118,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       serialization = triples$serialize()
      # add_data(serialization, access_options = access_options)
 	    #escape with backlash all the "N "W "E "S in coordinates
-	serialization = stringr::str_replace_all(serialization, "(?<=[A-Za-z0-9])[\"](?=N|E|W|S)", "\\\\\"")
+#	serialization = stringr::str_replace_all(serialization, "((?<=[A-Za-z0-9])[\"](?=N|E|W|S))|((?<=['A-Za-z0-9])[\"])", "\\\\\"")
+	serialization = gsub("('[A-Za-z]{0,1}[0-9]{1,3})", "\\1\\\\", serialization)
+#	serialization = stringr::str_remove_all(serialization, "'[A-Za-z]{0,1}[0-9]{1,3}[\"]", "\\\\\"")
 
 	    #TODO: Monitor file size and append to trig file.
 	    #TODO : Upload file from R
@@ -120,25 +128,32 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 	#2019-06-10 16:55:24
 
 	df <- file.info(list.files(serialization_dir, full.names = T))
-	last_modified = rownames(df)[which.max(df$mtime)]
-	file_size = file.info(last_modified)$size
-  if(file_size < 200000000){
-    #keep appending to file
-    cat(serialization, file = last_modified, append = TRUE)
-  }else{
-
-    #open new file and start appending to it
-    time = Sys.time()
-    time = gsub(":|\\s", "-", time)
-    file = paste0(serialization_dir, "/",time, ".trig")
-    print(file)
+	#if there are no files in the serialization dir, create new one and write to it
+	if (nrow(df) == 0){
+    file = create_new_file(serialization_dir)
     cat(
       serialization,
       file = file,
       append = TRUE
     )
+	}else{
+	  #if there are files, find the last modified one and write to it if its less than 200 Mb, or otherwise create a new one
+	  last_modified = rownames(df)[which.max(df$mtime)]
+	  file_size = file.info(last_modified)$size
+	  if(file_size < 200000000){
+	    #keep appending to file
+	    cat(serialization, file = last_modified, append = TRUE)
+	  }else{
+	    file = create_new_file(serialization_dir)
+	    #open new file and start appending to it
+	    cat(
+	      serialization,
+	      file = file,
+	      append = TRUE
+	    )
+	  }
+	}
 
-  }
 
 	    #command = "curl -X POST -H \"Content-Type:application/x-trig\" -T /home/mid/mongo-testing-dir/new_serializations/file.trig http://192.168.90.23:7200/repositories/depl2019-test/statements"
 		#system(command)
@@ -159,7 +174,13 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 }
 
 
-
+create_new_file = function(serialization_dir){
+  time = Sys.time()
+  time = gsub(":|\\s", "-", time)
+  file = paste0(serialization_dir, "/",time, ".trig")
+  file.create(file)
+  file
+}
 
 
 
@@ -343,7 +364,7 @@ root_id = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE
   root_node = xml2::xml_find_all(node, xpath = "/*")
 
 
-    if(is.null(arpha_id)){
+    if(is.na(arpha_id)){
       id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
     }else{
       arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
