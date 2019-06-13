@@ -186,9 +186,8 @@
   #' @export
   title = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
+
 
     tt = ResourceDescriptionFramework$new()
     tt$add_triple(identifiers$nid, rdf_type, Title)
@@ -214,9 +213,8 @@
   #' @export
   abstract = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
+
   #  trans_abstract = escape_special(atoms$trans_abstract)
     tt = ResourceDescriptionFramework$new()
     tt$add_triple(identifiers$nid, rdf_type, Abstract)
@@ -321,9 +319,8 @@
   #' @export
   introduction_section = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
-    sapply(atoms$text_content, function(x){
-      x = quotemeta(x)
-    })
+
+    atoms$text_content = double_quote_replacer(atoms$text_content)
     tt = ResourceDescriptionFramework$new()
     tt$add_triple(identifiers$nid, rdf_type, Introduction)
     tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -352,12 +349,10 @@
 
     treatment_id = identifiers$nid
 
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-      x = escape_q(x)
-
-      x
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
+    for (a in 1:length(atoms$text_content)){
+      atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
+    }
 
     #check mongo collection for treatments+tc (treatment frbf:realizationof taxonomicConcept)
    # treatment_collection = mongolite::mongo("treatment_collection")
@@ -399,9 +394,7 @@
   nomenclature = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
     nomenclature_id = identifiers$nid
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
     tt = ResourceDescriptionFramework$new()
     tt$add_triple(nomenclature_id, rdf_type, Nomenclature)
     tt$add_triple(nomenclature_id, is_contained_by, identifiers$pid)
@@ -425,9 +418,7 @@
   nomenclature_citations = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
     tt = ResourceDescriptionFramework$new()
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
     tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitationsList)
     tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
     sapply(atoms$text_content, function(i) {
@@ -452,9 +443,7 @@
   diagnosis = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
     diagnosis_id = identifiers$nid
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
     tt = ResourceDescriptionFramework$new()
     tt$add_triple(diagnosis_id, rdf_type, Diagnosis)
     tt$add_triple(diagnosis_id, is_contained_by, identifiers$pid)
@@ -480,9 +469,7 @@
   discussion = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
     tt = ResourceDescriptionFramework$new()
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
     tt$add_triple(identifiers$nid, rdf_type, Discussion)
     tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
     sapply(atoms$text_content, function(i) {
@@ -508,9 +495,8 @@
   distribution = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
     tt = ResourceDescriptionFramework$new()
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
+
     tt$add_triple(identifiers$nid, rdf_type, Distribution)
     tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
     sapply(atoms$text_content, function(i) {
@@ -535,9 +521,8 @@
   {
 
     tt = ResourceDescriptionFramework$new()
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
+
 
     tt$add_triple(identifiers$nid, rdf_type, MaterialsExamined) # type
     tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)   # containtment
@@ -560,9 +545,8 @@
   taxonomic_key = function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
     tt = ResourceDescriptionFramework$new()
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
+
     tt$add_triple(identifiers$nid, rdf_type, TaxonomicKey)
     tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
     sapply(atoms$text_content, function(i) {
@@ -586,9 +570,8 @@
   figure =  function (atoms, identifiers, prefix, schema_name, mongo_key)
   {
     tt = ResourceDescriptionFramework$new()
-    sapply(atoms$text_content, function(x){
-      x = escape_special(x)
-    })
+    atoms$text_content = double_quote_replacer(atoms$text_content)
+
     tt$add_triple(identifiers$nid, rdf_type, Figure)
     tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
     sapply(atoms$text_content, function(i) {
