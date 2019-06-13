@@ -6,7 +6,7 @@
  future: true
  jailed: false
  gfm_quirks: paragraph_end
- baseurl: "ropenbio"
- url: "https://mariyad.github.io/"
+ baseurl: ""
+ url: "https://mariyad.github.io/ropenbio"
 
 theme: jekyll-theme-tactile
