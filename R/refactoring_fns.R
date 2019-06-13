@@ -8,7 +8,7 @@ get_author_label = function(node, mongo_key){
 get_author_orcid = function(node){
   orcid = xml2::xml_text(xml2::xml_find_first(node, "./uri[@content-type='orcid']"))
   orcid = gsub("^(.*)orcid.org\\/", "", orcid)
-  print(orcid)
+  #print(orcid)
   return(orcid)
 }
 
@@ -84,10 +84,7 @@ process_general_component = function (node, mongo_key)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
   label = escape_special(label) #escape special chars
-  if(names(mongo_key)=="treatment"){
-    print(label)
-    cat(label, file= "~/treatment-contents.txt")
-  }
+
   df = set_component_frame(label = label, mongo_key = mongo_key,
                            type = names(mongo_key), orcid = NA)
   return(df)
@@ -141,7 +138,7 @@ get_or_set_mongoid= function (df, prefix)
       id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
     }
 
-   print(id)
+   #print(id)
   }
   return(id)
 }
@@ -154,4 +151,15 @@ escape_special = function(string){
   string =  gsub("\\”", "\\\\", string , fixed = TRUE)
   string =  gsub("[-[\\]{}()*+?.,\\^$|#\\s]", "\\\\", string, fixed = TRUE)
 
+}
+
+#' @export
+#replace all double quotes with sngle quotes
+double_quote_replacer = function(x){
+  for (a in 1:length(x)){
+    x[[a]]$text_value = gsub("(?<=[\\w\\s(])(\")(?=[\\.\\w\\s)]{3}[^\n])", "'", x[[a]]$text_value  ,perl=TRUE)
+    x[[a]]$squote = gsub("(?<=[\\w\\s(])(\")(?=[\\.\\w\\s)]{3}[^\n])", "'", x[[a]]$squote  ,perl=TRUE)
+
+  }
+  x
 }
