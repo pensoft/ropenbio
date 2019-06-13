@@ -5,7 +5,6 @@
    hard_wrap: false
  future: true
  jailed: false
- theme: jekyll-theme-tactile
  gfm_quirks: paragraph_end
  baseurl: "ropenbio"
  url: "https://mariyad.github.io/"
