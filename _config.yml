@@ -9,3 +9,5 @@
  gfm_quirks: paragraph_end
  baseurl: "ropenbio"
  url: "https://mariyad.github.io/"
+
+theme: jekyll-theme-tactile
