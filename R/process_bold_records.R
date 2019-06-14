@@ -11,8 +11,6 @@ process_bold <- function(file)
       nodeset <- XML::getNodeSet(doc, "//article-meta")
       #creates parent nodes for the bold-ids or bins section
       parent_id <- XML::newXMLNode("bold-ids", parent = nodeset)
-      parent_bin <- XML::newXMLNode("bins", parent = nodeset)
-      empty_bin <- TRUE
       empty_bold_id <- TRUE
       for (r in results)
       {
@@ -32,28 +30,14 @@ process_bold <- function(file)
         result <- xml2::url_parse(string)
         query <- result$query
 
-        #if the query part contains "bin" or "clusteruri" the uri contains a bin
-        #else - bold-id (which can be anything, like record-id or process-id)
-        if((sub('=.*', '', query) == "bin") || (sub('=.*', '', query) == "clusteruri" ))
-        {
-          empty_bin = FALSE
-          tag = "bin"
-          new_node <- XML::newXMLNode(tag, parent = parent_bin)
+        empty_bold_id = FALSE
+        tag = "bold-id"
+        new_node <- XML::newXMLNode(tag, parent = parent_id)
 
-        } else
-        {
-          empty_bold_id = FALSE
-          tag = "bold-id"
-          new_node <- XML::newXMLNode(tag, parent = parent_id)
-        }
         value <- sub('.*=', '', query)
         XML::xmlValue(new_node) <- value
       }
-      #remove the empty nodesets
-      if (empty_bin == TRUE)
-      {
-        XML::removeNodes(parent_bin)
-      }
+
       if (empty_bold_id == TRUE)
       {
         XML::removeNodes(parent_id)
