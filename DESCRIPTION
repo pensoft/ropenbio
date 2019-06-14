@@ -35,6 +35,8 @@ Collate:
     'nactem.R'
     'pensoft.R'
     'plazi.R'
+    'process_bold_records.R'
+    'rdf.R'
     'refactoring_fns.R'
     'ropenbio.R'
     'semantic-elements.R'
@@ -42,3 +44,4 @@ Collate:
     'xml.R'
     'taxonx.R'
     'taxpub.R'
+Encoding: UTF-8
