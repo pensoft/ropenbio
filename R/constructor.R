@@ -111,6 +111,24 @@
     tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
     tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
 
+
+    if(length(atoms$plazi_id) > 0){
+      for (n in 1:length(atoms$plazi_id)){
+          text_value = gsub("http://tb.plazi.org/GgServer/summary/", "", unlist(atoms$plazi_id[n])["text_value"])
+          ll = list(text_value = text_value, xsd_type = xsd_string, lang = "",
+                    squote = paste0("\"", text_value, "\"", ""))
+          class(ll) = "literal"
+          plazi_article_id_lit = ll
+
+      }
+      plazi_article_id = identifier(text_value, c(plazi = "http://tb.plazi.org/GgServer/summary/"))
+    }
+
+    tt$add_triple(article_id, has_identifier, plazi_article_id)
+    tt$add_triple(plazi_article_id, rdf_type, ResourceIdentifier)
+    tt$add_triple(plazi_article_id, identifier_scheme, plazi)
+    tt$add_triple(plazi_article_id, rdfs_label, plazi_article_id_lit)
+
     #  tt$add_triple(article_id, has_zoobank, article_zoobank)
 
       sapply(atoms$publisher, function(i) {
