@@ -116,8 +116,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
 
       serialization = triples$serialize()
-      cat(serialization, file = "~/weevil_s.trig")
-      write(serialization, file = "~/weevil_w.trig")
      # add_data(serialization, access_options = access_options)
 	    #escape "" in coordinates
 #	serialization = stringr::str_replace_all(serialization, "((?<=[A-Za-z0-9])[\"](?=N|E|W|S))|((?<=['A-Za-z0-9])[\"])", "\\\\\"")
