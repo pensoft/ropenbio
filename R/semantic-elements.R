@@ -80,6 +80,42 @@ KeywordGroup = rdf4r::identifier(
   prefix = c(openbiodivKeywords = "http://openbiodiv.net/resource/")
 )
 
+#' datacite orcid
+#' @export
+orcid = rdf4r::identifier(
+  id = "orcid",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' datacite zoobank
+#' @export
+zoobank = rdf4r::identifier(
+  id = "zoobank",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' datacite bold
+#' @export
+bold = rdf4r::identifier(
+  id = "bold",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' Personal Identifier
+#' @export
+PersonalIdentifier = rdf4r::identifier(
+  id = "PersonalIdentifier",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+
+#' Resource Identifier
+#' @export
+ResourceIdentifier = rdf4r::identifier(
+  id = "ResourceIdentifier",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
 
 #' Treatment Section
 #' @export
@@ -554,17 +590,37 @@ has_zoobank = rdf4r::identifier(
   prefix = c(openbiodivZoobank = "http://openbiodiv.net/property/")
 )
 
+#' @export
 has_bin = rdf4r::identifier(
   id = "BIN",
   prefix = c(openbiodivBIN = "http://openbiodiv.net/property/")
 )
 
+#' @export
 has_bold = rdf4r::identifier(
   id = "BOLD",
   prefix = c(openbiodivBOLD = "http://openbiodiv.net/property/")
 )
 
-s#
+#' @export
+has_identifier = rdf4r::identifier(
+  id="hasIdentifier",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' @export
+mentions_id = rdf4r::identifier(
+  id="mentionsIdentifier",
+  prefix = c(openbiodivMentionsID = "http://openbiodiv.net/property/")
+)
+
+
+#' @export
+identifier_scheme =  rdf4r::identifier(
+  id="usesIdentifierScheme",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+#
 # Table:
 #   uri: <http://purl.org/spar/doco/Table>
 #   comment: a table in a science article
