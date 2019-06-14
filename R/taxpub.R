@@ -29,8 +29,7 @@ taxpub = XmlSchema$new(
     starting_page = NA,
     ending_page = NA,
     keyword = "/article/front/article-meta/kwd-group/kwd",
-    bold_id="/article/front/article-meta/bold-ids/bold-id",
-    bin="/article/front/article-meta/bins/bin"
+    bold_id="/article/front/article-meta/bold-ids/bold-id"
     #pensoft_pub = NA # becasue we skip only Pensoft pubs from Plazi
   ),
 
@@ -55,8 +54,7 @@ taxpub = XmlSchema$new(
     ending_page = NA,
     #pensoft_pub = NA
     keyword = NA,
-    bold_id=NA,
-    bin=NA
+    bold_id=NA
   ),
 
   atom_types = list(
@@ -80,9 +78,8 @@ taxpub = XmlSchema$new(
     ending_page = rdf4r::xsd_integer,
     #pensoft_pub = rdf4r::xsd_string
     keyword = rdf4r::xsd_string,
-    bold_id=rdf4r::xsd_string,
-    bin=rdf4r::xsd_string
-  ),
+    bold_id=rdf4r::xsd_string
+    ),
   mongo_key = c(article = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
   constructor = metadata,
 
@@ -176,7 +173,8 @@ taxpub = XmlSchema$new(
         aff_id = "./xref[@rid]",
         all_affiliations_institutions = "//article/front/article-meta/aff/institution | //article/front/article-meta/aff/addr-line",
         all_affiliations_cities = "//article/front/article-meta/aff/addr-line[@content-type='city']",
-        all_affiliations = NA
+        all_affiliations = NA,
+        orcid = "./uri[@content-type='orcid']"
         # role = "./mods:role/mods:roleTerm"
       ),
 
@@ -188,7 +186,8 @@ taxpub = XmlSchema$new(
         aff_id = NA,
         all_affiliations_institutions = NA,
         all_affiliations_cities = NA,
-        all_affiliations = NA
+        all_affiliations = NA,
+        orcid = NA
         #role = NA
       ),
 
@@ -200,7 +199,8 @@ taxpub = XmlSchema$new(
         aff_id = rdf4r::xsd_integer,
         all_affiliations_institutions = rdf4r::xsd_string,
         all_affiliations_cities =  rdf4r::xsd_string,
-        all_affiliations = rdf4r::xsd_string
+        all_affiliations = rdf4r::xsd_string,
+        orcid = rdf4r::xsd_string
       ),
       #change mongokey
       mongo_key = c(author_name = "./name/given-names", surname = "./name/surname"),
