@@ -122,12 +122,13 @@
 
       }
       plazi_article_id = identifier(text_value, c(plazi = "http://tb.plazi.org/GgServer/summary/"))
+      tt$add_triple(article_id, has_identifier, plazi_article_id)
+      tt$add_triple(plazi_article_id, rdf_type, ResourceIdentifier)
+      tt$add_triple(plazi_article_id, identifier_scheme, plazi)
+      tt$add_triple(plazi_article_id, rdfs_label, plazi_article_id_lit)
     }
 
-    tt$add_triple(article_id, has_identifier, plazi_article_id)
-    tt$add_triple(plazi_article_id, rdf_type, ResourceIdentifier)
-    tt$add_triple(plazi_article_id, identifier_scheme, plazi)
-    tt$add_triple(plazi_article_id, rdfs_label, plazi_article_id_lit)
+
 
     #  tt$add_triple(article_id, has_zoobank, article_zoobank)
 
