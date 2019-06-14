@@ -116,51 +116,17 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
 
       serialization = triples$serialize()
+      cat(serialization, file = "~/weevil_s.trig")
+      write(serialization, file = "~/weevil_w.trig")
      # add_data(serialization, access_options = access_options)
-	    #escape with backlash all the "N "W "E "S in coordinates
+	    #escape "" in coordinates
 #	serialization = stringr::str_replace_all(serialization, "((?<=[A-Za-z0-9])[\"](?=N|E|W|S))|((?<=['A-Za-z0-9])[\"])", "\\\\\"")
-	serialization = gsub("('[A-Za-z]{0,1}[0-9]{1,3})", "\\1\\\\", serialization)
+      serialization = gsub("('[A-Za-z]{0,1}[0-9\\.\\,]{1,5})", "\\1\\\\", serialization)
 #	serialization = stringr::str_remove_all(serialization, "'[A-Za-z]{0,1}[0-9]{1,3}[\"]", "\\\\\"")
 
-	    #TODO: Monitor file size and append to trig file.
-	    #TODO : Upload file from R
-	#filename is created from systime
-	#2019-06-10 16:55:24
-
-	df <- file.info(list.files(serialization_dir, full.names = T))
-	#if there are no files in the serialization dir, create new one and write to it
-	if (nrow(df) == 0){
-    file = create_new_file(serialization_dir)
-    cat(
-      serialization,
-      file = file,
-      append = TRUE
-    )
-	}else{
-	  #if there are files, find the last modified one and write to it if its less than 200 Mb, or otherwise create a new one
-	  last_modified = rownames(df)[which.max(df$mtime)]
-	  file_size = file.info(last_modified)$size
-	  if(file_size < 200000000){
-	    #keep appending to file
-	    cat(serialization, file = last_modified, append = TRUE)
-	  }else{
-	    file = create_new_file(serialization_dir)
-	    #open new file and start appending to it
-	    cat(
-	      serialization,
-	      file = file,
-	      append = TRUE
-	    )
-	  }
-	}
-
-
+  save_serialization(serialization, serialization_dir)
 	    #command = "curl -X POST -H \"Content-Type:application/x-trig\" -T /home/mid/mongo-testing-dir/new_serializations/file.trig http://192.168.90.23:7200/repositories/depl2019-test/statements"
 		#system(command)
-  #now check file size
-
-
-
 #	xml2::write_xml(xml, filename)
 
 
@@ -173,7 +139,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
     })
 }
 
-
+#' @export
 create_new_file = function(serialization_dir){
   time = Sys.time()
   time = gsub(":|\\s", "-", time)
@@ -183,6 +149,27 @@ create_new_file = function(serialization_dir){
 }
 
 
+#' @export
+save_serialization = function(serialization,serialization_dir){
+  df <- file.info(list.files(serialization_dir, full.names = T))
+  #if there are no files in the serialization dir, create new one and write to it
+  if (nrow(df) == 0){
+    file = create_new_file(serialization_dir)
+    cat(serialization, file = file, append = TRUE)
+  }else{
+    #if there are files, find the last modified one and write to it if its less than 200 Mb, or otherwise create a new one
+    last_modified = rownames(df)[which.max(df$mtime)]
+    file_size = file.info(last_modified)$size
+    if(file_size < 200000000){
+      #keep appending to file
+      cat(serialization, file = last_modified, append = TRUE)
+    }else{
+      file = create_new_file(serialization_dir)
+      #open new file and start appending to it
+      cat(serialization,file = file,append = TRUE )
+    }
+  }
+}
 
 
 
