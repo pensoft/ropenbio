@@ -630,6 +630,12 @@ mentions_id = rdf4r::identifier(
   prefix = c(openbiodivMentionsID = "http://openbiodiv.net/property/")
 )
 
+#' @export
+has_coordinates = rdf4r::identifier(
+  id="hasCoordinates",
+  prefix = c(openbiodivCoordinates = "http://openbiodiv.net/property/")
+)
+
 
 #' @export
 identifier_scheme =  rdf4r::identifier(
