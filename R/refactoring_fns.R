@@ -60,9 +60,14 @@ process_author = function (node, mongo_key)
 process_tnu = function (node, mongo_key)
 {
   label = get_taxon_label(node, mongo_key)
-  mongo_key = c(taxonomic_name = "")
-  df = set_component_frame(label = label, mongo_key = mongo_key,type = names(mongo_key), orcid = NA)
-  return(df)
+  if (nchar(label)<3 && grepl(".", label)==TRUE){ #if the label is something like "B." then don't save it (too ambiguous)
+    df = NULL
+    }else{
+    mongo_key = c(taxonomic_name = "")
+    df = set_component_frame(label = label, mongo_key = mongo_key,type = names(mongo_key), orcid = NA)
+    return(df)
+  }
+
 }
 
 
@@ -111,35 +116,40 @@ get_or_set_mongoid= function (df, prefix)
 {
   general_collection = mongolite::mongo("new_collection")
  # print(df)
-  if (!(is.na(df$orcid))) {
-    key = check_mongo_via_orcid(df$orcid, general_collection)
-    if (is.null(key) == TRUE) {
-      key = df$orcid
-      save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
-                    collection = general_collection)
-      id = key
-    }
-    id = rdf4r::strip_angle(key)
-    # id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
-    id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
-  }
-  else {
-
-    key = check_mongo(value = df$label, type = df$type, collection = general_collection,
-                      regex = FALSE)
-    if (is.null(key) == TRUE) {
-      key = uuid::UUIDgenerate()
-      save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
-                    collection = general_collection)
-      id = key
-    }else{
+  if (is.null(df) == FALSE){
+    if (!(is.na(df$orcid))) {
+      key = check_mongo_via_orcid(df$orcid, general_collection)
+      if (is.null(key) == TRUE) {
+        key = df$orcid
+        save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
+                      collection = general_collection)
+        id = key
+      }
       id = rdf4r::strip_angle(key)
       # id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
       id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
     }
+    else {
 
-   #print(id)
+      key = check_mongo(value = df$label, type = df$type, collection = general_collection,
+                        regex = FALSE)
+      if (is.null(key) == TRUE) {
+        key = uuid::UUIDgenerate()
+        save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
+                      collection = general_collection)
+        id = key
+      }else{
+        id = rdf4r::strip_angle(key)
+        # id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
+        id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
+      }
+
+      #print(id)
+    }
+  }else{
+    id = NULL
   }
+
   return(id)
 }
 
