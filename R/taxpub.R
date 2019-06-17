@@ -267,15 +267,18 @@ taxpub = XmlSchema$new(
       extension = ".xml",
       prefix = c(openbiodivTreatment = "http://openbiodiv.net/resource/Treatment/"),
       atoms = c(
-        text_content = "."
+        text_content = ".",
+        coordinates = ".//named-content[@content-type='dwc:verbatimCoordinates']"
       ),
 
       atom_lang = c(
-        text_content = NA
+        text_content = NA,
+        coordinates = NA
       ),
 
       atom_types = list(
-        text_content =  rdf4r::xsd_string
+        text_content =  rdf4r::xsd_string,
+        coordinates = rdf4r::xsd_string
       ),
       mongo_key =  c(treatment = "."),
       constructor = treatment,
