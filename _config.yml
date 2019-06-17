@@ -9,4 +9,4 @@
  baseurl: "ropenbio/"
  url: "https://mariyad.github.io/"
 
-theme: jekyll-theme-cayman
+theme: jekyll-theme-slate
