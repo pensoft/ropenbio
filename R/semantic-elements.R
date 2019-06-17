@@ -101,6 +101,15 @@ bold = rdf4r::identifier(
   prefix = c(datacite = "http://purl.org/spar/datacite/")
 )
 
+#' datacite genbank
+#' @export
+genbank = rdf4r::identifier(
+  id = "genbank",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+
+
 #' datacite plazi
 #' @export
 plazi = rdf4r::identifier(
