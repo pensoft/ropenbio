@@ -19,6 +19,10 @@ identifier_new = function (node, xml, mongo_key, prefix = NA, blank = FALSE)
   else {
     id = xml2::xml_attr(node, "obkms_id")
   }
-  ident = identifier(id = id, prefix = prefix)
+
+  if(is.null(id))
+    ident = NULL
+  else
+    ident = identifier(id = id, prefix = prefix)
   ident
 }
