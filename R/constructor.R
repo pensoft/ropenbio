@@ -181,7 +181,7 @@
         tt$add_triple(article_id, mentions_id, i)
       })
       sapply(bold_identifiers, function(i){
-        tt$add_triple(bold_identifiers, rdf_type, ResourceIdentifier)
+        tt$add_triple(i, rdf_type, ResourceIdentifier)
 
       })
       for (i in 1:length(bold_identifiers)){
@@ -194,7 +194,7 @@
         tt$add_triple(article_id, mentions_id, i)
       })
       sapply(bin_identifiers, function(i){
-        tt$add_triple(bin_identifiers, rdf_type, ResourceIdentifier)
+        tt$add_triple(i, rdf_type, ResourceIdentifier)
 
       })
       for (i in 1:length(bin_identifiers)){
@@ -218,13 +218,14 @@
         tt$add_triple(article_id, mentions_id, i)
       })
       sapply(genbank_identifiers, function(i){
-        tt$add_triple(genbank_identifiers, rdf_type, ResourceIdentifier)
+        tt$add_triple(i, rdf_type, ResourceIdentifier)
 
       })
       for (i in 1:length(genbank_identifiers)){
         tt$add_triple(genbank_identifiers[[i]], rdfs_label, literal(genbank_values[i]))
         tt$add_triple(genbank_identifiers[[i]], identifier_scheme, genbank)
       }
+
 
       tt$add_triple(publisher_id, rdf_type, Publisher)
       sapply(atoms$publisher, function(i) {
@@ -467,6 +468,12 @@
         atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
       }
 
+      #for (i in 1:length(atoms$coordinates))
+     # {
+    #    coordinate_vect = stringr::str_split(atoms$coordinates[[i]]$text_value, ", ")
+
+      # }
+
       #check mongo collection for treatments+tc (treatment frbf:realizationof taxonomicConcept)
      # treatment_collection = mongolite::mongo("treatment_collection")
      #tc_key = check_mongo(value = treatment_id$uri, type  = names(mongo_key), collection = treatment_collection, regex = FALSE)
@@ -488,6 +495,10 @@
       tt$add_triple(treatment_id, is_contained_by, identifiers$pid)
       sapply(atoms$text_content, function(i) {
         tt$add_triple(treatment_id, has_content, i)
+      })
+
+      sapply(atoms$coordinates, function(i) {
+        tt$add_triple(treatment_id, has_coordinates, i)
       })
      # tt$add_triple(taxonomic_concept_id, rdf_type, TaxonomicConcept)
     #  tt$add_triple(taxonomic_concept_id, realization, treatment_id)
