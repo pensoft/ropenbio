@@ -91,7 +91,7 @@
       })
 
       #
-    #the article zoobank id is the one containing the words "arphahub.com"
+    #the article zoobank id is the one containing the words "zoobank"
       if(length(atoms$article_zoobank) > 0){
         for (n in 1:length(atoms$article_zoobank)){
           if (grepl("zoobank", unlist(atoms$article_zoobank[[n]])["text_value"]) == TRUE){
@@ -153,9 +153,9 @@
 
 
 
-      bold_prefix = "http://openbiodiv.net/property/BOLD"
-      names(bold_prefix) = "openbiodivBOLD"
-      tt$prefix_list$add(bold_prefix)
+      #bold_prefix = "http://openbiodiv.net/property/BOLD"
+      #names(bold_prefix) = "openbiodivBOLD"
+      #tt$prefix_list$add(bold_prefix)
 
       bold_values=c()
       bold_identifiers = c()
@@ -164,25 +164,67 @@
           bold_values = c(bold_values, atoms$bold_id[[i]]$text_value)
           bold_identifiers = c(bold_identifiers, list(identifier(gsub("BOLD:", "",atoms$bold_id[[i]]$text_value), c(openbiodivBOLD = "http://openbiodiv.net/resource/BOLD/"))))
           }
-
       }
 
 
+      bin_values=c()
+      bin_identifiers = c()
+      if (length(atoms$bin)>0){
+        for(i in 1:length(atoms$bin)){
+          bin_values = c(bin_values, atoms$bin[[i]]$text_value)
+          bin_identifiers = c(bin_identifiers, list(identifier(gsub("BOLD:", "",atoms$bin[[i]]$text_value), c(openbiodivBIN = "http://openbiodiv.net/resource/BIN/"))))
+        }
+      }
+
+      #BOLD IDS
       sapply(bold_identifiers, function(i){
         tt$add_triple(article_id, mentions_id, i)
       })
-
       sapply(bold_identifiers, function(i){
         tt$add_triple(bold_identifiers, rdf_type, ResourceIdentifier)
 
       })
-
       for (i in 1:length(bold_identifiers)){
-        tt$add_triple(bold_identifiers[[i]], rdfs_label, bold_values[i])
+        tt$add_triple(bold_identifiers[[i]], rdfs_label, literal(bold_values[i]))
         tt$add_triple(bold_identifiers[[i]], identifier_scheme, bold)
       }
 
+      #BINS
+      sapply(bin_identifiers, function(i){
+        tt$add_triple(article_id, mentions_id, i)
+      })
+      sapply(bin_identifiers, function(i){
+        tt$add_triple(bin_identifiers, rdf_type, ResourceIdentifier)
 
+      })
+      for (i in 1:length(bin_identifiers)){
+        tt$add_triple(bin_identifiers[[i]], rdfs_label, literal(bin_values[i]))
+        tt$add_triple(bin_identifiers[[i]], identifier_scheme, bold)
+      }
+
+
+
+      genbank_values=c()
+      genbank_identifiers = c()
+      if (length(atoms$genbank_id)>0){
+        for(i in 1:length(atoms$genbank_id)){
+          genbank_values = c(genbank_values, atoms$genbank_id[[i]]$text_value)
+          genbank_identifiers = c(genbank_identifiers, list(identifier(atoms$genbank_id[[i]]$text_value, c(openbiodivGenBank = "http://openbiodiv.net/resource/GenBank/"))))
+        }
+      }
+
+      #GenBank
+      sapply(genbank_identifiers, function(i){
+        tt$add_triple(article_id, mentions_id, i)
+      })
+      sapply(genbank_identifiers, function(i){
+        tt$add_triple(genbank_identifiers, rdf_type, ResourceIdentifier)
+
+      })
+      for (i in 1:length(genbank_identifiers)){
+        tt$add_triple(genbank_identifiers[[i]], rdfs_label, literal(genbank_values[i]))
+        tt$add_triple(genbank_identifiers[[i]], identifier_scheme, genbank)
+      }
 
       tt$add_triple(publisher_id, rdf_type, Publisher)
       sapply(atoms$publisher, function(i) {
@@ -191,6 +233,7 @@
       tt$add_triple(paper_id, rdf_type, Paper)
       return(tt)
     }
+
 
 
 
