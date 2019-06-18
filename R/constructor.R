@@ -19,7 +19,7 @@
       general_collection = mongolite::mongo("new_collection")
       doi = unlist(atoms$doi)["text_value"]
 
-      df = set_component_frame(label = doi, mongo_key = c(paper = ""), type = "research_paper", orcid = NA)
+      df = set_component_frame(label = doi, mongo_key = c(paper = ""), type = "research_paper", orcid = NA, parent = NA)
       researchPaper_prefix = c(openbiodivResearchPaper = "http://openbiodiv.net/resource/researchPaper/")
       paper_id = get_or_set_mongoid(df, researchPaper_prefix )
       paper_id = identifier(paper_id, researchPaper_prefix)
@@ -27,7 +27,7 @@
       article_id = identifiers$root_id
       publisher_lit = unlist(atoms$publisher)["text_value"]
 
-      df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = ""), type = "publisher", orcid = NA)
+      df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = ""), type = "publisher", orcid = NA, parent = NA)
       publisher_prefix = c(openbiodivPublisher = "http://openbiodiv.net/resource/publisher/")
       publisher_id = get_or_set_mongoid(df, publisher_prefix )
       publisher_id = identifier(publisher_id, publisher_prefix)
@@ -35,7 +35,7 @@
 
       journal_lit = unlist(atoms$journal)["text_value"]
 
-      df = set_component_frame(label = journal_lit, mongo_key = c(journal = ""), type = "journal", orcid = NA)
+      df = set_component_frame(label = journal_lit, mongo_key = c(journal = ""), type = "journal", orcid = NA, parent = NA)
       journal_prefix = c(openbiodivJournal = "http://openbiodiv.net/resource/journal/")
       journal_id = get_or_set_mongoid(df, journal_prefix )
       journal_id = identifier(journal_id, journal_prefix)
@@ -468,6 +468,30 @@
         atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
       }
 
+      #search mongo for this treatment id
+        tc_key = uuid::UUIDgenerate()
+        tc_prefix = c(openbiodivTC = "http://openbiodiv.net/resource/TaxonomicConcept")
+        tc_identifier = identifier(tc_key, tc_prefix)
+
+        #id_df = check_mongo_via_key(key = treatment_id$id, collection = "general_collection", fields = "_id")
+
+
+        #query = sprintf("{\"%s\":\"%s\"},{\"%s\":\"%s\"}", "key", treatment_id$uri, "type", type)
+        #general_collection$find(query = query, fields = '{"_id": true}')
+        #save_to_mongo(key = tc_identifier$uri, value = "", type="taxonomic_concept", parent = treatment_id$nid$id)
+        #update_parent_via_key(key, parent, collection){
+        #  query = sprintf("{\"%s\":\"%s\"},{\"$set\":\"%s\":\"%s\"}", "key", key, "parent", parent)
+        #  collection$update(query = query)
+
+
+
+        save_to_mongo(key = tc_identifier$uri, value = "", type = "taxonomic concept", parent = treatment_id$uri, collection = general_collection)
+
+        #query = sprintf("{\"%s\":\"%s\"},{\"$set\":\"%s\":\"%s\"}", "key", treatment_id$uri, "parent", parent)
+
+
+        #subjects$update('{"name":"jerry"}', '{"$set":{"age": 31}}')
+
       #for (i in 1:length(atoms$coordinates))
      # {
     #    coordinate_vect = stringr::str_split(atoms$coordinates[[i]]$text_value, ", ")
@@ -500,8 +524,8 @@
       sapply(atoms$coordinates, function(i) {
         tt$add_triple(treatment_id, has_coordinates, i)
       })
-     # tt$add_triple(taxonomic_concept_id, rdf_type, TaxonomicConcept)
-    #  tt$add_triple(taxonomic_concept_id, realization, treatment_id)
+      tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
+      tt$add_triple(tc_identifier, realization, treatment_id)
       return(tt)
     }
 
@@ -776,7 +800,7 @@
       if (is.null(mongo_tnu)) {
         mongo_tnu = uuid::UUIDgenerate()
         type = as.character(label$text_value)
-        save_to_mongo(key = identifier(mongo_tnu, tnu_prefix)$uri, value = paper_id, type = type,
+        save_to_mongo(key = identifier(mongo_tnu, tnu_prefix)$uri, value = paper_id, type = type, parent = NA,
                       collection = tnu_collection)
       }else{
         mongo_tnu = rdf4r::strip_angle(mongo_tnu)
