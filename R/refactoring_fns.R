@@ -39,9 +39,9 @@ get_figure_label = function (node, mongo_key, fig_number)
 
 
 #' @export
-set_component_frame = function(label, mongo_key, type, orcid)
+set_component_frame = function(label, mongo_key, type, orcid, parent)
 {
-  df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid)
+  df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid, parent = parent)
   df
 }
 
@@ -51,7 +51,7 @@ process_author = function (node, mongo_key)
   label = get_author_label(node, mongo_key)
   orcid = get_author_orcid(node)
   mongo_key = c(author = "")
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = orcid)
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = orcid, parent = NA)
   return(df)
 }
 
@@ -64,7 +64,7 @@ process_tnu = function (node, mongo_key)
     df = NULL
     }else{
     mongo_key = c(taxonomic_name = "")
-    df = set_component_frame(label = label, mongo_key = mongo_key,type = names(mongo_key), orcid = NA)
+    df = set_component_frame(label = label, mongo_key = mongo_key,type = names(mongo_key), orcid = NA, parent=NA)
     return(df)
   }
 
@@ -78,8 +78,7 @@ process_figure =  function (node, mongo_key)
   label = get_figure_label(node, mongo_key, fig_number)
   label = escape_special(label)
   type = paste0(names(mongo_key), " ", fig_number)
-  df = set_component_frame(label = label, mongo_key = mongo_key,
-                           type = type, orcid = NA)
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = type, orcid = NA, parent = NA)
   return(df)
 }
 
@@ -90,8 +89,7 @@ process_general_component = function (node, mongo_key)
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
   label = escape_special(label) #escape special chars
 
-  df = set_component_frame(label = label, mongo_key = mongo_key,
-                           type = names(mongo_key), orcid = NA)
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA)
   return(df)
 }
 
@@ -104,8 +102,7 @@ process_schema_component = function(node, mongo_key)
     df = process_tnu(node, mongo_key)
   } else if (is.figure(mongo_key) == TRUE){
     df = process_figure(node, mongo_key)
-  }
-  else{
+  } else{
     df = process_general_component(node, mongo_key)
   }
   df
@@ -118,11 +115,10 @@ get_or_set_mongoid= function (df, prefix)
  # print(df)
   if (is.null(df) == FALSE){
     if (!(is.na(df$orcid))) {
-      key = check_mongo_via_orcid(df$orcid, general_collection)
+      key = check_mongo_key_via_orcid(df$orcid, general_collection)
       if (is.null(key) == TRUE) {
         key = df$orcid
-        save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
-                      collection = general_collection)
+        save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, parent = NA, collection = general_collection)
         id = key
       }
       id = rdf4r::strip_angle(key)
@@ -131,11 +127,11 @@ get_or_set_mongoid= function (df, prefix)
     }
     else {
 
-      key = check_mongo(value = df$label, type = df$type, collection = general_collection,
+      key = check_mongo_key(value = df$label, type = df$type, collection = general_collection,
                         regex = FALSE)
       if (is.null(key) == TRUE) {
         key = uuid::UUIDgenerate()
-        save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,
+        save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, parent = NA,
                       collection = general_collection)
         id = key
       }else{
