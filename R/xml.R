@@ -86,7 +86,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
     {
       #xml = xml2::read_xml(filename)
 
-      xml_string = process_bold_genbank(filename)
+      xml_string = crosslinker(filename)
       if(is.null(xml_string)){
         xml = xml2::read_xml(filename)
       }else
