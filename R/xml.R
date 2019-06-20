@@ -94,6 +94,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         xml = xml2::as_xml_document(xml_string)
       }
 
+      general_collection =  mongolite::mongo("new_collection")
+
       #xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), split = "/"), xml)
       #prefix = c(openbiodiv = "http://openbiodiv.net")
 
@@ -101,17 +103,19 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       root_ident = root_id(node=xml, xml_schema = taxpub, xml=xml, mongo_key = xml_schema$mongo_key, prefix = xml_schema$prefix, blank = FALSE)
 
       triples$set_context(root_ident)
+      #finds all institution codes and names and saves them in mongodb collection
+      institutionalizer(xml=xml, root_id=root_ident, collection = general_collection)
 
-     triples = node_extractor(
-	node = xml,
-	xml_schema = xml_schema,
-	reprocess = reprocess,
-	triples = triples,
-	prefix = xml_schema$prefix,
-	dry = dry,
-	filename = filename,
-	root_id = root_ident
-	)
+      triples = node_extractor(
+    	node = xml,
+    	xml_schema = xml_schema,
+    	reprocess = reprocess,
+    	triples = triples,
+    	prefix = xml_schema$prefix,
+    	dry = dry,
+    	filename = filename,
+    	root_id = root_ident
+    	)
 
 
 
