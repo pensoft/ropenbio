@@ -24,6 +24,19 @@ check_mongo_parent = function(key, value, type, collection)
 }
 
 
+
+#' @export
+check_mongo_inst = function(code, parent, collection){
+  #search by: code, parent
+  #get key
+
+  #query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\",\"%s\":\"%s\"}", "code", code, "parent", parent, "type", "institution")
+  query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}, \"%s\":\"%s\",\"%s\":\"%s\"}", "parent", "$regex", parent, "$options", "i", "code", code, "type", "institution")
+  res = collection$find(query)
+
+}
+
+
 #' @export
 check_mongo_key_via_orcid = function(orcid, collection)
 {
