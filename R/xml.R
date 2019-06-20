@@ -95,7 +95,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       }
 
       general_collection =  mongolite::mongo("new_collection")
-
+      inst_collection = mongolite::mongo("institutions")
       #xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), split = "/"), xml)
       #prefix = c(openbiodiv = "http://openbiodiv.net")
 
@@ -104,7 +104,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       triples$set_context(root_ident)
       #finds all institution codes and names and saves them in mongodb collection
-      institutionalizer(xml=xml, root_id=root_ident, collection = general_collection)
+      institutionalizer(xml=xml, root_id=root_ident, collection = inst_collection)
 
       triples = node_extractor(
     	node = xml,
