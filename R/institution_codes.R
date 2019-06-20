@@ -22,9 +22,14 @@ dwc_institutions_extractor = function(xml){
     }
   }
 
+identif = sapply(codes, function(x){
+  id = identifier(uuid::UUIDgenerate(), prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+  id$uri
+})
 institutions_df = data.frame(
-  key = codes,
-  value = names,
+  key = identif,
+  code = codes,
+  name = names,
   type = "institution"
 )
 return(institutions_df)
@@ -42,9 +47,17 @@ abbrev_institutions_extractor = function(xml){
     xml2::xml_text(x)
   })
 
+  codes = unique(codes)
+  names = unique(names)
+  identif = sapply(codes, function(x){
+    id = identifier(uuid::UUIDgenerate(), prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+    id$uri
+  })
+
   institutions_df = data.frame(
-    key = unique(codes),
-    value = unique(names),
+    key = identif,
+    code =  codes,
+    name = names,
     type = "institution"
   )
   return(institutions_df)
@@ -56,6 +69,7 @@ institutions_to_mongo = function(df1, df2, root_id, collection){
   df = rbind(df1, df2)
   #parent saves the context (article id) in which an institution is used
   df$parent = root_id$uri
+  rownames(df) = NULL
   collection$insert(df)
   return(TRUE)
 }
