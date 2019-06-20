@@ -591,6 +591,20 @@ has_affiliation = rdf4r::identifier(
 )
 
 
+has_inst = rdf4r::identifier(
+  id = "hasInstitution",
+  prefix = c(openbiodivHasInst = "http://openbiodiv.net/property/")
+)
+
+has_instName = rdf4r::identifier(
+  id = "hasInstitutionName",
+  prefix = c(openbiodivHasInstName = "http://openbiodiv.net/property/")
+)
+
+Institution =  rdf4r::identifier(
+  id = "Institution",
+  prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/")
+)
 
 #' Has email
 #' @export
