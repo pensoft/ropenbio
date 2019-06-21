@@ -269,6 +269,31 @@
         mongo_key = c(discussion = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
         constructor = discussion
       ),
+
+      # Checklist
+      XmlSchema$new(
+        schema_name = "taxpub_checklist",
+        xpath = "//sec[contains(@sec-type, 'Checklist')]",
+        file_pattern = ".*\\.xml",
+        extension = ".xml",
+        prefix = c(openbiodivChecklist = "http://openbiodiv.net/resource/Checklist/"),
+        atoms = c(
+          text_content = ".",
+          inst_code = ".//abbrev[@content-type='institution'] | .//named-content[@content-type='dwc:institutional_code']"
+        ),
+
+        atom_lang = c(
+          text_content = NA,
+          inst_code = NA
+        ),
+
+        atom_types = list(
+          text_content =  rdf4r::xsd_string,
+          inst_code = rdf4r::xsd_string
+        ),
+        mongo_key = c(checklist = "."),
+        constructor = checklist
+      ),
       # Treatment
       XmlSchema$new(
         schema_name = "taxpub_treatment",

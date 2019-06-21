@@ -100,7 +100,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       #prefix = c(openbiodiv = "http://openbiodiv.net")
 
       triples = ResourceDescriptionFramework$new()
-      root_ident = root_id(node=xml, xml_schema = taxpub, xml=xml, mongo_key = xml_schema$mongo_key, prefix = xml_schema$prefix, blank = FALSE)
+      root_ident = root(node=xml, xml_schema = taxpub, xml=xml, mongo_key = xml_schema$mongo_key, prefix = xml_schema$prefix, blank = FALSE)
 
       triples$set_context(root_ident)
       #finds all institution codes and names and saves them in mongodb collection
@@ -125,6 +125,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 #	serialization = stringr::str_replace_all(serialization, "((?<=[A-Za-z0-9])[\"](?=N|E|W|S))|((?<=['A-Za-z0-9])[\"])", "\\\\\"")
       serialization = gsub("('[A-Za-z]{0,1}[0-9\\.\\,]{1,5})", "\\1\\\\", serialization)
 #	serialization = stringr::str_remove_all(serialization, "'[A-Za-z]{0,1}[0-9]{1,3}[\"]", "\\\\\"")
+cat(serialization,file = "~/inst_test.trig")
 
   save_serialization(serialization, serialization_dir)
 	    #command = "curl -X POST -H \"Content-Type:application/x-trig\" -T /home/mid/mongo-testing-dir/new_serializations/file.trig http://192.168.90.23:7200/repositories/depl2019-test/statements"
@@ -344,7 +345,7 @@ parent_id = function (node, fullname = FALSE )
 #' @param node
 #'
 #' @export
-root_id = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
+root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 {
   #look for "new style" article id:
   new_xpath = "//article/front/article-meta/article-id[@pub-id-type='other']"

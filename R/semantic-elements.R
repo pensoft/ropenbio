@@ -80,6 +80,13 @@ KeywordGroup = rdf4r::identifier(
   prefix = c(openbiodivKeywords = "http://openbiodiv.net/resource/")
 )
 
+#' Checklist
+#' @export
+Checklist =  rdf4r::identifier(
+  id = "Checklist",
+  prefix = c(openbiodivChecklist = "http://openbiodiv.net/resource/")
+)
+
 #' datacite orcid
 #' @export
 orcid = rdf4r::identifier(
@@ -656,6 +663,9 @@ identifier_scheme =  rdf4r::identifier(
   id="usesIdentifierScheme",
   prefix = c(datacite = "http://purl.org/spar/datacite/")
 )
+
+
+
 #
 # Table:
 #   uri: <http://purl.org/spar/doco/Table>

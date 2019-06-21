@@ -315,6 +315,20 @@
       sapply(atoms$trans_abstract, function(i) {
         tt$add_triple(identifiers$nid, has_content, i)
       })
+
+      #the inst codes within the abstract, also check mongo
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
       return(tt)
     }
 
@@ -433,13 +447,25 @@
     #' @export
     introduction_section = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
-
       atoms$text_content = double_quote_replacer(atoms$text_content)
       tt = ResourceDescriptionFramework$new()
       tt$add_triple(identifiers$nid, rdf_type, Introduction)
       tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
       sapply(atoms$text_content, function(i) {
         tt$add_triple(identifiers$nid, has_content, i)
+      })
+
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
       })
       return(tt)
     }
@@ -460,7 +486,6 @@
     #' @export
     treatment = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
-
       treatment_id = identifiers$nid
 
       atoms$text_content = double_quote_replacer(atoms$text_content)
@@ -524,6 +549,19 @@
       sapply(atoms$coordinates, function(i) {
         tt$add_triple(treatment_id, has_coordinates, i)
       })
+
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
       tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
       tt$add_triple(tc_identifier, realization, treatment_id)
       return(tt)
@@ -549,6 +587,21 @@
       sapply(atoms$text_content, function(i) {
         tt$add_triple(nomenclature_id, has_content, i)
       })
+
+
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
+
       return(tt)
     }
 
@@ -571,6 +624,19 @@
       tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
       sapply(atoms$text_content, function(i) {
         tt$add_triple(identifiers$nid, has_content, i)
+      })
+
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
       })
       return(tt)
     }
@@ -598,6 +664,20 @@
       sapply(atoms$text_content, function(i) {
         tt$add_triple(diagnosis_id, has_content, i)
       })
+
+
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
       return(tt)
     }
 
@@ -623,9 +703,56 @@
       sapply(atoms$text_content, function(i) {
         tt$add_triple(identifiers$nid, has_content, i)
       })
+
+
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
       return(tt)
     }
 
+    #' Checklist Section Constructor
+    #'
+    #' @param atoms a list of literals
+    #' @param identifiers a list of identifiers
+    #' @param prefix
+    #'
+    #' @return \code{ResourceDescriptionFramework}
+    #' @export
+    checklist = function (atoms, identifiers, prefix, schema_name, mongo_key)
+    {
+      tt = ResourceDescriptionFramework$new()
+      atoms$text_content = double_quote_replacer(atoms$text_content)
+      tt$add_triple(identifiers$nid, rdf_type, Checklist)
+      tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
+      sapply(atoms$text_content, function(i) {
+        tt$add_triple(identifiers$nid, has_content, i)
+      })
+      atoms$inst_code = unique(atoms$inst_code) #remove repeating inst codes
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
+
+      return(tt)
+    }
 
 
 
@@ -650,6 +777,19 @@
       sapply(atoms$text_content, function(i) {
         tt$add_triple(identifiers$nid, has_content, i)
       })
+
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
       return(tt)
     }
 
@@ -667,7 +807,6 @@
     #' @export
     materials_examined = function(atoms, identifiers, prefix, schema_name, mongo_key)
     {
-
       tt = ResourceDescriptionFramework$new()
       atoms$text_content = double_quote_replacer(atoms$text_content)
 
@@ -676,6 +815,18 @@
       tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)   # containtment
       sapply(atoms$text_content, function(i) { tt$add_triple(identifiers$nid, has_content, i) })
 
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
       return(tt)
     }
 
@@ -725,6 +876,21 @@
       sapply(atoms$text_content, function(i) {
         tt$add_triple(identifiers$nid, has_content, i)
       })
+
+
+      sapply(atoms$inst_code, function(i){
+        res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+        if (length(res) > 0){
+          inst_id = strip_angle(res$key)
+          inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+          inst_name = res$name
+          institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+          tt$add_triple(identifiers$nid, has_inst, institut)
+          tt$add_triple(institut, rdf_type, Institution)
+          tt$add_triple(institut, has_instName, literal(inst_name))
+        }
+      })
+
       return(tt)
     }
 
@@ -740,6 +906,7 @@
     #' @export
     taxonomic_name_usage = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       taxon_id = identifiers$nid
       atoml_to_val = function(atoml) {
         if (length(atoml) > 0) {
