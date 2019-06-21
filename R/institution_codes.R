@@ -74,4 +74,30 @@ institutions_to_mongo = function(df1, df2, root_id, collection){
   return(TRUE)
 }
 
+#' @export
+add_inst_triples = function(atoms, triples)
+{
+  triples$prefix_list$add(c(openbiodivHasInst = "http://openbiodiv.net/property/hasInstitution"))
+  triples$prefix_list$add(c(openbiodivHasInstName = "http://openbiodiv.net/property/hasInstitutionName"))
+  triples$prefix_list$add(c(openbiodivHasInstCode = "http://openbiodiv.net/property/hasInstitutionCode"))
+
+  atoms$inst_code = unique(atoms$inst_code)
+  #the inst codes within the abstract, also check mongo
+  sapply(atoms$inst_code, function(i){
+    res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
+    if (length(res) > 0){
+      inst_id = strip_angle(res$key)
+      inst_id = gsub("^(.*)resource\\/(.*)\\/", "", inst_id)
+      inst_name = res$name
+      institut = identifier(inst_id, prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/Institution/"))
+      triples$add_triple(identifiers$nid, has_inst, institut)
+      triples$add_triple(institut, rdf_type, Institution)
+      triples$add_triple(institut, has_instName, literal(inst_name))
+      triples$add_triple(institut, has_instCode, i)
+
+    }
+  })
+
+  return(triples)
+}
 
