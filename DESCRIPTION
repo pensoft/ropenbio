@@ -37,7 +37,6 @@ Collate:
     'nactem.R'
     'pensoft.R'
     'plazi.R'
-    'process_treatment.R'
     'rdf.R'
     'refactoring_fns.R'
     'ropenbio.R'
