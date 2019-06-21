@@ -10,7 +10,7 @@ check_mongo_key = function(value, type, collection, regex)
   key = collection$find(query)$key
   return(key)
 }
-save_to_mongo
+
 #' @export
 check_mongo_parent = function(key, value, type, collection)
 {
