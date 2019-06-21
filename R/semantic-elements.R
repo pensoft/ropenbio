@@ -597,17 +597,25 @@ has_affiliation = rdf4r::identifier(
   prefix = c(openbiodivAffil = "http://openbiodiv.net/property/")
 )
 
-
+#' @export
 has_inst = rdf4r::identifier(
   id = "hasInstitution",
   prefix = c(openbiodivHasInst = "http://openbiodiv.net/property/")
 )
 
+#' @export
 has_instName = rdf4r::identifier(
   id = "hasInstitutionName",
   prefix = c(openbiodivHasInstName = "http://openbiodiv.net/property/")
 )
 
+#' @export
+has_instCode = rdf4r::identifier(
+  id = "hasInstitutionCode",
+  prefix = c(openbiodivHasInstCode = "http://openbiodiv.net/property/")
+)
+
+#' @export
 Institution =  rdf4r::identifier(
   id = "Institution",
   prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/")
