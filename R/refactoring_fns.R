@@ -169,3 +169,8 @@ double_quote_replacer = function(x){
   }
   x
 }
+
+#' @export
+strip_trailing_whitespace = function(string){
+  string = gsub("\\s*$", "", string)
+}
