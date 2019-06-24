@@ -60,3 +60,9 @@ save_to_mongo = function(key, value, type, parent, collection)
   collection$insert(d)
 }
 
+#' @export
+check_code_name_combo = function(code, name, collection){
+    query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "code", code, "name", name)
+    key = collection$find(query)
+    return(key)
+  }
