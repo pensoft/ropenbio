@@ -68,14 +68,14 @@
           }
         }
         zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-
+        tt$add_triple(journal_id, has_identifier, zoobank_id)
+        tt$add_triple(zoobank_id, rdf_type, ResourceIdentifier)
+        tt$add_triple(zoobank_id, identifier_scheme, zoobank)
+        tt$add_triple(zoobank_id, rdfs_label, journal_zoobank_literal)
       }
 
 
-      tt$add_triple(journal_id, has_identifier, zoobank_id)
-      tt$add_triple(zoobank_id, rdf_type, ResourceIdentifier)
-      tt$add_triple(zoobank_id, identifier_scheme, zoobank)
-      tt$add_triple(zoobank_id, rdfs_label, journal_zoobank_literal)
+
 
 
       tt$add_triple(journal_id, frbr_part, article_id)
@@ -103,13 +103,14 @@
           }
         }
       article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-    }
+      tt$add_triple(article_id, has_identifier, article_zoobank_id)
+      tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
+      tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
+      tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
+
+      }
 
 
-    tt$add_triple(article_id, has_identifier, article_zoobank_id)
-    tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
-    tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
-    tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
 
 
     if(length(atoms$plazi_id) > 0){
@@ -251,6 +252,7 @@
     #' @export
     keyword_group = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       tt$add_triple(identifiers$nid, rdf_type, KeywordGroup)
       tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -276,6 +278,7 @@
     #' @export
     title = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       atoms$text_content = double_quote_replacer(atoms$text_content)
 
 
@@ -303,6 +306,7 @@
     #' @export
     abstract = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       atoms$text_content = double_quote_replacer(atoms$text_content)
 
     #  trans_abstract = escape_special(atoms$trans_abstract)
@@ -316,7 +320,7 @@
         tt$add_triple(identifiers$nid, has_content, i)
       })
 
-     tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
       return(tt)
     }
@@ -343,6 +347,7 @@
     #' @export
     author = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       full_name = function(lsurname, lgiven_name) {
         if (length(lsurname) == 1 && length(lgiven_name) == 1) {
           paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
@@ -436,6 +441,7 @@
     #' @export
     introduction_section = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       atoms$text_content = double_quote_replacer(atoms$text_content)
       tt = ResourceDescriptionFramework$new()
       tt$add_triple(identifiers$nid, rdf_type, Introduction)
@@ -444,7 +450,7 @@
         tt$add_triple(identifiers$nid, has_content, i)
       })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
       return(tt)
     }
@@ -465,6 +471,7 @@
     #' @export
     treatment = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       treatment_id = identifiers$nid
 
       atoms$text_content = double_quote_replacer(atoms$text_content)
@@ -489,7 +496,7 @@
         tt$add_triple(treatment_id, has_coordinates, i)
       })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
       tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
       tt$add_triple(tc_identifier, realization, treatment_id)
@@ -508,6 +515,7 @@
     #' @export
     nomenclature = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       nomenclature_id = identifiers$nid
       atoms$text_content = double_quote_replacer(atoms$text_content)
       tt = ResourceDescriptionFramework$new()
@@ -517,7 +525,7 @@
         tt$add_triple(nomenclature_id, has_content, i)
       })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
 
       return(tt)
@@ -536,6 +544,7 @@
     #' @export
     nomenclature_citations = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       atoms$text_content = double_quote_replacer(atoms$text_content)
       tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitationsList)
@@ -544,7 +553,7 @@
         tt$add_triple(identifiers$nid, has_content, i)
       })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
       return(tt)
     }
@@ -564,6 +573,7 @@
     #' @export
     diagnosis = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       diagnosis_id = identifiers$nid
       atoms$text_content = double_quote_replacer(atoms$text_content)
       tt = ResourceDescriptionFramework$new()
@@ -573,7 +583,7 @@
         tt$add_triple(diagnosis_id, has_content, i)
       })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
       return(tt)
     }
@@ -593,6 +603,7 @@
     #' @export
     discussion = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       atoms$text_content = double_quote_replacer(atoms$text_content)
       tt$add_triple(identifiers$nid, rdf_type, Discussion)
@@ -601,7 +612,7 @@
         tt$add_triple(identifiers$nid, has_content, i)
       })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
       return(tt)
     }
@@ -616,6 +627,7 @@
     #' @export
     checklist = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       atoms$text_content = double_quote_replacer(atoms$text_content)
       tt$add_triple(identifiers$nid, rdf_type, Checklist)
@@ -623,7 +635,7 @@
       sapply(atoms$text_content, function(i) {
         tt$add_triple(identifiers$nid, has_content, i)
       })
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
 
       return(tt)
@@ -644,6 +656,7 @@
     #' @export
     distribution = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       atoms$text_content = double_quote_replacer(atoms$text_content)
 
@@ -653,7 +666,7 @@
         tt$add_triple(identifiers$nid, has_content, i)
       })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
       return(tt)
     }
@@ -672,6 +685,7 @@
     #' @export
     materials_examined = function(atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       atoms$text_content = double_quote_replacer(atoms$text_content)
 
@@ -680,7 +694,7 @@
       tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)   # containtment
       sapply(atoms$text_content, function(i) { tt$add_triple(identifiers$nid, has_content, i) })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
       return(tt)
     }
@@ -698,6 +712,7 @@
     #' @export
     taxonomic_key = function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       atoms$text_content = double_quote_replacer(atoms$text_content)
 
@@ -723,6 +738,7 @@
     #' @export
     figure =  function (atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       atoms$text_content = double_quote_replacer(atoms$text_content)
 
@@ -732,7 +748,7 @@
         tt$add_triple(identifiers$nid, has_content, i)
       })
 
-      tt =  add_inst_triples(atoms, tt)
+      tt =  add_inst_triples(atoms, tt, identifiers)
 
 
       return(tt)
@@ -800,13 +816,9 @@
         atoms$genus = atoms$regularzied_genus
       }
       tnu_collection = mongolite::mongo("tnus")
-      #label = label[!is.null(label)]
-      #paper_id = stringr::str_extract(identifiers$root_id$id, "([^\\/]*)$")
       paper_id = identifiers$root_id$uri
       mongo_tnu = check_mongo(paper_id, label$text_value, tnu_collection,
                               regex = FALSE)
-      #print("mongo tnu")
-      #print(mongo_tnu)
       tnu_prefix = c(openbiodivTNU = "http://openbiodiv.net/resource/TNU/")
       if (is.null(mongo_tnu)) {
         mongo_tnu = uuid::UUIDgenerate()
@@ -817,10 +829,9 @@
         mongo_tnu = rdf4r::strip_angle(mongo_tnu)
         mongo_tnu = gsub("^(.*)resource\\/(.*)\\/", "", mongo_tnu)
       }
-     #
-      #print(mongo_tnu)
+
       tnu_id = identifier(mongo_tnu, prefix = tnu_prefix)
-      #print(tnu_id)
+
       todate = function(year, month, day) {
         list(literal(paste(year[[1]]$text_value, month[[1]]$text_value,
                            day[[1]]$text_value, sep = "-"), xsd_type = rdf4r::xsd_date))
@@ -908,6 +919,7 @@
     #' @export
     institution_code_usage = function(atoms, identifiers, prefix, schema_name, mongo_key)
     {
+
       tt = ResourceDescriptionFramework$new()
       tt$add_triple(identifiers$nid, rdf_type, InstitutionalCodeUsage) # type
       tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)   # containtment

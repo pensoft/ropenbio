@@ -8,7 +8,7 @@
 #'
 #' @return identifier from OpenBiodiv
 #' @export
-verbstat2openbiodiv = function(verbatim_status, vocab_file = paste0(path.package('ropenbio') , "/inst/vocabulary/", "taxonomic-status.yml"), def_prefix)
+verbstat2openbiodiv = function(verbatim_status, vocab_file = paste0(path.package('ropenbio') , "/vocabulary/", "taxonomic-status.yml"), def_prefix)
 {
   vocab = yaml::yaml.load_file(vocab_file)
   verbatim_status = trimws(tolower(verbatim_status))
