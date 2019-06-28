@@ -221,6 +221,9 @@
 
         components = NULL
       ),
+
+
+
       # Introduction
       XmlSchema$new(
         schema_name = "taxpub_introduction_section",
@@ -461,25 +464,31 @@
       # Taxonomic Key
       XmlSchema$new(
         schema_name = "taxpub_taxonomic_key",
-        xpath = "/sec[@sec-type='key']",
+        xpath = "//sec[@sec-type='key'] | //sec[contains(@sec-type, 'key')] | //sec[contains(@sec-type, 'Key to')] | //sec[contains(@sec-type, 'key to')]",
         file_pattern = ".*\\.xml",
         extension = ".xml",
         prefix = c(openbiodivKey = "http://openbiodiv.net/resource/TaxonomicKey/"),
         atoms = c(
-          text_content = "."
+          title = "title",
+          table = "table-wrap/table/table-contents",
+          text_content = "*[not(name()='table-wrap')][not(name()='title')]" #any node which is not a table-wrap or a title
         ),
 
         atom_lang = c(
+          title = NA,
+          table = NA,
           text_content = NA
         ),
 
         atom_types = list(
+          title = rdf4r::xsd_string,
+          table = rdf4r::xsd_string,
           text_content = rdf4r::xsd_string
         ),
         mongo_key =  c(taxonomic_key = "."),
         constructor = taxonomic_key,
 
-        components = NULL
+    components = NULL
       ),
 
       # Figure
