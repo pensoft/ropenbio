@@ -8,7 +8,6 @@ get_author_label = function(node, mongo_key){
 get_author_orcid = function(node){
   orcid = xml2::xml_text(xml2::xml_find_first(node, "./uri[@content-type='orcid']"))
   orcid = gsub("^(.*)orcid.org\\/", "", orcid)
-  #print(orcid)
   return(orcid)
 }
 
@@ -41,6 +40,7 @@ get_figure_label = function (node, mongo_key, fig_number)
 #' @export
 set_component_frame = function(label, mongo_key, type, orcid, parent)
 {
+
   df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid, parent = parent)
   df
 }
@@ -112,7 +112,6 @@ process_schema_component = function(node, mongo_key)
 get_or_set_mongoid= function (df, prefix)
 {
   general_collection = mongolite::mongo("new_collection")
- # print(df)
   if (is.null(df) == FALSE){
     if (!(is.na(df$orcid))) {
       key = check_mongo_key_via_orcid(df$orcid, general_collection)
@@ -139,8 +138,6 @@ get_or_set_mongoid= function (df, prefix)
         # id = stringr::str_extract(id, "(?:.(?!\\/)){36}$")
         id = gsub("^(.*)resource\\/(.*)\\/", "", id) #only get the uuid part of the id
       }
-
-      #print(id)
     }
   }else{
     id = NULL
