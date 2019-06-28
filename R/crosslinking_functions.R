@@ -113,3 +113,41 @@ genbank_xml_modifier = function(nodeset, results){
   }
   return(nodeset)
 }
+
+#' @export
+table_formatter = function(xml){
+
+ # doc = XML::xmlParse(xml, isHTML = FALSE)
+#  nodeset = XML::getNodeSet(doc, "//table")
+    nd = xml2::xml_find_all(xml, "//table")
+
+    for (n in 1:length(nd)){
+
+    children = xml2::xml_children(nd[n])
+
+    #parent_gen = XML::newXMLNode("genbank-ids", parent = nodeset)
+     # xml_string = toString(nodeset[n])
+    xml_string = toString(nd[n])
+
+    #scrap all <th> for now - need complex regexes to make those work
+    xml_string = gsub("<tr>\\s+<th(.*?)<\\/th>", "", xml_string)
+    xml_string = gsub("<th(.*?)<\\/th>\\s+<\\/tr>", "", xml_string)
+    xml_string = gsub("  <th(.*?)<\\/th>", "", xml_string)
+  #  xml_string = gsub("\n", "", xml_string)
+    #xml_string = gsub("<tr>", "", xml_string)
+    xml_string = gsub("\\s+", " ", xml_string)
+    xml_string = gsub("<tr>", "", xml_string)
+    xml_string = gsub("<td(.*?)>", "", xml_string)
+    xml_string = gsub("<\\/td>\\s+<\\/tr>", "   ;   ", xml_string)
+    xml_string = gsub("<\\/td>", " ||| ", xml_string)
+    xml_string = gsub("<(.)*?>", "", xml_string)
+
+    child = children[[1]]
+    sib = xml2::xml_add_sibling(child, "table-contents")
+    xml2::xml_set_text(sib, xml_string)
+    }
+
+  return(xml)
+}
+
+
