@@ -392,7 +392,7 @@
 
       affiliation_prefix = "http://openbiodiv.net/property/affiliation"
       names(affiliation_prefix) = "openbiodivAffil"
-      tt$prefix_list$add(affiliation_prefix)
+     # tt$prefix_list$add(affiliation_prefix)
 
       tt$add_triple(paper_id, creator, author_id)
       tt$add_triple(author_id, rdf_type, Person)
@@ -492,6 +492,7 @@
         tt$add_triple(treatment_id, has_content, i)
       })
 
+     # tt$prefix_list$add(c(openbiodivCoordinates = "http://openbiodiv.net/property/"))
       sapply(atoms$coordinates, function(i) {
         tt$add_triple(treatment_id, has_coordinates, i)
       })
@@ -714,13 +715,31 @@
     {
 
       tt = ResourceDescriptionFramework$new()
-      atoms$text_content = double_quote_replacer(atoms$text_content)
-
       tt$add_triple(identifiers$nid, rdf_type, TaxonomicKey)
-      tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-      sapply(atoms$text_content, function(i) {
-        tt$add_triple(identifiers$nid, has_content, i)
+
+
+      if (length(atoms$text_content)>0){
+        atoms$text_content = double_quote_replacer(atoms$text_content)
+        sapply(atoms$text_content, function(i) {
+          tt$add_triple(identifiers$nid, has_content, i)
+        })
+      }
+
+      sapply(atoms$table, function(i) {
+
+
+        table_key = uuid::UUIDgenerate()
+        table_prefix = c(openbiodivTable = "http://openbiodiv.net/resource/Table")
+        table_identifier = identifier(table_key, table_prefix)
+        save_to_mongo(key = table_identifier$uri, value = i, type = "table", parent = identifiers$nid$uri, collection = general_collection)
+        tt$add_triple(table_identifier, is_contained_by, identifiers$nid)
+        tt$add_triple(table_identifier, has_content, i)
       })
+      tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
+
+
+
+
       return(tt)
     }
 
@@ -857,7 +876,7 @@
       tt$add_triple(taxon_id, rdf_type, ScientificName)
       ScPrefix = "http://openbiodiv.net/resource/ScientificName/"
       names(ScPrefix) = "openbiodivScName"
-      tt$prefix_list$add(ScPrefix)
+   #   tt$prefix_list$add(ScPrefix)
 
       tt$add_triple(taxon_id, rdfs_label, label)
       tt$add_triple(taxon_id, has_scientific_name, label)
