@@ -52,24 +52,29 @@ abbrev_institutions_extractor = function(xml){
   attribs = sapply(nodes, function(x){
     xml2::xml_attrs(x)
   })
-  names = strip_trailing_whitespace(attribs[2,])
-  codes = sapply(nodes, function(x){
-    strip_trailing_whitespace(xml2::xml_text(x))
-  })
 
-  codes = unique(codes)
-  names = unique(names)
-  identif = sapply(codes, function(x){
-    id = identifier(uuid::UUIDgenerate(), prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
-    id$uri
-  })
+  if(!(is.null(nrow(attribs)))){
+    names = strip_trailing_whitespace(attribs[2,])
+    codes = sapply(nodes, function(x){
+      strip_trailing_whitespace(xml2::xml_text(x))
+    })
 
-  institutions_df = data.frame(
-    key = identif,
-    code =  codes,
-    name = names,
-    type = "institution"
-  )
+    codes = unique(codes)
+    names = unique(names)
+    identif = sapply(codes, function(x){
+      id = identifier(uuid::UUIDgenerate(), prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/institution/"))
+      id$uri
+    })
+
+    institutions_df = data.frame(
+      key = identif,
+      code =  codes,
+      name = names,
+      type = "institution"
+    )
+  }else{
+    institutions_df = NULL
+    }
   }else{
     institutions_df = NULL
   }
