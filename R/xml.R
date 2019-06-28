@@ -103,8 +103,12 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       root_ident = root(node=xml, xml_schema = taxpub, xml=xml, mongo_key = xml_schema$mongo_key, prefix = xml_schema$prefix, blank = FALSE)
 
       triples$set_context(root_ident)
+      triples = populate_prefix_list(triples)
+
       #finds all institution codes and names and saves them in mongodb collection
       institutionalizer(xml=xml, root_id=root_ident, collection = inst_collection)
+      xml = table_formatter(xml)
+      #xml = xml2::as_xml_document(xml)
 
       triples = node_extractor(
     	node = xml,
@@ -125,12 +129,12 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 #	serialization = stringr::str_replace_all(serialization, "((?<=[A-Za-z0-9])[\"](?=N|E|W|S))|((?<=['A-Za-z0-9])[\"])", "\\\\\"")
       serialization = gsub("('[A-Za-z]{0,1}[0-9\\.\\,]{1,5})", "\\1\\\\", serialization)
 #	serialization = stringr::str_remove_all(serialization, "'[A-Za-z]{0,1}[0-9]{1,3}[\"]", "\\\\\"")
-cat(serialization,file = "~/inst_test.trig")
+#cat(serialization,file = "~/inst_test.trig")
 
   save_serialization(serialization, serialization_dir)
 	    #command = "curl -X POST -H \"Content-Type:application/x-trig\" -T /home/mid/mongo-testing-dir/new_serializations/file.trig http://192.168.90.23:7200/repositories/depl2019-test/statements"
 		#system(command)
-#	xml2::write_xml(xml, filename)
+	xml2::write_xml(xml, filename)
 
 
       return(TRUE)
@@ -261,8 +265,9 @@ find_literals = function(xml, xml_schema)
   names(rr) = names(xml_schema$atoms)
   for (nn in names(xml_schema$atoms))
   {
-    #inside a particular name
-    literals = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
+      #inside a particular name
+      literals = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
+
     languages = tryCatch(
       xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atom_lang[nn])),
       error = function(e) {
@@ -313,6 +318,12 @@ parent_id = function (node, fullname = FALSE )
   while ( path != "/" && is.na( obkms_id ) ) {
     node = xml2::xml_parent( node )
     obkms_id = xml2::xml_attr( node, "obkms_id")
+    obkms_list = xml2::xml_attr( node, "obkms_prefix")
+   # obkms_list = strsplit(obkms_list,split='|', fixed=TRUE)
+  #  obkms_prefix = obkms_list[2]
+  #  names(obkms_prefix) = obkms_list[1]
+    obkms_prefix = obkms_list
+    names(obkms_prefix) = paste0("openbiodiv",stringr::str_extract(obkms_prefix,"(?<=resource\\/)(.*)(?=\\/)"))
     path = xml2::xml_path( node )
   }
 
@@ -321,20 +332,8 @@ parent_id = function (node, fullname = FALSE )
     return (  paste0( strip_angle( obkms$prefixes$`_base`) , obkms_id ) )
   }
 
-  else return ( obkms_id )
+  else return (identifier(obkms_id, obkms_prefix))
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -356,9 +355,12 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 
     if(is.na(arpha_id)){
       id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
+      xml2::xml_attr(root_node, "obkms_prefix") = prefix
+
     }else{
       arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
       xml2::xml_attr(root_node, "obkms_id") = arpha_id #save to xml
+      xml2::xml_attr(root_node, "obkms_prefix") = prefix
       id = identifier(id = arpha_id, prefix = prefix)       #build identifier
     }
   id
