@@ -113,8 +113,7 @@ add_inst_triples = function(atoms, triples, identifiers)
   atoms$inst_code = unique(atoms$inst_code)
   #the inst codes within the abstract, also check mongo
   sapply(atoms$inst_code, function(i){
-    print(i)
-    print(i$text_value)
+
 
     res = check_mongo_inst(code = i$text_value, parent = identifiers$root_id$id, collection = inst_collection)
 
