@@ -5,7 +5,7 @@
 \title{Converts a Verbatim Status to a Controlled Vocabulary}
 \usage{
 verbstat2openbiodiv(verbatim_status,
-  vocab_file = paste0(path.package("ropenbio"), "/inst/vocabulary/",
+  vocab_file = paste0(path.package("ropenbio"), "/vocabulary/",
   "taxonomic-status.yml"), def_prefix)
 }
 \arguments{
