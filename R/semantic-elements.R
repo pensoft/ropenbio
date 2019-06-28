@@ -87,6 +87,13 @@ Checklist =  rdf4r::identifier(
   prefix = c(openbiodivChecklist = "http://openbiodiv.net/resource/")
 )
 
+#' Table
+#' @export
+Table =  rdf4r::identifier(
+  id = "Table",
+  prefix = c(openbiodivTable = "http://openbiodiv.net/resource/")
+)
+
 #' datacite orcid
 #' @export
 orcid = rdf4r::identifier(
