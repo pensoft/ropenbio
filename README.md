@@ -1,1 +1,1 @@
-# EbbeNielsen2019
+# TypeR: Type material data as RDF
