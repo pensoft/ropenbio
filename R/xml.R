@@ -265,16 +265,23 @@ find_literals = function(xml, xml_schema)
   names(rr) = names(xml_schema$atoms)
   for (nn in names(xml_schema$atoms))
   {
-      #inside a particular name
+    #inside a particular name
+    if (xml_schema$schema_name == "taxonomic_key" && nn == "text_content"){
+      literals = toString(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
+    }else{
       literals = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
-
+      #insert spaces where needed - lowercase followed by uppercase (AbstractContent)
+      literals = gsub("(?<=[a-z])(?=[A-Z])", " ", literals, perl = TRUE)
+    }
+   
+    
     languages = tryCatch(
       xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atom_lang[nn])),
       error = function(e) {
         NA
       }
     )
-
+    
     rr[[nn]] = lapply(seq(along.with = literals), function(i)
     {
       literal(literals[i], xsd_type = xml_schema$atom_types[[nn]] ,lang = languages[i])
@@ -318,21 +325,15 @@ parent_id = function (node, fullname = FALSE )
   while ( path != "/" && is.na( obkms_id ) ) {
     node = xml2::xml_parent( node )
     obkms_id = xml2::xml_attr( node, "obkms_id")
-    obkms_list = xml2::xml_attr( node, "obkms_prefix")
-   # obkms_list = strsplit(obkms_list,split='|', fixed=TRUE)
-  #  obkms_prefix = obkms_list[2]
-  #  names(obkms_prefix) = obkms_list[1]
-    obkms_prefix = obkms_list
-    names(obkms_prefix) = paste0("openbiodiv",stringr::str_extract(obkms_prefix,"(?<=resource\\/)(.*)(?=\\/)"))
     path = xml2::xml_path( node )
   }
-
+  
   if ( fullname )
   {
     return (  paste0( strip_angle( obkms$prefixes$`_base`) , obkms_id ) )
   }
-
-  else return (identifier(obkms_id, obkms_prefix))
+  
+  else return ( obkms_id )
 }
 
 
