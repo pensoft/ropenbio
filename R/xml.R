@@ -80,64 +80,55 @@ XmlSchema =
 xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess = FALSE, dry)
 {
   # generate lookup functions
-
-
+  
+  
+  
+      #xml = xml2::read_xml(filename)
+      
   tryCatch(
     {
-      #xml = xml2::read_xml(filename)
-
       xml_string = crosslinker(filename)
       if(is.null(xml_string)){
         xml = xml2::read_xml(filename)
       }else
-      {
+     {
         xml = xml2::as_xml_document(xml_string)
       }
-
+      
       general_collection =  mongolite::mongo("new_collection")
       inst_collection = mongolite::mongo("institutions")
-      #xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename), split = "/"), xml)
-      #prefix = c(openbiodiv = "http://openbiodiv.net")
+      checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
+      
+      
+     # taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
 
+      prefix = c(openbiodiv = "http://openbiodiv.net/")
+      
       triples = ResourceDescriptionFramework$new()
-      root_ident = root(node=xml, xml_schema = taxpub, xml=xml, mongo_key = xml_schema$mongo_key, prefix = xml_schema$prefix, blank = FALSE)
-
+      root_ident = root(node=xml, xml_schema = material_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
+      
       triples$set_context(root_ident)
-      triples = populate_prefix_list(triples)
-
+      
       #finds all institution codes and names and saves them in mongodb collection
-      institutionalizer(xml=xml, root_id=root_ident, collection = inst_collection)
-      xml = table_formatter(xml)
-      #xml = xml2::as_xml_document(xml)
+      extract_inst_identifiers(xml, root_id = root_ident, prefix = prefix, collection = inst_collection)
 
-      triples = node_extractor(
-    	node = xml,
-    	xml_schema = xml_schema,
-    	reprocess = reprocess,
-    	triples = triples,
-    	prefix = xml_schema$prefix,
-    	dry = dry,
-    	filename = filename,
-    	root_id = root_ident
-    	)
-
-
-
+      triples = node_extractor_en(
+        node = xml,
+        xml_schema = xml_schema,
+        reprocess = reprocess,
+        triples = triples,
+        prefix = prefix,
+        dry = dry,
+        filename = filename,
+        root_id = root_ident
+      )
+      
       serialization = triples$serialize()
-     # add_data(serialization, access_options = access_options)
-	    #escape "" in coordinates
-#	serialization = stringr::str_replace_all(serialization, "((?<=[A-Za-z0-9])[\"](?=N|E|W|S))|((?<=['A-Za-z0-9])[\"])", "\\\\\"")
-      serialization = gsub("('[A-Za-z]{0,1}[0-9\\.\\,]{1,5})", "\\1\\\\", serialization)
-#	serialization = stringr::str_remove_all(serialization, "'[A-Za-z]{0,1}[0-9]{1,3}[\"]", "\\\\\"")
-#cat(serialization,file = "~/inst_test.trig")
-
-  save_serialization(serialization, serialization_dir)
-	    #command = "curl -X POST -H \"Content-Type:application/x-trig\" -T /home/mid/mongo-testing-dir/new_serializations/file.trig http://192.168.90.23:7200/repositories/depl2019-test/statements"
-		#system(command)
-	xml2::write_xml(xml, filename)
-
-
-      return(TRUE)
+    
+     # cat(serialization,file = "~/test-holotyper_5.trig")
+      save_serialization(serialization, serialization_dir)
+      xml2::write_xml(xml, filename)
+    return(TRUE)
     },
     error = function(e)
     {
@@ -145,6 +136,12 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       return(FALSE)
     })
 }
+   
+  
+  
+}
+
+
 
 #' @export
 create_new_file = function(serialization_dir){
