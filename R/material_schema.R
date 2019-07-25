@@ -1,4 +1,4 @@
-
+#' @include xml.R
 #' @export
 material_schema = XmlSchema$new(
   schema_name = "material_schema",
