@@ -1,5 +1,5 @@
 #' @export
-  metadata_en = function (atoms, identifiers, prefix,schema_name = xml_schema$schema_name, mongo_key)
+  metadata= function (atoms, identifiers, prefix,schema_name = xml_schema$schema_name, mongo_key)
     {
       pub_date = function(year, month, day) {
         literal(paste0(text_value = unlist(year)["text_value"],
@@ -404,7 +404,7 @@
   
   
    #' @export
-  treatment_en = function (atoms, identifiers, prefix, schema_name = xml_schema$schema_name, mongo_key){
+  treatment = function (atoms, identifiers, prefix, schema_name = xml_schema$schema_name, mongo_key){
     
     taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
     
@@ -608,7 +608,7 @@
   
       
     #' @export
-    type_material_en = function (atoms, identifiers, prefix, schema_name = xml_schema$schema_name, mongo_key){
+    type_material = function (atoms, identifiers, prefix, schema_name = xml_schema$schema_name, mongo_key){
       #first check the status
       tt = ResourceDescriptionFramework$new()
       
