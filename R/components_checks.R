@@ -20,3 +20,9 @@ is.figure = function(mongo_key){
   check = "figure" %in% names(mongo_key)
   return(check)
 }
+
+#' @export
+is.treatment = function(mongo_key){
+  check = "treatment" %in% names(mongo_key)
+  return(check)
+}
