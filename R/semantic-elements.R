@@ -679,7 +679,59 @@ identifier_scheme =  rdf4r::identifier(
   prefix = c(datacite = "http://purl.org/spar/datacite/")
 )
 
+  #' @export
+  has_grbioCool = rdf4r::identifier(
+    id = "hasCoolID",
+    prefix = c(openbiodiv = "http://openbiodiv.net/")
+  )
+  
+  #' @export
+  has_instName = rdf4r::identifier(
+    id = "hasInstitutionName",
+    prefix = c(openbiodiv = "http://openbiodiv.net/")
+  )
+  
+  #' @export
+  inst_names =  rdf4r::identifier(
+    id = "institutionNames",
+    prefix = c(openbiodiv = "http://openbiodiv.net/")
+  )
+  
+  #' @export
+  has_instCode = rdf4r::identifier(
+    id = "hasInstitutionCode",
+    prefix = c(openbiodiv = "http://openbiodiv.net/")
+  )
+  
+  #' @export
+  inst_codes = rdf4r::identifier(
+  id = "institutionCodes",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+  
+  #' @export
+   has_grbioInstCode = rdf4r::identifier(
+    id = "hasGrbioInstitutionCode",
+    prefix = c(openbiodiv = "http://openbiodiv.net/")
+  )
+  
+   #' @export
+  has_inst = rdf4r::identifier(
+    id = "hasInstitutionRecord",
+    prefix = c(openbiodiv = "http://openbiodiv.net/")
+  )
 
+  #' @export
+  GrbioInst = rdf4r::identifier(
+    id = "GRSciCollInstitution",
+    prefix = c(openbiodiv = "http://openbiodiv.net/")
+  )
+  
+  #' @export
+  taxonStatus =  rdf4r::identifier(
+      id = "taxonomicStatus",
+      prefix = c(openbiodiv = "http://openbiodiv.net/")
+    )
 
 #
 # Table:
