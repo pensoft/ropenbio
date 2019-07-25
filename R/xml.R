@@ -136,10 +136,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       return(FALSE)
     })
 }
-   
   
-  
-}
 
 
 
