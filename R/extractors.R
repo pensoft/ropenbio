@@ -14,62 +14,42 @@
   #'   the article
   #'
   #' @export
-  node_extractor = function (node, xml_schema, reprocess, triples, prefix,
-            dry = FALSE, filename, root_id)
-  {
-    if (processing_status(node) == FALSE || reprocess == TRUE) {
-      if (!is.null(xml_schema$injector)) {
-        xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename),
-                                                         split = "/"), node)
-      }
-
-
-      atoms = find_literals(node, xml_schema)
-      #TODO fix parent_id prefix
-
-      new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = xml_schema$prefix, blank = FALSE),
-                                                                     pid = parent_id(node),
-                                                                     root_id = root_id),
-                                           prefix = xml_schema$prefix,schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key)
-      new_triples$set_context(triples$context)
-
-
-      serialization = new_triples$serialize()
-      # if (dry == FALSE) {
-      #    add_data(serialization, access_options = access_options)
-      #  }
-      xml2::xml_attr(node, "obkms_process") = "TRUE"
-      triples$add_triples(new_triples)
+node_extractor = function (node, xml_schema, reprocess, triples, prefix,
+                              dry = FALSE, filename, root_id)
+{
+  if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples))) {
+    if (!is.null(xml_schema$injector)) {
+      xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename),
+                                                       split = "/"), node)
     }
-    for (c in xml_schema$components) {
-      nodel = xml2::xml_find_all(node, c$xpath)
-      for (n in nodel) {
-        node_extractor(n, c, reprocess = reprocess, triples = triples,
-                       prefix = c$prefix, dry = dry, filename = filename,
-                       root_id = root_id)
-      }
-    }
-    return(triples)
+    
+    
+    atoms = find_literals(node, xml_schema)
+    #TODO fix parent_id prefix
+    
+    new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE),
+                                                                   pid = identifier(parent_id(node), prefix),
+                                                                   root_id = root_id),
+                                         prefix = xml_schema$prefix,schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key)
+    new_triples$set_context(triples$context)
+    
+    serialization = new_triples$serialize()
+    # if (dry == FALSE) {
+    #    add_data(serialization, access_options = access_options)
+    #  }
+    xml2::xml_attr(node, "obkms_process") = "TRUE"
+    triples$add_triples(new_triples)
   }
-
-
-#' @export
-  populate_prefix_list = function(triples){
-    #prefixes which are not added to prefix list via identifier()
-    prefixes = c(openbiodivScName = "http://openbiodiv.net/resource/ScientificName/",
-                 openbiodivResearchPaper = "http://openbiodiv.net/resource/ResearchPaper/",
-                 openbiodivPublisher = "http://openbiodiv.net/resource/Publisher/",
-                 openbiodivJournal = "http://openbiodiv.net/resource/Journal/",
-                 openbiodivAffil = "http://openbiodiv.net/property/affiliation/",
-                 openbiodivTC = "http://openbiodiv.net/resource/TaxonomicConcept/",
-                 openbiodivCoordinates = "http://openbiodiv.net/property/hasCoordinates/",
-                 openbiodivTNU = "http://openbiodiv.net/resource/TNU/")
-
-
-
-    for (s in 1:length(prefixes)){
-      triples$prefix_list$add(prefixes[s])
+  for (c in xml_schema$components) {
+    nodel = xml2::xml_find_all(node, c$xpath)
+    for (n in nodel) {
+      
+        node_extractor_en(n, c, reprocess = reprocess, triples = triples,
+                          prefix = prefix, dry = dry, filename = filename,
+                          root_id = root_id)
+      
+      
     }
-
-    return(triples)
   }
+  return(triples)
+}
