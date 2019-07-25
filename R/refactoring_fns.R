@@ -184,6 +184,18 @@ get_or_set_mongoid= function (df, prefix)
 }
 
 #' @export
+get_or_set = function(key, df){
+  if (is.null(key) == TRUE) {
+    key = uuid::UUIDgenerate()
+    save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, parent = df$parent, collection = general_collection)
+    id = key
+  }else{
+    id = rdf4r::strip_angle(key)
+    id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", id)
+  }
+}
+
+#' @export
 escape_special = function(string){
     string =  gsub("\r?\n|\r", " ", string)
     string =  gsub("\\“", "\\\\", string , fixed = TRUE)
