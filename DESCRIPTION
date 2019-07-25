@@ -33,6 +33,7 @@ Collate:
     'identifier_factory_new.R'
     'identifier_new.R'
     'institution_codes.R'
+    'material_schema.R'
     'mongo_operations.R'
     'nactem.R'
     'pensoft.R'
