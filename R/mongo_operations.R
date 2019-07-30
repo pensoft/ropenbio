@@ -1,4 +1,3 @@
-
 #' @export
 check_mongo_key = function(value, type, collection, regex)
 {
@@ -23,15 +22,15 @@ check_mongo_parent = function(key, value, type, collection)
   return(parent)
 }
 
- #' @export
-  check_mongo_instCode = function(code, collection){
+#' @export
+check_mongo_instCode = function(code, collection){
     query = sprintf("{\"%s\":\"%s\"}", "code", code)
     res = collection$find(query)
     return(res)
   }
   
-  #' @export
-  check_mongo_instName = function(name, collection){
+#' @export
+check_mongo_instName = function(name, collection){
     query = sprintf("{\"%s\":\"%s\"}", "name", name)
     res = collection$find(query)
     return(res)
@@ -39,8 +38,8 @@ check_mongo_parent = function(key, value, type, collection)
   
 
   
-  #' @export
-  check_mongo_key_via_parent = function(parent,type, collection){
+#' @export
+check_mongo_key_via_parent = function(parent,type, collection){
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "parent", parent, "type", type)
     key = collection$find(query)$key
     return(key)
