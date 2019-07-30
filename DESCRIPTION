@@ -16,7 +16,8 @@ Imports:
     rdf4r,
     gsubfn,
     uuid,
-    purrr
+    purrr,
+    mongolite
 Suggests:
     testthat,
     knitr,
