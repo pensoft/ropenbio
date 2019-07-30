@@ -1,4 +1,8 @@
+
 #' @include xml.R
+
+#' Material Schema
+#'
 #' @export
 material_schema = XmlSchema$new(
   schema_name = "material_schema",
@@ -389,7 +393,6 @@ material_schema = XmlSchema$new(
               constructor = nomenclature_citations
             )
             
-          )
           ),
         
         XmlSchema$new(
@@ -649,5 +652,6 @@ material_schema = XmlSchema$new(
           
           components = NULL
         )
-      ))
+      )
+)
  
