@@ -96,6 +96,7 @@ save_orcid_to_mongo = function(key, value, type, parent, orcid, collection)
   collection$insert(d)
 }
 
+
 #' @export
 check_code_name_combo = function(code, name, collection){
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "code", code, "name", name)
