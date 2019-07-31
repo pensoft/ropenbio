@@ -1,4 +1,5 @@
 #' require(mongolite)
+
 #' checking mongo key
 #' @export
 check_mongo_key = function(value, type, collection, regex)
