@@ -1,0 +1,44 @@
+RegularizedPartialTaxonomicNameUsage:
+  markup: ./@reg
+
+PartialTaxonomicNameUsage:
+  markup: tp:taxon-name-part
+
+TaxonomicNameUsage:
+  markup: tp:taxon-name
+  kingdom: ./tp:taxon-name-part[@taxon-name-part-type="kingdom" or @taxon-name-part-type="Kingdom" or @taxon-name-part-type="divisio" or @taxon-name-part-type="Divisio" or @taxon-name-part-type="division" or @taxon-name-part-type="Division"]
+  phylum: ./tp:taxon-name-part[@taxon-name-part-type="phylum" or @taxon-name-part-type="Phylum" or @taxon-name-part-type="regnum" or @taxon-name-part-type="Regnum"]
+  class: ./tp:taxon-name-part[@taxon-name-part-type="class" or @taxon-name-part-type="Class" or @taxon-name-part-type="classis" or @taxon-name-part-type="Classis"]
+  order: ./tp:taxon-name-part[@taxon-name-part-type="order" or @taxon-name-part-type="Order" or @taxon-name-part-type="ordo" or @taxon-name-part-type="Ordo"]
+  family: ./tp:taxon-name-part[@taxon-name-part-type="family" or @taxon-name-part-type="Family" or @taxon-name-part-type="familia" or @taxon-name-part-type="Familia" or @taxon-name-part-type="famil" or @taxon-name-part-type="Famil"]
+  genus: ./tp:taxon-name-part[@taxon-name-part-type="genus" or @taxon-name-part-type="Genus" or @taxon-name-part-type="genera" or @taxon-name-part-type="Genera"]
+  subgenus: ./tp:taxon-name-part[@taxon-name-part-type="subgenus" or @taxon-name-part-type="Subgenus" or @taxon-name-part-type="subgenera" or @taxon-name-part-type="Subgenera"]
+  species: ./tp:taxon-name-part[@taxon-name-part-type="Species" or @taxon-name-part-type="species"]
+  subspecies: ./tp:taxon-name-part[@taxon-name-part-type="Subspecies" or @taxon-name-part-type="subspecies" or @taxon-name-part-type="Variety" or @taxon-name-part-type="variety" or @taxon-name-part-type="varietas" or @taxon-name-part-type="Varietas" or @taxon-name-part-type="variation" or @taxon-name-part-type="Variation" or @taxon-name-part-type="subvariety" or @taxon-name-part-type="Subvariety" or @taxon-name-part-type="subvarietas" or @taxon-name-part-type="Subvarietas" or @taxon-name-part-type="subvariation" or @taxon-name-part-type="Subvariation"  or @taxon-name-part-type="Form" or @taxon-name-part-type="form" or @taxon-name-part-type="forma" or @taxon-name-part-type="Forma" or @taxon-name-part-type="aberration" or @taxon-name-part-type="Aberration" or @taxon-name-part-type="race" or @taxon-name-part-type="Race" or @taxon-name-part-type="Subform" or @taxon-name-part-type="subform" or @taxon-name-part-type="subforma" or @taxon-name-part-type="Subforma" or @taxon-name-part-type="subaberation" or @taxon-name-part-type="Subaberation" or @taxon-name-part-type="subrace" or @taxon-name-part-type="Subrace" ]
+  verbatim_rank: ./tp:taxon-name-part[last()]/@taxon-name-part-type
+  external_taxonomic_name_id: ./object-id
+  authorship: ./following-sibling::tp:taxon-authority | ../following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type="authority"]
+  verbatim_status: ./following-sibling::tp:taxon-status | ../following-sibling::tp:taxon-authority
+
+  genus.reg: ./tp:taxon-name-part[@taxon-name-part-type="genus" or @taxon-name-part-type="Genus" or @taxon-name-part-type="genera" or @taxon-name-part-type="Genera"]/@reg
+  pub_year: /article/front/article-meta/pub-date/year
+  pub_day: /article/front/article-meta/pub-date/day
+  pub_month: /article/front/article-meta/pub-date/month
+
+NomenclatureHeadading:
+  character_content: /article/body//tp:taxon-treatment/tp:nomenclature
+
+Treatment:
+  first_taxonomic_name_usage: ./tp:nomenclature/tp:taxon-name
+  nomenclatural_TNU: ./tp:nomenclature/tp:nomenclature-citation-list//tp:taxon-name
+
+FrontMatter:
+  character_content: .
+
+Title:
+  character_content: .
+
+Abstract:
+  character_content: .
+
+

@@ -1,0 +1,50 @@
+Package: ropenbio
+Type: Package
+Title: R Package of the Open Biodiveristy Knowledge Management System
+Version: 0.2.0
+Date: 2016-08-02
+Authors@R: c( person( "Viktor", "Senderov", email = "vsenderov@gmail.com", role = c( "aut", "cre" ) ), person("Scott", "Chamberlain", role = c("rev" ) ) )
+Description: This package contains a collection of R functions, abstracting
+    access to an RDF4J API. Also, it contains function for converting various
+    sources (TaxPub XML, DwC-A, etc.) into RDF modeled with the OpenBiodiv 
+    ontology. There are also specialized functions that faciliate the work,
+    administration, and debugging of an OpenBiodiv installation.
+License: MIT + file LICENSE
+LazyData: TRUE
+Imports:
+    httr,
+    rdf4r,
+    gsubfn,
+    uuid,
+    purrr,
+    mongolite
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
+Collate: 
+    'biology.R'
+    'blr-zenodo.R'
+    'components_checks.R'
+    'constructor.R'
+    'crosslinking_functions.R'
+    'extractors.R'
+    'identifier_factory_new.R'
+    'identifier_new.R'
+    'institution_codes.R'
+    'material_schema.R'
+    'mongo_operations.R'
+    'nactem.R'
+    'pensoft.R'
+    'plazi.R'
+    'rdf.R'
+    'refactoring_fns.R'
+    'ropenbio.R'
+    'semantic-elements.R'
+    'sparql.R'
+    'xml.R'
+    'taxonx.R'
+    'taxpub.R'
+Encoding: UTF-8

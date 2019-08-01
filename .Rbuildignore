@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$       # An Rmarkdown file used to generate README.
+^README\.Rmd$
+^README-.*\.png$
+^CONDUCT\.md$
