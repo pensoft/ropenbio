@@ -1,15 +1,12 @@
-#' require(mongolite)
-
-#' checking mongo key
 #' @export
 check_mongo_key = function(value, type, collection, regex)
 {
   if (regex == TRUE){
     query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "value", "$regex", value, "$options", "i")
-  }else{
+  } else{
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
   }
-  key = mongolite::collection$find(query)$key
+  key = collection$find(query)$key
   return(key)
 }
 
@@ -18,46 +15,45 @@ check_mongo_parent = function(key, value, type, collection)
 {
   if (is.null(key)){
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
-  }else{
+  } else{
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "key", key, "type", type)
   }
-  parent = mongolite::collection$find(query)$parent
+  parent = collection$find(query)$parent
   return(parent)
 }
 
 #' @export
-check_mongo_instCode = function(code, collection){
+check_mongo_instCode = function(code, collection)
+{
     query = sprintf("{\"%s\":\"%s\"}", "code", code)
-    res = mongolite::collection$find(query)
+    res = collection$find(query)
     return(res)
   }
   
 #' @export
-check_mongo_instName = function(name, collection){
+check_mongo_instName = function(name, collection)
+{
     query = sprintf("{\"%s\":\"%s\"}", "name", name)
-    res = mongolite::collection$find(query)
+    res = collection$find(query)
     return(res)
   }
   
 
   
 #' @export
-check_mongo_key_via_parent = function(parent,type, collection){
+check_mongo_key_via_parent = function(parent,type, collection)
+{
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "parent", parent, "type", type)
-    key = mongolite::collection$find(query)$key
+    key = collection$find(query)$key
     return(key)
   }
   
 
 #' @export
-check_mongo_inst = function(code, parent, collection){
-  #search by: code, parent
-  #get key
-
-  #query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\",\"%s\":\"%s\"}", "code", code, "parent", parent, "type", "institution")
+check_mongo_inst = function(code, parent, collection)
+{
   query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}, \"%s\":\"%s\",\"%s\":\"%s\"}", "parent", "$regex", parent, "$options", "i", "code", code, "type", "institution")
-  res = mongolite::collection$find(query)
-
+  res = collection$find(query)
 }
 
 
@@ -66,7 +62,7 @@ check_mongo_key_via_orcid = function(orcid, collection)
 {
   query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "key", "$regex", orcid, "$options", "i")
   collection$find(query)
-  key = mongolite::collection$find(query)$key
+  key = collection$find(query)$key
   return(key)
 }
 
@@ -82,7 +78,7 @@ save_to_mongo = function(key, value, type, parent, collection)
     type = as.character(type),
     parent = as.character(parent)
   )
-  mongolite::collection$insert(d)
+  collection$insert(d)
 }
 
 
@@ -96,13 +92,14 @@ save_orcid_to_mongo = function(key, value, type, parent, orcid, collection)
     parent = as.character(parent),
     orcid = as.character(orcid)
   )
-  mongolite::collection$insert(d)
+  collection$insert(d)
 }
 
 
 #' @export
-check_code_name_combo = function(code, name, collection){
+check_code_name_combo = function(code, name, collection)
+{
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "code", code, "name", name)
-    key = mongolite::collection$find(query)
+    key = collection$find(query)
     return(key)
   }
