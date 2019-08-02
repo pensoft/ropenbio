@@ -65,6 +65,7 @@ process_author = function (node, mongo_key)
 #' @export
 process_tnu = function (node, mongo_key)
 {
+   label = get_taxon_label(node, mongo_key)
    if (nchar(label)<3 && grepl(".", label)==TRUE){ #if the label is something like "B." then don't save it (too ambiguous)
    label = get_taxon_label(node, mongo_key)
     df = NULL
