@@ -563,6 +563,11 @@ has_taxonomic_rank_id = rdf4r::identifier(
   prefix = c(dwciri = "http://rs.tdwg.org/dwc/iri/")
 )
 
+#' @export
+has_gbifID = rdf4r::identifier(
+  id = "hasGbifTaxon",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
 
 #' Dwc Authorshiop
 #' @export
