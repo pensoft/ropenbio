@@ -125,6 +125,8 @@ escape_special_json = function(string){
   string =  gsub("\"E", "\"E", string , fixed = TRUE)
   string =  gsub("\"S", "\"S", string , fixed = TRUE)
   string =  gsub("\"W", "\"W", string , fixed = TRUE)
+  string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
+
   return(string)
 }
 
@@ -145,6 +147,8 @@ escape_special = function(string){
   string = gsub("\\[", "\\\\\\[", string)
   string = gsub("–", "-", string)
   string = gsub("\\r\\n", " ", string)
+  string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
+
 
   #string = gsub("[^\x00-\x7F]+", string)
   # string =  gsub("(?<=[^\\])\"", "\\\"", string , fixed = TRUE)
