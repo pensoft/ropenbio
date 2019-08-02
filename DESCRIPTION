@@ -34,6 +34,7 @@ Collate:
     'identifier_factory_new.R'
     'identifier_new.R'
     'institution_codes.R'
+    'xml.R'
     'material_schema.R'
     'mongo_operations.R'
     'nactem.R'
@@ -44,7 +45,6 @@ Collate:
     'ropenbio.R'
     'semantic-elements.R'
     'sparql.R'
-    'xml.R'
     'taxonx.R'
     'taxpub.R'
 Encoding: UTF-8
