@@ -354,6 +354,13 @@ has_doi = rdf4r::identifier(
   prefix = c(prism = "http://prismstandard.org/namespaces/basic/2.0/")
 )
 
+#' @export
+has_link = rdf4r::identifier(
+  id = "hasDownloadLink",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
 #' Has a Publisher
 #' @export
 has_publisher = rdf4r::identifier(
