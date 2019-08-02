@@ -1,3 +1,41 @@
+#' @export
+#' #get or set scName identifier - mongoDB
+
+gbif_taxonomy_mapping = function(scName, collection = checklistCol)
+{
+
+  query_can = sprintf("{\"%s\":\"%s\"}", "canonicalName", scName)
+
+  query_sc = sprintf("{\"%s\":\"%s\"}", "scientificName", scName)
+
+
+  res = collection$find(query_can)
+  if (nrow(res)==0)
+    res = collection$find(query_sc)
+
+
+  if (nrow(res)==0 || nrow(res)>1){
+    gbif_key = NULL
+  }else{
+    gbif_key = res$tcId
+  }
+
+  if(!(is.null(gbif_key))){
+    gbif_id = strip_angle(gbif_key)
+    gbif_id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", gbif_id)
+    gbif_id = paste0(gbif_id, "-label")
+    gbif_id = identifier(gbif_id, prefix)
+  }else{
+    gbif_id = NULL
+  }
+
+  return(gbif_id)
+}
+
+
+
+
+
 #' Crosslinker extracts external identifiers within the xml which enables crosslinking between OpenBiodiv and other systems
 #' Can add more types of identifiers to be extracted
 #' @export

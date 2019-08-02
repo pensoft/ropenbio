@@ -9,6 +9,10 @@
 #' @field atoms named character vector of xpath locations
 #' @field constructor an RDF constructor function that can be called on
 #'   a list of atoms extractor from a node in the schema
+#' @field injector
+#' @field atom_types
+#' @field atom_lang
+#' @field mongo_key
 #' @field components a list of \code{XmlSchema} object containing the nested
 #'   components in the node
 #'
@@ -80,35 +84,34 @@ XmlSchema =
 xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess = FALSE, dry)
 {
   # generate lookup functions
-  
-  
-  
-      #xml = xml2::read_xml(filename)
-      
+
+
   tryCatch(
     {
+      #xml = xml2::read_xml(filename)
+
       xml_string = crosslinker(filename)
       if(is.null(xml_string)){
         xml = xml2::read_xml(filename)
       }else
-     {
+      {
         xml = xml2::as_xml_document(xml_string)
       }
-      
+
       general_collection =  mongolite::mongo("new_collection")
       inst_collection = mongolite::mongo("institutions")
       checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
-      
-      
-     # taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
+
+
+      # taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
 
       prefix = c(openbiodiv = "http://openbiodiv.net/")
-      
+
       triples = ResourceDescriptionFramework$new()
       root_ident = root(node=xml, xml_schema = material_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
-      
+
       triples$set_context(root_ident)
-      
+
       #finds all institution codes and names and saves them in mongodb collection
       extract_inst_identifiers(xml, root_id = root_ident, prefix = prefix, collection = inst_collection)
 
@@ -122,13 +125,14 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         filename = filename,
         root_id = root_ident
       )
-      
+
       serialization = triples$serialize()
-    
-     # cat(serialization,file = "~/test-holotyper_5.trig")
-      save_serialization(serialization, serialization_dir)
-      xml2::write_xml(xml, filename)
-    return(TRUE)
+      cat(serialization, file = "~/diptera.trig")
+      #save_serialization(serialization, serialization_dir)
+      xml2::write_xml(xml, "~/diptera_2.xml")
+
+
+      return(TRUE)
     },
     error = function(e)
     {
@@ -136,7 +140,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       return(FALSE)
     })
 }
-  
+
 
 
 
@@ -260,22 +264,22 @@ find_literals = function(xml, xml_schema)
   for (nn in names(xml_schema$atoms))
   {
     #inside a particular name
-    if (xml_schema$schema_name == "taxonomic_key" && nn == "text_content"){
-      literals = toString(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
-    }else{
-      literals = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
-      #insert spaces where needed - lowercase followed by uppercase (AbstractContent)
-      literals = gsub("(?<=[a-z])(?=[A-Z])", " ", literals, perl = TRUE)
-    }
-   
-    
+    #if (xml_schema$schema_name == "taxonomic_key" && nn == "text_content"){
+    #  literals = toString(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
+    #}else{
+    literals = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
+    #insert spaces where needed - lowercase followed by uppercase (AbstractContent)
+    literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals, perl = TRUE)
+    #}
+
+
     languages = tryCatch(
       xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atom_lang[nn])),
       error = function(e) {
         NA
       }
     )
-    
+
     rr[[nn]] = lapply(seq(along.with = literals), function(i)
     {
       literal(literals[i], xsd_type = xml_schema$atom_types[[nn]] ,lang = languages[i])
@@ -284,9 +288,6 @@ find_literals = function(xml, xml_schema)
   }
   return(rr)
 }
-
-
-
 
 #'
 #find_identifiers = function(node, xml_schema)
@@ -321,12 +322,12 @@ parent_id = function (node, fullname = FALSE )
     obkms_id = xml2::xml_attr( node, "obkms_id")
     path = xml2::xml_path( node )
   }
-  
+
   if ( fullname )
   {
     return (  paste0( strip_angle( obkms$prefixes$`_base`) , obkms_id ) )
   }
-  
+
   else return ( obkms_id )
 }
 
@@ -344,20 +345,20 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
   #look for "new style" article id:
   new_xpath = "//article/front/article-meta/article-id[@pub-id-type='other']"
   arpha_id = xml2::xml_text(xml2::xml_find_first(node, new_xpath))
-
+  if (grepl("urn:lsid:arphahub.com", arpha_id)==FALSE){
+    arpha_id = NA
+  }
   root_node = xml2::xml_find_all(node, xpath = "/*")
 
 
-    if(is.na(arpha_id)){
-      id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
-      xml2::xml_attr(root_node, "obkms_prefix") = prefix
+  if(is.na(arpha_id)){
+    id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
 
-    }else{
-      arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
-      xml2::xml_attr(root_node, "obkms_id") = arpha_id #save to xml
-      xml2::xml_attr(root_node, "obkms_prefix") = prefix
-      id = identifier(id = arpha_id, prefix = prefix)       #build identifier
-    }
+  }else{
+    arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
+    xml2::xml_attr(root_node, "obkms_id") = arpha_id #save to xml
+    id = identifier(id = arpha_id, prefix = prefix)       #build identifier
+  }
   id
 }
 
@@ -397,7 +398,7 @@ remove_all_tags = function(xmldoc) {
 unescape_html <- function(str){
   xml2::xml_text(xml2::read_html(paste0("<x>", str, "</x>"
 
-                                        )))
+  )))
 }
 
 

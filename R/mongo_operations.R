@@ -29,7 +29,7 @@ check_mongo_instCode = function(code, collection)
     res = collection$find(query)
     return(res)
   }
-  
+
 #' @export
 check_mongo_instName = function(name, collection)
 {
@@ -37,9 +37,9 @@ check_mongo_instName = function(name, collection)
     res = collection$find(query)
     return(res)
   }
-  
 
-  
+
+
 #' @export
 check_mongo_key_via_parent = function(parent,type, collection)
 {
@@ -47,7 +47,7 @@ check_mongo_key_via_parent = function(parent,type, collection)
     key = collection$find(query)$key
     return(key)
   }
-  
+
 
 #' @export
 check_mongo_inst = function(code, parent, collection)
@@ -103,3 +103,12 @@ check_code_name_combo = function(code, name, collection)
     key = collection$find(query)
     return(key)
   }
+
+#' @export
+#'
+update_parent =  function(key, parent, collection = general_collection){
+  query = sprintf("{\"%s\":\"%s\"}", "key", key)
+  update = sprintf("{\"$set\":{\"%s\":\"%s\"}}", "parent", parent)
+
+  collection$update(query = query, update = update)
+}

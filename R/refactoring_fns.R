@@ -22,7 +22,7 @@ get_taxon_label = function(node, mongo_key)
       b
     }
   })
-  
+
   tolit = do.call(get_scientific_name_or_tcl, x)
   if (is.null(tolit)){
     tolit = xml2::xml_text(xml2::xml_find_first(node, "."))
@@ -45,7 +45,7 @@ get_figure_label = function (node, mongo_key, fig_number)
 #' @export
 set_component_frame = function(label, mongo_key, type, orcid, parent, key)
 {
-  
+
   df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid, parent = parent, key = key,  stringsAsFactors = FALSE)
   return(df)
 }
@@ -73,7 +73,7 @@ process_tnu = function (node, mongo_key)
     df = set_component_frame(label = label, mongo_key = mongo_key,type = names(mongo_key), orcid = NA, parent=NA, key = NA)
     return(df)
   }
-  
+
 }
 
 
@@ -88,13 +88,13 @@ process_figure  = function (node, mongo_key)
     fig_id = NA
   }
   fig_number = xml2::xml_attr(node, "id")
-  
+
   label = get_figure_label(node, mongo_key, fig_number)
   label = escape_special(label)
   type = paste0(names(mongo_key), " ", fig_number)
   df = set_component_frame(label = label, mongo_key = mongo_key, type = type, orcid = NA, parent = NA, key = fig_id)
-  
-  return(df) 
+
+  return(df)
 }
 
 #' @export
@@ -102,7 +102,7 @@ process_treatment = function(node, mongo_key){
   #if the treatment id is in the article xml, get it and save it in mongodb
   id = xml2::xml_text(xml2::xml_find_all(node, "//tp:nomenclature/tp:taxon-name/object-id[@content-type='arpha']"))
   if (length(id)>0){
-    treat_id = identifier(id, prefix)  
+    treat_id = identifier(id, prefix)
     label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
     label = escape_special(label) #escape special chars
     df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = treat_id$uri)
@@ -110,6 +110,46 @@ process_treatment = function(node, mongo_key){
     df = process_general_component(node, mongo_key)
   }
   return(df)
+}
+
+
+#' @export
+escape_special_json = function(string){
+
+  string =  gsub("\"", "\\\"", string , fixed = TRUE)
+  string =  gsub("\r?\n|\r", " ", string)
+  string =  gsub("\\“", "\\\\", string , fixed = TRUE)
+  string =  gsub("\\”", "\\\\", string , fixed = TRUE)
+  string =  gsub("[-[\\]\\{\\}()*+?.,\\^$|#\\s]", "\\\\", string, perl=TRUE)
+  string =  gsub("\"N", "\"N", string , fixed = TRUE)
+  string =  gsub("\"E", "\"E", string , fixed = TRUE)
+  string =  gsub("\"S", "\"S", string , fixed = TRUE)
+  string =  gsub("\"W", "\"W", string , fixed = TRUE)
+  return(string)
+}
+
+#' @export
+escape_special = function(string){
+  string =  gsub("\r?\n|\r", " ", string)
+  string =  gsub("\\“", "\\\\", string , fixed = TRUE)
+  string =  gsub("\\”", "\\\\", string , fixed = TRUE)
+  #  string =  gsub("[-[\\]{}()*+?.,\\^$|#\\s]", "\\\\", string, fixed = TRUE)
+  string =  gsub("\"N", "\\\"N", string , fixed = TRUE)
+  string =  gsub("\"E", "\\\"E", string , fixed = TRUE)
+  string =  gsub("\"S", "\\\"S", string , fixed = TRUE)
+  string =  gsub("\"W", "\\\"W", string , fixed = TRUE)
+  string =  gsub("\"", "\\\"", string , fixed = TRUE)
+  string =  gsub("\\\\", "\\", string , fixed = TRUE)
+  #string = gsub("\\", " ", string, fixed = TRUE)
+  string = gsub("\\]", "\\\\\\]", string)
+  string = gsub("\\[", "\\\\\\[", string)
+  string = gsub("–", "-", string)
+  string = gsub("\\r\\n", " ", string)
+
+  #string = gsub("[^\x00-\x7F]+", string)
+  # string =  gsub("(?<=[^\\])\"", "\\\"", string , fixed = TRUE)
+
+  return(string)
 }
 
 #' @export
@@ -127,7 +167,7 @@ process_general_component = function (node, mongo_key)
 #' @export
 process_schema_component = function(node, mongo_key)
 {
-  
+
   if (is.author(mongo_key) == TRUE){
     df = process_author(node, mongo_key)
   } else if (is.tnu(mongo_key) == TRUE){
@@ -148,7 +188,7 @@ get_or_set_mongoid= function (df, prefix)
   general_collection = mongolite::mongo("new_collection")
   if (is.null(df) == FALSE){
     #check whether the type is treatment and the id is not na
-    
+
 
     if (!(is.na(df$key))){
       key = df$key
@@ -170,7 +210,7 @@ get_or_set_mongoid= function (df, prefix)
           }
           else
           {
-            
+
           key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
           id = get_or_set(key, df)
           print(id)
@@ -180,7 +220,7 @@ get_or_set_mongoid= function (df, prefix)
    }else{
     id = NULL
   }
-  
+
   return(id)
 }
 
@@ -196,24 +236,7 @@ get_or_set = function(key, df){
   }
 }
 
-#' @export
-escape_special = function(string){
-    string =  gsub("\r?\n|\r", " ", string)
-    string =  gsub("\\“", "\\\\", string , fixed = TRUE)
-    string =  gsub("\\”", "\\\\", string , fixed = TRUE)
-    # string =  gsub("[-[\\]{}()*+?.,\\^$|#\\s]", "\\\\", string, fixed = TRUE)
-    string =  gsub("\"N", "\\\"N", string , fixed = TRUE)
-    string =  gsub("\"E", "\\\"E", string , fixed = TRUE)
-    string =  gsub("\"S", "\\\"S", string , fixed = TRUE)
-    string =  gsub("\"W", "\\\"W", string , fixed = TRUE)
-    string =  gsub("\"", "\\\"", string , fixed = TRUE)
-    string =  gsub("\\\\", "\\", string , fixed = TRUE)
-    string = gsub("\\", " ", string, fixed = TRUE)
-    #string = gsub("[^\x00-\x7F]+", string)
-    # string =  gsub("(?<=[^\\])\"", "\\\"", string , fixed = TRUE)
-    
-    return(string)
-  }
+
 
 #' @export
 #replace all double quotes with sngle quotes
