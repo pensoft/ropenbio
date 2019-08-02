@@ -50,10 +50,12 @@ check_mongo_key_via_parent = function(parent,type, collection)
 
 
 #' @export
-check_mongo_inst = function(code, parent, collection)
-{
-  query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}, \"%s\":\"%s\",\"%s\":\"%s\"}", "parent", "$regex", parent, "$options", "i", "code", code, "type", "institution")
+check_mongo_inst = function(tpKey, collection){
+  query = sprintf("{\"%s\":\"%s\"}", "tpKey", tpKey)
+  print(query)
   res = collection$find(query)
+  print(res)
+  return(res)
 }
 
 
