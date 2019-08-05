@@ -176,6 +176,7 @@ process_general_component = function (node, mongo_key)
   if (length(id)>0){
     print("this is the id")
     print(id)
+    print(toString(node))
     label = gsub(id, "", label)
   }
 
