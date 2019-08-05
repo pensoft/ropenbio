@@ -638,7 +638,7 @@ figure = function (atoms, identifiers, prefix, schema_name, mongo_key)
 }
 
 #' @export
-treatment = function (atoms, identifiers, prefix, schema_name = xml_schema$schema_name, mongo_key){
+treatment_en = function (atoms, identifiers, prefix, schema_name = xml_schema$schema_name, mongo_key){
 
   atoml_to_val = function(atoml)
   {
