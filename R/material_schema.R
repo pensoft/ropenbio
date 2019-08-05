@@ -362,7 +362,7 @@ material_schema = XmlSchema$new(
             institution_name = rdf4r::xsd_string,
             institution_code = rdf4r::xsd_string
           ),
-          mongo_key =  c(nomenclature = "//tp:taxon-treatment/tp:nomenclature"),
+          mongo_key =  c(nomenclature = "."),
           constructor = nomenclature,
           components = list(
             XmlSchema$new(
