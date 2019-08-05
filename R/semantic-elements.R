@@ -2,8 +2,14 @@
 Collection = rdf4r::identifier(
   id = "Collection",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
-  
 )
+
+#' @export
+GrbioInst = rdf4r::identifier(
+  id = "GRSciCollInstitution",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
 
 #' @export
 Thing = rdf4r::identifier(
@@ -129,6 +135,36 @@ genbank = rdf4r::identifier(
   prefix = c(datacite = "http://purl.org/spar/datacite/")
 )
 
+#' @export
+has_grbioCool = rdf4r::identifier(
+  id = "hasCoolID",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+#' @export
+has_grbioInstCode = rdf4r::identifier(
+  id = "hasGrbioInstitutionCode",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+inst_codes = rdf4r::identifier(
+  id = "institutionCodes",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+inst_names = rdf4r::identifier(
+  id = "institutionNames",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+taxonStatus = rdf4r::identifier(
+  id = "taxonomicStatus",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
 
 
 #' datacite plazi
