@@ -68,9 +68,11 @@ process_tnu = function (node, mongo_key)
    label = get_taxon_label(node, mongo_key)
    if (nchar(label)<3 && grepl(".", label)==TRUE){ #if the label is something like "B." then don't save it (too ambiguous)
    label = get_taxon_label(node, mongo_key)
+   label = escape_special(label)
     df = NULL
   }else{
     mongo_key = c(taxonomic_name = "")
+    label = escape_special(label)
     df = set_component_frame(label = label, mongo_key = mongo_key,type = names(mongo_key), orcid = NA, parent=NA, key = NA)
     return(df)
   }
@@ -128,6 +130,8 @@ escape_special_json = function(string){
   string =  gsub("\"S", "\"S", string , fixed = TRUE)
   string =  gsub("\"W", "\"W", string , fixed = TRUE)
   string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
+  string = gsub("\\s{2,}", " ", string)
+
 
   return(string)
 }
@@ -150,7 +154,7 @@ escape_special = function(string){
   string = gsub("–", "-", string)
   string = gsub("\\r\\n", " ", string)
   string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
-
+  string = gsub("\\s{2,}", " ", string)
 
   #string = gsub("[^\x00-\x7F]+", string)
   # string =  gsub("(?<=[^\\])\"", "\\\"", string , fixed = TRUE)
