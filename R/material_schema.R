@@ -334,7 +334,7 @@ material_schema = XmlSchema$new(
         institution_name = rdf4r::xsd_string,
         institution_code = rdf4r::xsd_string
       ),
-      mongo_key =  c(treatment = "/article/body/sec/tp:taxon-treatment"),
+      mongo_key =  c(treatment = "/article/body/..//tp:taxon-treatment"),
       constructor = treatment,
 
       components = list(
