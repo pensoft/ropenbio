@@ -103,7 +103,7 @@ process_figure  = function (node, mongo_key)
 #' @export
 process_treatment = function(node, mongo_key){
   #if the treatment id is in the article xml, get it and save it in mongodb
-  id = xml2::xml_text(xml2::xml_find_all(node, "//tp:nomenclature/tp:taxon-name/object-id[@content-type='arpha']"))
+  id = xml2::xml_text(xml2::xml_find_all(node, "tp:nomenclature/tp:taxon-name/object-id[@content-type='arpha']"))
   if (length(id)>0){
     treat_id = identifier(id, prefix)
     label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
