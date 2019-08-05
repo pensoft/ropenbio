@@ -123,7 +123,7 @@ escape_special_json = function(string){
   string =  gsub("\r?\n|\r", " ", string)
   string =  gsub("\\“", "\\\\", string , fixed = TRUE)
   string =  gsub("\\”", "\\\\", string , fixed = TRUE)
-  string =  gsub("[-[\\]\\{\\}()*+,?\\^$|#]", "\\\\", string, perl=TRUE)
+  string =  gsub("[-[\\]\\{\\}()*+,.?\\^$|#]", "\\\\", string, perl=TRUE)
   string =  gsub("\\n", " ", string, perl=TRUE)
   string =  gsub("\"N", "\"N", string , fixed = TRUE)
   string =  gsub("\"E", "\"E", string , fixed = TRUE)
