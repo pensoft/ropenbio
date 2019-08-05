@@ -172,7 +172,7 @@ process_general_component = function (node, mongo_key)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
   
-  id = xml2::xml_text(xml2::xml_find_all(node, "..//object-id[@content-type='arpha']"))
+  id = xml2::xml_text(xml2::xml_find_all(node, ".//object-id[@content-type='arpha']"))
   if (length(id)>0)
     label = gsub(id, "", label)
 
