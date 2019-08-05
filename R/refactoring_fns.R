@@ -87,12 +87,15 @@ process_figure  = function (node, mongo_key)
   if (length(id)>0){
     fig_id = identifier(id, prefix)
     fig_id = fig_id$uri
+    id_literal = id
   }else{
     fig_id = NA
+    id_literal = ""
   }
   fig_number = xml2::xml_attr(node, "id")
 
   label = get_figure_label(node, mongo_key, fig_number)
+  label = gsub(id_literal, "", label)
   label = escape_special(label)
   type = paste0(names(mongo_key), " ", fig_number)
   df = set_component_frame(label = label, mongo_key = mongo_key, type = type, orcid = NA, parent = NA, key = fig_id)
@@ -106,7 +109,9 @@ process_treatment = function(node, mongo_key){
   id = xml2::xml_text(xml2::xml_find_all(node, "tp:nomenclature/tp:taxon-name/object-id[@content-type='arpha']"))
   if (length(id)>0){
     treat_id = identifier(id, prefix)
+    id_literal = id
     label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
+    label = gsub(id_literal, "", label)
     label = escape_special(label) #escape special chars
     df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = treat_id$uri)
   }else{
