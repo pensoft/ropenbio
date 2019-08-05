@@ -117,7 +117,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       triples = node_extractor_en(
         node = xml,
-        xml_schema = xml_schema,
+        xml_schema = material_schema,
         reprocess = reprocess,
         triples = triples,
         prefix = prefix,
