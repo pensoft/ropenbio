@@ -1,7 +1,8 @@
 #' @export
 Collection = rdf4r::identifier(
   id = "Collection",
-  prefix = c(openbiodivCollection = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  
 )
 
 #' @export
@@ -27,7 +28,7 @@ Person = rdf4r::identifier(
 #' @export
 Publisher = rdf4r::identifier(
   id = "Publisher",
-  prefix = c(openbiodivPublisher = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' Organization
@@ -77,21 +78,27 @@ Article = rdf4r::identifier(
 #' @export
 KeywordGroup = rdf4r::identifier(
   id = "KeywordGroup",
-  prefix = c(openbiodivKeywords = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' Checklist
 #' @export
 Checklist =  rdf4r::identifier(
   id = "Checklist",
-  prefix = c(openbiodivChecklist = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' Table
 #' @export
 Table =  rdf4r::identifier(
   id = "Table",
-  prefix = c(openbiodivTable = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+TaxonomicDiscovery = rdf4r::identifier(
+  id = "TaxonomicDiscovery",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' datacite orcid
@@ -151,7 +158,7 @@ ResourceIdentifier = rdf4r::identifier(
 #' @export
 Treatment = rdf4r::identifier(
   id = "Treatment",
-  prefix = c(openbiodivTreatment = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -169,7 +176,7 @@ Paper = rdf4r::identifier(
 #' @export
 TaxonomicConcept = rdf4r::identifier(
   id = "TaxonomicConcept",
-  prefix = c(openbiodivTC = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -178,7 +185,7 @@ TaxonomicConcept = rdf4r::identifier(
 #' @export
 Nomenclature = rdf4r::identifier(
   id = "NomenclatureSection",
-  prefix = c(openbiodivNomenclature = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -187,7 +194,7 @@ Nomenclature = rdf4r::identifier(
 #' @export
 NomenclatureCitationsList = rdf4r::identifier(
   id = "NomenclatureCitationsList",
-  prefix = c(openbiodivNomenclatureCit = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -195,7 +202,7 @@ NomenclatureCitationsList = rdf4r::identifier(
 #' @export
 TaxonomicNameUsage = rdf4r::identifier(
   id = "TaxonomicNameUsage",
-  prefix = c(openbiodivTNU = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -211,7 +218,7 @@ InstitutionalCodeUsage = rdf4r::identifier(
 #' @export
 ScientificName= rdf4r::identifier(
   id = "ScientificName",
-  prefix = c(openbiodivScName = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -220,7 +227,7 @@ ScientificName= rdf4r::identifier(
 #' @export
 Diagnosis = rdf4r::identifier(
   id = "DiagnosisSection",
-  prefix = c(openbiodivDiagnosis = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -237,7 +244,7 @@ Discussion = rdf4r::identifier(
 #' @export
 Distribution = rdf4r::identifier(
   id = "DistributionSection",
-  prefix = c(openbiodivDistribution = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -247,7 +254,7 @@ Distribution = rdf4r::identifier(
 #' @export
 TaxonomicKey = rdf4r::identifier(
   id = "TaxonomicKey",
-  prefix = c(openbiodivKey = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -257,7 +264,7 @@ TaxonomicKey = rdf4r::identifier(
 #' @export
 MaterialsExamined = rdf4r::identifier(
   id = "MaterialsExamined",
-  prefix =  c(openbiodivMaterials = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -353,13 +360,6 @@ has_doi = rdf4r::identifier(
   id = "doi",
   prefix = c(prism = "http://prismstandard.org/namespaces/basic/2.0/")
 )
-
-#' @export
-has_link = rdf4r::identifier(
-  id = "hasDownloadLink",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
-)
-
 
 #' Has a Publisher
 #' @export
@@ -563,11 +563,6 @@ has_taxonomic_rank_id = rdf4r::identifier(
   prefix = c(dwciri = "http://rs.tdwg.org/dwc/iri/")
 )
 
-#' @export
-has_gbifID = rdf4r::identifier(
-  id = "hasGbifTaxon",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
-)
 
 #' Dwc Authorshiop
 #' @export
@@ -613,31 +608,31 @@ has_issue = rdf4r::identifier(
 #' @export
 has_affiliation = rdf4r::identifier(
   id = "affiliation",
-  prefix = c(openbiodivAffil = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
 has_inst = rdf4r::identifier(
   id = "hasInstitution",
-  prefix = c(openbiodivHasInst = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
 has_instName = rdf4r::identifier(
   id = "hasInstitutionName",
-  prefix = c(openbiodivHasInstName = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
 has_instCode = rdf4r::identifier(
   id = "hasInstitutionCode",
-  prefix = c(openbiodivHasInstCode = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
 Institution =  rdf4r::identifier(
   id = "Institution",
-  prefix = c(openbiodivInstitution = "http://openbiodiv.net/resource/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' Has email
@@ -651,19 +646,19 @@ has_email = rdf4r::identifier(
 #' @export
 has_zoobank = rdf4r::identifier(
   id = "zoobank",
-  prefix = c(openbiodivZoobank = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
 has_bin = rdf4r::identifier(
   id = "BIN",
-  prefix = c(openbiodivBIN = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
 has_bold = rdf4r::identifier(
   id = "BOLD",
-  prefix = c(openbiodivBOLD = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
@@ -675,13 +670,13 @@ has_identifier = rdf4r::identifier(
 #' @export
 mentions_id = rdf4r::identifier(
   id="mentionsIdentifier",
-  prefix = c(openbiodivMentionsID = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
 has_coordinates = rdf4r::identifier(
   id="hasCoordinates",
-  prefix = c(openbiodivCoordinates = "http://openbiodiv.net/property/")
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 
@@ -691,59 +686,26 @@ identifier_scheme =  rdf4r::identifier(
   prefix = c(datacite = "http://purl.org/spar/datacite/")
 )
 
-  #' @export
-  has_grbioCool = rdf4r::identifier(
-    id = "hasCoolID",
-    prefix = c(openbiodiv = "http://openbiodiv.net/")
-  )
-  
-  #' @export
-  has_instName = rdf4r::identifier(
-    id = "hasInstitutionName",
-    prefix = c(openbiodiv = "http://openbiodiv.net/")
-  )
-  
-  #' @export
-  inst_names =  rdf4r::identifier(
-    id = "institutionNames",
-    prefix = c(openbiodiv = "http://openbiodiv.net/")
-  )
-  
-  #' @export
-  has_instCode = rdf4r::identifier(
-    id = "hasInstitutionCode",
-    prefix = c(openbiodiv = "http://openbiodiv.net/")
-  )
-  
-  #' @export
-  inst_codes = rdf4r::identifier(
-  id = "institutionCodes",
+#' @export
+has_gbifID = rdf4r::identifier(
+  id="hasGbifTaxon",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
-  
-  #' @export
-   has_grbioInstCode = rdf4r::identifier(
-    id = "hasGrbioInstitutionCode",
-    prefix = c(openbiodiv = "http://openbiodiv.net/")
-  )
-  
-   #' @export
-  has_inst = rdf4r::identifier(
-    id = "hasInstitutionRecord",
-    prefix = c(openbiodiv = "http://openbiodiv.net/")
-  )
 
-  #' @export
-  GrbioInst = rdf4r::identifier(
-    id = "GRSciCollInstitution",
-    prefix = c(openbiodiv = "http://openbiodiv.net/")
-  )
-  
-  #' @export
-  taxonStatus =  rdf4r::identifier(
-      id = "taxonomicStatus",
-      prefix = c(openbiodiv = "http://openbiodiv.net/")
-    )
+TypeMaterial = rdf4r::identifier(
+  id = "TypeMaterial",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+HolotypeDescription = rdf4r::identifier(
+  id = "HolotypeDescription",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+has_link = rdf4r::identifier(
+  id = "hasDownloadLink",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
 
 #
 # Table:
