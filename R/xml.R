@@ -263,9 +263,7 @@ find_literals = function(xml, xml_schema)
   names(rr) = names(xml_schema$atoms)
   for (nn in names(xml_schema$atoms))
   {
-    id_literal = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$mongo_key))
     literals = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
-    literals = gsub(id_literal, "", literals)
     
     #insert spaces where needed - lowercase followed by uppercase (AbstractContent)
     literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals, perl = TRUE)
