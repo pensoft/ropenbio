@@ -482,6 +482,10 @@ nomenclature = function (atoms, identifiers, prefix, schema_name = xml_schema$sc
   nomenclature_id = identifiers$nid
   nomenclature_content = atoms$text_content[[1]]
   nomenclature_content = escape_special(nomenclature_content$text_value)
+  
+  nomenclature_id_literal = nomenclature_id$id
+  nomenclature_content = gsub(nomenclature_id_literal, "", nomenclature_content)
+  
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(nomenclature_id, rdf_type, Nomenclature)
   tt$add_triple(nomenclature_id, is_contained_by, identifiers$pid)
