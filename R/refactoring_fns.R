@@ -171,6 +171,11 @@ escape_special = function(string){
 process_general_component = function (node, mongo_key)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
+  
+  id = xml2::xml_text(xml2::xml_find_all(node, "object-id[@content-type='arpha']"))
+  label = gsub(id, "", label)
+
+  
   #label = escape_special(label) #escape special chars
   label = escape_special_json(label)
   print(label)
