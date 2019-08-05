@@ -308,7 +308,7 @@ material_schema = XmlSchema$new(
     #Treatment
     XmlSchema$new(
       schema_name = "treatment",
-      xpath = "/article/body/sec/tp:taxon-treatment",
+      xpath = "/article/body/..//tp:taxon-treatment",
       file_pattern = ".*\\.xml",
       extension = ".xml",
       prefix = c(openbiodiv = "http://openbiodiv.net/"),
