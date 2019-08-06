@@ -45,7 +45,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_tax
     for (n in nodel) {
 
         node_extractor_en(n, c, reprocess = reprocess, triples = triples,
-                          prefix = prefix, dry = dry, filename = filename,
+                          prefix = prefix, new_taxons = new_taxons, dry = dry, filename = filename,
                           root_id = root_id)
 
 
@@ -86,7 +86,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     for (n in nodel) {
 
       node_extractor_en(n, c, reprocess = reprocess, triples = triples,
-                        prefix = prefix, dry = dry, filename = filename,
+                        prefix = prefix, new_taxons = new_taxons, dry = dry, filename = filename,
                         root_id = root_id)
 
 
