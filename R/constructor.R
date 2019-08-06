@@ -457,7 +457,7 @@ treatment = function (atoms, identifiers, prefix, schema_name = xml_schema$schem
   if (length(atoms$status)>0 ){
     status = atoms$status[[1]]$text_value
     tt$add_triple(treatment_id, taxonStatus, literal(status))
-    if (status %in% new_taxons ==TRUE)
+    if (!(is.null(status)) & status %in% new_taxons ==TRUE)
       tt$add_triple(treatment_id, mentions, TaxonomicDiscovery)
   }
   #for (a in 1:length(atoms$text_content)){
