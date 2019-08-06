@@ -142,7 +142,7 @@ material_schema = XmlSchema$new(
         institution_name = rdf4r::xsd_string,
         institution_code = rdf4r::xsd_string
       ),
-      mongo_key = c(abstract = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
+      mongo_key = c(abstract = "."),
       constructor = abstract,
 
       components = NULL
@@ -246,7 +246,7 @@ material_schema = XmlSchema$new(
         institution_name = rdf4r::xsd_string,
         institution_code = rdf4r::xsd_string
       ),
-      mongo_key = c(introduction = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
+      mongo_key = c(introduction = "."),
       constructor = introduction_section
     ),
     # DISCUSSION
@@ -273,7 +273,7 @@ material_schema = XmlSchema$new(
         institution_name = rdf4r::xsd_string,
         institution_code = rdf4r::xsd_string
       ),
-      mongo_key = c(discussion = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
+      mongo_key = c(discussion = "."),
       constructor = discussion
     ),
 
