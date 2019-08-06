@@ -485,7 +485,7 @@ treatment = function (atoms, identifiers, prefix, schema_name = xml_schema$schem
 nomenclature = function (atoms, identifiers, prefix, schema_name = xml_schema$schema_name, mongo_key){
 
   nomenclature_id = identifiers$nid$id #remove any ids from the text contents
-  nomenclature_parent_id = identifiers$parent$id
+  nomenclature_parent_id = identifiers$pid$id
   nomenclature_content = atoms$text_content[[1]]
   
   nomenclature_content = gsub(nomenclature_id, "", nomenclature_content$text_value)
