@@ -783,6 +783,8 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key){
     sapply(atoms$holotype, function(n){
       #n$text_value = escape_special(n$text_value)
       #label = escape_special_json(n$text_value)
+      print(n$text_value)
+      write(n$text_value, "~/unknown.txt")
       df = set_component_frame(label = escape_special_json(n$text_value), mongo_key = NA, type = "holotype", orcid = NA, parent = identifiers$nid$uri, key = NA)
       holotypeID = get_or_set_mongoid(df, prefix)
       tt$add_triple(identifier(holotypeID, prefix), rdf_type, HolotypeDescription)
