@@ -463,9 +463,10 @@ treatment = function (atoms, identifiers, prefix, schema_name = xml_schema$schem
   #  atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
   #}
   treatment_content = atoms$text_content[[1]]
-  treatment_content = escape_special(treatment_content$text_value)
   treatment_id_literal = treatment_id$id
-  treatment_content = gsub(treatment_id_literal, "", treatment_content)
+  treatment_content = gsub(treatment_id_literal, "", treatment_content$text_value)
+  treatment_content = escape_special(treatment_content)
+
 
   tt$add_triple(treatment_id, has_content, literal(treatment_content))
 
@@ -479,13 +480,15 @@ treatment = function (atoms, identifiers, prefix, schema_name = xml_schema$schem
 
 nomenclature = function (atoms, identifiers, prefix, schema_name = xml_schema$schema_name, mongo_key){
 
-  nomenclature_id = identifiers$nid
+  nomenclature_id = identifiers$nid$id #remove any ids from the text contents
+  nomenclature_parent_id = identifiers$parent$id
   nomenclature_content = atoms$text_content[[1]]
-  nomenclature_content = escape_special(nomenclature_content$text_value)
   
-  nomenclature_id_literal = nomenclature_id$id
-  nomenclature_content = gsub(nomenclature_id_literal, "", nomenclature_content)
-  
+  nomenclature_content = gsub(nomenclature_id, "", nomenclature_content$text_value)
+  nomenclature_content = gsub(nomenclature_parent_id, "", nomenclature_content)
+
+  nomenclature_content = escape_special(nomenclature_content)
+
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(nomenclature_id, rdf_type, Nomenclature)
   tt$add_triple(nomenclature_id, is_contained_by, identifiers$pid)
