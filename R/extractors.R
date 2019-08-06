@@ -14,7 +14,7 @@
   #'   the article
   #'
   #' @export
-node_extractor = function (node, xml_schema, reprocess, triples, prefix,
+node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_taxons,
                               dry = FALSE, filename, root_id)
 {
   if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples))) {
@@ -30,7 +30,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix,
     new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE),
                                                                    pid = identifier(parent_id(node), prefix),
                                                                    root_id = root_id),
-                                         prefix = xml_schema$prefix,schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key)
+                                         prefix = xml_schema$prefix,new_taxons = new_taxons, mongo_key = xml_schema$mongo_key)
     new_triples$set_context(triples$context)
 
     serialization = new_triples$serialize()
@@ -55,7 +55,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix,
 }
 
 #' @export
-node_extractor_en = function (node, xml_schema, reprocess, triples, prefix,
+node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_taxons,
           dry = FALSE, filename, root_id)
 {
   if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples))) {
@@ -71,7 +71,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix,
     new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE),
                                                                    pid = identifier(parent_id(node), prefix),
                                                                    root_id = root_id),
-                                         prefix = xml_schema$prefix,schema_name = xml_schema$schema_name, mongo_key = xml_schema$mongo_key)
+                                         prefix = xml_schema$prefix,new_taxons = new_taxons, mongo_key = xml_schema$mongo_key)
     new_triples$set_context(triples$context)
 
     serialization = new_triples$serialize()
