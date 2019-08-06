@@ -142,7 +142,8 @@ extract_inst_identifiers = function(xml, root_id, prefix, collection){
 institution_serializer = function(tt, atoms, identifiers){
   rdfized_codes = c()
   nid = identifiers$nid
-  sapply(atoms$institution_name, function(n){
+  if (!(is.null(unlist(atoms$institution_name)))){
+    sapply(atoms$institution_name, function(n){
 
     tt$add_triple(nid, inst_names, n)
     #check mongo for id
@@ -165,7 +166,9 @@ institution_serializer = function(tt, atoms, identifiers){
       }
     }
   })
-
+  }
+  
+if (!(is.null(unlist(atoms$institution_code)))){
   sapply(atoms$institution_code, function(n){
     if (!(n$text_value %in% rdfized_codes)){
       tt$add_triple(nid , inst_codes, n)
@@ -186,6 +189,7 @@ institution_serializer = function(tt, atoms, identifiers){
       }
     }
   })
+  }
   return(tt)
 }
 
