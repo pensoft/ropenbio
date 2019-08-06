@@ -114,7 +114,8 @@ metadata = function (atoms, identifiers, prefix,schema_name = xml_schema$schema_
 
   bold_values=c()
   bold_identifiers = c()
-  if (length(atoms$bold_id)>0){
+  
+  if (!(is.null(unlist(atoms$bold_id)) & length(atoms$bold_id)>0){
     for(i in 1:length(atoms$bold_id)){
       bold_values = c(bold_values, atoms$bold_id[[i]]$text_value)
       bold_identifiers = c(bold_identifiers, list(identifier(gsub("BOLD:", "",atoms$bold_id[[i]]$text_value), prefix)))
@@ -124,7 +125,7 @@ metadata = function (atoms, identifiers, prefix,schema_name = xml_schema$schema_
 
   bin_values=c()
   bin_identifiers = c()
-  if (length(atoms$bin)>0){
+  if (!(is.null(unlist(atoms$bin)) & length(atoms$bin)>0){
     for(i in 1:length(atoms$bin)){
       bin_values = c(bin_values, atoms$bin[[i]]$text_value)
       bin_identifiers = c(bin_identifiers, list(identifier(gsub("BOLD:", "",atoms$bin[[i]]$text_value), prefix)))
@@ -161,7 +162,7 @@ metadata = function (atoms, identifiers, prefix,schema_name = xml_schema$schema_
 
   genbank_values=c()
   genbank_identifiers = c()
-  if (length(atoms$genbank_id)>0){
+  if (!(is.null(unlist(atoms$genbank_id)) & length(atoms$genbank_id)>0){
     for(i in 1:length(atoms$genbank_id)){
       genbank_values = c(genbank_values, atoms$genbank_id[[i]]$text_value)
       genbank_identifiers = c(genbank_identifiers, list(identifier(atoms$genbank_id[[i]]$text_value, prefix)))
