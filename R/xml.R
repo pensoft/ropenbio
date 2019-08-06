@@ -114,13 +114,17 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       #finds all institution codes and names and saves them in mongodb collection
       extract_inst_identifiers(xml, root_id = root_ident, prefix = prefix, collection = inst_collection)
-
+      #TODO: add into proj directory 
+      taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
+      new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
+      
       triples = node_extractor_en(
         node = xml,
         xml_schema = material_schema,
         reprocess = reprocess,
         triples = triples,
         prefix = prefix,
+        new_taxons = new_taxons,
         dry = dry,
         filename = filename,
         root_id = root_ident
