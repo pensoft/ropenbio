@@ -779,7 +779,7 @@ type_material = function (atoms, identifiers, prefix, schema_name = xml_schema$s
 
 
 
-
+  if (length(unlist(atoms$holotype))>0){
   sapply(atoms$holotype, function(n){
     #n$text_value = escape_special(n$text_value)
     #label = escape_special_json(n$text_value)
@@ -792,7 +792,7 @@ type_material = function (atoms, identifiers, prefix, schema_name = xml_schema$s
     tt$add_triple(identifier(holotypeID, prefix), has_content, literal(holotype_content))
 
   })
-
+}
 
   sapply(atoms$coordinates, function(n){
 
