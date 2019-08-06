@@ -257,34 +257,28 @@ processing_status = function(node)
 #' @return list
 #'
 #' @export
-find_literals = function(xml, xml_schema)
+find_literals = function (xml, xml_schema) 
 {
-  rr = vector(mode = 'list', length = length(xml_schema$atoms))
+  rr = vector(mode = "list", length = length(xml_schema$atoms))
   names(rr) = names(xml_schema$atoms)
-  for (nn in names(xml_schema$atoms))
-  {
-    literals = xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atoms[nn]))
+  for (nn in names(xml_schema$atoms)) {
+    nodes = xml2::xml_find_all(xml, xml_schema$atoms[nn])
+    literals = paste(xml2::xml_text(nodes), collapse = " ")
     
-    #insert spaces where needed - lowercase followed by uppercase (AbstractContent)
-    literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals, perl = TRUE)
-    #}
-
-
-    languages = tryCatch(
-      xml2::xml_text(xml2::xml_find_all(xml, xml_schema$atom_lang[nn])),
-      error = function(e) {
-        NA
-      }
-    )
-
-    rr[[nn]] = lapply(seq(along.with = literals), function(i)
-    {
-      literal(literals[i], xsd_type = xml_schema$atom_types[[nn]] ,lang = languages[i])
-    }
-    )
+   # literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals, 
+                #    perl = TRUE)
+    languages = tryCatch(xml2::xml_text(xml2::xml_find_all(xml, 
+                                                           xml_schema$atom_lang[nn])), error = function(e) {
+                                                             NA
+                                                           })
+    rr[[nn]] = lapply(seq(along.with = literals), function(i) {
+      literal(literals[i], xsd_type = xml_schema$atom_types[[nn]], 
+              lang = languages[i])
+    })
   }
   return(rr)
 }
+
 
 #'
 #find_identifiers = function(node, xml_schema)
