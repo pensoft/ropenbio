@@ -181,8 +181,8 @@ process_general_component = function (node, mongo_key)
   }
 
   
-  #label = escape_special(label) #escape special chars
-  label = escape_special_json(label)
+  label = escape_special(label) #escape special chars
+  #label = escape_special_json(label)
   print(label)
   df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA)
   print(df)
