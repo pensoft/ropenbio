@@ -728,16 +728,19 @@ has_gbifID = rdf4r::identifier(
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' @export
 TypeMaterial = rdf4r::identifier(
   id = "TypeMaterial",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' @export
 HolotypeDescription = rdf4r::identifier(
   id = "HolotypeDescription",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' @export
 has_link = rdf4r::identifier(
   id = "hasDownloadLink",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
