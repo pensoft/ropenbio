@@ -400,7 +400,7 @@ material_schema = XmlSchema$new(
           prefix = c(openbiodiv = "http://openbiodiv.net/"),
           atoms = c(
             text_content = ".",
-            holotype = "./*[contains(., 'holotype')]",
+            holotype = "./*[contains(., 'holotype')] | ./*[contains(., 'Holotype')]",
             coordinates = ".//named-content[@content-type='dwc:verbatimCoordinates']",
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
             institution_code = ".//named-content[@content-type='dwc:institutional_code']"
