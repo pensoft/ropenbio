@@ -136,6 +136,8 @@ escape_special_json = function(string){
   string =  gsub("\"W", "\"W", string , fixed = TRUE)
   string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
   string = gsub("\\s{2,}", " ", string)
+  string = trimws(string)
+
 
 
   return(string)
@@ -160,7 +162,7 @@ escape_special = function(string){
   string = gsub("\\r\\n", " ", string)
   string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
   string = gsub("\\s{2,}", " ", string)
-
+  string = trimws(string)
   #string = gsub("[^\x00-\x7F]+", string)
   # string =  gsub("(?<=[^\\])\"", "\\\"", string , fixed = TRUE)
 
