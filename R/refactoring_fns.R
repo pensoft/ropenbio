@@ -137,6 +137,8 @@ escape_special_json = function(string){
   string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
   string = gsub("\\s{2,}", " ", string)
   string = stringr::str_extract(string, ".*\\n")
+    write(string, "~/unknown_json.txt", append = TRUE)
+
  # string = strip_trailing_whitespace(string)
 
   return(string)
@@ -162,6 +164,7 @@ escape_special = function(string){
   string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
   string = gsub("\\s{2,}", " ", string)
   string = stringr::str_extract(string, ".*\\n")
+  write(string, "~/unknown.txt", append = TRUE)
 
   #string = strip_trailing_whitespace(string)
  # string = trimws(string)
