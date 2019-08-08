@@ -1003,7 +1003,7 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key)
                    "-", unlist(month)["text_value"], "-", unlist(day)["text_value"]),
             xsd_type = rdf4r::xsd_date)
   }
-  if (length(unlist((atoms$pensoft_pub)) > 0) {
+  if (length(unlist(atoms$pensoft_pub)) > 0) {
     stop("Pensoft publication")
   }
   general_collection = mongolite::mongo("new_collection")
