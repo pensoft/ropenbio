@@ -131,9 +131,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       )
 
       serialization = triples$serialize()
-      cat(serialization, file = "~/diptera.trig")
-      #save_serialization(serialization, serialization_dir)
-      xml2::write_xml(xml, "~/diptera_2.xml")
+      #cat(serialization, file = "~/diptera.trig")
+      save_serialization(serialization, serialization_dir)
+      xml2::write_xml(xml, filename)
 
 
       return(TRUE)
