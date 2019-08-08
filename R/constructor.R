@@ -337,7 +337,7 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     }
   }
   
-  atoms$full_name = ifelse(length(atoms$full_name) == 0, list(literal(full_name(atoms$surname,
+  atoms$full_name = ifelse(length(unlist(atoms$full_name)) == 0, list(literal(full_name(atoms$surname,
                                                                                 atoms$given_names), xsd_type = rdf4r::xsd_string)), atoms$full_name)
   aid = sapply(atoms$aff_id, function(a) {
     as.integer(gsub("[^0-9.]", "", a$text_value))
