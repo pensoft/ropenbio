@@ -736,7 +736,7 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   
   
-  if length(unlist(atoms$status))>0 ){
+  if (length(unlist(atoms$status))>0 ){
     status = atoms$status[[1]]$text_value
     tt$add_triple(treatment_id, taxonStatus, literal(status))
     if (status %in% new_taxons ==TRUE)
