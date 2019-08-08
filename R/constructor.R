@@ -6,7 +6,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
                    "-", unlist(month)["text_value"], "-", unlist(day)["text_value"]),
             xsd_type = rdf4r::xsd_date)
   }
-  if (length(atoms$pensoft_pub) > 0) {
+  if (length(unlist(atoms$pensoft_pub)) > 0) {
     stop("Pensoft publication")
   }
   general_collection = mongolite::mongo("new_collection")
@@ -50,7 +50,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
     tt$add_triple(journal_id, eissn, i)
   })
   
-  if(length(atoms$journal_zoobank)>0){
+  if(length(unlist(atoms$journal_zoobank))>0){
     for (n in 1:length(atoms$journal_zoobank)){
       if (grepl("zoobank", unlist(atoms$journal_zoobank[[n]])["text_value"]) == TRUE){
         text_value = gsub("^(.*):", "", unlist(atoms$journal_zoobank[n])["text_value"])
@@ -92,7 +92,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
   
   
   #the article zoobank id is the one containing the words "zoobank"
-  if(length(atoms$article_zoobank) > 0){
+  if(length(unlist(atoms$article_zoobank)) > 0){
     for (n in 1:length(atoms$article_zoobank)){
       if (grepl("zoobank", unlist(atoms$article_zoobank[[n]])["text_value"]) == TRUE){
         text_value = gsub("^(.*):", "", unlist(atoms$article_zoobank[n])["text_value"])
@@ -115,7 +115,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
   bold_values=c()
   bold_identifiers = c()
   
-  if (!(is.null(unlist(atoms$bold_id))) & length(atoms$bold_id)>0){
+  if (!(is.null(unlist(atoms$bold_id))) & length(unlist(atoms$bold_id))>0){
     for(i in 1:length(atoms$bold_id)){
       bold_values = c(bold_values, atoms$bold_id[[i]]$text_value)
       bold_identifiers = c(bold_identifiers, list(identifier(gsub("BOLD:", "",atoms$bold_id[[i]]$text_value), prefix)))
@@ -125,7 +125,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
   
   bin_values=c()
   bin_identifiers = c()
-  if (!(is.null(unlist(atoms$bin))) & length(atoms$bin)>0){
+  if (!(is.null(unlist(atoms$bin))) & length(unlist(atoms$bin))>0){
     for(i in 1:length(atoms$bin)){
       bin_values = c(bin_values, atoms$bin[[i]]$text_value)
       bin_identifiers = c(bin_identifiers, list(identifier(gsub("BOLD:", "",atoms$bin[[i]]$text_value), prefix)))
@@ -162,7 +162,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
   
   genbank_values=c()
   genbank_identifiers = c()
-  if (!(is.null(unlist(atoms$genbank_id))) & length(atoms$genbank_id)>0){
+  if (!(is.null(unlist(atoms$genbank_id))) & length(unlist(atoms$genbank_id))>0){
     for(i in 1:length(atoms$genbank_id)){
       genbank_values = c(genbank_values, atoms$genbank_id[[i]]$text_value)
       genbank_identifiers = c(genbank_identifiers, list(identifier(atoms$genbank_id[[i]]$text_value, prefix)))
@@ -183,7 +183,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
   }
   
   
-  if(length(atoms$plazi_id) > 0){
+  if(length(unlist(atoms$plazi_id))> 0){
     for (n in 1:length(atoms$plazi_id)){
       text_value =  unlist(atoms$plazi_id[n])["text_value"]
       text_value = gsub(" ", "", text_value)
@@ -295,7 +295,7 @@ abstract = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   tt$add_triple(identifiers$nid, has_content, literal(abstract_content))
   
-  if(length(atoms$trans_abstract) > 0)
+  if(length(unlist(atoms$trans_abstract)) > 0)
   {
     trans_content = atoms$trans_abstract[[1]]
     trans_content = escape_special(trans_content$text_value)
@@ -355,9 +355,9 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   
   #concatenate affiliation institution and city
   all_affs = NULL
-  if(length(atoms$all_affiliations_institutions)>0){
+  if(length(unlist(atoms$all_affiliations_institutions))>0){
     for(r in 1:length(atoms$all_affiliations_institutions)){
-      if (length(atoms$all_affiliations_cities)>0 && length(atoms$all_affiliations_cities)==length(atoms$all_affiliations_institutions)){
+      if (length(unlist(atoms$all_affiliations_cities))>0 && length(unlist(atoms$all_affiliations_cities))==length(unlist(atoms$all_affiliations_institutions))){
         a = paste0(atoms$all_affiliations_institutions[[r]]$text_value, ",", atoms$all_affiliations_cities[[r]]$text_value)
       }else{
         a = atoms$all_affiliations_institutions[[r]]$text_value
@@ -388,7 +388,7 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   })
   
   
-  if(length(atoms$orcid)>0){
+  if(length(unlist(atoms$orcid))>0){
     orcid_value = atoms$orcid[[1]]$text_value
     orcid_value = gsub(" ", "", orcid_value)
     orcid_value = gsub("^(.*)orcid.org\\/", "", orcid_value)
@@ -454,7 +454,7 @@ treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   tt$add_triple(treatment_id, rdf_type, Treatment)
   tt$add_triple(treatment_id, is_contained_by, identifiers$pid)
-  if (length(atoms$status)>0 ){
+  if length(unlist(atoms$status))>0 ){
     status = atoms$status[[1]]$text_value
     if (!(is.null(status)))
     {
@@ -631,7 +631,7 @@ figure = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   
   tt$add_triple(identifiers$nid, rdf_type, Figure)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  if (length(atoms$caption)>0){
+  if (length(unlist(atoms$caption))>0){
     fig_caption =  atoms$caption[[1]]
     fig_caption = escape_special(fig_caption$text_value)
     tt$add_triple(identifiers$nid, has_content, literal(fig_caption))
@@ -736,7 +736,7 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   
   
-  if (length(atoms$status)>0 ){
+  if length(unlist(atoms$status))>0 ){
     status = atoms$status[[1]]$text_value
     tt$add_triple(treatment_id, taxonStatus, literal(status))
     if (status %in% new_taxons ==TRUE)
@@ -931,7 +931,7 @@ taxonomic_name_usage = function (atoms, identifiers, prefix, new_taxons, mongo_k
       })
       
       
-      if (length(atoms$status)>0 ){
+      if (length(unlist(atoms$status))>0 ){
         status = atoms$status[[1]]$text_value
         tt$add_triple(scNameID, taxonStatus, literal(status))
       }
@@ -959,7 +959,7 @@ taxonomic_key = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(identifiers$nid, dc_title, title)
   
   
-  if (length(atoms$text_content)>0){
+  if (length(unlist(atoms$text_content))>0){
     table_content = atoms$text_content[[1]]
     
     table_content = escape_special(table_content$text_value)
@@ -1003,7 +1003,7 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key)
                    "-", unlist(month)["text_value"], "-", unlist(day)["text_value"]),
             xsd_type = rdf4r::xsd_date)
   }
-  if (length(atoms$pensoft_pub) > 0) {
+  if (length(unlist((atoms$pensoft_pub)) > 0) {
     stop("Pensoft publication")
   }
   general_collection = mongolite::mongo("new_collection")
