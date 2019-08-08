@@ -267,7 +267,7 @@ find_literals = function (xml, xml_schema)
   names(rr) = names(xml_schema$atoms)
   for (nn in names(xml_schema$atoms)) {
     nodes = xml2::xml_find_all(xml, xml_schema$atoms[nn])
-    literals = paste(xml2::xml_text(nodes), collapse = " ")
+    #literals = paste(xml2::xml_text(nodes), collapse = " ")
     
    # literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals, 
                 #    perl = TRUE)
