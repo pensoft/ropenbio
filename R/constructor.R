@@ -454,7 +454,7 @@ treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   tt$add_triple(treatment_id, rdf_type, Treatment)
   tt$add_triple(treatment_id, is_contained_by, identifiers$pid)
-  if length(unlist(atoms$status))>0 ){
+  if (length(unlist(atoms$status))>0 ){
     status = atoms$status[[1]]$text_value
     if (!(is.null(status)))
     {
