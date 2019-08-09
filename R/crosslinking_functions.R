@@ -23,7 +23,7 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
   if(!(is.null(gbif_key))){
     gbif_id = strip_angle(gbif_key)
     gbif_id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", gbif_id)
-    gbif_id = paste0(gbif_id, "-label")
+    gbif_id = paste0(gbif_id, "-scName")
     gbif_id = identifier(gbif_id, prefix)
   }else{
     gbif_id = NULL
