@@ -201,7 +201,7 @@ if (!(is.null(unlist(atoms$institution_code)))){
       if (nrow(res)>0){
         for (i in 1:nrow(res)){
 
-          inst_identifier = set_institution_id(res$coolURI[i])
+          inst_identifier = grbio_uri_parser(res$coolURI[i])
           tt$add_triple(nid , has_inst, inst_identifier)
           tt$add_triple(inst_identifier, rdf_type, Institution)
 
