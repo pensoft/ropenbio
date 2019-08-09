@@ -484,7 +484,7 @@ treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
 
 nomenclature = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
-  nomenclature_id = identifiers$nid$id #remove any ids from the text contents
+  nomenclature_id = identifiers$nid #remove any ids from the text contents
   nomenclature_parent_id = identifiers$pid$id
   nomenclature_content = atoms$text_content[[1]]
   
