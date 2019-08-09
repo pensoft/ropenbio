@@ -1,6 +1,6 @@
 
 #' @export
-get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = "~/ebbenielsen2019/EbbeNielsen2019/grbio_institutions_05_29_18.csv"){
+get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = "/home/backend/OpenBiodiv/tests/grbio_institutions_05_29_18.csv"){
   mongo_res = check_mongo_inst(tpKey = url, collection = collection)
   if (nrow(mongo_res)>0){
     coolURI = mongo_res$coolURI
