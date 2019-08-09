@@ -5,7 +5,7 @@ get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = "~
   if (nrow(mongo_res)>0){
     coolURI = mongo_res$coolURI
     code = mongo_res$code
-    id = grbio_uri_parser(coolURI,prefix)
+    id = grbio_uri_parser(coolURI)
   }else{
     grbio_res = check_grbio(grbio = grbio, url = url, name = name)
     grbio_uri = grbio_res$coolURI
@@ -16,7 +16,7 @@ get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = "~
       id = identifier(grbio_uri, prefix = prefix)
       code = NA
     }else{
-      id = grbio_uri_parser(grbio_uri, prefix = prefix)
+      id = grbio_uri_parser(grbio_uri)
     }
 
     #save to mongo
@@ -51,37 +51,30 @@ check_grbio = function(grbio, url, name){
 }
 
 #' @export
-grbio_uri_parser = function(grbio_uri, prefix){
+grbio_uri_parser = function(grbio_uri){
   #extract grbio uri and turn into id
   #need to detect whether its lsid or a cool uri
-  lsid_regex = "http:\\/\\/biocol\\.org\\/urn:lsid:biocol\\.org:"
-  grbio_cool_regex = "http:\\/\\/grbio\\.org\\/cool\\/"
-  biocol_cool_regex = "http:\\/\\/biocol\\.org\\/cool\\/"
-  gsrscicol_regex = "http:\\/\\/grscicoll\\.org\\/cool\\/"
-  usfc_regex = "http:\\/\\/usfsc\\.grscicoll\\.org\\/cool\\/"
-
-  if (grepl(lsid_regex, grbio_uri)){
-    grbio_uri = gsub(lsid_regex, "", grbio_uri)
-    id = identifier(grbio_uri, c(biocol = "http://biocol.org/urn:lsid:biocol.org:"))
-
-  }else if (grepl(grbio_cool_regex, grbio_uri))
-  {
-    grbio_uri = gsub(grbio_cool_regex, "", grbio_uri)
-    id = identifier(grbio_uri, c(grbioCool = "http://grbio.org/cool/"))
-  } else if (grepl(biocol_cool_regex, grbio_uri)){
-    grbio_uri = gsub(biocol_cool_regex, "", grbio_uri)
-    id = identifier(grbio_uri, c(biocolCool = "http://biocol.org/cool"))
-  } else if (grepl(gsrscicol_regex, grbio_uri)){
-    grbio_uri = gsub(gsrscicol_regex, "", grbio_uri)
-    id = identifier(grbio_uri, c(gsrscicoll = "http://grscicoll.org/cool/"))
-  } else if (grepl(usfc_regex, grbio_uri)){
-    grbio_uri = gsub(usfc_regex, "", grbio_uri)
-    id = identifier(grbio_uri, c(usfc = "http://usfsc.grscicoll.org/cool/"))
-  }else{
-    inst_uri = gsub("http:\\/\\/openbiodiv\\.net\\/", "", grbio_uri)
-    id = identifier(inst_uri, c(openbiodiv = "http://openbiodiv.net/"))
+  lsid_regex = c(biocol =  "http:\\/\\/biocol\\.org\\/urn:lsid:biocol\\.org:")
+  grbio_cool_regex = c(grbioCool = "http:\\/\\/grbio\\.org\\/cool\\/")
+  biocol_cool_regex = c(biocolCool = "http:\\/\\/biocol\\.org\\/cool\\/")
+  gsrscicol_regex = c(gsrscicoll = "http:\\/\\/grscicoll\\.org\\/cool\\/")
+  usfc_regex = c(usfc = "http:\\/\\/usfsc\\.grscicoll\\.org\\/cool\\/")
+  default_regex = c(openbiodiv = "http:\\/\\/openbiodiv\\.net\\/")
+  
+  patterns = list(lsid_regex, grbio_cool_regex, biocol_cool_regex, gsrscicol_regex, usfc_regex, default_regex)
+  
+  grep_and_id = function(pattern, grbio_uri){
+    if (grepl(pattern, grbio_uri)){
+      grbio_uri = gsub(pattern, "", grbio_uri)
+      prefix = stringi::stri_unescape_unicode(pattern)
+      names(prefix) = names(pattern)
+      id = identifier(grbio_uri, prefix)
+      return(id)
+    }
   }
-  return(id)
+ inst_id =  sapply(patterns, grep_and_id, grbio_uri=grbio_uri)
+ inst_id=inst_id[lapply(inst_id,length)>0][[1]]
+ return(inst_id)
 }
 
 
