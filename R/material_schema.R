@@ -489,7 +489,7 @@ material_schema = XmlSchema$new(
     # Taxonomic Key
     XmlSchema$new(
       schema_name = "taxonomic_key",
-      xpath = "//sec[@sec-type='key'] | //sec[contains(@sec-type, 'key')] | //sec[contains(@sec-type, 'Key to')] | //sec[contains(@sec-type, 'key to')]",
+      xpath = "//sec[@sec-type='key'] | //sec[starts-with(@sec-type, 'key')] | //sec[starts-with(@sec-type, 'Key to')] | //sec[starts-with(@sec-type, 'key to')]",
       file_pattern = ".*\\.xml",
       extension = ".xml",
       prefix = c(openbiodiv = "http://openbiodiv.net/"),
