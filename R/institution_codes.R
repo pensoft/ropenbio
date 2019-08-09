@@ -86,6 +86,38 @@ grbio_uri_parser = function(grbio_uri, prefix){
 
 
 #' @export
+set_institution_id = function(uri){
+  lsid_regex = "http:\\/\\/biocol\\.org\\/urn:lsid:biocol\\.org:"
+  grbio_cool_regex = "http:\\/\\/grbio\\.org\\/cool\\/"
+  biocol_cool_regex = "http:\\/\\/biocol\\.org\\/cool\\/"
+  gsrscicol_regex = "http:\\/\\/grscicoll\\.org\\/cool\\/"
+  usfc_regex = "http:\\/\\/usfsc\\.grscicoll\\.org\\/cool\\/"
+  
+  if (grepl(lsid_regex, uri)){
+    grbio_uri = gsub(lsid_regex, "", uri)
+    id = identifier(grbio_uri, c(biocol = "http://biocol.org/urn:lsid:biocol.org:"))
+  }else if (grepl(grbio_cool_regex, uri))
+  {
+    grbio_uri = gsub(grbio_cool_regex, "", uri)
+    id = identifier(grbio_uri, c(grbioCool = "http://grbio.org/cool/"))
+  } else if (grepl(biocol_cool_regex, uri)){
+    grbio_uri = gsub(biocol_cool_regex, "", uri)
+    id = identifier(grbio_uri, c(biocolCool = "http://biocol.org/cool"))
+  } else if (grepl(gsrscicol_regex, uri)){
+    grbio_uri = gsub(gsrscicol_regex, "", uri)
+    id = identifier(grbio_uri, c(gsrscicoll = "http://grscicoll.org/cool/"))
+  } else if (grepl(usfc_regex, uri)){
+    grbio_uri = gsub(usfc_regex, "", uri)
+    id = identifier(grbio_uri, c(usfc = "http://usfsc.grscicoll.org/cool/"))
+  }else{
+    grbio_uri = gsub("http:\\/\\/openbiodiv\\.net\\/", "", uri)
+    id = identifier(grbio_uri, c(openbiodiv = "http://openbiodiv.net/"))
+  }
+  
+  return(id)
+}
+
+#' @export
 extract_inst_identifiers = function(xml, root_id, prefix, collection){
 
 
