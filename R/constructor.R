@@ -437,7 +437,7 @@ introduction_section = function (atoms, identifiers, prefix, new_taxons, mongo_k
 }
 
 
-
+#' @export
 treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
@@ -482,6 +482,7 @@ treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
 }
 
 
+#' @export
 nomenclature = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   nomenclature_id = identifiers$nid #remove any ids from the text contents
@@ -502,6 +503,7 @@ nomenclature = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
 }
 
+#' @export
 nomenclature_citations = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
   
@@ -621,7 +623,7 @@ distribution = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
 
 
-
+#' @export
 figure = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
   
