@@ -4,7 +4,7 @@
 \alias{distribution}
 \title{Distribution Section Constructor}
 \usage{
-distribution(atoms, identifiers, prefix, schema_name, mongo_key)
+distribution(atoms, identifiers, prefix, new_taxons, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

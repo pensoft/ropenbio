@@ -4,7 +4,7 @@
 \alias{author}
 \title{Author constructor}
 \usage{
-author(atoms, identifiers, prefix, schema_name, mongo_key)
+author(atoms, identifiers, prefix, new_taxons, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}

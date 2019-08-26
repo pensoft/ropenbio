@@ -4,7 +4,7 @@
 \alias{checklist}
 \title{Checklist Section Constructor}
 \usage{
-checklist(atoms, identifiers, prefix, schema_name, mongo_key)
+checklist(atoms, identifiers, prefix, new_taxons, mongo_key)
 }
 \arguments{
 \item{atoms}{a list of literals}
