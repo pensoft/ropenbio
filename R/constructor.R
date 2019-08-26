@@ -807,7 +807,7 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   return(tt)
 }
 
-
+#' @export
 taxonomic_name_usage = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   tnu_id = identifiers$nid
