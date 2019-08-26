@@ -440,10 +440,6 @@ introduction_section = function (atoms, identifiers, prefix, new_taxons, mongo_k
 #' @export
 treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
 
-  taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
-
-  new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
-
   treatment_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
 
@@ -666,10 +662,6 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
 
 
 
-  #first check the status
-  taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
-
-  new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
   tt = ResourceDescriptionFramework$new()
 
 
@@ -1377,13 +1369,6 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
     }
   }
 
-
-
-
-  #first check the status
-  taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
-
-  new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
   tt = ResourceDescriptionFramework$new()
 
 
