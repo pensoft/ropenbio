@@ -108,7 +108,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       prefix = c(openbiodiv = "http://openbiodiv.net/")
 
       triples = ResourceDescriptionFramework$new()
-      root_ident = root(node=xml, xml_schema = material_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
+      xml_schema = material_schema
+      root_ident = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
 
       triples$set_context(root_ident)
 
@@ -120,7 +121,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       
       triples = node_extractor_en(
         node = xml,
-        xml_schema = material_schema,
+        xml_schema = xml_schema,
         reprocess = reprocess,
         triples = triples,
         prefix = prefix,
