@@ -60,9 +60,9 @@ grbio_uri_parser = function(grbio_uri){
   gsrscicol_regex = c(gsrscicoll = "http:\\/\\/grscicoll\\.org\\/cool\\/")
   usfc_regex = c(usfc = "http:\\/\\/usfsc\\.grscicoll\\.org\\/cool\\/")
   default_regex = c(openbiodiv = "http:\\/\\/openbiodiv\\.net\\/")
-  
+
   patterns = list(lsid_regex, grbio_cool_regex, biocol_cool_regex, gsrscicol_regex, usfc_regex, default_regex)
-  
+
   grep_and_id = function(pattern, grbio_uri){
     if (grepl(pattern, grbio_uri)){
       grbio_uri = gsub(pattern, "", grbio_uri)
@@ -85,7 +85,7 @@ set_institution_id = function(uri){
   biocol_cool_regex = "http:\\/\\/biocol\\.org\\/cool\\/"
   gsrscicol_regex = "http:\\/\\/grscicoll\\.org\\/cool\\/"
   usfc_regex = "http:\\/\\/usfsc\\.grscicoll\\.org\\/cool\\/"
-  
+
   if (grepl(lsid_regex, uri)){
     grbio_uri = gsub(lsid_regex, "", uri)
     id = identifier(grbio_uri, c(biocol = "http://biocol.org/urn:lsid:biocol.org:"))
@@ -106,7 +106,7 @@ set_institution_id = function(uri){
     grbio_uri = gsub("http:\\/\\/openbiodiv\\.net\\/", "", uri)
     id = identifier(grbio_uri, c(openbiodiv = "http://openbiodiv.net/"))
   }
-  
+
   return(id)
 }
 
@@ -192,7 +192,7 @@ institution_serializer = function(tt, atoms, identifiers){
     }
   })
   }
-  
+
 if (!(is.null(unlist(atoms$institution_code)))){
   sapply(atoms$institution_code, function(n){
     if (!(n$text_value %in% rdfized_codes)){
@@ -303,7 +303,6 @@ abbrev_institutions_extractor = function(xml){
 
 
 #' @export
-#' get or set inst code and inst name
 institutions_to_mongo = function(df1, df2, root_id, collection){
   df = rbind(df1, df2)
   if(is.null(df) == FALSE){

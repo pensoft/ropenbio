@@ -1,6 +1,4 @@
 #' @export
-#' #get or set scName identifier - mongoDB
-
 gbif_taxonomy_mapping = function(scName, collection = checklistCol)
 {
 
