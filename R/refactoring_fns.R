@@ -138,10 +138,6 @@ escape_special_json = function(string){
   string = gsub("\\s{2,}", " ", string)
   string = strip_trailing_whitespace(string)
   string  = gsub("\\s*$", "", string)
-  #string = stringr::str_extract(string, ".*\\n")
-    write(string, "~/unknown_json.txt", append = TRUE)
-
- # string = strip_trailing_whitespace(string)
 
   return(string)
 }
@@ -151,14 +147,12 @@ escape_special = function(string){
   string =  gsub("\r?\n|\r", " ", string)
   string =  gsub("\\“", "\\\\", string , fixed = TRUE)
   string =  gsub("\\”", "\\\\", string , fixed = TRUE)
-  #  string =  gsub("[-[\\]{}()*+?.,\\^$|#\\s]", "\\\\", string, fixed = TRUE)
   string =  gsub("\"N", "\\\"N", string , fixed = TRUE)
   string =  gsub("\"E", "\\\"E", string , fixed = TRUE)
   string =  gsub("\"S", "\\\"S", string , fixed = TRUE)
   string =  gsub("\"W", "\\\"W", string , fixed = TRUE)
   string =  gsub("\"", "\\\"", string , fixed = TRUE)
   string =  gsub("\\\\", "\\", string , fixed = TRUE)
-  #string = gsub("\\", " ", string, fixed = TRUE)
   string = gsub("\\]", "\\\\\\]", string)
   string = gsub("\\[", "\\\\\\[", string)
   string = gsub("–", "-", string)
@@ -167,13 +161,6 @@ escape_special = function(string){
   string = gsub("\\s{2,}", " ", string)  
   string = strip_trailing_whitespace(string)
   string  = gsub("\\s*$", "", string)
-  
-  #string = stringr::str_extract(string, ".*\\n")
-  write(string, "~/unknown.txt", append = TRUE)
-
- # string = trimws(string)
-  #string = gsub("[^\x00-\x7F]+", string)
-  # string =  gsub("(?<=[^\\])\"", "\\\"", string , fixed = TRUE)
 
   return(string)
 }
@@ -264,6 +251,8 @@ get_or_set_mongoid= function (df, prefix)
 get_or_set = function(key, df){
   if (is.null(key) == TRUE) {
     key = uuid::UUIDgenerate()
+    key = gsub("-", "", key)
+    key = toupper(key)
     save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, parent = df$parent, collection = general_collection)
     id = key
   }else{
