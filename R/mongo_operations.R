@@ -52,9 +52,7 @@ check_mongo_key_via_parent = function(parent,type, collection)
 #' @export
 check_mongo_inst = function(tpKey, collection){
   query = sprintf("{\"%s\":\"%s\"}", "tpKey", tpKey)
-  print(query)
   res = collection$find(query)
-  print(res)
   return(res)
 }
 
@@ -111,6 +109,5 @@ check_code_name_combo = function(code, name, collection)
 update_parent =  function(key, parent, collection = general_collection){
   query = sprintf("{\"%s\":\"%s\"}", "key", key)
   update = sprintf("{\"$set\":{\"%s\":\"%s\"}}", "parent", parent)
-
   collection$update(query = query, update = update)
 }
