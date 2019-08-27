@@ -63,58 +63,101 @@ process_author = function (node, mongo_key)
 
 
 #' @export
-process_tnu = function (node, mongo_key)
+process_tnu = function (node, mongo_key) 
 {
-   label = get_taxon_label(node, mongo_key)
-   if (nchar(label)<3 && grepl(".", label)==TRUE){ #if the label is something like "B." then don't save it (too ambiguous)
-   label = get_taxon_label(node, mongo_key)
-   label = escape_special(label)
+  label = get_taxon_label(node, mongo_key)
+  if (nchar(label) < 3 && grepl(".", label) == TRUE) {
+    label = get_taxon_label(node, mongo_key)
+    new_label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+    #  label = escape_special(label)
     df = NULL
-  }else{
+  }
+  else {
     mongo_key = c(taxonomic_name = "")
-    label = escape_special(label)
-    df = set_component_frame(label = label, mongo_key = mongo_key,type = names(mongo_key), orcid = NA, parent=NA, key = NA)
+    label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+   # label = escape_special(label)
+    df = set_component_frame(label = label, mongo_key = mongo_key, 
+                             type = names(mongo_key), orcid = NA, parent = NA, 
+                             key = NA)
     return(df)
   }
-
 }
 
 
 #' @export
-process_figure  = function (node, mongo_key)
+process_figure = function (node, mongo_key) 
 {
   id = xml2::xml_text(xml2::xml_find_all(node, "..//object-id[@content-type='arpha']"))
-  if (length(id)>0){
+  if (length(id) > 0) {
     fig_id = identifier(id, prefix)
     fig_id = fig_id$uri
     id_literal = id
-  }else{
+  }
+  else {
     fig_id = NA
     id_literal = ""
   }
   fig_number = xml2::xml_attr(node, "id")
-
   label = get_figure_label(node, mongo_key, fig_number)
   label = gsub(id_literal, "", label)
-  label = escape_special(label)
+  #label = escape_special(label)
+  label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   type = paste0(names(mongo_key), " ", fig_number)
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = type, orcid = NA, parent = NA, key = fig_id)
-
+  df = set_component_frame(label = label, mongo_key = mongo_key, 
+                           type = type, orcid = NA, parent = NA, key = fig_id)
   return(df)
 }
 
 #' @export
-process_treatment = function(node, mongo_key){
-  #if the treatment id is in the article xml, get it and save it in mongodb
+process_treatment = function (node, mongo_key) 
+{
   id = xml2::xml_text(xml2::xml_find_all(node, "tp:nomenclature/tp:taxon-name/object-id[@content-type='arpha']"))
-  if (length(id)>0){
+  if (length(id) > 0) {
     treat_id = identifier(id, prefix)
     id_literal = id
     label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
     label = gsub(id_literal, "", label)
-    label = escape_special(label) #escape special chars
-    df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = treat_id$uri)
-  }else{
+   # label = escape_special(label)
+    label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+    df = set_component_frame(label = label, mongo_key = mongo_key, 
+                             type = names(mongo_key), orcid = NA, parent = NA, 
+                             key = treat_id$uri)
+  }
+  else {
+    df = process_general_component(node, mongo_key)
+  }
+  return(df)
+}
+
+#' @export
+process_general_component = function (node, mongo_key)
+{
+  label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
+  
+  id = xml2::xml_text(xml2::xml_find_all(node, ".//object-id[@content-type='arpha']"))
+  if (length(id)>0){
+    label = gsub(id, "", label)
+  }
+   label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+ # label = escape_special(label) #escape special chars
+  #label = escape_special_json(label)
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA)
+  return(df)
+}
+
+#' @export
+process_schema_component = function(node, mongo_key)
+{
+
+  if (is.author(mongo_key) == TRUE){
+    df = process_author(node, mongo_key)
+  } else if (is.tnu(mongo_key) == TRUE){
+    df = process_tnu(node, mongo_key)
+  } else if (is.figure(mongo_key) == TRUE){
+    df = process_figure(node, mongo_key)
+  } else if (is.treatment(mongo_key) == TRUE){
+    df = process_treatment(node, mongo_key)
+  } else{
     df = process_general_component(node, mongo_key)
   }
   return(df)
@@ -165,45 +208,6 @@ escape_special = function(string){
   return(string)
 }
 
-#' @export
-process_general_component = function (node, mongo_key)
-{
-  label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
-  
-  id = xml2::xml_text(xml2::xml_find_all(node, ".//object-id[@content-type='arpha']"))
-  if (length(id)>0){
-    print("this is the id")
-    print(id)
-    print(toString(node))
-    label = gsub(id, "", label)
-  }
-
-  
-  label = escape_special(label) #escape special chars
-  #label = escape_special_json(label)
-  print(label)
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA)
-  print(df)
-  return(df)
-}
-
-#' @export
-process_schema_component = function(node, mongo_key)
-{
-
-  if (is.author(mongo_key) == TRUE){
-    df = process_author(node, mongo_key)
-  } else if (is.tnu(mongo_key) == TRUE){
-    df = process_tnu(node, mongo_key)
-  } else if (is.figure(mongo_key) == TRUE){
-    df = process_figure(node, mongo_key)
-  } else if (is.treatment(mongo_key) == TRUE){
-    df = process_treatment(node, mongo_key)
-  } else{
-    df = process_general_component(node, mongo_key)
-  }
-  return(df)
-}
 
 #' @export
 get_or_set_mongoid= function (df, prefix)
@@ -233,10 +237,8 @@ get_or_set_mongoid= function (df, prefix)
           }
           else
           {
-
           key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
           id = get_or_set(key, df)
-          print(id)
           }
         }
       }
@@ -251,6 +253,7 @@ get_or_set_mongoid= function (df, prefix)
 get_or_set = function(key, df){
   if (is.null(key) == TRUE) {
     key = uuid::UUIDgenerate()
+    #remove dashes and convert to uppercase
     key = gsub("-", "", key)
     key = toupper(key)
     save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, parent = df$parent, collection = general_collection)
