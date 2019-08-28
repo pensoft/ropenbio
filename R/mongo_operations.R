@@ -6,8 +6,16 @@ check_mongo_key = function(value, type, collection, regex)
   } else{
     query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
   }
+    tryCatch(
+    {
   key = collection$find(query)$key
   return(key)
+      },
+    error = function(e)
+    {
+     # warning(e)
+      return(NULL)
+    })
 }
 
 #' @export
