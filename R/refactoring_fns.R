@@ -77,7 +77,7 @@ process_tnu = function (node, mongo_key)
     mongo_key = c(taxonomic_name = "")
     label = strip_trailing_whitespace(label)
     label = escape_special(label)
-    label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+   # label =  jsonlite::fromJSON(jsonlite::toJSON(label))
     df = set_component_frame(label = label, mongo_key = mongo_key, 
                              type = names(mongo_key), orcid = NA, parent = NA, 
                              key = NA)
@@ -104,7 +104,7 @@ process_figure = function (node, mongo_key)
   label = gsub(id_literal, "", label)
   label = strip_trailing_whitespace(label)
   label = escape_special(label)
-  label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+ # label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   type = paste0(names(mongo_key), " ", fig_number)
   df = set_component_frame(label = label, mongo_key = mongo_key, 
                            type = type, orcid = NA, parent = NA, key = fig_id)
@@ -122,7 +122,7 @@ process_treatment = function (node, mongo_key)
     label = gsub(id_literal, "", label)
     label = strip_trailing_whitespace(label)
     label = escape_special(label)
-    label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+ #   label =  jsonlite::fromJSON(jsonlite::toJSON(label))
     df = set_component_frame(label = label, mongo_key = mongo_key, 
                              type = names(mongo_key), orcid = NA, parent = NA, 
                              key = treat_id$uri)
@@ -144,7 +144,7 @@ process_general_component = function (node, mongo_key)
   }
    label = strip_trailing_whitespace(label)
    label = escape_special(label) #escape special chars
-   label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+ #  label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   #label = escape_special_json(label)
   df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA)
   return(df)
