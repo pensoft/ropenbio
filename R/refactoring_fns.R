@@ -68,12 +68,14 @@ process_tnu = function (node, mongo_key)
   label = get_taxon_label(node, mongo_key)
   if (nchar(label) < 3 && grepl(".", label) == TRUE) {
     label = get_taxon_label(node, mongo_key)
-    new_label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+    label = strip_trailing_whitespace(label)
+    label =  jsonlite::fromJSON(jsonlite::toJSON(label))
     #  label = escape_special(label)
     df = NULL
   }
   else {
     mongo_key = c(taxonomic_name = "")
+    label = strip_trailing_whitespace(label)
     label =  jsonlite::fromJSON(jsonlite::toJSON(label))
    # label = escape_special(label)
     df = set_component_frame(label = label, mongo_key = mongo_key, 
@@ -100,6 +102,7 @@ process_figure = function (node, mongo_key)
   fig_number = xml2::xml_attr(node, "id")
   label = get_figure_label(node, mongo_key, fig_number)
   label = gsub(id_literal, "", label)
+  label = strip_trailing_whitespace(label)
   #label = escape_special(label)
   label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   type = paste0(names(mongo_key), " ", fig_number)
@@ -117,6 +120,7 @@ process_treatment = function (node, mongo_key)
     id_literal = id
     label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
     label = gsub(id_literal, "", label)
+    label = strip_trailing_whitespace(label)
    # label = escape_special(label)
     label =  jsonlite::fromJSON(jsonlite::toJSON(label))
     df = set_component_frame(label = label, mongo_key = mongo_key, 
@@ -138,6 +142,7 @@ process_general_component = function (node, mongo_key)
   if (length(id)>0){
     label = gsub(id, "", label)
   }
+   label = strip_trailing_whitespace(label)
    label =  jsonlite::fromJSON(jsonlite::toJSON(label))
  # label = escape_special(label) #escape special chars
   #label = escape_special_json(label)
