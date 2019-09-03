@@ -119,6 +119,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       taxon_discovery = "/home/backend/OpenBiodiv/tests/status_vocab_abbrev/taxon_discovery.txt"
       new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
       
+      print(filename)
+
       triples = node_extractor_en(
         node = xml,
         xml_schema = xml_schema,
@@ -130,7 +132,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         filename = filename,
         root_id = root_ident
       )
-
+      
+      
       serialization = triples$serialize()
       #cat(serialization, file = "~/diptera.trig")
       save_serialization(serialization, serialization_dir)
