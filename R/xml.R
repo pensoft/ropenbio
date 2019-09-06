@@ -85,18 +85,16 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 {
   # generate lookup functions
 
-
+      general_collection =  mongolite::mongo(collection = "new_collection", db = "test")
+      inst_collection = mongolite::mongo(collection = "institutions", db = "test")
+      checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
+  
   tryCatch(
     {
       #xml = xml2::read_xml(filename)
 
       xml_string = crosslinker(filename)
       xml = xml2::as_xml_document(xml_string)
-      
-      general_collection =  mongolite::mongo(collection = "new_collection", db = "test")
-      inst_collection = mongolite::mongo(collection = "institutions", db = "test")
-      checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
-
 
       # taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
 
