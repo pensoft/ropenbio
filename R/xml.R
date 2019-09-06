@@ -91,13 +91,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       #xml = xml2::read_xml(filename)
 
       xml_string = crosslinker(filename)
-      if(is.null(xml_string)){
-        xml = xml2::read_xml(filename)
-      }else
-      {
-        xml = xml2::as_xml_document(xml_string)
-      }
-
+      xml = xml2::as_xml_document(xml_string)
+      
       general_collection =  mongolite::mongo(collection = "new_collection", db = "test")
       inst_collection = mongolite::mongo(collection = "institutions", db = "test")
       checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
