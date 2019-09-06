@@ -81,7 +81,7 @@ XmlSchema =
 #'
 #'
 #' @export
-xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess = FALSE, dry)
+xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess, dry)
 {
   # generate lookup functions
 
