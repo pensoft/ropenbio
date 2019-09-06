@@ -89,8 +89,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       inst_collection = mongolite::mongo(collection = "institutions", db = "test")
       checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
   
-  tryCatch(
-    {
+ # tryCatch(
+  #  {
       #xml = xml2::read_xml(filename)
 
       xml_string = crosslinker(filename)
@@ -133,13 +133,13 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       xml2::write_xml(xml, filename)
 
 
-      return(TRUE)
-    },
-    error = function(e)
-    {
-      warning(e)
-      return(FALSE)
-    })
+  #    return(TRUE)
+  #  },
+  #  error = function(e)
+  #  {
+  #    warning(e)
+  #    return(FALSE)
+  #  })
 }
 
 
