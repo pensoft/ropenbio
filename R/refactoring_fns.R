@@ -28,6 +28,7 @@ get_taxon_label = function(node, mongo_key)
     tolit = xml2::xml_text(xml2::xml_find_first(node, "."))
   }
   label = tolit
+  label = gsub("\"", "", label)
   label
 }
 
