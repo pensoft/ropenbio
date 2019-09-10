@@ -112,6 +112,7 @@ get_scientific_name_or_tcl = function(kingdom = NA, phylum = NA, class = NA, ord
   }
   label = trimws(label)
   clean_label = gsub("[\\(\\)]", "", label)
+  clean_label = gsub("\"", "", clean_label)
   return(clean_label)
 }
 
