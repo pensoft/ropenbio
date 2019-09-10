@@ -132,6 +132,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       save_serialization(serialization, serialization_dir)
       xml2::write_xml(xml, filename)
       cat(filename, file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
+      cat("\n", file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
 
 
   #    return(TRUE)
