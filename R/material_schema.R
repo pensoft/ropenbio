@@ -31,9 +31,9 @@ material_schema = XmlSchema$new(
     bin = "/article/front/article-meta/bins/bin",
     genbank_id = "/article/front/article-meta/genbank-ids/genbank-id"
   ),
-
+  
   atom_lang = c(
-
+    
     title = NA,
     date = NA,
     pub_year = NA,
@@ -59,8 +59,8 @@ material_schema = XmlSchema$new(
     bin = NA,
     genbank_id = NA
   ),
-
-
+  
+  
   atom_types = list(
     title = rdf4r::xsd_string,
     date = rdf4r::xsd_date,
@@ -89,9 +89,9 @@ material_schema = XmlSchema$new(
   ),
   mongo_key = c(article = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
   constructor = metadata,
-
+  
   components = list(
-
+    
     # Keyword
     XmlSchema$new(
       schema_name = "keyword_group",
@@ -102,17 +102,17 @@ material_schema = XmlSchema$new(
       atoms = c(
         keyword = "./kwd"
       ),
-
+      
       atom_lang = c(
         keyword = NA
       ),
-
+      
       atom_types = list(
         keyword =  rdf4r::xsd_string
       ),
       mongo_key = c(keywords = "/article/front/article-meta/kwd-group"),
       constructor = keyword_group,
-
+      
       components = NULL
     ),
     # Abstract
@@ -128,14 +128,14 @@ material_schema = XmlSchema$new(
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
         institution_code = ".//named-content[@content-type='dwc:institutional_code']"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         trans_abstract = "../trans-abstract/@xml:lang",
         institution_name = NA,
         institution_code = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         trans_abstract = rdf4r::xsd_string,
@@ -144,10 +144,10 @@ material_schema = XmlSchema$new(
       ),
       mongo_key = c(abstract = "."),
       constructor = abstract,
-
+      
       components = NULL
     ),
-
+    
     # Title
     XmlSchema$new(
       schema_name = "title",
@@ -158,20 +158,20 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = "."
       ),
-
+      
       atom_lang = c(
         text_content = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string
       ),
       mongo_key = c(article_title = "/article/front/article-meta/title-group/article-title"),
       constructor = title,
-
+      
       components = NULL
     ),
-
+    
     # Author
     XmlSchema$new(
       schema_name = "author",
@@ -191,7 +191,7 @@ material_schema = XmlSchema$new(
         orcid = "./uri[@content-type='orcid']"
         # role = "./mods:role/mods:roleTerm"
       ),
-
+      
       atom_lang = c(
         full_name = NA,
         surname = NA,
@@ -204,7 +204,7 @@ material_schema = XmlSchema$new(
         orcid = NA
         #role = NA
       ),
-
+      
       atom_types = list(
         full_name = rdf4r::xsd_string,
         surname = rdf4r::xsd_string,
@@ -219,7 +219,7 @@ material_schema = XmlSchema$new(
       #change mongokey
       mongo_key = c(author_name = "./name/given-names", surname = "./name/surname"),
       constructor = author,
-
+      
       components = NULL
     ),
     # Introduction
@@ -234,13 +234,13 @@ material_schema = XmlSchema$new(
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
         institution_code = ".//named-content[@content-type='dwc:institutional_code']"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
         institution_code = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -261,13 +261,13 @@ material_schema = XmlSchema$new(
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
         institution_code = ".//named-content[@content-type='dwc:institutional_code']"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
         institution_code = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -276,7 +276,7 @@ material_schema = XmlSchema$new(
       mongo_key = c(discussion = "."),
       constructor = discussion
     ),
-
+    
     # Checklist
     XmlSchema$new(
       schema_name = "checklist",
@@ -289,13 +289,13 @@ material_schema = XmlSchema$new(
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
         institution_code = ".//named-content[@content-type='dwc:institutional_code']"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
         institution_code = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -304,7 +304,7 @@ material_schema = XmlSchema$new(
       mongo_key = c(checklist = "."),
       constructor = checklist
     ),
-
+    
     #Treatment
     XmlSchema$new(
       schema_name = "treatment",
@@ -317,17 +317,17 @@ material_schema = XmlSchema$new(
         status = "tp:nomenclature/tp:taxon-status",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
         institution_code = ".//named-content[@content-type='dwc:institutional_code']"
-
+        
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         status = NA,
         institution_name = NA,
         institution_code = NA
-
+        
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         status = rdf4r::xsd_string,
@@ -336,9 +336,9 @@ material_schema = XmlSchema$new(
       ),
       mongo_key =  c(treatment = "/article/body/..//tp:taxon-treatment"),
       constructor = treatment,
-
+      
       components = list(
-
+        
         XmlSchema$new(
           schema_name = "nomenclature",
           xpath = "tp:nomenclature",
@@ -350,13 +350,13 @@ material_schema = XmlSchema$new(
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
             institution_code = ".//named-content[@content-type='dwc:institutional_code']"
           ),
-
+          
           atom_lang = c(
             text_content = NA,
             institution_name = NA,
             institution_code = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
@@ -374,58 +374,91 @@ material_schema = XmlSchema$new(
               atoms = c(
                 text_content = "."
               ),
-
+              
               atom_lang = c(
                 text_content = NA
               ),
-
+              
               atom_types = list(
                 text_content =  rdf4r::xsd_string
               ),
-
+              
               components = NULL,
               mongo_key =  c(nomenclature_citations = "."),
-
+              
               constructor = nomenclature_citations
             )
-
+            
           )
         ),
-
+        
         XmlSchema$new(
           schema_name = "type_material",
-          xpath = "tp:treatment-sec[@sec-type='type material'] | tp:treatment-sec[@sec-type='material'] | tp:treatment-sec[@sec-type='Holotype'] | tp:treatment-sec[@sec-type='Types'] | tp:treatment-sec[@sec-type='Typification']",
+          xpath = "tp:treatment-sec[@sec-type='type material'] | tp:treatment-sec[@sec-type='material'] | tp:treatment-sec[@sec-type='materials'] | tp:treatment-sec[@sec-type='Holotype'] | tp:treatment-sec[@sec-type='Types'] | tp:treatment-sec[@sec-type='Typification']",
           file_pattern = ".*\\.xml",
           extension = ".xml",
           prefix = c(openbiodiv = "http://openbiodiv.net/"),
           atoms = c(
             text_content = ".",
             holotype = "./*[contains(., 'holotype')] | ./*[contains(., 'Holotype')]",
+            record_number = ".//named-content[@content-type='dwc:recordNumber']",
+            recorded_by = ".//named-content[@content-type='dwc:recordedBy']",
             coordinates = ".//named-content[@content-type='dwc:verbatimCoordinates']",
-            institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-            institution_code = ".//named-content[@content-type='dwc:institutional_code']"
-
-          ),
-
+            verbatim_lat = ".//named-content[@content-type='dwc:verbatimLatitude']",
+            verbatim_long = ".//named-content[@content-type='dwc:verbatimLongitude']",
+            country = ".//named-content[@content-type='dwc:country']",
+            state_province = ".//named-content[@content-type='dwc:stateProvince']",
+            locality = ".//named-content[@content-type='dwc:locality']",
+            collection_year = ".//named-content[@content-type='dwc:year']",
+            collection_month = ".//named-content[@content-type='dwc:month']",
+            collection_day = ".//named-content[@content-type='dwc:day']",
+            collection_date = NA,
+            institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution'] | .//named-content[@content-type='dwc:institutionID']",
+            institution_code = ".//named-content[@content-type='dwc:institutional_code'] | .//named-content[@content-type='dwc:institutionalCode']"
+            ),
+          
           atom_lang = c(
             text_content = NA,
             holotype = NA,
+            record_number = NA,
+            recorded_by = NA,
             coordinates = NA,
+            verbatim_lat = NA,
+            verbatim_long = NA,
+            country = NA,
+            state_province = NA,
+            locality = NA,
+            collection_year = NA,
+            collection_month = NA,
+            collection_day = NA,
+            collection_date = NA,
             institution_name = NA,
             institution_code = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             holotype = rdf4r::xsd_string,
+            record_number = rdf4r::xsd_string,
+            recorded_by = rdf4r::xsd_string,
             coordinates = rdf4r::xsd_string,
+            verbatim_lat = rdf4r::xsd_string,
+            verbatim_long = rdf4r::xsd_string,
+            dwc_verb_coord = rdf4r::xsd_string,
+            country = rdf4r::xsd_string,
+            state_province =  rdf4r::xsd_string,
+            locality =  rdf4r::xsd_string,
+            collection_year =  rdf4r::xsd_string,
+            collection_month =  rdf4r::xsd_string,
+            collection_day =  rdf4r::xsd_string,
+            collection_date = rdf4r::xsd_date,
             institution_name = rdf4r::xsd_string,
             institution_code = rdf4r::xsd_string
           ),
-          mongo_key =  c(type_material = "tp:treatment-sec[@sec-type='type material'] | tp:treatment-sec[@sec-type='material'] | tp:treatment-sec[@sec-type='Holotype'] | tp:treatment-sec[@sec-type='Types'] | tp:treatment-sec[@sec-type='Typification']"),
+          mongo_key =  c(type_material = "tp:treatment-sec[@sec-type='type material'] | tp:treatment-sec[@sec-type='material'] | tp:treatment-sec[@sec-type='materials'] | tp:treatment-sec[@sec-type='Holotype'] | tp:treatment-sec[@sec-type='Types'] | tp:treatment-sec[@sec-type='Typification']"),
           constructor = type_material
         ),
-
+        
         #Diagnosis
         XmlSchema$new(
           schema_name = "diagnosis_section",
@@ -438,25 +471,25 @@ material_schema = XmlSchema$new(
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
             institution_code = ".//named-content[@content-type='dwc:institutional_code']"
           ),
-
+          
           atom_lang = c(
             text_content = NA,
             institution_name =  NA,
             institution_code = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
             institution_code = rdf4r::xsd_string
           ),
           mongo_key =  c(diagnosis = "."),
-
+          
           constructor = diagnosis
         ),
-
-
-
+        
+        
+        
         # distribution
         XmlSchema$new(
           schema_name = "distribution_section",
@@ -469,13 +502,13 @@ material_schema = XmlSchema$new(
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
             institution_code = ".//named-content[@content-type='dwc:institutional_code']"
           ),
-
+          
           atom_lang = c(
             text_content = NA,
             institution_name =  NA,
             institution_code = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
@@ -496,25 +529,25 @@ material_schema = XmlSchema$new(
       atoms = c(
         title = "title",
         text_content = "*[not(name()='title')]" #any node which is not  a title
-
+        
       ),
-
+      
       atom_lang = c(
         title = NA,
         text_content = NA
-
+        
       ),
-
+      
       atom_types = list(
         title = rdf4r::xsd_string,
         text_content = rdf4r::xsd_string
       ),
       mongo_key =  c(taxonomic_key = "//sec[@sec-type='key'] | //sec[contains(@sec-type, 'key')] | //sec[contains(@sec-type, 'Key to')] | //sec[contains(@sec-type, 'key to')]"),
       constructor = taxonomic_key,
-
+      
       components = NULL
     ),
-
+    
     # Figure
     XmlSchema$new(
       schema_name = "figure",
@@ -527,17 +560,17 @@ material_schema = XmlSchema$new(
         caption = "caption",
         download_link = "graphic/uri[@content-type='original_file']",
         doi = "object-id[@content-type = 'doi']"
-
+        
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         caption = NA,
         download_link = NA,
         doi = NA
-
+        
       ),
-
+      
       atom_types = list(
         text_content = rdf4r::xsd_string,
         caption = rdf4r::xsd_string,
@@ -546,9 +579,9 @@ material_schema = XmlSchema$new(
       ),
       mongo_key =  c(figure = "//fig"),
       constructor = figure,
-
+      
       components = NULL
-
+      
     ),
     # Taxonomic Name Usage
     XmlSchema$new(
@@ -582,7 +615,7 @@ material_schema = XmlSchema$new(
         zoobank = "../object-id[@content-type='zoobank']",
         secundum_literal = NA
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         date = NA,
@@ -607,7 +640,7 @@ material_schema = XmlSchema$new(
         zoobank = NA,
         secundum_literal = NA
       ),
-
+      
       atom_types = list(
         text_content = rdf4r::xsd_string,
         date = rdf4r::xsd_date,
@@ -646,9 +679,9 @@ material_schema = XmlSchema$new(
         authorship = "following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type='authority']",
         secundum_literal = NA
       ),
-
+      
       constructor = taxonomic_name_usage,
-
+      
       components = NULL
     )
   )
