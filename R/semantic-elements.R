@@ -458,6 +458,50 @@ institutional_code = rdf4r::identifier(
 
 
 
+#' @export
+dwc_coordinates = rdf4r::identifier(
+  id="verbatimCoordinates",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_record_number = rdf4r::identifier(
+  id="recordNumber",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_recorded_by = rdf4r::identifier(
+  id="recordedBy",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_country = rdf4r::identifier(
+  id="country",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_state_province = rdf4r::identifier(
+  id="stateProvince",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_locality = rdf4r::identifier(
+  id="locality",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_collection_date = rdf4r::identifier(
+  id="eventDate",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+
 
 #' mentions
 #' @export
