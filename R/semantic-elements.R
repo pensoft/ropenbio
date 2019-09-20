@@ -753,10 +753,66 @@ mentions_id = rdf4r::identifier(
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+
 #' @export
-has_coordinates = rdf4r::identifier(
-  id="hasCoordinates",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+dwc_inst_id = rdf4r::identifier(
+  id="institutionID",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_inst_code = rdf4r::identifier(
+  id="institutionCode",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_event_date = rdf4r::identifier(
+  id="eventDate",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_individual_count = rdf4r::identifier(
+  id="individualCount",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_sex = rdf4r::identifier(
+  id="sex",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_life_stage = rdf4r::identifier(
+  id="lifeStage",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_sampling_protocol = rdf4r::identifier(
+  id="samplingProtocol",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_sampling_protocol = rdf4r::identifier(
+  id="samplingProtocol",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_catalog_number = rdf4r::identifier(
+  id="catalogNumber",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_other_catalog_numbers = rdf4r::identifier(
+  id="otherCatalogNumbers",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
 )
 
 
