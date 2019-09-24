@@ -260,7 +260,7 @@ get_or_set = function(key, df){
   if (is.null(key) == TRUE) {
     key = uuid::UUIDgenerate()
     #remove dashes and convert to uppercase
-    key = gsub("-", "", key)
+    #key = gsub("-", "", key)
     key = toupper(key)
     save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, parent = df$parent, collection = general_collection)
     id = key
