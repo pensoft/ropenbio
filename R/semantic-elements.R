@@ -255,7 +255,7 @@ SequenceRecord = rdf4r::identifier(
 )
 
 #' @export
-Methods = identifier(
+Methods = rdf4r::identifier(
   id = "Methods",
   prefix = c(deo = "http://purl.org/spar/deo/")
 )
