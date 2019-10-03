@@ -24,8 +24,6 @@ Event = rdf4r::identifier(
 
 
 
-
-
 #' @export
 Collection = rdf4r::identifier(
   id = "Collection",
@@ -756,6 +754,11 @@ has_issue = rdf4r::identifier(
   prefix = c(prism = "http://prismstandard.org/namespaces/basic/2.0/")
 )
 
+#' @export
+has_url = identifier(
+  id = "hasURL",
+  prefix = c(fabio = "http://purl.org/spar/fabio/")
+)
 
 #' Has Affiliation
 #' @export
