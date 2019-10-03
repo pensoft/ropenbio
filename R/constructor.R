@@ -107,79 +107,8 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
     tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
     tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
     tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
-    
   }
-  
-  bold_values=c()
-  bold_identifiers = c()
-  
-  if (!(is.null(unlist(atoms$bold_id))) & length(unlist(atoms$bold_id))>0){
-    for(i in 1:length(atoms$bold_id)){
-      bold_values = c(bold_values, atoms$bold_id[[i]]$text_value)
-      bold_identifiers = c(bold_identifiers, list(identifier(gsub("BOLD:", "",atoms$bold_id[[i]]$text_value), prefix)))
-    }
-  }
-  
-  
-  bin_values=c()
-  bin_identifiers = c()
-  if (!(is.null(unlist(atoms$bin))) & length(unlist(atoms$bin))>0){
-    for(i in 1:length(atoms$bin)){
-      bin_values = c(bin_values, atoms$bin[[i]]$text_value)
-      bin_identifiers = c(bin_identifiers, list(identifier(gsub("BOLD:", "",atoms$bin[[i]]$text_value), prefix)))
-    }
-  }
-  
-  #BOLD IDS
-  sapply(bold_identifiers, function(i){
-    tt$add_triple(article_id, mentions_id, i)
-  })
-  sapply(bold_identifiers, function(i){
-    tt$add_triple(i, rdf_type, ResourceIdentifier)
-    
-  })
-  for (i in 1:length(bold_identifiers)){
-    tt$add_triple(bold_identifiers[[i]], rdfs_label, literal(bold_values[i]))
-    tt$add_triple(bold_identifiers[[i]], identifier_scheme, bold)
-  }
-  
-  #BINS
-  sapply(bin_identifiers, function(i){
-    tt$add_triple(article_id, mentions_id, i)
-  })
-  sapply(bin_identifiers, function(i){
-    tt$add_triple(i, rdf_type, ResourceIdentifier)
-    
-  })
-  for (i in 1:length(bin_identifiers)){
-    tt$add_triple(bin_identifiers[[i]], rdfs_label, literal(bin_values[i]))
-    tt$add_triple(bin_identifiers[[i]], identifier_scheme, bold)
-  }
-  
-  
-  
-  genbank_values=c()
-  genbank_identifiers = c()
-  if (!(is.null(unlist(atoms$genbank_id))) & length(unlist(atoms$genbank_id))>0){
-    for(i in 1:length(atoms$genbank_id)){
-      genbank_values = c(genbank_values, atoms$genbank_id[[i]]$text_value)
-      genbank_identifiers = c(genbank_identifiers, list(identifier(atoms$genbank_id[[i]]$text_value, prefix)))
-    }
-  }
-  
-  #GenBank
-  sapply(genbank_identifiers, function(i){
-    tt$add_triple(article_id, mentions_id, i)
-  })
-  sapply(genbank_identifiers, function(i){
-    tt$add_triple(i, rdf_type, ResourceIdentifier)
-    
-  })
-  for (i in 1:length(genbank_identifiers)){
-    tt$add_triple(genbank_identifiers[[i]], rdfs_label, literal(genbank_values[i]))
-    tt$add_triple(genbank_identifiers[[i]], identifier_scheme, genbank)
-  }
-  
+
   
   if(length(unlist(atoms$plazi_id))> 0){
     for (n in 1:length(atoms$plazi_id)){
@@ -302,8 +231,9 @@ abstract = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   }
   
   
-  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
+  
   
   return(tt)
 }
@@ -428,7 +358,7 @@ introduction_section = function (atoms, identifiers, prefix, new_taxons, mongo_k
   
   tt$add_triple(identifiers$nid, has_content, literal(intro_content))
   
-  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
   
   return(tt)
@@ -470,6 +400,8 @@ treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
+  
   tt = institution_serializer(tt, atoms, identifiers)
   
   return(tt)
@@ -535,7 +467,7 @@ diagnosis = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(diagnosis_id, is_contained_by, identifiers$pid)
   tt$add_triple(diagnosis_id, has_content, literal(diagnosis_content))
   
-  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
   
   return(tt)
@@ -559,11 +491,29 @@ discussion = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   tt$add_triple(identifiers$nid, has_content, literal(discussion_content))
   
-  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
   
   return(tt)
 }
+
+#' @export
+methods = function (atoms, identifiers, prefix, new_taxons, mongo_key)
+{
+  
+  tt = ResourceDescriptionFramework$new()
+  methods_content = atoms$text_content[[1]]
+  methods_content = escape_special(methods_content$text_value)
+  tt$add_triple(identifiers$nid, rdf_type, Methods)
+  tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
+  tt$add_triple(identifiers$nid, has_content, literal(methods_content))
+  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
+  tt =  institution_serializer(tt, atoms, identifiers)
+  
+  return(tt)
+}
+
 
 
 #' Checklist Section Constructor
@@ -584,6 +534,7 @@ checklist = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(identifiers$nid, rdf_type, Checklist)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   tt$add_triple(identifiers$nid, has_content, literal(checklist_content))
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   
   tt =  institution_serializer(tt, atoms, identifiers)
   
@@ -609,7 +560,7 @@ distribution = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   tt$add_triple(identifiers$nid, has_content, literal(distribution_content))
   
-  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
   
   return(tt)
@@ -640,6 +591,8 @@ figure = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   sapply(atoms$download_link, function(i){
     tt$add_triple(identifiers$nid, has_link, i)
   })
+  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   
   return(tt)
 }
@@ -743,6 +696,8 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
+  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt = institution_serializer(tt, atoms, identifiers)
   
   return(tt)
@@ -758,49 +713,6 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   typeMaterialID = identifiers$nid
   tt$add_triple(typeMaterialID, rdf_type, MaterialsExamined)
   tt$add_triple(typeMaterialID, is_contained_by, identifiers$pid)
-  
-  sapply(atoms$record_number, function(n){
-    tt$add_triple(typeMaterialID, dwc_record_number, n)
-  })
-  
-  sapply(atoms$recorded_by, function(n){
-    tt$add_triple(typeMaterialID, dwc_recorded_by, n)
-  })
-  
-  sapply(atoms$country, function(n){
-    tt$add_triple(typeMaterialID, dwc_country, n)
-  })
-  
-  sapply(atoms$state_province, function(n){
-    tt$add_triple(typeMaterialID, dwc_state_province, n)
-  })
-  
-  sapply(atoms$locality, function(n){
-    tt$add_triple(typeMaterialID, dwc_locality, n)
-  })
-  
-  
-  collection_date = function(year, month, day) {
-    if (length(year) == 1 && length(month) == 1 && length(day) == 1) {
-      paste0(year[[1]]$text_value, "-", month[[1]]$text_value, "-", day[[1]]$text_value)
-    }
-    else if (length(year) == 1) {
-      year[[1]]$text_value
-    }
-    else {
-      NA
-    }
-  }
-  
-  
-  atoms$collection_date = ifelse(length(unlist(atoms$collection_date)) == 0, list(literal(collection_date(atoms$collection_year,
-                                                                                                          atoms$collection_month, atoms$collection_day), xsd_type = rdf4r::xsd_date)), atoms$collection_date)
-  
-  
-  sapply(atoms$collection_date, function(n){
-    tt$add_triple(typeMaterialID, dwc_collection_date, n)
-    
-  })
   material_content = atoms$text_content[[1]]
   material_content = escape_special(material_content$text_value)
   tt$add_triple(typeMaterialID, has_content, literal(material_content))
@@ -819,37 +731,43 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key){
     })
   }
   
-  sapply(atoms$coordinates, function(n){
-    
-    coordinates = escape_special(n$text_value)
-    tt$add_triple(typeMaterialID, dwc_coordinates, literal(coordinates))
-  })
+
+tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
+tt = check_dwc_location(tt, atoms, typeMaterialID)
+tt = check_dwc_identification(tt, atoms, typeMaterialID)
+tt = check_dwc_event(tt, atoms, typeMaterialID)
+
+tt = bold_genbank_serializer(tt, atoms, identifiers)
+tt = institution_serializer(tt, atoms, identifiers)
   
-  
-  verbatim_coord = function(lat, long) {
-    if (length(lat) == 1 && length(long) == 1) {
-      paste0(lat[[1]]$text_value, ", ", long[[1]]$text_value)
-    }
-    else {
-      NA
-    }
-  }
-  
-  atoms$dwc_verb_coord = ifelse(length(unlist(atoms$dwc_verb_coord)) == 0, list(literal(verbatim_coord(atoms$verbatim_lat,
-                                                                                                          atoms$verbatim_long), xsd_type = rdf4r::xsd_string)), atoms$dwc_verb_coord)
-  
-  sapply(atoms$dwc_verb_coord, function(n){
-    tt$add_triple(typeMaterialID, dwc_coordinates, n)
-    
-  })
-  
-  
-  
-  
-  tt = institution_serializer(tt, atoms, identifiers)
-  
-  return(tt)
+
 }
+
+
+
+
+#' @export
+occurrence_list = function (atoms, identifiers, prefix, new_taxons, mongo_key){
+  #first check the status
+  tt = ResourceDescriptionFramework$new()
+  #get the name:
+  #escape special chars
+  
+  typeMaterialID = identifiers$pid
+  #tt$add_triple(occurrenceList, rdf_type, OccurrenceList)
+  
+  tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
+  tt = check_dwc_location(tt, atoms, typeMaterialID)
+  tt = check_dwc_identification(tt, atoms, typeMaterialID)
+  tt = check_dwc_event(tt, atoms, typeMaterialID)
+  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
+  tt = institution_serializer(tt, atoms, identifiers)
+
+
+return(tt)
+}
+
 
 #' @export
 taxonomic_name_usage = function (atoms, identifiers, prefix, new_taxons, mongo_key){
@@ -1013,6 +931,7 @@ taxonomic_key = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   
   
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   
   
   
@@ -1153,74 +1072,7 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key)
     
   }
   
-  bold_values=c()
-  bold_identifiers = c()
-  if (length(atoms$bold_id)>0){
-    for(i in 1:length(atoms$bold_id)){
-      bold_values = c(bold_values, atoms$bold_id[[i]]$text_value)
-      bold_identifiers = c(bold_identifiers, list(identifier(gsub("BOLD:", "",atoms$bold_id[[i]]$text_value), prefix)))
-    }
-  }
-  
-  
-  bin_values=c()
-  bin_identifiers = c()
-  if (length(atoms$bin)>0){
-    for(i in 1:length(atoms$bin)){
-      bin_values = c(bin_values, atoms$bin[[i]]$text_value)
-      bin_identifiers = c(bin_identifiers, list(identifier(gsub("BOLD:", "",atoms$bin[[i]]$text_value), prefix)))
-    }
-  }
-  
-  #BOLD IDS
-  sapply(bold_identifiers, function(i){
-    tt$add_triple(article_id, mentions_id, i)
-  })
-  sapply(bold_identifiers, function(i){
-    tt$add_triple(i, rdf_type, ResourceIdentifier)
-    
-  })
-  for (i in 1:length(bold_identifiers)){
-    tt$add_triple(bold_identifiers[[i]], rdfs_label, literal(bold_values[i]))
-    tt$add_triple(bold_identifiers[[i]], identifier_scheme, bold)
-  }
-  
-  #BINS
-  sapply(bin_identifiers, function(i){
-    tt$add_triple(article_id, mentions_id, i)
-  })
-  sapply(bin_identifiers, function(i){
-    tt$add_triple(i, rdf_type, ResourceIdentifier)
-    
-  })
-  for (i in 1:length(bin_identifiers)){
-    tt$add_triple(bin_identifiers[[i]], rdfs_label, literal(bin_values[i]))
-    tt$add_triple(bin_identifiers[[i]], identifier_scheme, bold)
-  }
-  
-  
-  
-  genbank_values=c()
-  genbank_identifiers = c()
-  if (length(atoms$genbank_id)>0){
-    for(i in 1:length(atoms$genbank_id)){
-      genbank_values = c(genbank_values, atoms$genbank_id[[i]]$text_value)
-      genbank_identifiers = c(genbank_identifiers, list(identifier(atoms$genbank_id[[i]]$text_value, prefix)))
-    }
-  }
-  
-  #GenBank
-  sapply(genbank_identifiers, function(i){
-    tt$add_triple(article_id, mentions_id, i)
-  })
-  sapply(genbank_identifiers, function(i){
-    tt$add_triple(i, rdf_type, ResourceIdentifier)
-    
-  })
-  for (i in 1:length(genbank_identifiers)){
-    tt$add_triple(genbank_identifiers[[i]], rdfs_label, literal(genbank_values[i]))
-    tt$add_triple(genbank_identifiers[[i]], identifier_scheme, genbank)
-  }
+
   
   
   if(length(atoms$plazi_id) > 0){
@@ -1502,7 +1354,10 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
+  
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt = institution_serializer(tt, atoms, identifiers)
   
   return(tt)
 }
+
