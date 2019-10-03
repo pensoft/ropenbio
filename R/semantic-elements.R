@@ -755,7 +755,7 @@ has_issue = rdf4r::identifier(
 )
 
 #' @export
-has_url = identifier(
+has_url = rdf4r::identifier(
   id = "hasURL",
   prefix = c(fabio = "http://purl.org/spar/fabio/")
 )
