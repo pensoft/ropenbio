@@ -162,61 +162,70 @@ extract_inst_identifiers = function(xml, root_id, prefix, collection){
 
 }
 
-
 #' @export
-institution_serializer = function(tt, atoms, identifiers){
+institution_serializer = function (tt, atoms, identifiers) 
+{
   rdfized_codes = c()
   nid = identifiers$nid
-  if (!(is.null(unlist(atoms$institution_name)))){
-    sapply(atoms$institution_name, function(n){
-
-    tt$add_triple(nid, inst_names, n)
-    #check mongo for id
-    res = check_mongo_instName(name = n$text_value, collection = inst_collection)
-    if (nrow(res)>0){
-      for (i in 1:nrow(res)){
-
-        inst_identifier = grbio_uri_parser(res$coolURI[i])
-
-
-        tt$add_triple(nid , has_inst, inst_identifier)
-        tt$add_triple(inst_identifier, rdf_type, Institution)
-        if (names(inst_identifier$prefix) == "grbioCool" || names(inst_identifier$prefix) == "biocol" || names(inst_identifier$prefix) == "biocolCool" || names(inst_identifier$prefix) == "gsrscicoll" || names(inst_identifier$prefix) == "usfc"){
-          tt$add_triple(inst_identifier, rdf_type, GrbioInst)
-        }
-
-        tt$add_triple(inst_identifier, has_instName, literal(res$name[i]))
-        tt$add_triple(inst_identifier, has_instCode, literal(res$code[i]))
-        rdfized_codes = c(rdfized_codes, res$code[i])
-      }
-    }
-  })
-  }
-
-if (!(is.null(unlist(atoms$institution_code)))){
-  sapply(atoms$institution_code, function(n){
-    if (!(n$text_value %in% rdfized_codes)){
-      tt$add_triple(nid , inst_codes, n)
-      res = check_mongo_instCode(code = n$text_value, collection = inst_collection)
-      if (nrow(res)>0){
-        for (i in 1:nrow(res)){
-
-          inst_identifier = grbio_uri_parser(res$coolURI[i])
-          tt$add_triple(nid , has_inst, inst_identifier)
-          tt$add_triple(inst_identifier, rdf_type, Institution)
-
-          if (names(inst_identifier$prefix) == "grbio" || names(inst_identifier$prefix) == "biocol"){
-            tt$add_triple(inst_identifier, rdf_type, GrbioInst)
+  
+    if (!(is.null(unlist(atoms$institution_name)))) {
+      sapply(atoms$institution_name, function(n) {
+        tt$add_triple(nid, inst_names, n)
+        res = check_mongo_instName(name = n$text_value, 
+                                   collection = inst_collection)
+        if (nrow(res) > 0) {
+          for (i in 1:nrow(res)) {
+            inst_identifier = grbio_uri_parser(res$coolURI[i])
+            tt$add_triple(nid, dwc_inst_id, inst_identifier)
+            tt$add_triple(inst_identifier, rdf_type, Institution)
+            if (names(inst_identifier$prefix) == "grbioCool" || 
+                names(inst_identifier$prefix) == "biocol" || 
+                names(inst_identifier$prefix) == "biocolCool" || 
+                names(inst_identifier$prefix) == "gsrscicoll" || 
+                names(inst_identifier$prefix) == "usfc") {
+              tt$add_triple(inst_identifier, rdf_type, 
+                            GrbioInst)
+            }
+            tt$add_triple(inst_identifier, has_instName, 
+                          literal(res$name[i]))
+            tt$add_triple(inst_identifier, dwc_inst_code, 
+                          literal(res$code[i]))
+            rdfized_codes = c(rdfized_codes, res$code[i])
           }
-          tt$add_triple(inst_identifier, has_instCode, literal(res$code[i]))
-          tt$add_triple(inst_identifier, has_instName, literal(res$name[i]))
         }
-      }
+      })
     }
-  })
-  }
+    if (!(is.null(unlist(atoms$institution_code)))) {
+      sapply(atoms$institution_code, function(n) {
+        if (!(n$text_value %in% rdfized_codes)) {
+          tt$add_triple(nid, inst_codes, n)
+          res = check_mongo_instCode(code = n$text_value, 
+                                     collection = inst_collection)
+          if (nrow(res) > 0) {
+            for (i in 1:nrow(res)) {
+              inst_identifier = grbio_uri_parser(res$coolURI[i])
+              tt$add_triple(nid, dwc_inst_id, inst_identifier)
+              tt$add_triple(inst_identifier, rdf_type, 
+                            Institution)
+              if (names(inst_identifier$prefix) == "grbio" || 
+                  names(inst_identifier$prefix) == "biocol") {
+                tt$add_triple(inst_identifier, rdf_type, 
+                              GrbioInst)
+              }
+              tt$add_triple(inst_identifier, dwc_inst_code, 
+                            literal(res$code[i]))
+              tt$add_triple(inst_identifier, has_instName, 
+                            literal(res$name[i]))
+            }
+          }
+        }
+      })
+    }
+  
+  
   return(tt)
 }
+
 
 #' @export
 institutionalizer = function(xml, root_id, collection){
