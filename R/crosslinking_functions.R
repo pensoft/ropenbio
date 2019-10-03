@@ -1,3 +1,5 @@
+
+#' Maps ScNames from xmls to ScNames from GBIF
 #' @export
 gbif_taxonomy_mapping = function(scName, collection = checklistCol)
 {
@@ -31,9 +33,51 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
 }
 
 
+#' Serialization of BOLD record ids/BINS/Genbank ids in different article sections (a separate function like institution_serializer)
+#' @export
+ bold_genbank_serializer = function(tt, atoms, identifiers){
+   nid = identifiers$nid
+   
+   #BOLD id
+   sapply(atoms$bold_id, function(n){
+     
+     bold_uri_label = n$text_value
+     bold_id_label = stringr::str_extract(bold_uri_label, "(?<==).*")
+     
+     if (grepl(bold_uri_label, "bin") || grepl(bold_uri_label, "clusteruri")){
+       df_type = "bin"
+       semantic_type = BOLDBin
+     } else{
+       df_type = "bold-id"
+       semantic_type = BOLDRecord
+     }
+     
+     bold_df = set_component_frame(label =  bold_id_label , mongo_key = NA, type = df_type, orcid = NA, parent = NA, key = NA)
+     bold_id = identifier(get_or_set_mongoid(bold_df, prefix), prefix)
+     tt$add_triple(nid, mentions_id , bold_id)
+     tt$add_triple(bold_id, rdf_type , semantic_type)
+     tt$add_triple(bold_id, rdfs_label , literal(bold_id_label))
+     tt$add_triple(bold_id, has_url, literal(bold_uri_label, xsd_type = xsd_uri))
+     
+   })
+   
+   #GenBank id
+   sapply(atoms$genbank_id, function(n){
+     
+     genbank_label = n$text_value
+     genbank_df = set_component_frame(label =  genbank_label , mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA)
+     genbank_id = identifier(get_or_set_mongoid(genbank_df, prefix), prefix)
+     tt$add_triple(nid, mentions_id , genbank_id)
+     tt$add_triple(genbank_id, rdf_type , SequenceRecord)
+     tt$add_triple(genbank_id, rdfs_label , literal(genbank_label))
+     
+   })
+   
+   return(tt)
+   
+ }
 
-
-
+#' DEPRECATED
 #' Crosslinker extracts external identifiers within the xml which enables crosslinking between OpenBiodiv and other systems
 #' Can add more types of identifiers to be extracted
 #' @export
@@ -56,6 +100,8 @@ crosslinker <- function(file)
     })
   }
 
+
+#' DEPRECATED
 #' @export
 bold_processor = function(xml, nodeset){
   bold_results = xml2::xml_find_all(xml, "//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')] | //*[starts-with(@xlink:href, 'http://boldsystems.org/')]")
@@ -66,6 +112,8 @@ bold_processor = function(xml, nodeset){
   return(nodeset)
 }
 
+
+#' DEPRECATED
 #' @export
 genbank_processor =  function(xml, nodeset){
   genbank_results = xml2::xml_find_all(xml, "//ext-link[@ext-link-type='gen']")
@@ -76,6 +124,8 @@ genbank_processor =  function(xml, nodeset){
   return(nodeset)
 }
 
+
+#' DEPRECATED
 #' @export
 bold_string_cleaner = function(node_string){
   node_string = sub('.*http', '', node_string)
@@ -95,6 +145,8 @@ bold_string_cleaner = function(node_string){
   return(query)
 }
 
+
+#' DEPRECATED
 #' @export
 bold_xml_modifier = function(nodeset, results){
 
@@ -136,6 +188,8 @@ bold_xml_modifier = function(nodeset, results){
   return(nodeset)
 }
 
+
+#' DEPRECATED
 #' @export
 genbank_xml_modifier = function(nodeset, results){
   #creates parent nodes for the bold-ids or bins section
@@ -150,6 +204,8 @@ genbank_xml_modifier = function(nodeset, results){
   return(nodeset)
 }
 
+
+#' DEPRECATED
 #' @export
 table_formatter = function(xml){
 
