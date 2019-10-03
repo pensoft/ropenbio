@@ -2,12 +2,14 @@
 % Please edit documentation in R/crosslinking_functions.R
 \name{crosslinker}
 \alias{crosslinker}
-\title{Crosslinker extracts external identifiers within the xml which enables crosslinking between OpenBiodiv and other systems
+\title{DEPRECATED
+Crosslinker extracts external identifiers within the xml which enables crosslinking between OpenBiodiv and other systems
 Can add more types of identifiers to be extracted}
 \usage{
 crosslinker(file)
 }
 \description{
+DEPRECATED
 Crosslinker extracts external identifiers within the xml which enables crosslinking between OpenBiodiv and other systems
 Can add more types of identifiers to be extracted
 }
