@@ -37,44 +37,44 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
 #' @export
  bold_genbank_serializer = function(tt, atoms, identifiers){
    nid = identifiers$nid
-   
+
    #BOLD id
    sapply(atoms$bold_id, function(n){
-     
+
      bold_uri_label = n$text_value
      bold_id_label = stringr::str_extract(bold_uri_label, "(?<==).*")
-     
-     if (grepl(bold_uri_label, "bin") || grepl(bold_uri_label, "clusteruri")){
+
+     if (grepl("bin", bold_uri_label) || grepl("clusteruri", bold_uri_label)){
        df_type = "bin"
        semantic_type = BOLDBin
      } else{
        df_type = "bold-id"
        semantic_type = BOLDRecord
      }
-     
+
      bold_df = set_component_frame(label =  bold_id_label , mongo_key = NA, type = df_type, orcid = NA, parent = NA, key = NA)
      bold_id = identifier(get_or_set_mongoid(bold_df, prefix), prefix)
      tt$add_triple(nid, mentions_id , bold_id)
      tt$add_triple(bold_id, rdf_type , semantic_type)
      tt$add_triple(bold_id, rdfs_label , literal(bold_id_label))
      tt$add_triple(bold_id, has_url, literal(bold_uri_label, xsd_type = xsd_uri))
-     
+
    })
-   
+
    #GenBank id
    sapply(atoms$genbank_id, function(n){
-     
+
      genbank_label = n$text_value
      genbank_df = set_component_frame(label =  genbank_label , mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA)
      genbank_id = identifier(get_or_set_mongoid(genbank_df, prefix), prefix)
      tt$add_triple(nid, mentions_id , genbank_id)
      tt$add_triple(genbank_id, rdf_type , SequenceRecord)
      tt$add_triple(genbank_id, rdfs_label , literal(genbank_label))
-     
+
    })
-   
+
    return(tt)
-   
+
  }
 
 #' DEPRECATED
