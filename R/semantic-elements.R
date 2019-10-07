@@ -250,7 +250,7 @@ BOLDBin = rdf4r::identifier(
 
 #' @export
 SequenceRecord = rdf4r::identifier(
-  id="data_0849",
+  id="data_2292",
   prefix = c(edam = "http://edamontology.org/")
 )
 
