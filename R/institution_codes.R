@@ -13,6 +13,7 @@ get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = gr
     if (length(grbio_uri)==0){
       #set it
       grbio_uri = uuid::UUIDgenerate()
+      grbio_uri = toupper(grbio_uri)
       id = identifier(grbio_uri, prefix = prefix)
       code = NA
     }else{
