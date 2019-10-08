@@ -1,6 +1,6 @@
 
 #' @export
-get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = "/home/backend/OpenBiodiv/tests/grbio_institutions_05_29_18.csv"){
+get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = grbio){
   mongo_res = check_mongo_inst(tpKey = url, collection = collection)
   if (nrow(mongo_res)>0){
     coolURI = mongo_res$coolURI
@@ -111,7 +111,7 @@ set_institution_id = function(uri){
 }
 
 #' @export
-extract_inst_identifiers = function(xml, root_id, prefix, collection){
+extract_inst_identifiers = function(xml, root_id, prefix, collection, grbio){
 
 
   #inst_codes = c()
@@ -163,32 +163,32 @@ extract_inst_identifiers = function(xml, root_id, prefix, collection){
 }
 
 #' @export
-institution_serializer = function (tt, atoms, identifiers) 
+institution_serializer = function (tt, atoms, identifiers)
 {
   rdfized_codes = c()
   nid = identifiers$nid
-  
+
     if (!(is.null(unlist(atoms$institution_name)))) {
       sapply(atoms$institution_name, function(n) {
         tt$add_triple(nid, inst_names, n)
-        res = check_mongo_instName(name = n$text_value, 
+        res = check_mongo_instName(name = n$text_value,
                                    collection = inst_collection)
         if (nrow(res) > 0) {
           for (i in 1:nrow(res)) {
             inst_identifier = grbio_uri_parser(res$coolURI[i])
             tt$add_triple(nid, dwc_inst_id, inst_identifier)
             tt$add_triple(inst_identifier, rdf_type, Institution)
-            if (names(inst_identifier$prefix) == "grbioCool" || 
-                names(inst_identifier$prefix) == "biocol" || 
-                names(inst_identifier$prefix) == "biocolCool" || 
-                names(inst_identifier$prefix) == "gsrscicoll" || 
+            if (names(inst_identifier$prefix) == "grbioCool" ||
+                names(inst_identifier$prefix) == "biocol" ||
+                names(inst_identifier$prefix) == "biocolCool" ||
+                names(inst_identifier$prefix) == "gsrscicoll" ||
                 names(inst_identifier$prefix) == "usfc") {
-              tt$add_triple(inst_identifier, rdf_type, 
+              tt$add_triple(inst_identifier, rdf_type,
                             GrbioInst)
             }
-            tt$add_triple(inst_identifier, has_instName, 
+            tt$add_triple(inst_identifier, has_instName,
                           literal(res$name[i]))
-            tt$add_triple(inst_identifier, dwc_inst_code, 
+            tt$add_triple(inst_identifier, dwc_inst_code,
                           literal(res$code[i]))
             rdfized_codes = c(rdfized_codes, res$code[i])
           }
@@ -199,30 +199,30 @@ institution_serializer = function (tt, atoms, identifiers)
       sapply(atoms$institution_code, function(n) {
         if (!(n$text_value %in% rdfized_codes)) {
           tt$add_triple(nid, inst_codes, n)
-          res = check_mongo_instCode(code = n$text_value, 
+          res = check_mongo_instCode(code = n$text_value,
                                      collection = inst_collection)
           if (nrow(res) > 0) {
             for (i in 1:nrow(res)) {
               inst_identifier = grbio_uri_parser(res$coolURI[i])
               tt$add_triple(nid, dwc_inst_id, inst_identifier)
-              tt$add_triple(inst_identifier, rdf_type, 
+              tt$add_triple(inst_identifier, rdf_type,
                             Institution)
-              if (names(inst_identifier$prefix) == "grbio" || 
+              if (names(inst_identifier$prefix) == "grbio" ||
                   names(inst_identifier$prefix) == "biocol") {
-                tt$add_triple(inst_identifier, rdf_type, 
+                tt$add_triple(inst_identifier, rdf_type,
                               GrbioInst)
               }
-              tt$add_triple(inst_identifier, dwc_inst_code, 
+              tt$add_triple(inst_identifier, dwc_inst_code,
                             literal(res$code[i]))
-              tt$add_triple(inst_identifier, has_instName, 
+              tt$add_triple(inst_identifier, has_instName,
                             literal(res$name[i]))
             }
           }
         }
       })
     }
-  
-  
+
+
   return(tt)
 }
 

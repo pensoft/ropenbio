@@ -81,20 +81,20 @@ XmlSchema =
 #'
 #'
 #' @export
-xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess, dry)
+xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess, dry, grbio, taxon_discovery)
 {
   # generate lookup functions
 
       general_collection =  mongolite::mongo(collection = "new_collection", db = "test")
       inst_collection = mongolite::mongo(collection = "institutions", db = "test")
       checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
-  
+
  # tryCatch(
   #  {
-      #xml = xml2::read_xml(filename)
+      xml = xml2::read_xml(filename)
 
-      xml_string = crosslinker(filename)
-      xml = xml2::as_xml_document(xml_string)
+     # xml_string = crosslinker(filename)
+    #  xml = xml2::as_xml_document(xml_string)
 
       # taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
 
@@ -107,11 +107,10 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       triples$set_context(root_ident)
 
       #finds all institution codes and names and saves them in mongodb collection
-      extract_inst_identifiers(xml, root_id = root_ident, prefix = prefix, collection = inst_collection)
-      #TODO: add into proj directory 
-      taxon_discovery = "/home/backend/OpenBiodiv/tests/status_vocab_abbrev/taxon_discovery.txt"
+      extract_inst_identifiers(xml, root_id = root_ident, prefix = prefix, collection = inst_collection, grbio = grbio)
+      #TODO: add into proj directory
       new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
-      
+
       print(filename)
 
       triples = node_extractor_en(
@@ -125,14 +124,14 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         filename = filename,
         root_id = root_ident
       )
-      
-      
+
+
       serialization = triples$serialize()
       #cat(serialization, file = "~/diptera.trig")
       save_serialization(serialization, serialization_dir)
       xml2::write_xml(xml, filename)
-      cat(filename, file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
-      cat("\n", file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
+     # cat(filename, file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
+    #  cat("\n", file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
 
 
   #    return(TRUE)
@@ -260,7 +259,7 @@ processing_status = function(node)
 #' @return list
 #'
 #' @export
-find_literals = function (xml, xml_schema) 
+find_literals = function (xml, xml_schema)
 {
   rr = vector(mode = "list", length = length(xml_schema$atoms))
   names(rr) = names(xml_schema$atoms)
@@ -268,14 +267,14 @@ find_literals = function (xml, xml_schema)
     nodes = xml2::xml_find_all(xml, xml_schema$atoms[nn])
     #literals = paste(xml2::xml_text(nodes), collapse = " ")
     literals = xml2::xml_text(nodes)
-   # literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals, 
+   # literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals,
                 #    perl = TRUE)
-    languages = tryCatch(xml2::xml_text(xml2::xml_find_all(xml, 
+    languages = tryCatch(xml2::xml_text(xml2::xml_find_all(xml,
                                                            xml_schema$atom_lang[nn])), error = function(e) {
                                                              NA
                                                            })
     rr[[nn]] = lapply(seq(along.with = literals), function(i) {
-      literal(literals[i], xsd_type = xml_schema$atom_types[[nn]], 
+      literal(literals[i], xsd_type = xml_schema$atom_types[[nn]],
               lang = languages[i])
     })
   }
