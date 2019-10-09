@@ -64,31 +64,22 @@ process_author = function (node, mongo_key)
 
 
 #' @export
-process_tnu = function (node, mongo_key) 
+process_tnu = function (node, mongo_key)
 {
   label = get_taxon_label(node, mongo_key)
-  if (nchar(label) < 3 && grepl(".", label) == TRUE) {
-    label = get_taxon_label(node, mongo_key)
-    label = strip_trailing_whitespace(label)
-    label =  jsonlite::fromJSON(jsonlite::toJSON(label))
-    #  label = escape_special(label)
-    df = NULL
-  }
-  else {
-    mongo_key = c(taxonomic_name = "")
-    label = strip_trailing_whitespace(label)
-    label = escape_special(label)
-   # label =  jsonlite::fromJSON(jsonlite::toJSON(label))
-    df = set_component_frame(label = label, mongo_key = mongo_key, 
-                             type = names(mongo_key), orcid = NA, parent = NA, 
+  mongo_key = c("tnu" = "")
+  label = strip_trailing_whitespace(label)
+  #label =  jsonlite::fromJSON(jsonlite::toJSON(label))
+  label = escape_special(label)
+  df = set_component_frame(label = label, mongo_key = mongo_key,
+                             type = names(mongo_key), orcid = NA, parent = NA,
                              key = NA)
-    return(df)
-  }
+  return(df)
 }
 
 
 #' @export
-process_figure = function (node, mongo_key) 
+process_figure = function (node, mongo_key)
 {
   id = xml2::xml_text(xml2::xml_find_all(node, "..//object-id[@content-type='arpha']"))
   if (length(id) > 0) {
@@ -107,13 +98,13 @@ process_figure = function (node, mongo_key)
   label = escape_special(label)
  # label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   type = paste0(names(mongo_key), " ", fig_number)
-  df = set_component_frame(label = label, mongo_key = mongo_key, 
+  df = set_component_frame(label = label, mongo_key = mongo_key,
                            type = type, orcid = NA, parent = NA, key = fig_id)
   return(df)
 }
 
 #' @export
-process_treatment = function (node, mongo_key) 
+process_treatment = function (node, mongo_key)
 {
   id = xml2::xml_text(xml2::xml_find_all(node, "tp:nomenclature/tp:taxon-name/object-id[@content-type='arpha']"))
   if (length(id) > 0) {
@@ -124,8 +115,8 @@ process_treatment = function (node, mongo_key)
     label = strip_trailing_whitespace(label)
     label = escape_special(label)
  #   label =  jsonlite::fromJSON(jsonlite::toJSON(label))
-    df = set_component_frame(label = label, mongo_key = mongo_key, 
-                             type = names(mongo_key), orcid = NA, parent = NA, 
+    df = set_component_frame(label = label, mongo_key = mongo_key,
+                             type = names(mongo_key), orcid = NA, parent = NA,
                              key = treat_id$uri)
   }
   else {
@@ -138,7 +129,7 @@ process_treatment = function (node, mongo_key)
 process_general_component = function (node, mongo_key)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
-  
+
   id = xml2::xml_text(xml2::xml_find_all(node, ".//object-id[@content-type='arpha']"))
   if (length(id)>0){
     label = gsub(id, "", label)
@@ -207,7 +198,7 @@ escape_special = function(string){
   string = gsub("–", "-", string)
   string = gsub("\\r\\n", " ", string)
   string = gsub("\\\\(?=[WNSE])(?=[a-zA-Z])", "", string,fixed = TRUE)
-  string = gsub("\\s{2,}", " ", string)  
+  string = gsub("\\s{2,}", " ", string)
   string = strip_trailing_whitespace(string)
   string  = gsub("\\s*$", "", string)
 
