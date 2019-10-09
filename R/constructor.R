@@ -281,23 +281,6 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   paper_id = gsub("http://openbiodiv.net/", "", paper_id)
   paper_id = identifier(paper_id, prefix)
 
-  #concatenate affiliation institution and city
-  all_affs = NULL
-  if(length(unlist(atoms$all_affiliations_institutions))>0){
-    for(r in 1:length(atoms$all_affiliations_institutions)){
-      if (length(unlist(atoms$all_affiliations_cities))>0 && length(unlist(atoms$all_affiliations_cities))==length(unlist(atoms$all_affiliations_institutions))){
-        a = paste0(atoms$all_affiliations_institutions[[r]]$text_value, ",", atoms$all_affiliations_cities[[r]]$text_value)
-      }else{
-        a = atoms$all_affiliations_institutions[[r]]$text_value
-      }
-      a = literal(a, xsd_type = rdf4r::xsd_string)
-      all_affs[[r]] = a
-    }
-  }
-
-
-
-
   tt = ResourceDescriptionFramework$new()
 
 
@@ -308,9 +291,9 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   })
 
   if (length(aid)>0){
-    sapply(all_affs[aid], function(j) {
+    sapply(atoms$all_affiliations[aid], function(j) {
       tt$add_triple(author_id, has_affiliation, j)
-    })
+      })
   }
 
 

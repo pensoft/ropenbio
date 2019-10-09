@@ -27,11 +27,11 @@ material_schema = XmlSchema$new(
     starting_page = NA,
     ending_page = NA,
     keyword = "/article/front/article-meta/kwd-group/kwd"
-   
+
   ),
-  
+
   atom_lang = c(
-    
+
     title = NA,
     date = NA,
     pub_year = NA,
@@ -53,10 +53,10 @@ material_schema = XmlSchema$new(
     ending_page = NA,
     #pensoft_pub = NA
     keyword = NA
-   
+
   ),
-  
-  
+
+
   atom_types = list(
     title = rdf4r::xsd_string,
     date = rdf4r::xsd_date,
@@ -82,9 +82,9 @@ material_schema = XmlSchema$new(
   ),
   mongo_key = c(article = "/article/front/article-meta/article-id[@pub-id-type='doi']"),
   constructor = metadata,
-  
+
   components = list(
-    
+
     # Keyword
     XmlSchema$new(
       schema_name = "keyword_group",
@@ -95,17 +95,17 @@ material_schema = XmlSchema$new(
       atoms = c(
         keyword = "./kwd"
       ),
-      
+
       atom_lang = c(
         keyword = NA
       ),
-      
+
       atom_types = list(
         keyword =  rdf4r::xsd_string
       ),
       mongo_key = c(keywords = "/article/front/article-meta/kwd-group"),
       constructor = keyword_group,
-      
+
       components = NULL
     ),
     # Abstract
@@ -123,7 +123,7 @@ material_schema = XmlSchema$new(
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-      
+
       atom_lang = c(
         text_content = NA,
         trans_abstract = "../trans-abstract/@xml:lang",
@@ -132,7 +132,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-      
+
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         trans_abstract = rdf4r::xsd_string,
@@ -143,10 +143,10 @@ material_schema = XmlSchema$new(
       ),
       mongo_key = c(abstract = "."),
       constructor = abstract,
-      
+
       components = NULL
     ),
-    
+
     # Title
     XmlSchema$new(
       schema_name = "title",
@@ -157,20 +157,20 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = "."
       ),
-      
+
       atom_lang = c(
         text_content = NA
       ),
-      
+
       atom_types = list(
         text_content =  rdf4r::xsd_string
       ),
       mongo_key = c(article_title = "/article/front/article-meta/title-group/article-title"),
       constructor = title,
-      
+
       components = NULL
     ),
-    
+
     # Author
     XmlSchema$new(
       schema_name = "author",
@@ -184,41 +184,35 @@ material_schema = XmlSchema$new(
         given_names = "./name/given-names",
         email = "./email",
         aff_id = "./xref[@rid]",
-        all_affiliations_institutions = "//article/front/article-meta/aff/institution | //article/front/article-meta/aff/addr-line",
-        all_affiliations_cities = "//article/front/article-meta/aff/addr-line[@content-type='city']",
-        all_affiliations = NA,
+        all_affiliations = "//article/front/article-meta/aff/addr-line",
         orcid = "./uri[@content-type='orcid']"
         # role = "./mods:role/mods:roleTerm"
       ),
-      
+
       atom_lang = c(
         full_name = NA,
         surname = NA,
         given_names = NA,
         email = NA,
         aff_id = NA,
-        all_affiliations_institutions = NA,
-        all_affiliations_cities = NA,
         all_affiliations = NA,
         orcid = NA
         #role = NA
       ),
-      
+
       atom_types = list(
         full_name = rdf4r::xsd_string,
         surname = rdf4r::xsd_string,
         given_names = rdf4r::xsd_string,
         email = rdf4r::xsd_string,
         aff_id = rdf4r::xsd_integer,
-        all_affiliations_institutions = rdf4r::xsd_string,
-        all_affiliations_cities =  rdf4r::xsd_string,
         all_affiliations = rdf4r::xsd_string,
         orcid = rdf4r::xsd_string
       ),
       #change mongokey
       mongo_key = c(author_name = "./name/given-names", surname = "./name/surname"),
       constructor = author,
-      
+
       components = NULL
     ),
     # Introduction
@@ -235,7 +229,7 @@ material_schema = XmlSchema$new(
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-      
+
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
@@ -243,7 +237,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-      
+
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -268,7 +262,7 @@ material_schema = XmlSchema$new(
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-      
+
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
@@ -276,7 +270,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-      
+
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -287,8 +281,8 @@ material_schema = XmlSchema$new(
       mongo_key = c(discussion = "."),
       constructor = discussion
     ),
-    
-    
+
+
     # Methods
     XmlSchema$new(
       schema_name = "methods",
@@ -303,7 +297,7 @@ material_schema = XmlSchema$new(
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-      
+
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
@@ -311,7 +305,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-      
+
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -322,7 +316,7 @@ material_schema = XmlSchema$new(
       mongo_key = c(methods = "."),
       constructor = methods
     ),
-    
+
     # Checklist
     XmlSchema$new(
       schema_name = "checklist",
@@ -337,7 +331,7 @@ material_schema = XmlSchema$new(
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-      
+
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
@@ -345,7 +339,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-      
+
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -356,7 +350,7 @@ material_schema = XmlSchema$new(
       mongo_key = c(checklist = "."),
       constructor = checklist
     ),
-    
+
     #Treatment
     XmlSchema$new(
       schema_name = "treatment",
@@ -371,9 +365,9 @@ material_schema = XmlSchema$new(
         institution_code = ".//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
-        
+
       ),
-      
+
       atom_lang = c(
         text_content = NA,
         status = NA,
@@ -381,9 +375,9 @@ material_schema = XmlSchema$new(
         institution_code = NA,
         bold_id=NA,
         genbank_id = NA
-        
+
       ),
-      
+
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         status = rdf4r::xsd_string,
@@ -394,9 +388,9 @@ material_schema = XmlSchema$new(
       ),
       mongo_key =  c(treatment = "/article/body/..//tp:taxon-treatment"),
       constructor = treatment,
-      
+
       components = list(
-        
+
         XmlSchema$new(
           schema_name = "nomenclature",
           xpath = "tp:nomenclature",
@@ -408,13 +402,13 @@ material_schema = XmlSchema$new(
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
             institution_code = ".//named-content[@content-type='dwc:institutional_code']"
           ),
-          
+
           atom_lang = c(
             text_content = NA,
             institution_name = NA,
             institution_code = NA
           ),
-          
+
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
@@ -432,24 +426,24 @@ material_schema = XmlSchema$new(
               atoms = c(
                 text_content = "."
               ),
-              
+
               atom_lang = c(
                 text_content = NA
               ),
-              
+
               atom_types = list(
                 text_content =  rdf4r::xsd_string
               ),
-              
+
               components = NULL,
               mongo_key =  c(nomenclature_citations = "."),
-              
+
               constructor = nomenclature_citations
             )
-            
+
           )
         ),
-        
+
         XmlSchema$new(
           schema_name = "type_material",
           xpath = "tp:treatment-sec[@sec-type='type material'] | tp:treatment-sec[@sec-type='material'] | tp:treatment-sec[@sec-type='materials'] | tp:treatment-sec[@sec-type='Holotype'] | tp:treatment-sec[@sec-type='Types'] | tp:treatment-sec[@sec-type='Typification']",
@@ -459,7 +453,7 @@ material_schema = XmlSchema$new(
           atoms = c(
             text_content = ".",
             holotype = "./*[contains(., 'holotype')] | ./*[contains(., 'Holotype')]",
-            
+
             record_number = ".//named-content[@content-type='dwc:recordNumber']//*[not(ancestor::list-item)]",
             recorded_by = ".//named-content[@content-type='dwc:recordedBy']//*[not(ancestor::list-item)]",
             coordinates = ".//named-content[@content-type='dwc:verbatimCoordinates']/*[not(ancestor::list[@list-type='alpha-lower'])]//*[not(ancestor::list-item)]",
@@ -484,7 +478,7 @@ material_schema = XmlSchema$new(
             bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href//*[not(ancestor::list-item)] | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href//*[not(ancestor::list-item)]",
             genbank_id = ".//ext-link[@ext-link-type='gen']//*[not(ancestor::list-item)]"
             ),
-          
+
           atom_lang = c(
             text_content = NA,
             holotype = NA,
@@ -512,7 +506,7 @@ material_schema = XmlSchema$new(
             bold_id=NA,
             genbank_id = NA
           ),
-          
+
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             holotype = rdf4r::xsd_string,
@@ -540,8 +534,8 @@ material_schema = XmlSchema$new(
             other_catalog_numbers = rdf4r::xsd_string,
             bold_id=rdf4r::xsd_string,
             genbank_id= rdf4r::xsd_string
-           
-            
+
+
           ),
           mongo_key =  c(type_material = "tp:treatment-sec[@sec-type='type material'] | tp:treatment-sec[@sec-type='material'] | tp:treatment-sec[@sec-type='materials'] | tp:treatment-sec[@sec-type='Holotype'] | tp:treatment-sec[@sec-type='Types'] | tp:treatment-sec[@sec-type='Typification']"),
           constructor = type_material,
@@ -578,7 +572,7 @@ material_schema = XmlSchema$new(
               bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
               genbank_id = ".//ext-link[@ext-link-type='gen']"
             ),
-              
+
             atom_lang = c(
                text_content = NA,
                 record_number = NA,
@@ -605,7 +599,7 @@ material_schema = XmlSchema$new(
                 bold_id=NA,
                 genbank_id = NA
               ),
-              
+
               atom_types = list(
                text_content = rdf4r::xsd_string,
                record_number = rdf4r::xsd_string,
@@ -633,12 +627,12 @@ material_schema = XmlSchema$new(
                 genbank_id= rdf4r::xsd_string
              ),
              mongo_key =  c(occurrence_info_list = "."),
-             
+
              constructor = occurrence_list
             )
           )
         ),
-        
+
         #Diagnosis
         XmlSchema$new(
           schema_name = "diagnosis_section",
@@ -653,7 +647,7 @@ material_schema = XmlSchema$new(
             bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
             genbank_id = ".//ext-link[@ext-link-type='gen']"
           ),
-          
+
           atom_lang = c(
             text_content = NA,
             institution_name =  NA,
@@ -661,7 +655,7 @@ material_schema = XmlSchema$new(
             bold_id=NA,
             genbank_id = NA
           ),
-          
+
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
@@ -670,12 +664,12 @@ material_schema = XmlSchema$new(
             genbank_id= rdf4r::xsd_string
           ),
           mongo_key =  c(diagnosis = "."),
-          
+
           constructor = diagnosis
         ),
-        
-        
-        
+
+
+
         # distribution
         XmlSchema$new(
           schema_name = "distribution_section",
@@ -690,7 +684,7 @@ material_schema = XmlSchema$new(
             bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]",
             genbank_id = ".//ext-link[@ext-link-type='gen']"
           ),
-          
+
           atom_lang = c(
             text_content = NA,
             institution_name =  NA,
@@ -698,7 +692,7 @@ material_schema = XmlSchema$new(
             bold_id=NA,
             genbank_id = NA
           ),
-          
+
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
@@ -723,17 +717,17 @@ material_schema = XmlSchema$new(
         text_content = "*[not(name()='title')]", #any node which is not  a title,
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
-        
+
       ),
-      
+
       atom_lang = c(
         title = NA,
         text_content = NA,
         bold_id=NA,
         genbank_id = NA
-        
+
       ),
-      
+
       atom_types = list(
         title = rdf4r::xsd_string,
         text_content = rdf4r::xsd_string,
@@ -742,10 +736,10 @@ material_schema = XmlSchema$new(
       ),
       mongo_key =  c(taxonomic_key = "//sec[@sec-type='key'] | //sec[contains(@sec-type, 'key')] | //sec[contains(@sec-type, 'Key to')] | //sec[contains(@sec-type, 'key to')]"),
       constructor = taxonomic_key,
-      
+
       components = NULL
     ),
-    
+
     # Figure
     XmlSchema$new(
       schema_name = "figure",
@@ -760,9 +754,9 @@ material_schema = XmlSchema$new(
         doi = "object-id[@content-type = 'doi']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
-        
+
       ),
-      
+
       atom_lang = c(
         text_content = NA,
         caption = NA,
@@ -770,9 +764,9 @@ material_schema = XmlSchema$new(
         doi = NA,
         bold_id=NA,
         genbank_id = NA
-        
+
       ),
-      
+
       atom_types = list(
         text_content = rdf4r::xsd_string,
         caption = rdf4r::xsd_string,
@@ -783,9 +777,9 @@ material_schema = XmlSchema$new(
       ),
       mongo_key =  c(figure = "//fig"),
       constructor = figure,
-      
+
       components = NULL
-      
+
     ),
     # Taxonomic Name Usage
     XmlSchema$new(
@@ -821,7 +815,7 @@ material_schema = XmlSchema$new(
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-      
+
       atom_lang = c(
         text_content = NA,
         date = NA,
@@ -848,7 +842,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-      
+
       atom_types = list(
         text_content = rdf4r::xsd_string,
         date = rdf4r::xsd_date,
@@ -889,9 +883,9 @@ material_schema = XmlSchema$new(
         authorship = "following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type='authority']",
         secundum_literal = NA
       ),
-      
+
       constructor = taxonomic_name_usage,
-      
+
       components = NULL
     )
   )
