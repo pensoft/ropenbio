@@ -307,9 +307,12 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     tt$add_triple(author_id, rdfs_label, j)
   })
 
-  sapply(all_affs[[aid]], function(j) {
-    tt$add_triple(author_id, has_affiliation, j)
-  })
+  if (length(aid)>0){
+    sapply(all_affs[[aid]], function(j) {
+      tt$add_triple(author_id, has_affiliation, j)
+    })
+  }
+
 
   sapply(atoms$email, function(j) {
     tt$add_triple(author_id, has_email, j)
