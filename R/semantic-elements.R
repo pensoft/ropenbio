@@ -120,6 +120,21 @@ ResourceIdentifier = rdf4r::identifier(
   prefix = c(datacite = "http://purl.org/spar/datacite/")
 )
 
+#' datacite boldsystems
+#' @export
+boldsystems = rdf4r::identifier(
+  id = "boldsystems",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+
+#' GenBankAccession
+#' @export
+GenBankAccession = rdf4r::identifier(
+  id = "GenBankAccession",
+  prefix = c(openbiodiv = "http://openbiodiv.net")
+)
+
 
 #' Treatment Section
 #' @export
