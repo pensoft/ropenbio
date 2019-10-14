@@ -8,18 +8,18 @@ get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = gr
     id = grbio_uri_parser(coolURI)
   }else{
     grbio_res = check_grbio(grbio = grbio, url = url, name = name)
-    grbio_uri = grbio_res$coolURI
-    code = grbio_res$instCode
+    grbio_uri = grbio_res$Cool.URI
+    code = grbio_res$Institutional.Code.Acronym
     if (length(grbio_uri)==0){
       #set it
       grbio_uri = uuid::UUIDgenerate()
       grbio_uri = toupper(grbio_uri)
       id = identifier(grbio_uri, prefix = prefix)
-      code = NA
+      code = code
     }else{
       id = grbio_uri_parser(grbio_uri)
     }
-
+    
     #save to mongo
     #key #value  #type #parent
     mongo_df = data.frame(
@@ -29,11 +29,11 @@ get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = gr
       code = code,
       parent = strip_angle(root_id$uri)
     )
-
-
+    
+    
     collection$insert(mongo_df)
   }
-
+  
   return(id)
 }
 
@@ -44,12 +44,14 @@ check_grbio = function(grbio, url, name){
   #first look for the url if present
   if (is.na(url) == FALSE){
     #res = grbio_tibble %>% filter(url == url)
-    res = grbio_df[which(grbio_df$url == url),]
-
+    res = grbio_df[which(tolower(grbio_df$URL) == tolower(url)),]
   }else if (is.na(url) || nrow(res)==0){
-    res = grbio_df[which(grbio_df$instName == name),]
+    res = grbio_df[which(tolower(grbio_df$Cool.URI) == tolower(url)),]
+  }else{
+    res = grbio_df[which(tolower(grbio_df$Name.of.Institution) == tolower(name)),]
   }
 }
+
 
 #' @export
 grbio_uri_parser = function(grbio_uri){
