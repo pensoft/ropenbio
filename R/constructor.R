@@ -60,8 +60,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
                   squote = paste0("\"", text_value, "\"", ""))
         class(ll) = "literal"
         journal_zoobank_literal = ll
-      }
-    }
+
 
     zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
     zoobank_url = paste0("http://zoobank.org/",text_value)
@@ -71,6 +70,8 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
     tt$add_triple(zoobank_id, rdfs_label, journal_zoobank_literal)
     tt$add_triple(zoobank_id, has_url, literal(zoobank_url, xsd_type = xsd_uri))
 
+      }
+    }
   }
 
 
@@ -103,16 +104,15 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
                   squote = paste0("\"", text_value, "\"", ""))
         class(ll) = "literal"
         article_zoobank_literal = ll
-      }
-    }
+
     article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-    zoobank_url = paste0("http://zoobank.org/",text_value)
     tt$add_triple(article_id, has_identifier, article_zoobank_id)
     tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
     tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
     tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
-    tt$add_triple(article_zoobank_id, has_url, literal(zoobank_url, xsd_type = xsd_uri))
-
+    tt$add_triple(article_zoobank_id, has_url, literal(strip_angle(article_zoobank_id$uri), xsd_type = xsd_uri))
+      }
+    }
   }
 
 
@@ -328,6 +328,7 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(orcid_id, rdf_type, PersonalIdentifier)
   tt$add_triple(orcid_id, identifier_scheme, orcid)
   tt$add_triple(orcid_id, rdfs_label, literal(orcid_value))
+  tt$add_triple(orcid_id, has_url, literal(strip_angle(orcid$uri), xsd_type = xsd_uri))
   return(tt)
 }
 
@@ -1024,6 +1025,8 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key)
     tt$add_triple(zoobank_id, rdf_type, ResourceIdentifier)
     tt$add_triple(zoobank_id, identifier_scheme, zoobank)
     tt$add_triple(zoobank_id, rdfs_label, journal_zoobank_literal)
+    tt$add_triple(zoobank_id, has_url, literal(strip_angle(zoobank_id$uri), xsd_type = xsd_uri))
+
   }
 
 
@@ -1058,13 +1061,15 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key)
                   squote = paste0("\"", text_value, "\"", ""))
         class(ll) = "literal"
         article_zoobank_literal = ll
-      }
-    }
+
     article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
     tt$add_triple(article_id, has_identifier, article_zoobank_id)
     tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
     tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
     tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
+    tt$add_triple(article_zoobank_id, has_url, literal(article_zoobank_id, xsd_type = xsd_uri))
+      }
+    }
 
   }
 
@@ -1080,13 +1085,16 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key)
                 squote = paste0("\"", text_value, "\"", ""))
       class(ll) = "literal"
       plazi_article_id_lit = ll
+      plazi_url = paste0("http://tb.plazi.org/GgServer/summary/",text_value)
 
-    }
+
     plazi_article_id = identifier(text_value, c(plazi = "http://tb.plazi.org/GgServer/summary/"))
     tt$add_triple(article_id, has_identifier, plazi_article_id)
     tt$add_triple(plazi_article_id, rdf_type, ResourceIdentifier)
     tt$add_triple(plazi_article_id, identifier_scheme, plazi)
     tt$add_triple(plazi_article_id, rdfs_label, plazi_article_id_lit)
+    tt$add_triple(plazi_article_id, has_url, literal(plazi_url, xsd_type = xsd_uri))
+  }
   }
 
   sapply(atoms$publisher, function(i) {
