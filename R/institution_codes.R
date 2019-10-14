@@ -170,6 +170,7 @@ institution_serializer = function (tt, atoms, identifiers)
 {
   rdfized_codes = c()
   instNames = c()
+  instCodes = c()
   nid = identifiers$nid
   
   if (!(is.null(unlist(atoms$institution_name)))) {
@@ -198,6 +199,8 @@ institution_serializer = function (tt, atoms, identifiers)
           tt$add_triple(inst_identifier, dwc_inst_code,
                         literal(res$code[i]))
           rdfized_codes = c(rdfized_codes, res$code[i])
+          instCodes = instCodes[tolower(instCodes) != tolower(res$code[i])]
+          
         }
       }
       
@@ -205,12 +208,16 @@ institution_serializer = function (tt, atoms, identifiers)
   }
   if (!(is.null(unlist(atoms$institution_code)))) {
     sapply(atoms$institution_code, function(n) {
+      instCodes = c(instCodes, n$text_value)
+      
       if (!(n$text_value %in% rdfized_codes)) {
-        tt$add_triple(nid, inst_codes, n)
+       # tt$add_triple(nid, inst_codes, n)
         res = check_mongo_instCode(code = n$text_value,
                                    collection = inst_collection)
         if (nrow(res) > 0) {
           for (i in 1:nrow(res)) {
+            
+            instCodes = instCodes[tolower(instCodes) != tolower(n$text_value)]
             inst_identifier = grbio_uri_parser(res$coolURI[i])
             tt$add_triple(nid, dwc_inst_id, inst_identifier)
             tt$add_triple(inst_identifier, rdf_type,
@@ -240,9 +247,16 @@ institution_serializer = function (tt, atoms, identifiers)
     tt$add_triple(nid, inst_names, literal(n))
   })
   
+  sapply(instCodes, function(n){
+    #name_literal = literal(n)
+    tt$add_triple(nid, inst_codes, literal(n))
+  })
+  
+  
   
   return(tt)
 }
+
 
 
 
