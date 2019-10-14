@@ -407,13 +407,13 @@ has_grbioInstCode = rdf4r::identifier(
 
 #' @export
 inst_codes = rdf4r::identifier(
-  id = "institutionCodes",
+  id = "institutionCode",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
 #' @export
 inst_names = rdf4r::identifier(
-  id = "institutionNames",
+  id = "institutionName",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
