@@ -72,7 +72,7 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
     tt$add_triple(nid, mentions_id , genbank_id)
     tt$add_triple(genbank_id, rdf_type , GenBankAccession)
     tt$add_triple(genbank_id, rdf_type , ResourceIdentifier) #this could go in the ontology (e.g. GenBankAccession subclassOf ResourceIdentifier) but for now stays here until we have updated the ontology
-    tt$add_triple(bold_id, identifier_scheme , genbank)
+    tt$add_triple(genbank_id, identifier_scheme , genbank)
     tt$add_triple(genbank_id, rdfs_label , literal(genbank_label))
     
     
