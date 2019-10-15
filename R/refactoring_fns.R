@@ -81,7 +81,7 @@ process_tnu = function (node, mongo_key)
 #' @export
 process_figure = function (node, mongo_key)
 {
-  id = xml2::xml_text(xml2::xml_find_all(node, "..//object-id[@content-type='arpha']"))
+  id = xml2::xml_text(xml2::xml_find_all(node, "object-id[@content-type='arpha']"))
   if (length(id) > 0) {
     fig_id = identifier(id, prefix)
     fig_id = fig_id$uri
