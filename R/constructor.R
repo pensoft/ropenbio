@@ -101,7 +101,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
                 squote = paste0("\"", text_value, "\"", ""))
       class(ll) = "literal"
       article_zoobank_literal = ll
-      
+
       article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
       tt$add_triple(article_id, has_identifier, article_zoobank_id)
       tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
@@ -110,17 +110,17 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
       tt$add_triple(article_zoobank_id, has_url, literal(strip_angle(article_zoobank_id$uri), xsd_type = xsd_uri))
       }
     }
-  
+
   #Zenodo
   if(length(unlist(atoms$zenodo)) > 0){
   for (n in 1:length(atoms$zenodo)){
-  
+
       text_value = unlist(atoms$zenodo[n])["text_value"]
       ll = list(text_value = text_value, xsd_type = xsd_string, lang = "",
                 squote = paste0("\"", text_value, "\"", ""))
       class(ll) = "literal"
       zenodo_literal = ll
-      
+
       zenodo_id = identifier(text_value, c(zenodo = "http://zenodo.org/record/"))
       tt$add_triple(article_id, has_identifier, zenodo_id)
       tt$add_triple(zenodo_id, rdf_type, ResourceIdentifier)
@@ -129,7 +129,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
       tt$add_triple(zenodo_id, has_url, literal(strip_angle(zenodo_id$uri), xsd_type = xsd_uri))
     }
   }
-  
+
 
   if(length(unlist(atoms$plazi_id))> 0){
     for (n in 1:length(atoms$plazi_id)){
@@ -749,6 +749,16 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   tt = check_dwc_identification(tt, atoms, typeMaterialID)
   tt = check_dwc_event(tt, atoms, typeMaterialID)
 
+  dwc_classes = c(atoms$occurrenceID, atoms$eventID, atoms$locationID, atoms$identificationID)
+  if (length(dwc_classes)>0){
+    count = 1
+    for(n in dwc_classes){
+      for (k in dwc_classes[-n]){
+        tt$add_triple(dwc_classes[n], relation, dwc_classes[k])
+      }
+    }
+  }
+
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt = institution_serializer(tt, atoms, identifiers)
 
@@ -772,6 +782,17 @@ occurrence_list = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   tt = check_dwc_location(tt, atoms, typeMaterialID)
   tt = check_dwc_identification(tt, atoms, typeMaterialID)
   tt = check_dwc_event(tt, atoms, typeMaterialID)
+
+  dwc_classes = c(atoms$occurrenceID, atoms$eventID, atoms$locationID, atoms$identificationID)
+  if (length(dwc_classes)>0){
+    count = 1
+    for(n in dwc_classes){
+      for (k in dwc_classes[-n]){
+        tt$add_triple(dwc_classes[n], relation, dwc_classes[k])
+      }
+    }
+  }
+
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt = institution_serializer(tt, atoms, identifiers)
