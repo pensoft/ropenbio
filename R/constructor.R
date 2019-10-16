@@ -121,7 +121,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
       class(ll) = "literal"
       zenodo_literal = ll
       
-      zenodo_id = identifier(text_value, c(zoobank = "http://zenodo.org/record/"))
+      zenodo_id = identifier(text_value, c(zenodo = "http://zenodo.org/record/"))
       tt$add_triple(article_id, has_identifier, zenodo_id)
       tt$add_triple(zenodo_id, rdf_type, ResourceIdentifier)
       tt$add_triple(zenodo_id, identifier_scheme, zenodo)
