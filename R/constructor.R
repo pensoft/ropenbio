@@ -62,13 +62,13 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
         journal_zoobank_literal = ll
 
 
-    zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-    zoobank_url = paste0("http://zoobank.org/",text_value)
-    tt$add_triple(journal_id, has_identifier, zoobank_id)
-    tt$add_triple(zoobank_id, rdf_type, ResourceIdentifier)
-    tt$add_triple(zoobank_id, identifier_scheme, zoobank)
-    tt$add_triple(zoobank_id, rdfs_label, journal_zoobank_literal)
-    tt$add_triple(zoobank_id, has_url, literal(zoobank_url, xsd_type = xsd_uri))
+        zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
+        zoobank_url = paste0("http://zoobank.org/",text_value)
+        tt$add_triple(journal_id, has_identifier, zoobank_id)
+        tt$add_triple(zoobank_id, rdf_type, ResourceIdentifier)
+        tt$add_triple(zoobank_id, identifier_scheme, zoobank)
+        tt$add_triple(zoobank_id, rdfs_label, journal_zoobank_literal)
+        tt$add_triple(zoobank_id, has_url, literal(zoobank_url, xsd_type = xsd_uri))
 
       }
     }
@@ -105,12 +105,12 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
         class(ll) = "literal"
         article_zoobank_literal = ll
 
-    article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-    tt$add_triple(article_id, has_identifier, article_zoobank_id)
-    tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
-    tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
-    tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
-    tt$add_triple(article_zoobank_id, has_url, literal(strip_angle(article_zoobank_id$uri), xsd_type = xsd_uri))
+        article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
+        tt$add_triple(article_id, has_identifier, article_zoobank_id)
+        tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
+        tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
+        tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
+        tt$add_triple(article_zoobank_id, has_url, literal(strip_angle(article_zoobank_id$uri), xsd_type = xsd_uri))
       }
     }
   }
@@ -303,7 +303,7 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   if (length(aid)>0){
     sapply(atoms$all_affiliations[aid], function(j) {
       tt$add_triple(author_id, has_affiliation, j)
-      })
+    })
   }
 
 
@@ -728,16 +728,14 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key){
     })
   }
 
-tt = check_dwc_terms(tt, atoms, typeMaterialID)
 
-#tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
-#tt = check_dwc_location(tt, atoms, typeMaterialID)
+  tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
+  tt = check_dwc_location(tt, atoms, typeMaterialID)
+  tt = check_dwc_identification(tt, atoms, typeMaterialID)
+  tt = check_dwc_event(tt, atoms, typeMaterialID)
 
-#tt = check_dwc_identification(tt, atoms, typeMaterialID)
-#tt = check_dwc_event(tt, atoms, typeMaterialID)
-
-tt = bold_genbank_serializer(tt, atoms, identifiers)
-tt = institution_serializer(tt, atoms, identifiers)
+  tt = bold_genbank_serializer(tt, atoms, identifiers)
+  tt = institution_serializer(tt, atoms, identifiers)
 
 
 }
@@ -755,18 +753,16 @@ occurrence_list = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   typeMaterialID = identifiers$pid
   #tt$add_triple(occurrenceList, rdf_type, OccurrenceList)
 
-  tt = check_dwc_terms(tt, atoms, typeMaterialID)
-
-  #tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
-  #tt = check_dwc_location(tt, atoms, typeMaterialID)
-  #tt = check_dwc_identification(tt, atoms, typeMaterialID)
-  #tt = check_dwc_event(tt, atoms, typeMaterialID)
+  tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
+  tt = check_dwc_location(tt, atoms, typeMaterialID)
+  tt = check_dwc_identification(tt, atoms, typeMaterialID)
+  tt = check_dwc_event(tt, atoms, typeMaterialID)
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt = institution_serializer(tt, atoms, identifiers)
 
 
-return(tt)
+  return(tt)
 }
 
 
@@ -1066,12 +1062,12 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key)
         class(ll) = "literal"
         article_zoobank_literal = ll
 
-    article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-    tt$add_triple(article_id, has_identifier, article_zoobank_id)
-    tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
-    tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
-    tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
-    tt$add_triple(article_zoobank_id, has_url, literal(article_zoobank_id, xsd_type = xsd_uri))
+        article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
+        tt$add_triple(article_id, has_identifier, article_zoobank_id)
+        tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
+        tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
+        tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
+        tt$add_triple(article_zoobank_id, has_url, literal(article_zoobank_id, xsd_type = xsd_uri))
       }
     }
 
@@ -1092,13 +1088,13 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key)
       plazi_url = paste0("http://tb.plazi.org/GgServer/summary/",text_value)
 
 
-    plazi_article_id = identifier(text_value, c(plazi = "http://tb.plazi.org/GgServer/summary/"))
-    tt$add_triple(article_id, has_identifier, plazi_article_id)
-    tt$add_triple(plazi_article_id, rdf_type, ResourceIdentifier)
-    tt$add_triple(plazi_article_id, identifier_scheme, plazi)
-    tt$add_triple(plazi_article_id, rdfs_label, plazi_article_id_lit)
-    tt$add_triple(plazi_article_id, has_url, literal(plazi_url, xsd_type = xsd_uri))
-  }
+      plazi_article_id = identifier(text_value, c(plazi = "http://tb.plazi.org/GgServer/summary/"))
+      tt$add_triple(article_id, has_identifier, plazi_article_id)
+      tt$add_triple(plazi_article_id, rdf_type, ResourceIdentifier)
+      tt$add_triple(plazi_article_id, identifier_scheme, plazi)
+      tt$add_triple(plazi_article_id, rdfs_label, plazi_article_id_lit)
+      tt$add_triple(plazi_article_id, has_url, literal(plazi_url, xsd_type = xsd_uri))
+    }
   }
 
   sapply(atoms$publisher, function(i) {
@@ -1374,24 +1370,19 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
 
 #' @export
 check_dwc_terms = function(tt, atoms, typeMaterialID){
-dwc_terms = c()
 
   #Occurrence
   if (length(atoms$catalog_number)>0 || length(atoms$other_catalog_numbers)>0 ||   length(atoms$record_number)>0  || length(atoms$recorded_by)>0 || length(atoms$individual_count)>0 || length(atoms$sex)>0 || length(atoms$life_stage)>0 ){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     occurrence_df = set_component_frame(label = paste0("Occurrence: ", occurrence_content_label), mongo_key = NA, type = "occurrence", orcid = NA, parent = typeMaterialID$uri, key = NA)
     occurrenceID = identifier(get_or_set_mongoid(occurrence_df, prefix), prefix)
-    dwc_terms = c(dwc_terms, occurrenceID)
   }
-
-
 
   #Location
   if (length(atoms$coordinates)>0 || length(atoms$verbatim_lat)>0 ||   length(atoms$verbatim_long)>0  || length(atoms$decimal_long)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$state_province)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$locality)>0 || length(atoms$elevation)>0 || length(atoms$depth)>0 || length(atoms$water_body)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     location_df = set_component_frame(label = paste0("Location: ", occurrence_content_label), mongo_key = NA, type = "location", orcid = NA, parent = typeMaterialID$uri, key = NA)
     locationID = identifier(get_or_set_mongoid(location_df, prefix), prefix)
-    dwc_terms = c(dwc_terms, locationID)
   }
 
   #Event
@@ -1399,7 +1390,6 @@ dwc_terms = c()
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA)
     eventID = identifier(get_or_set_mongoid(event_df, prefix), prefix)
-    dwc_terms = c(dwc_terms, eventID)
   }
 
   #Identification
@@ -1407,28 +1397,14 @@ dwc_terms = c()
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     identification_df = set_component_frame(label = paste0("Identification: ", occurrence_content_label), mongo_key = NA, type = "identification", orcid = NA, parent = typeMaterialID$uri, key = NA)
     identificationID = identifier(get_or_set_mongoid(identification_df, prefix), prefix)
-    dwc_terms = c(dwc_terms, identificationID)
   }
 
-
-  if (!(is.null(occurrenceID))){
-    tt = process_dwc_occurrence(tt, atoms, typeMaterialID, occurrenceID, dwc_terms)
-  }
-
-  if (!(is.null(eventID))){
-    tt = process_dwc_event(tt, atoms, typeMaterialID, eventID, dwc_terms)
-  }
-
-  if (!(is.null(locationID))){
-    tt = process_dwc_location(tt, atoms, typeMaterialID, locationID, dwc_terms)
-  }
-
-  if (!(is.null(identificationID))){
-    tt = process_dwc_identification(tt, atoms, typeMaterialID, identificationID, dwc_terms)
-  }
+  tt = process_dwc_occurrence(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  tt =  process_dwc_event(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  tt = process_dwc_location(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  tt = process_dwc_identification(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
 
 
-return(tt)
 
 
 }
@@ -1438,44 +1414,42 @@ return(tt)
 
 
 #' @export
-process_dwc_occurrence = function(tt, atoms, typeMaterialID, occurrenceID, dwc_terms){
+process_dwc_occurrence = function(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID){
 
-    #Occurrence
-    tt$add_triple(typeMaterialID, dwc_occurrence_id, occurrenceID)
-    tt$add_triple(occurrenceID, rdf_type, Occurrence)
+  #Occurrence
+  tt$add_triple(typeMaterialID, dwc_occurrence_id, occurrenceID)
+  tt$add_triple(occurrenceID, rdf_type, Occurrence)
+  tt$add_triple(occurrenceID, relation, eventID)
+  tt$add_triple(occurrenceID, relation, locationID)
+  tt$add_triple(occurrenceID, relation, identificationID)
 
-    sapply(dwc_terms, function(n){
-      tt$add_triple(occurrenceID, relation, identifier(n, prefix))
-    })
+  sapply(atoms$record_number, function(n){
+    tt$add_triple(occurrenceID, dwc_record_number, n)
+  })
 
+  sapply(atoms$recorded_by, function(n){
+    tt$add_triple(occurrenceID, dwc_recorded_by, n)
+  })
 
-    sapply(atoms$record_number, function(n){
-      tt$add_triple(occurrenceID, dwc_record_number, n)
-    })
+  sapply(atoms$catalog_number, function(n){
+    tt$add_triple(occurrenceID, dwc_catalog_number, n)
+  })
 
-    sapply(atoms$recorded_by, function(n){
-      tt$add_triple(occurrenceID, dwc_recorded_by, n)
-    })
+  sapply(atoms$other_catalog_numbers, function(n){
+    tt$add_triple(occurrenceID, dwc_other_catalog_numbers, n)
+  })
 
-    sapply(atoms$catalog_number, function(n){
-      tt$add_triple(occurrenceID, dwc_catalog_number, n)
-    })
+  sapply(atoms$individual_count, function(n){
+    tt$add_triple(occurrenceID, dwc_individual_count, n)
+  })
 
-    sapply(atoms$other_catalog_numbers, function(n){
-      tt$add_triple(occurrenceID, dwc_other_catalog_numbers, n)
-    })
+  sapply(atoms$sex, function(n){
+    tt$add_triple(occurrenceID, dwc_sex, n)
+  })
 
-    sapply(atoms$individual_count, function(n){
-      tt$add_triple(occurrenceID, dwc_individual_count, n)
-    })
-
-    sapply(atoms$sex, function(n){
-      tt$add_triple(occurrenceID, dwc_sex, n)
-    })
-
-    sapply(atoms$life_stage, function(n){
-      tt$add_triple(occurrenceID, dwc_life_stage, n)
-    })
+  sapply(atoms$life_stage, function(n){
+    tt$add_triple(occurrenceID, dwc_life_stage, n)
+  })
 
 
   return(tt)
@@ -1483,64 +1457,64 @@ process_dwc_occurrence = function(tt, atoms, typeMaterialID, occurrenceID, dwc_t
 
 
 #' @export
-process_dwc_location = function(tt, atoms, typeMaterialID, locationID, dwc_terms){
+process_dwc_location = function(tt, atoms, typeMaterialID){
 
-    #Location
-    tt$add_triple(typeMaterialID, dwc_location_id, locationID)
-    tt$add_triple(locationID, rdf_type, Location)
-    sapply(dwc_terms, function(n){
-      tt$add_triple(locationID, relation, identifier(n, prefix))
-    })
+  #Location
+  tt$add_triple(typeMaterialID, dwc_location_id, locationID)
+  tt$add_triple(locationID, rdf_type, Location)
+  tt$add_triple(locationID, relation, occurrenceID)
+  tt$add_triple(locationID, relation, eventID)
+  tt$add_triple(locationID, relation, identificationID)
 
-    verbatim_coord = function(lat, long) {
-      if (length(lat) == 1 && length(long) == 1) {
-        paste0(lat[[1]]$text_value, ", ", long[[1]]$text_value)
-      }
-      else {
-        NA
-      }
+  verbatim_coord = function(lat, long) {
+    if (length(lat) == 1 && length(long) == 1) {
+      paste0(lat[[1]]$text_value, ", ", long[[1]]$text_value)
     }
+    else {
+      NA
+    }
+  }
 
-    atoms$coordinates  = ifelse(length(unlist(atoms$coordinates)) == 0, list(literal(verbatim_coord(atoms$verbatim_lat,
-                                                                                                    atoms$verbatim_long), xsd_type = rdf4r::xsd_string)), atoms$coordinates)
+  atoms$coordinates  = ifelse(length(unlist(atoms$coordinates)) == 0, list(literal(verbatim_coord(atoms$verbatim_lat,
+                                                                                                  atoms$verbatim_long), xsd_type = rdf4r::xsd_string)), atoms$coordinates)
 
-    sapply(atoms$coordinates , function(n){
-      tt$add_triple(locationID, dwc_coordinates, n)
-    })
+  sapply(atoms$coordinates , function(n){
+    tt$add_triple(locationID, dwc_coordinates, n)
+  })
 
-    sapply(atoms$decimal_long , function(n){
-      tt$add_triple(locationID, dwc_decimal_long, n)
-    })
+  sapply(atoms$decimal_long , function(n){
+    tt$add_triple(locationID, dwc_decimal_long, n)
+  })
 
-    sapply(atoms$decimal_lat , function(n){
-      tt$add_triple(locationID, dwc_decimal_lat, n)
-    })
-
-
-    sapply(atoms$country, function(n){
-      tt$add_triple(locationID, dwc_country, n)
-    })
-
-    sapply(atoms$state_province, function(n){
-      tt$add_triple(locationID, dwc_state_province, n)
-    })
-
-    sapply(atoms$locality, function(n){
-      tt$add_triple(locationID, dwc_locality, n)
-    })
+  sapply(atoms$decimal_lat , function(n){
+    tt$add_triple(locationID, dwc_decimal_lat, n)
+  })
 
 
-    sapply(atoms$elevation, function(n){
-      tt$add_triple(locationID, dwc_elevation, n)
-    })
+  sapply(atoms$country, function(n){
+    tt$add_triple(locationID, dwc_country, n)
+  })
 
-    sapply(atoms$depth, function(n){
-      tt$add_triple(locationID, dwc_depth, n)
-    })
+  sapply(atoms$state_province, function(n){
+    tt$add_triple(locationID, dwc_state_province, n)
+  })
 
-    sapply(atoms$water_body, function(n){
-      tt$add_triple(locationID, dwc_water_body, n)
-    })
+  sapply(atoms$locality, function(n){
+    tt$add_triple(locationID, dwc_locality, n)
+  })
+
+
+  sapply(atoms$elevation, function(n){
+    tt$add_triple(locationID, dwc_elevation, n)
+  })
+
+  sapply(atoms$depth, function(n){
+    tt$add_triple(locationID, dwc_depth, n)
+  })
+
+  sapply(atoms$water_body, function(n){
+    tt$add_triple(locationID, dwc_water_body, n)
+  })
 
 
   return(tt)
@@ -1548,83 +1522,83 @@ process_dwc_location = function(tt, atoms, typeMaterialID, locationID, dwc_terms
 
 
 #' @export
-process_dwc_identification = function(tt, atoms, typeMaterialID, identificationID, dwc_terms){
+process_dwc_identification = function(tt, atoms, typeMaterialID){
   tt$add_triple(typeMaterialID, dwc_identification_id, identificationID)
   tt$add_triple(identificationID, rdf_type, Identification)
-  sapply(dwc_terms, function(n){
-    tt$add_triple(identificationID, relation, identifier(n, prefix))
-  })
+  tt$add_triple(identificationID, relation, occurrenceID)
+  tt$add_triple(identificationID, relation, eventID)
+  tt$add_triple(identificationID, relation, locationID)
 
 
   sapply(atoms$identified_by, function(n){
     tt$add_triple(identificationID, dwc_identified_by, n)
   })
 
-return(tt)
+  return(tt)
 
 }
 
 #' @export
-process_dwc_event = function(tt, atoms, typeMaterialID, eventID, dwc_terms){
-     tt$add_triple(typeMaterialID, dwc_event_id, eventID)
-     tt$add_triple(eventID, rdf_type, Event)
-     sapply(dwc_terms, function(n){
-       tt$add_triple(eventID, relation, identifier(n, prefix))
-     })
+process_dwc_event = function(tt, atoms, typeMaterialID){
+  tt$add_triple(typeMaterialID, dwc_event_id, eventID)
+  tt$add_triple(eventID, rdf_type, Event)
+  tt$add_triple(eventID, relation, occurrenceID)
+  tt$add_triple(eventID, relation, identificationID)
+  tt$add_triple(eventID, relation, locationID)
 
-     collection_date = function(year, month, day) {
-       if (length(year) == 1 && length(month) == 1 && length(day) == 1) {
-         paste0(year[[1]]$text_value, "-", month[[1]]$text_value, "-", day[[1]]$text_value)
-       }
-       else if (length(year) == 1) {
-         year[[1]]$text_value
-       }
-       else {
-         NA
-       }
-     }
+  collection_date = function(year, month, day) {
+    if (length(year) == 1 && length(month) == 1 && length(day) == 1) {
+      paste0(year[[1]]$text_value, "-", month[[1]]$text_value, "-", day[[1]]$text_value)
+    }
+    else if (length(year) == 1) {
+      year[[1]]$text_value
+    }
+    else {
+      NA
+    }
+  }
 
-     if (length(atoms$collection_month)>0){
-       for (n in 1:length(atoms$collection_month)){
-         collection_month_text = atoms$collection_month[[n]]$text_value
-         if (nchar(collection_month_text)<2){
-           collection_month_text = paste0("0", collection_month_text)
-         }
-         atoms$collection_month[[n]]=literal(collection_month_text)
-       }
-     }
+  if (length(atoms$collection_month)>0){
+    for (n in 1:length(atoms$collection_month)){
+      collection_month_text = atoms$collection_month[[n]]$text_value
+      if (nchar(collection_month_text)<2){
+        collection_month_text = paste0("0", collection_month_text)
+      }
+      atoms$collection_month[[n]]=literal(collection_month_text)
+    }
+  }
 
-     atoms$collection_date = ifelse(length(unlist(atoms$collection_date)) == 0, list(literal(collection_date(atoms$collection_year,
-                                                                                                             atoms$collection_month, atoms$collection_day), xsd_type = rdf4r::xsd_date)), atoms$collection_date)
+  atoms$collection_date = ifelse(length(unlist(atoms$collection_date)) == 0, list(literal(collection_date(atoms$collection_year,
+                                                                                                          atoms$collection_month, atoms$collection_day), xsd_type = rdf4r::xsd_date)), atoms$collection_date)
 
 
-     sapply(atoms$collection_date, function(n){
-       tt$add_triple(eventID, dwc_event_date, n)
-     })
+  sapply(atoms$collection_date, function(n){
+    tt$add_triple(eventID, dwc_event_date, n)
+  })
 
-     sapply(atoms$event_date, function(n){
-       tt$add_triple(eventID, dwc_event_date, n)
-     })
+  sapply(atoms$event_date, function(n){
+    tt$add_triple(eventID, dwc_event_date, n)
+  })
 
-     sapply(atoms$collection_year, function(n){
-       tt$add_triple(eventID, dwc_collection_year, n)
-     })
+  sapply(atoms$collection_year, function(n){
+    tt$add_triple(eventID, dwc_collection_year, n)
+  })
 
-     sapply(atoms$collection_month, function(n){
-       tt$add_triple(eventID, dwc_collection_month, n)
-     })
+  sapply(atoms$collection_month, function(n){
+    tt$add_triple(eventID, dwc_collection_month, n)
+  })
 
-     sapply(atoms$collection_day, function(n){
-       tt$add_triple(eventID, dwc_collection_day, n)
-     })
+  sapply(atoms$collection_day, function(n){
+    tt$add_triple(eventID, dwc_collection_day, n)
+  })
 
-     sapply(atoms$sampling_protocol, function(n){
-       tt$add_triple(eventID, dwc_sampling_protocol, n)
-     })
+  sapply(atoms$sampling_protocol, function(n){
+    tt$add_triple(eventID, dwc_sampling_protocol, n)
+  })
 
-     sapply(atoms$habitat, function(n){
-       tt$add_triple(eventID, dwc_habitat, n)
-     })
+  sapply(atoms$habitat, function(n){
+    tt$add_triple(eventID, dwc_habitat, n)
+  })
 
-   return(tt)
- }
+  return(tt)
+}
