@@ -784,11 +784,13 @@ occurrence_list = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   tt = check_dwc_event(tt, atoms, typeMaterialID)
 
   dwc_classes = c(atoms$occurrenceID, atoms$eventID, atoms$locationID, atoms$identificationID)
+
+  print(dwc_classes)
   if (length(dwc_classes)>0){
-    count = 1
     for(n in dwc_classes){
       for (k in dwc_classes[-n]){
-        tt$add_triple(dwc_classes[n], relation, dwc_classes[k])
+        #tt$add_triple(dwc_classes[n], relation, dwc_classes[k])
+        print(paste(dwc_classes[n], dwc_classes[k]))
       }
     }
   }
@@ -1413,6 +1415,7 @@ check_dwc_occurrence = function(tt, atoms, typeMaterialID){
     occurrenceID = identifier(get_or_set_mongoid(occurrence_df, prefix), prefix)
 
     atoms$occurrenceID  = ifelse(length(unlist(atoms$occurrenceID)) == 0, list(occurrenceID), atoms$occurrenceID)
+
     #Occurrence
     tt$add_triple(typeMaterialID, dwc_occurrence_id, occurrenceID)
     tt$add_triple(occurrenceID, rdf_type, Occurrence)
