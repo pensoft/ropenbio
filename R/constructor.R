@@ -95,26 +95,21 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
 
   #the article zoobank id is the one containing the words "zoobank"
   if(length(unlist(atoms$article_zoobank)) > 0){
-    for (n in 1:length(atoms$article_zoobank)){
-      if (grepl("zoobank", unlist(atoms$article_zoobank[[n]])["text_value"]) == TRUE){
-        text_value = gsub("^(.*):", "", unlist(atoms$article_zoobank[n])["text_value"])
-        text_value = gsub(" ", "", text_value)
-
-        ll = list(text_value = text_value, xsd_type = xsd_string, lang = "",
-                  squote = paste0("\"", text_value, "\"", ""))
-        class(ll) = "literal"
-        article_zoobank_literal = ll
-
-        article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-        tt$add_triple(article_id, has_identifier, article_zoobank_id)
-        tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
-        tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
-        tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
-        tt$add_triple(article_zoobank_id, has_url, literal(strip_angle(article_zoobank_id$uri), xsd_type = xsd_uri))
+  for (n in 1:length(atoms$article_zoobank)){
+      text_value = unlist(atoms$article_zoobank[n])["text_value"]
+      ll = list(text_value = text_value, xsd_type = xsd_string, lang = "",
+                squote = paste0("\"", text_value, "\"", ""))
+      class(ll) = "literal"
+      article_zoobank_literal = ll
+      
+      article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
+      tt$add_triple(article_id, has_identifier, article_zoobank_id)
+      tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
+      tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
+      tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
+      tt$add_triple(article_zoobank_id, has_url, literal(strip_angle(article_zoobank_id$uri), xsd_type = xsd_uri))
       }
     }
-  }
-
 
   if(length(unlist(atoms$plazi_id))> 0){
     for (n in 1:length(atoms$plazi_id)){
