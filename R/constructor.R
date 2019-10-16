@@ -1403,10 +1403,22 @@ check_dwc_terms = function(tt, atoms, typeMaterialID){
     identificationID = identifier(get_or_set_mongoid(identification_df, prefix), prefix)
   }
 
-  tt = process_dwc_occurrence(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
-  tt = process_dwc_event(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
-  tt = process_dwc_location(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
-  tt = process_dwc_identification(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  if (!(is.null(occurrenceID))){
+    tt = process_dwc_occurrence(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  }
+
+  if (!(is.null(eventID))){
+    tt = process_dwc_event(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  }
+
+  if (!(is.null(locationID))){
+    tt = process_dwc_location(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  }
+
+  if (!(is.null(identificationID))){
+    tt = process_dwc_identification(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  }
+
 
 return(tt)
 
