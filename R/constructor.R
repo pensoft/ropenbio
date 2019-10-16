@@ -1380,6 +1380,8 @@ check_dwc_terms = function(tt, atoms, typeMaterialID){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     occurrence_df = set_component_frame(label = paste0("Occurrence: ", occurrence_content_label), mongo_key = NA, type = "occurrence", orcid = NA, parent = typeMaterialID$uri, key = NA)
     occurrenceID = identifier(get_or_set_mongoid(occurrence_df, prefix), prefix)
+  }else{
+    occurrenceID = NULL
   }
 
   #Location
@@ -1387,6 +1389,8 @@ check_dwc_terms = function(tt, atoms, typeMaterialID){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     location_df = set_component_frame(label = paste0("Location: ", occurrence_content_label), mongo_key = NA, type = "location", orcid = NA, parent = typeMaterialID$uri, key = NA)
     locationID = identifier(get_or_set_mongoid(location_df, prefix), prefix)
+  }else{
+    locationID = NULL
   }
 
   #Event
@@ -1394,6 +1398,8 @@ check_dwc_terms = function(tt, atoms, typeMaterialID){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA)
     eventID = identifier(get_or_set_mongoid(event_df, prefix), prefix)
+  }else{
+    eventID = NULL
   }
 
   #Identification
@@ -1401,6 +1407,8 @@ check_dwc_terms = function(tt, atoms, typeMaterialID){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     identification_df = set_component_frame(label = paste0("Identification: ", occurrence_content_label), mongo_key = NA, type = "identification", orcid = NA, parent = typeMaterialID$uri, key = NA)
     identificationID = identifier(get_or_set_mongoid(identification_df, prefix), prefix)
+  }else{
+    identificationID = NULL
   }
 
   if (!(is.null(occurrenceID))){
