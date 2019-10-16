@@ -110,6 +110,26 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
       tt$add_triple(article_zoobank_id, has_url, literal(strip_angle(article_zoobank_id$uri), xsd_type = xsd_uri))
       }
     }
+  
+  #Zenodo
+  if(length(unlist(atoms$zenodo)) > 0){
+  for (n in 1:length(atoms$zenodo)){
+  
+      text_value = unlist(atoms$zenodo[n])["text_value"]
+      ll = list(text_value = text_value, xsd_type = xsd_string, lang = "",
+                squote = paste0("\"", text_value, "\"", ""))
+      class(ll) = "literal"
+      zenodo_literal = ll
+      
+      zenodo_id = identifier(text_value, c(zoobank = "http://zenodo.org/record/"))
+      tt$add_triple(article_id, has_identifier, zenodo_id)
+      tt$add_triple(zenodo_id, rdf_type, ResourceIdentifier)
+      tt$add_triple(zenodo_id, identifier_scheme, zenodo)
+      tt$add_triple(zenodo_id, rdfs_label, zenodo_literal)
+      tt$add_triple(zenodo_id, has_url, literal(strip_angle(zenodo_id$uri), xsd_type = xsd_uri))
+    }
+  }
+  
 
   if(length(unlist(atoms$plazi_id))> 0){
     for (n in 1:length(atoms$plazi_id)){
