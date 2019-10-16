@@ -127,6 +127,13 @@ boldsystems = rdf4r::identifier(
   prefix = c(datacite = "http://purl.org/spar/datacite/")
 )
 
+#' datacite zenodo
+#' @export
+zenodo = rdf4r::identifier(
+  id = "zenodo",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
 
 #' GenBankAccession
 #' @export
