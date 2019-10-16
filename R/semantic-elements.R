@@ -1054,6 +1054,12 @@ has_link = rdf4r::identifier(
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' @export
+relation = rdf4r::identifier(
+  id = "relation",
+  prefix = c(dcterms = "http://purl.org/dc/terms/")
+)
+
 #
 # Table:
 #   uri: <http://purl.org/spar/doco/Table>

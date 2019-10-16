@@ -453,7 +453,7 @@ material_schema = XmlSchema$new(
           atoms = c(
             text_content = ".",
             holotype = "./*[contains(., 'holotype')] | ./*[contains(., 'Holotype')]",
-
+            identified_by = ".//named-content[@content-type='dwc:identifiedBy']//*[not(ancestor::list-item)]",
             record_number = ".//named-content[@content-type='dwc:recordNumber']//*[not(ancestor::list-item)]",
             recorded_by = ".//named-content[@content-type='dwc:recordedBy']//*[not(ancestor::list-item)]",
             coordinates = ".//named-content[@content-type='dwc:verbatimCoordinates']/*[not(ancestor::list[@list-type='alpha-lower'])]//*[not(ancestor::list-item)]",
@@ -482,6 +482,7 @@ material_schema = XmlSchema$new(
           atom_lang = c(
             text_content = NA,
             holotype = NA,
+            identified_by = NA,
             record_number = NA,
             recorded_by = NA,
             coordinates = NA,
@@ -510,6 +511,7 @@ material_schema = XmlSchema$new(
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             holotype = rdf4r::xsd_string,
+            identified_by = rdf4r::xsd_string,
             record_number = rdf4r::xsd_string,
             recorded_by = rdf4r::xsd_string,
             coordinates = rdf4r::xsd_string,
@@ -548,6 +550,7 @@ material_schema = XmlSchema$new(
               prefix = c(openbiodiv = "http://openbiodiv.net/"),
               atoms = c(
                 text_content = ".",
+                identified_by = ".//named-content[@content-type='dwc:identifiedBy']",
                 record_number = ".//named-content[@content-type='dwc:recordNumber']",
                 recorded_by = ".//named-content[@content-type='dwc:recordedBy']",
                 coordinates = ".//named-content[@content-type='dwc:verbatimCoordinates']",
@@ -575,6 +578,7 @@ material_schema = XmlSchema$new(
 
             atom_lang = c(
                text_content = NA,
+               identified_by = NA,
                 record_number = NA,
                recorded_by =  NA,
                 coordinates =  NA,
@@ -602,6 +606,7 @@ material_schema = XmlSchema$new(
 
               atom_types = list(
                text_content = rdf4r::xsd_string,
+               identified_by = rdf4r::xsd_string,
                record_number = rdf4r::xsd_string,
                 recorded_by =  rdf4r::xsd_string,
                coordinates =  rdf4r::xsd_string,
