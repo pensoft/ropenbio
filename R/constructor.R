@@ -1368,237 +1368,200 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
 ###############################3
 #dwc checks
 
-#' @export
-check_dwc_terms = function(tt, atoms, typeMaterialID){
 
-  #Occurrence
+#' @export
+check_dwc_occurrence = function(tt, atoms, typeMaterialID){
   if (length(atoms$catalog_number)>0 || length(atoms$other_catalog_numbers)>0 ||   length(atoms$record_number)>0  || length(atoms$recorded_by)>0 || length(atoms$individual_count)>0 || length(atoms$sex)>0 || length(atoms$life_stage)>0 ){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     occurrence_df = set_component_frame(label = paste0("Occurrence: ", occurrence_content_label), mongo_key = NA, type = "occurrence", orcid = NA, parent = typeMaterialID$uri, key = NA)
     occurrenceID = identifier(get_or_set_mongoid(occurrence_df, prefix), prefix)
-  }
 
-  #Location
+    #Occurrence
+    tt$add_triple(typeMaterialID, dwc_occurrence_id, occurrenceID)
+    tt$add_triple(occurrenceID, rdf_type, Occurrence)
+
+    sapply(atoms$record_number, function(n){
+      tt$add_triple(occurrenceID, dwc_record_number, n)
+    })
+
+    sapply(atoms$recorded_by, function(n){
+      tt$add_triple(occurrenceID, dwc_recorded_by, n)
+    })
+
+    sapply(atoms$catalog_number, function(n){
+      tt$add_triple(occurrenceID, dwc_catalog_number, n)
+    })
+
+    sapply(atoms$other_catalog_numbers, function(n){
+      tt$add_triple(occurrenceID, dwc_other_catalog_numbers, n)
+    })
+
+    sapply(atoms$individual_count, function(n){
+      tt$add_triple(occurrenceID, dwc_individual_count, n)
+    })
+
+    sapply(atoms$sex, function(n){
+      tt$add_triple(occurrenceID, dwc_sex, n)
+    })
+
+    sapply(atoms$life_stage, function(n){
+      tt$add_triple(occurrenceID, dwc_life_stage, n)
+    })
+
+  }
+  return(tt)
+}
+
+
+#' @export
+check_dwc_location = function(tt, atoms, typeMaterialID){
   if (length(atoms$coordinates)>0 || length(atoms$verbatim_lat)>0 ||   length(atoms$verbatim_long)>0  || length(atoms$decimal_long)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$state_province)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$locality)>0 || length(atoms$elevation)>0 || length(atoms$depth)>0 || length(atoms$water_body)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     location_df = set_component_frame(label = paste0("Location: ", occurrence_content_label), mongo_key = NA, type = "location", orcid = NA, parent = typeMaterialID$uri, key = NA)
     locationID = identifier(get_or_set_mongoid(location_df, prefix), prefix)
-  }
+    #Location
+    tt$add_triple(typeMaterialID, dwc_location_id, locationID)
+    tt$add_triple(locationID, rdf_type, Location)
 
-  #Event
-  if (length(atoms$collection_year)>0 || length(atoms$collection_month)>0 || length(atoms$collection_day)>0 || length(atoms$event_date)>0 || length(atoms$collection_date)>0 || length(atoms$samplingProtocol)>0 || length(atoms$habitat) > 0){
-    occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
-    event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA)
-    eventID = identifier(get_or_set_mongoid(event_df, prefix), prefix)
-  }
 
-  #Identification
+    verbatim_coord = function(lat, long) {
+      if (length(lat) == 1 && length(long) == 1) {
+        paste0(lat[[1]]$text_value, ", ", long[[1]]$text_value)
+      }
+      else {
+        NA
+      }
+    }
+
+    atoms$coordinates  = ifelse(length(unlist(atoms$coordinates)) == 0, list(literal(verbatim_coord(atoms$verbatim_lat,
+                                                                                                    atoms$verbatim_long), xsd_type = rdf4r::xsd_string)), atoms$coordinates)
+
+    sapply(atoms$coordinates , function(n){
+      tt$add_triple(locationID, dwc_coordinates, n)
+    })
+
+    sapply(atoms$decimal_long , function(n){
+      tt$add_triple(locationID, dwc_decimal_long, n)
+    })
+
+    sapply(atoms$decimal_lat , function(n){
+      tt$add_triple(locationID, dwc_decimal_lat, n)
+    })
+
+
+    sapply(atoms$country, function(n){
+      tt$add_triple(locationID, dwc_country, n)
+    })
+
+    sapply(atoms$state_province, function(n){
+      tt$add_triple(locationID, dwc_state_province, n)
+    })
+
+    sapply(atoms$locality, function(n){
+      tt$add_triple(locationID, dwc_locality, n)
+    })
+
+
+    sapply(atoms$elevation, function(n){
+      tt$add_triple(locationID, dwc_elevation, n)
+    })
+
+    sapply(atoms$depth, function(n){
+      tt$add_triple(locationID, dwc_depth, n)
+    })
+
+    sapply(atoms$water_body, function(n){
+      tt$add_triple(locationID, dwc_water_body, n)
+    })
+
+  }
+  return(tt)
+}
+
+
+#' @export
+check_dwc_identification = function(tt, atoms, typeMaterialID){
   if (length(atoms$identified_by)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     identification_df = set_component_frame(label = paste0("Identification: ", occurrence_content_label), mongo_key = NA, type = "identification", orcid = NA, parent = typeMaterialID$uri, key = NA)
     identificationID = identifier(get_or_set_mongoid(identification_df, prefix), prefix)
+
+    tt$add_triple(typeMaterialID, dwc_identification_id, identificationID)
+    tt$add_triple(identificationID, rdf_type, Identification)
+
+    sapply(atoms$identified_by, function(n){
+      tt$add_triple(identificationID, dwc_identified_by, n)
+    })
   }
-
-  tt = process_dwc_occurrence(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
-  tt =  process_dwc_event(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
-  tt = process_dwc_location(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
-  tt = process_dwc_identification(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
-
-
-
-
-}
-
-
-
-
-
-#' @export
-process_dwc_occurrence = function(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID){
-
-  #Occurrence
-  tt$add_triple(typeMaterialID, dwc_occurrence_id, occurrenceID)
-  tt$add_triple(occurrenceID, rdf_type, Occurrence)
-  tt$add_triple(occurrenceID, relation, eventID)
-  tt$add_triple(occurrenceID, relation, locationID)
-  tt$add_triple(occurrenceID, relation, identificationID)
-
-  sapply(atoms$record_number, function(n){
-    tt$add_triple(occurrenceID, dwc_record_number, n)
-  })
-
-  sapply(atoms$recorded_by, function(n){
-    tt$add_triple(occurrenceID, dwc_recorded_by, n)
-  })
-
-  sapply(atoms$catalog_number, function(n){
-    tt$add_triple(occurrenceID, dwc_catalog_number, n)
-  })
-
-  sapply(atoms$other_catalog_numbers, function(n){
-    tt$add_triple(occurrenceID, dwc_other_catalog_numbers, n)
-  })
-
-  sapply(atoms$individual_count, function(n){
-    tt$add_triple(occurrenceID, dwc_individual_count, n)
-  })
-
-  sapply(atoms$sex, function(n){
-    tt$add_triple(occurrenceID, dwc_sex, n)
-  })
-
-  sapply(atoms$life_stage, function(n){
-    tt$add_triple(occurrenceID, dwc_life_stage, n)
-  })
-
-
-  return(tt)
-}
-
-
-#' @export
-process_dwc_location = function(tt, atoms, typeMaterialID){
-
-  #Location
-  tt$add_triple(typeMaterialID, dwc_location_id, locationID)
-  tt$add_triple(locationID, rdf_type, Location)
-  tt$add_triple(locationID, relation, occurrenceID)
-  tt$add_triple(locationID, relation, eventID)
-  tt$add_triple(locationID, relation, identificationID)
-
-  verbatim_coord = function(lat, long) {
-    if (length(lat) == 1 && length(long) == 1) {
-      paste0(lat[[1]]$text_value, ", ", long[[1]]$text_value)
-    }
-    else {
-      NA
-    }
-  }
-
-  atoms$coordinates  = ifelse(length(unlist(atoms$coordinates)) == 0, list(literal(verbatim_coord(atoms$verbatim_lat,
-                                                                                                  atoms$verbatim_long), xsd_type = rdf4r::xsd_string)), atoms$coordinates)
-
-  sapply(atoms$coordinates , function(n){
-    tt$add_triple(locationID, dwc_coordinates, n)
-  })
-
-  sapply(atoms$decimal_long , function(n){
-    tt$add_triple(locationID, dwc_decimal_long, n)
-  })
-
-  sapply(atoms$decimal_lat , function(n){
-    tt$add_triple(locationID, dwc_decimal_lat, n)
-  })
-
-
-  sapply(atoms$country, function(n){
-    tt$add_triple(locationID, dwc_country, n)
-  })
-
-  sapply(atoms$state_province, function(n){
-    tt$add_triple(locationID, dwc_state_province, n)
-  })
-
-  sapply(atoms$locality, function(n){
-    tt$add_triple(locationID, dwc_locality, n)
-  })
-
-
-  sapply(atoms$elevation, function(n){
-    tt$add_triple(locationID, dwc_elevation, n)
-  })
-
-  sapply(atoms$depth, function(n){
-    tt$add_triple(locationID, dwc_depth, n)
-  })
-
-  sapply(atoms$water_body, function(n){
-    tt$add_triple(locationID, dwc_water_body, n)
-  })
-
-
-  return(tt)
-}
-
-
-#' @export
-process_dwc_identification = function(tt, atoms, typeMaterialID){
-  tt$add_triple(typeMaterialID, dwc_identification_id, identificationID)
-  tt$add_triple(identificationID, rdf_type, Identification)
-  tt$add_triple(identificationID, relation, occurrenceID)
-  tt$add_triple(identificationID, relation, eventID)
-  tt$add_triple(identificationID, relation, locationID)
-
-
-  sapply(atoms$identified_by, function(n){
-    tt$add_triple(identificationID, dwc_identified_by, n)
-  })
-
   return(tt)
 
 }
 
 #' @export
-process_dwc_event = function(tt, atoms, typeMaterialID){
-  tt$add_triple(typeMaterialID, dwc_event_id, eventID)
-  tt$add_triple(eventID, rdf_type, Event)
-  tt$add_triple(eventID, relation, occurrenceID)
-  tt$add_triple(eventID, relation, identificationID)
-  tt$add_triple(eventID, relation, locationID)
+check_dwc_event = function(tt, atoms, typeMaterialID){
+  if (length(atoms$collection_year)>0 || length(atoms$collection_month)>0 || length(atoms$collection_day)>0 || length(atoms$event_date)>0 || length(atoms$collection_date)>0 || length(atoms$samplingProtocol)>0 || length(atoms$habitat) > 0){
+    occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
+    event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA)
+    eventID = identifier(get_or_set_mongoid(event_df, prefix), prefix)
 
-  collection_date = function(year, month, day) {
-    if (length(year) == 1 && length(month) == 1 && length(day) == 1) {
-      paste0(year[[1]]$text_value, "-", month[[1]]$text_value, "-", day[[1]]$text_value)
-    }
-    else if (length(year) == 1) {
-      year[[1]]$text_value
-    }
-    else {
-      NA
-    }
-  }
+    tt$add_triple(typeMaterialID, dwc_event_id, eventID)
+    tt$add_triple(eventID, rdf_type, Event)
 
-  if (length(atoms$collection_month)>0){
-    for (n in 1:length(atoms$collection_month)){
-      collection_month_text = atoms$collection_month[[n]]$text_value
-      if (nchar(collection_month_text)<2){
-        collection_month_text = paste0("0", collection_month_text)
+
+    collection_date = function(year, month, day) {
+      if (length(year) == 1 && length(month) == 1 && length(day) == 1) {
+        paste0(year[[1]]$text_value, "-", month[[1]]$text_value, "-", day[[1]]$text_value)
       }
-      atoms$collection_month[[n]]=literal(collection_month_text)
+      else if (length(year) == 1) {
+        year[[1]]$text_value
+      }
+      else {
+        NA
+      }
     }
+
+    if (length(atoms$collection_month)>0){
+      for (n in 1:length(atoms$collection_month)){
+        collection_month_text = atoms$collection_month[[n]]$text_value
+        if (nchar(collection_month_text)<2){
+          collection_month_text = paste0("0", collection_month_text)
+        }
+        atoms$collection_month[[n]]=literal(collection_month_text)
+      }
+    }
+
+    atoms$collection_date = ifelse(length(unlist(atoms$collection_date)) == 0, list(literal(collection_date(atoms$collection_year,
+                                                                                                            atoms$collection_month, atoms$collection_day), xsd_type = rdf4r::xsd_date)), atoms$collection_date)
+
+
+    sapply(atoms$collection_date, function(n){
+      tt$add_triple(eventID, dwc_event_date, n)
+    })
+
+    sapply(atoms$event_date, function(n){
+      tt$add_triple(eventID, dwc_event_date, n)
+    })
+
+    sapply(atoms$collection_year, function(n){
+      tt$add_triple(eventID, dwc_collection_year, n)
+    })
+
+    sapply(atoms$collection_month, function(n){
+      tt$add_triple(eventID, dwc_collection_month, n)
+    })
+
+    sapply(atoms$collection_day, function(n){
+      tt$add_triple(eventID, dwc_collection_day, n)
+    })
+
+    sapply(atoms$sampling_protocol, function(n){
+      tt$add_triple(eventID, dwc_sampling_protocol, n)
+    })
+
+    sapply(atoms$habitat, function(n){
+      tt$add_triple(eventID, dwc_habitat, n)
+    })
+
   }
-
-  atoms$collection_date = ifelse(length(unlist(atoms$collection_date)) == 0, list(literal(collection_date(atoms$collection_year,
-                                                                                                          atoms$collection_month, atoms$collection_day), xsd_type = rdf4r::xsd_date)), atoms$collection_date)
-
-
-  sapply(atoms$collection_date, function(n){
-    tt$add_triple(eventID, dwc_event_date, n)
-  })
-
-  sapply(atoms$event_date, function(n){
-    tt$add_triple(eventID, dwc_event_date, n)
-  })
-
-  sapply(atoms$collection_year, function(n){
-    tt$add_triple(eventID, dwc_collection_year, n)
-  })
-
-  sapply(atoms$collection_month, function(n){
-    tt$add_triple(eventID, dwc_collection_month, n)
-  })
-
-  sapply(atoms$collection_day, function(n){
-    tt$add_triple(eventID, dwc_collection_day, n)
-  })
-
-  sapply(atoms$sampling_protocol, function(n){
-    tt$add_triple(eventID, dwc_sampling_protocol, n)
-  })
-
-  sapply(atoms$habitat, function(n){
-    tt$add_triple(eventID, dwc_habitat, n)
-  })
-
   return(tt)
 }
