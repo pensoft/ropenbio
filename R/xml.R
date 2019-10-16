@@ -336,11 +336,12 @@ parent_id = function (node, fullname = FALSE )
 root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 {
   #look for "new style" article id:
-  new_xpath = "//article/front/article-meta/article-id[@pub-id-type='other']"
+  #new_xpath = "//article/front/article-meta/article-id[@pub-id-type='other']"
+  new_xpath = "//article/front/article-meta/uri[@content-type='arpha']"
   arpha_id = xml2::xml_text(xml2::xml_find_first(node, new_xpath))
-  if (grepl("urn:lsid:arphahub.com", arpha_id)==FALSE){
-    arpha_id = NA
-  }
+  #if (grepl("urn:lsid:arphahub.com", arpha_id)==FALSE){
+  #  arpha_id = NA
+  #}
   root_node = xml2::xml_find_all(node, xpath = "/*")
 
 
@@ -348,7 +349,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
     id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
 
   }else{
-    arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
+    #arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
     xml2::xml_attr(root_node, "obkms_id") = arpha_id #save to xml
     id = identifier(id = arpha_id, prefix = prefix)       #build identifier
   }
