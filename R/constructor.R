@@ -1376,6 +1376,7 @@ check_dwc_occurrence = function(tt, atoms, typeMaterialID){
     occurrence_df = set_component_frame(label = paste0("Occurrence: ", occurrence_content_label), mongo_key = NA, type = "occurrence", orcid = NA, parent = typeMaterialID$uri, key = NA)
     occurrenceID = identifier(get_or_set_mongoid(occurrence_df, prefix), prefix)
 
+    atoms$occurrenceID  = ifelse(length(unlist(atoms$occurrenceID)) == 0, list(occurrenceID), atoms$occurrenceID)
     #Occurrence
     tt$add_triple(typeMaterialID, dwc_occurrence_id, occurrenceID)
     tt$add_triple(occurrenceID, rdf_type, Occurrence)
@@ -1419,6 +1420,9 @@ check_dwc_location = function(tt, atoms, typeMaterialID){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     location_df = set_component_frame(label = paste0("Location: ", occurrence_content_label), mongo_key = NA, type = "location", orcid = NA, parent = typeMaterialID$uri, key = NA)
     locationID = identifier(get_or_set_mongoid(location_df, prefix), prefix)
+
+    atoms$locationID  = ifelse(length(unlist(atoms$locationID)) == 0, list(locationID), atoms$locationID)
+
     #Location
     tt$add_triple(typeMaterialID, dwc_location_id, locationID)
     tt$add_triple(locationID, rdf_type, Location)
@@ -1486,6 +1490,8 @@ check_dwc_identification = function(tt, atoms, typeMaterialID){
     identification_df = set_component_frame(label = paste0("Identification: ", occurrence_content_label), mongo_key = NA, type = "identification", orcid = NA, parent = typeMaterialID$uri, key = NA)
     identificationID = identifier(get_or_set_mongoid(identification_df, prefix), prefix)
 
+    atoms$identificationID  = ifelse(length(unlist(atoms$identificationID)) == 0, list(identificationID), atoms$identificationID)
+
     tt$add_triple(typeMaterialID, dwc_identification_id, identificationID)
     tt$add_triple(identificationID, rdf_type, Identification)
 
@@ -1503,6 +1509,8 @@ check_dwc_event = function(tt, atoms, typeMaterialID){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA)
     eventID = identifier(get_or_set_mongoid(event_df, prefix), prefix)
+
+    atoms$eventID  = ifelse(length(unlist(atoms$eventID)) == 0, list(eventID), atoms$eventID)
 
     tt$add_triple(typeMaterialID, dwc_event_id, eventID)
     tt$add_triple(eventID, rdf_type, Event)

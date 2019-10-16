@@ -549,6 +549,10 @@ material_schema = XmlSchema$new(
               extension = ".xml",
               prefix = c(openbiodiv = "http://openbiodiv.net/"),
               atoms = c(
+                occurrenceID = NULL,
+                locationID = NULL,
+                eventID = NULL,
+                identificationID = NULL,
                 text_content = ".",
                 identified_by = ".//named-content[@content-type='dwc:identifiedBy']",
                 record_number = ".//named-content[@content-type='dwc:recordNumber']",
@@ -577,6 +581,10 @@ material_schema = XmlSchema$new(
             ),
 
             atom_lang = c(
+              occurrenceID = NA,
+              locationID = NA,
+              eventID = NA,
+              identificationID = NA,
                text_content = NA,
                identified_by = NA,
                 record_number = NA,
@@ -605,6 +613,10 @@ material_schema = XmlSchema$new(
               ),
 
               atom_types = list(
+                occurrenceID = rdf4r::xsd_string,
+                locationID = rdf4r::xsd_string,
+                eventID = rdf4r::xsd_string,
+                identificationID = rdf4r::xsd_string,
                text_content = rdf4r::xsd_string,
                identified_by = rdf4r::xsd_string,
                record_number = rdf4r::xsd_string,
