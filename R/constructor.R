@@ -728,11 +728,13 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key){
     })
   }
 
+tt = check_dwc_terms(tt, atoms, typeMaterialID)
 
-tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
-tt = check_dwc_location(tt, atoms, typeMaterialID)
-tt = check_dwc_identification(tt, atoms, typeMaterialID)
-tt = check_dwc_event(tt, atoms, typeMaterialID)
+#tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
+#tt = check_dwc_location(tt, atoms, typeMaterialID)
+
+#tt = check_dwc_identification(tt, atoms, typeMaterialID)
+#tt = check_dwc_event(tt, atoms, typeMaterialID)
 
 tt = bold_genbank_serializer(tt, atoms, identifiers)
 tt = institution_serializer(tt, atoms, identifiers)
@@ -753,10 +755,12 @@ occurrence_list = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   typeMaterialID = identifiers$pid
   #tt$add_triple(occurrenceList, rdf_type, OccurrenceList)
 
-  tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
-  tt = check_dwc_location(tt, atoms, typeMaterialID)
-  tt = check_dwc_identification(tt, atoms, typeMaterialID)
-  tt = check_dwc_event(tt, atoms, typeMaterialID)
+  tt = check_dwc_terms(tt, atoms, typeMaterialID)
+
+  #tt = check_dwc_occurrence(tt, atoms, typeMaterialID)
+  #tt = check_dwc_location(tt, atoms, typeMaterialID)
+  #tt = check_dwc_identification(tt, atoms, typeMaterialID)
+  #tt = check_dwc_event(tt, atoms, typeMaterialID)
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt = institution_serializer(tt, atoms, identifiers)
@@ -1400,11 +1404,11 @@ check_dwc_terms = function(tt, atoms, typeMaterialID){
   }
 
   tt = process_dwc_occurrence(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
-  tt =  process_dwc_event(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
+  tt = process_dwc_event(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
   tt = process_dwc_location(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
   tt = process_dwc_identification(tt, atoms, typeMaterialID, occurrenceID, eventID, locationID, identificationID)
 
-
+return(tt)
 
 
 }
