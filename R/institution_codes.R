@@ -19,7 +19,7 @@ get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = gr
     }else{
       id = grbio_uri_parser(grbio_uri)
     }
-    
+
     #save to mongo
     #key #value  #type #parent
     mongo_df = data.frame(
@@ -29,11 +29,11 @@ get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = gr
       code = code,
       parent = strip_angle(root_id$uri)
     )
-    
-    
+
+
     collection$insert(mongo_df)
   }
-  
+
   return(id)
 }
 
@@ -172,17 +172,20 @@ institution_serializer = function (tt, atoms, identifiers)
   instNames = c()
   instCodes = c()
   nid = identifiers$nid
-  
   if (!(is.null(unlist(atoms$institution_name)))) {
     sapply(atoms$institution_name, function(n) {
+      tt$add_triple(nid, inst_names, n)
       instNames = c(instNames, n$text_value)
-      #tt$add_triple(nid, inst_names, n)
       res = check_mongo_instName(name = n$text_value,
                                  collection = inst_collection)
       if (nrow(res) > 0) {
         for (i in 1:nrow(res)) {
-          instNames = instNames[tolower(instNames) != tolower(n$text_value)]
-                                  
+          instNames = instNames[-which(tolower(instNames) !=
+                                         tolower(res$name[i]))]
+
+          instCodes = instCodes[-which(tolower(instCodes) !=
+                                         tolower(res$code[i]))]
+
           inst_identifier = grbio_uri_parser(res$coolURI[i])
           tt$add_triple(nid, dwc_inst_id, inst_identifier)
           tt$add_triple(inst_identifier, rdf_type, Institution)
@@ -199,63 +202,54 @@ institution_serializer = function (tt, atoms, identifiers)
           tt$add_triple(inst_identifier, dwc_inst_code,
                         literal(res$code[i]))
           rdfized_codes = c(rdfized_codes, res$code[i])
-          instCodes = instCodes[tolower(instCodes) != tolower(res$code[i])]
-          
+
         }
       }
-      
     })
   }
   if (!(is.null(unlist(atoms$institution_code)))) {
+
     sapply(atoms$institution_code, function(n) {
+      tt$add_triple(nid, dwc_inst_code, n)
+
       instCodes = c(instCodes, n$text_value)
-      
       if (!(n$text_value %in% rdfized_codes)) {
-       # tt$add_triple(nid, inst_codes, n)
+
         res = check_mongo_instCode(code = n$text_value,
                                    collection = inst_collection)
         if (nrow(res) > 0) {
           for (i in 1:nrow(res)) {
-            
-            instCodes = instCodes[tolower(instCodes) != tolower(n$text_value)]
+            instNames = instNames[-which(tolower(instNames) !=
+                                           tolower(res$name[i]))]
+            instCodes = instCodes[-which(tolower(instCodes) !=
+                                           tolower(res$code[i]))]
             inst_identifier = grbio_uri_parser(res$coolURI[i])
             tt$add_triple(nid, dwc_inst_id, inst_identifier)
             tt$add_triple(inst_identifier, rdf_type,
                           Institution)
-            if  (names(inst_identifier$prefix) == "grbioCool" ||
-                 names(inst_identifier$prefix) == "biocol" ||
-                 names(inst_identifier$prefix) == "biocolCool" ||
-                 names(inst_identifier$prefix) == "gsrscicoll" ||
-                 names(inst_identifier$prefix) == "usfc") {
+            if (names(inst_identifier$prefix) == "grbioCool" ||
+                names(inst_identifier$prefix) == "biocol" ||
+                names(inst_identifier$prefix) == "biocolCool" ||
+                names(inst_identifier$prefix) == "gsrscicoll" ||
+                names(inst_identifier$prefix) == "usfc") {
               tt$add_triple(inst_identifier, rdf_type,
                             GrbioInst)
             }
             tt$add_triple(inst_identifier, dwc_inst_code,
                           literal(res$code[i]))
-            
             tt$add_triple(inst_identifier, inst_names,
                           literal(res$name[i]))
-            instNames = instNames[tolower(instNames) != tolower(res$name[i])]
-                                  
-        }
+            instNames = instNames[tolower(instNames) !=
+                                    tolower(res$name[i])]
+          }
         }
       }
     })
   }
-  sapply(instNames, function(n){
-    #name_literal = literal(n)
-    tt$add_triple(nid, inst_names, literal(n))
-  })
-  
-  sapply(instCodes, function(n){
-    #name_literal = literal(n)
-    tt$add_triple(nid, inst_codes, literal(n))
-  })
-  
-  
-  
+
   return(tt)
 }
+
 
 
 

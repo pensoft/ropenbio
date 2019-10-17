@@ -549,7 +549,11 @@ institutional_code = rdf4r::identifier(
   prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
 )
 
-
+#' @export
+dwc_type_status = rdf4r::identifier(
+  id="typeStatus",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
 
 #' @export
 dwc_coordinates = rdf4r::identifier(
