@@ -22,7 +22,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
   journal_lit = toString(unlist(atoms$journal)["text_value"])
 
   journal_id = atoms$journal_id
-  journal_id = gsub("urn:lsid:zoobank.org:pub:", "", toString(unlist(atoms$journal_id)["text_value"]))
+  journal_id = gsub("urn:lsid:arphahub\.com:pub:", "", toString(unlist(atoms$journal_id)["text_value"]))
   journal_id = identifier(journal_id, prefix)
 
   if(is.null(journal_id)){
