@@ -21,9 +21,15 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key)
 
   journal_lit = toString(unlist(atoms$journal)["text_value"])
 
-  df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA)
-  journal_id = get_or_set_mongoid(df, prefix )
+  journal_id = atoms$journal_id
+  journal_id = gsub("urn:lsid:zoobank.org:pub:", "", journal_id)
   journal_id = identifier(journal_id, prefix)
+
+  if(is.null(journal_id)){
+    df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA)
+    journal_id = get_or_set_mongoid(df, prefix )
+    journal_id = identifier(journal_id, prefix)
+  }
 
   paper_label = unlist(atoms$title)["text_value"]
 
