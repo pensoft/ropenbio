@@ -403,7 +403,7 @@ material_schema = XmlSchema$new(
           atoms = c(
             text_content = ".",
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
+             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']"
           ),
 
           atom_lang = c(
