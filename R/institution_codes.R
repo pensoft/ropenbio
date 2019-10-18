@@ -1,42 +1,37 @@
 
 #' @export
-get_or_set_inst_id = function(name, url, root_id, prefix, collection, grbio = grbio){
+get_or_set_inst_id = function (name, url, root_id, prefix, collection, grbio = grbio)
+{
   mongo_res = check_mongo_inst(tpKey = url, collection = collection)
-  if (nrow(mongo_res)>0){
+  if (nrow(mongo_res) > 0) {
     coolURI = mongo_res$coolURI
     code = mongo_res$code
     id = grbio_uri_parser(coolURI)
-  }else{
+  }
+  else {
     grbio_res = check_grbio(grbio = grbio, url = url, name = name)
     grbio_uri = grbio_res$Cool.URI
     code = grbio_res$Institutional.Code.Acronym
-    if (length(grbio_uri)==0){
-      #set it
+    if (length(grbio_uri) == 0) {
       grbio_uri = uuid::UUIDgenerate()
       grbio_uri = toupper(grbio_uri)
       id = identifier(grbio_uri, prefix = prefix)
       code = code
-    }else{
+    }
+    else {
       id = grbio_uri_parser(grbio_uri)
     }
 
-    #save to mongo
-    #key #value  #type #parent
-    mongo_df = data.frame(
-      tpKey = url,
-      coolURI = strip_angle(id$uri),
-      name = name,
-      code = code,
-      parent = strip_angle(root_id$uri)
-    )
+    if(code == 0 || length(code)<1 || is.null(code)){
+      code = NA
+    }
 
-
+    mongo_df = data.frame(tpKey = url, coolURI = strip_angle(id$uri),
+                          name = name, code = code, parent = strip_angle(root_id$uri))
     collection$insert(mongo_df)
   }
-
   return(id)
 }
-
 
 #' @export
 check_grbio = function(grbio, url, name){
