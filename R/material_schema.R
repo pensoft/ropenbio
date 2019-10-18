@@ -228,7 +228,7 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = ".",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",,
+         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
@@ -261,7 +261,7 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = ".",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",,
+         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
@@ -296,7 +296,7 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = ".",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",,
+         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
@@ -330,7 +330,7 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = ".",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",,
+         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
@@ -365,7 +365,7 @@ material_schema = XmlSchema$new(
         text_content = ".",
         status = "tp:nomenclature/tp:taxon-status",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",,
+         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
 
@@ -657,7 +657,7 @@ material_schema = XmlSchema$new(
           atoms = c(
             text_content = ".",
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",,
+             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
             bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
             genbank_id = ".//ext-link[@ext-link-type='gen']"
           ),
@@ -694,7 +694,7 @@ material_schema = XmlSchema$new(
           atoms = c(
             text_content = ".",
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",,
+             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
             bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]",
             genbank_id = ".//ext-link[@ext-link-type='gen']"
           ),
