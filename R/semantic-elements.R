@@ -186,6 +186,13 @@ NomenclatureCitationsList = rdf4r::identifier(
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' Nom Citation
+#' the informational content of an article
+#' @export
+NomenclatureCitation = rdf4r::identifier(
+  id = "NomenclatureCitation",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
 
 #' TNU
 #' @export

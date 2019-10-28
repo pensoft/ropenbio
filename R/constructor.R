@@ -453,19 +453,57 @@ nomenclature_citations = function (atoms, identifiers, prefix, new_taxons, mongo
 {
 
   tt = ResourceDescriptionFramework$new()
-  citations = atoms$text_content[[1]]
-  citations = escape_special(citations$text_value)
+  #citations = atoms$text_content[[1]]
+  #citations = escape_special(citations$text_value)
 
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitationsList)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  tt$add_triple(identifiers$nid, has_content, literal(citations))
-
-
-
+ # tt$add_triple(identifiers$nid, has_content, literal(citations))
   return(tt)
 }
 
 
+#' @export
+nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_key)
+{
+
+  tt = ResourceDescriptionFramework$new()
+  #citations = atoms$text_content[[1]]
+  #citations = escape_special(citations$text_value)
+
+  tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitation)
+  tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
+  sapply(atoms$text_content, function(n){
+    tt$add_triple(identifiers$nid, has_content, n)
+  })
+
+
+  verbatim_citations = c()
+  sapply(atoms$comment, function(n){
+    comment = unlist(n)["text_value"]
+    if (grep(";", comment)){
+      verbatim_citations = c(verbatim_citations,strsplit(comment, ";"))
+    }else{
+      verbatim_citations = c(verbatim_citations,comment)
+    }
+  })
+
+  sapply(verbatim_citations, function(comment){
+    #extract name:
+    author_name = stringr::str_extract(comment, "^(.*?)(?=[0-9])")
+    author_name = gsub(",", "", author_name)
+    author_name = strip_trailing_whitespace(author_name)
+
+    #extract year: (only years starting with 1 or 2, followed by 7 until 9)
+    year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
+
+    #save to mongo for lookup during bibliography constr
+    d = data.frame(key = as.character(identifiers$nid$uri), value = comment, type = "nomenclature-cit", author = author_name, year = year)
+    general_collection$insert(d)
+  })
+
+  return(tt)
+}
 
 #' Diagnosis Section Constructor
 #'

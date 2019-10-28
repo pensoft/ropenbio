@@ -402,18 +402,21 @@ material_schema = XmlSchema$new(
           prefix = c(openbiodiv = "http://openbiodiv.net/"),
           atoms = c(
             text_content = ".",
+            zoobank = "./tp:taxon-name/object-id[@content-type='zoobank']",
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']"
+            institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']"
           ),
 
           atom_lang = c(
             text_content = NA,
+            zoobank = NA,
             institution_name = NA,
             institution_code = NA
           ),
 
           atom_types = list(
             text_content =  rdf4r::xsd_string,
+            zoobank = rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
             institution_code = rdf4r::xsd_string
           ),
@@ -421,7 +424,7 @@ material_schema = XmlSchema$new(
           constructor = nomenclature,
           components = list(
             XmlSchema$new(
-              schema_name = "nomenclature_citations",
+              schema_name = "nomenclature_citations-list",
               xpath = "./tp:nomenclature-citation-list", #rel path from treatment
               file_pattern = ".*\\.xml",
               extension = ".xml",
@@ -438,13 +441,45 @@ material_schema = XmlSchema$new(
                 text_content =  rdf4r::xsd_string
               ),
 
-              components = NULL,
+
               mongo_key =  c(nomenclature_citations = "."),
 
-              constructor = nomenclature_citations
+              constructor = nomenclature_citations,
+              components = list(
+                XmlSchema$new(
+                  schema_name = "nomenclature_citation",
+                  xpath = "tp:nomenclature-citation", #rel path from treatment
+                  file_pattern = ".*\\.xml",
+                  extension = ".xml",
+                  prefix = c(openbiodiv = "http://openbiodiv.net/"),
+                  atoms = c(
+                    text_content = ".",
+                    comment = ".comment[not(./xref[@ref-type='bibr'])", #need to crossreference with the bibliography section,
+                    bibr = ".comment/xref/@ref-type='bibr'"
+                    ),
+
+                  atom_lang = c(
+                    text_content = NA,
+                    comment = NA,
+                    bibr = NA
+                  ),
+
+                  atom_types = list(
+                    text_content =  rdf4r::xsd_string,
+                    comment = rdf4r::xsd_string,
+                    bibr =  rdf4r::xsd_string
+                  ),
+
+
+                  mongo_key =  c(nomenclature_citation = "."),
+
+                  constructor = nomenclature_citation,
+                  components = NULL
+                )
             )
 
           )
+        )
         ),
 
         XmlSchema$new(
@@ -904,3 +939,4 @@ material_schema = XmlSchema$new(
     )
   )
 )
+
