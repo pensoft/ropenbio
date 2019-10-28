@@ -478,17 +478,29 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   })
 
 
+  sapply(atoms$bibr, function(a) {
+    tt$add_triple(identifiers$nid, has_ref_id, a)
+  })
+
+  bib_id =  sapply(atoms$bibr, function(a){
+    as.integer(gsub("[^0-9.]", "", a$text_value))
+  })
+
+
+
   verbatim_citations = c()
   sapply(atoms$comment, function(n){
 
-    cat(toString(n), file = "../atoms-comment", append = TRUE)
+
     comment = unlist(n)["text_value"]
+    cat(toString(comment), file = "../atoms-comment", append = TRUE)
     if (grepl(";", comment)){
       verbatim_citations = c(verbatim_citations,strsplit(comment, ";"))
     }else{
       verbatim_citations = c(verbatim_citations,comment)
     }
   })
+
 
   sapply(verbatim_citations, function(comment){
     #extract name:
@@ -499,13 +511,24 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     #extract year: (only years starting with 1 or 2, followed by 7 until 9)
     year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
 
-    cat(paste0(author_name, "~", year), file = "../atoms-comment-parsed", append = TRUE)
+    if (length(bib_id)>0){
+      sapply(atoms$all_bibs[bib_id], function(j) {
+        bib_content = unlist(j)$text_value
+      if (grepl(author_name, bib_content) && grepl(year, bib_content)){
+        verbatim_citations = verbatim_citations[-which(comment %in% verbatim_citations)]
+      }
+      })
+    }
 
     #save to mongo for lookup during bibliography constr
-    d = data.frame(key = as.character(identifiers$nid$uri), value = as.character(comment), type = "nomenclature-cit", author = as.character(author_name), year = as.character(year))
-    general_collection$insert(d)
+    #d = data.frame(key = as.character(identifiers$nid$uri), value = as.character(comment), type = "nomenclature-cit", author = as.character(author_name), year = as.character(year))
+    #general_collection$insert(d)
   })
 
+
+  sapply(verbatim_citations, function(n){
+    tt$add_triple(identifiers$nid, mentions, literal(n))
+  })
   return(tt)
 }
 
