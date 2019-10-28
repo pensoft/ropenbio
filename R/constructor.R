@@ -525,6 +525,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     #general_collection$insert(d)
   })
 
+  print(verbatim_citations)
 
   sapply(verbatim_citations, function(n){
     tt$add_triple(identifiers$nid, mentions, literal(n))
