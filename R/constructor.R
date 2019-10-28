@@ -487,21 +487,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   })
 
 
-
-  sapply(atoms$comment, function(n){
-    comment = n$text_value
-    print(comment)
-    if (grepl(";", comment)){
-      verbatim_citations = strsplit(comment, ";")
-      cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
-    }else{
-      verbatim_citations = comment
-    }
-  })
-
-  sapply(verbatim_citations, function(comment){
-    #extract name:
-
+  process_nomenclature_cit =  function(comment, atoms, positive){
     author_name = stringr::str_extract(comment, "^(.*?)(?=[0-9])")
     author_name = gsub(",", "", author_name)
     author_name = strip_trailing_whitespace(author_name)
@@ -514,22 +500,31 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     if (length(bib_id)>0){
       sapply(atoms$all_bibs[bib_id], function(j) {
         bib_content = unlist(j)$text_value
-      if (grepl(author_name, bib_content) && grepl(year, bib_content)){
-        verbatim_citations = verbatim_citations[-which(comment %in% verbatim_citations)]
-      }
+        if (!(grepl(author_name, bib_content) && grepl(year, bib_content))){
+          positive = c(positive, comment)
+        }
       })
     }
+    return(positive)
+  }
 
-
-
-    #save to mongo for lookup during bibliography constr
-    #d = data.frame(key = as.character(identifiers$nid$uri), value = as.character(comment), type = "nomenclature-cit", author = as.character(author_name), year = as.character(year))
-    #general_collection$insert(d)
+  sapply(atoms$comment, function(n){
+    comment = n$text_value
+    print(comment)
+    if (grepl(";", comment)){
+      verbatim_citations = strsplit(comment, ";")
+      cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
+    }else{
+      verbatim_citations = comment
+    }
   })
 
-  #print(verbatim_citations)
-
-  sapply(verbatim_citations, function(n){
+  positive = c()
+  for(n in 1:length(verbatim_citations)){
+    positive = process_nomenclature_cit(verbatim_citations[n], atoms, positive)
+  }
+  print(positive)
+  sapply(positive, function(n){
     tt$add_triple(identifiers$nid, mentions, literal(n))
   })
   return(tt)
