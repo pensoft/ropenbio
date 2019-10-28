@@ -480,6 +480,8 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
   verbatim_citations = c()
   sapply(atoms$comment, function(n){
+
+    cat(n, file = "../atoms-comment", append = TRUE)
     comment = unlist(n)["text_value"]
     if (grep(";", comment)){
       verbatim_citations = c(verbatim_citations,strsplit(comment, ";"))
@@ -497,8 +499,10 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     #extract year: (only years starting with 1 or 2, followed by 7 until 9)
     year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
 
+    cat(paste0(author_name, "~", year), file = "../atoms-comment-parsed", append = TRUE)
+
     #save to mongo for lookup during bibliography constr
-    d = data.frame(key = as.character(identifiers$nid$uri), value = comment, type = "nomenclature-cit", author = author_name, year = year)
+    d = data.frame(key = as.character(identifiers$nid$uri), value = as.character(comment), type = "nomenclature-cit", author = as.character(author_name), year = as.character(year))
     general_collection$insert(d)
   })
 
