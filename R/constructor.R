@@ -493,10 +493,15 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
 
     comment = unlist(n)["text_value"]
+    print(comment)
     if (grepl(";", comment)){
+      print("yes")
+      print(strsplit(comment, ";"))
       verbatim_citations = c(verbatim_citations,strsplit(comment, ";"))
     }else{
+      print("no")
       verbatim_citations = c(verbatim_citations,comment)
+      print(verbatim_citations)
     }
   })
 
