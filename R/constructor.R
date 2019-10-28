@@ -483,7 +483,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   })
 
   bib_id =  sapply(atoms$bibr, function(a){
-    as.integer(gsub("[^0-9.]", "", a$text_value))
+    a$text_value
   })
 
 

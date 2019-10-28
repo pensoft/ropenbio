@@ -455,7 +455,7 @@ material_schema = XmlSchema$new(
                   atoms = c(
                     text_content = ".",
                     comment = ".//comment", #need to crossreference with the bibliography section,
-                    bibr = ".//comment/xref/@ref-type",
+                    bibr = ".//comment/xref[@ref-type]/@rid",
                     all_bibs = "//article/back/ref-list/ref"
                     ),
 
