@@ -520,9 +520,8 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     }
   })
 
-  print(length(atoms$comment))
-  if(length(atoms$comment)>0){
     positive = c()
+    print(length(verbatim_citations))
     for(n in 1:length(verbatim_citations)){
       positive = c(positive, process_nomenclature_cit(verbatim_citations[n], atoms))
     }
@@ -530,7 +529,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     sapply(positive, function(n){
       tt$add_triple(identifiers$nid, mentions, literal(n))
     })
-  }
+
 
   return(tt)
 }
