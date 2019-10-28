@@ -509,7 +509,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     }
     return(positive)
   }
-
+  verbatim_citations = c()
   sapply(atoms$comment, function(n){
     comment = n$text_value
     if (grepl(";", comment)){
