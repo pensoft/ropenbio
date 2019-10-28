@@ -492,7 +492,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   sapply(atoms$comment, function(n){
 
 
-    comment = unlist(n)["text_value"]
+    comment = n$text_value
     print(comment)
     if (grepl(";", comment)){
       print("yes")
