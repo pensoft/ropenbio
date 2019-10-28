@@ -494,13 +494,14 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
     comment = n$text_value
     if (grepl(";", comment)){
-      verbatim_citations = c(verbatim_citations,strsplit(comment, ";"))
+      cit = strsplit(comment, ";")
+      verbatim_citations = c(verbatim_citations,cit)
     }else{
       verbatim_citations = c(verbatim_citations,comment)
     }
   })
 
-
+  print(str(verbatim_citations))
   sapply(verbatim_citations, function(comment){
     #extract name:
     print(comment)
