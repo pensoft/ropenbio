@@ -487,7 +487,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   })
 
 
-  process_nomenclature_cit =  function(comment, atoms, positive){
+  process_nomenclature_cit =  function(comment, atoms){
     author_name = stringr::str_extract(comment, "^(.*?)(?=[0-9])")
     author_name = gsub(",", "", author_name)
     author_name = strip_trailing_whitespace(author_name)
@@ -501,7 +501,9 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
       sapply(atoms$all_bibs[bib_id], function(j) {
         bib_content = unlist(j)$text_value
         if (!(grepl(author_name, bib_content) && grepl(year, bib_content))){
-          positive = c(positive, comment)
+          positive = comment
+        }else{
+          positive = NULL
         }
       })
     }
@@ -518,10 +520,11 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     }
   })
 
+  print(length(atoms$comment))
   if(length(atoms$comment)>1){
     positive = c()
     for(n in 1:length(verbatim_citations)){
-      positive = process_nomenclature_cit(verbatim_citations[n], atoms, positive)
+      positive = c(positive, process_nomenclature_cit(verbatim_citations[n], atoms))
     }
     print(positive)
     sapply(positive, function(n){
