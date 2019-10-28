@@ -521,7 +521,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   })
 
   print(length(atoms$comment))
-  if(length(atoms$comment)>1){
+  if(length(atoms$comment)>0){
     positive = c()
     for(n in 1:length(verbatim_citations)){
       positive = c(positive, process_nomenclature_cit(verbatim_citations[n], atoms))
