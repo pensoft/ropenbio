@@ -454,8 +454,8 @@ material_schema = XmlSchema$new(
                   prefix = c(openbiodiv = "http://openbiodiv.net/"),
                   atoms = c(
                     text_content = ".",
-                    comment = "./comment[not(./xref[@ref-type='bibr'])", #need to crossreference with the bibliography section,
-                    bibr = "./comment/xref/@ref-type='bibr'"
+                    comment = "./comment[not(./xref[@ref-type='bibr'])]", #need to crossreference with the bibliography section,
+                    bibr = "./comment/xref/@ref-type"
                     ),
 
                   atom_lang = c(
