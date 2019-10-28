@@ -490,6 +490,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
   sapply(atoms$comment, function(n){
     comment = n$text_value
+    print(comment)
     if (grepl(";", comment)){
       verbatim_citations = strsplit(comment, ";")
       cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
@@ -508,7 +509,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     #extract year: (only years starting with 1 or 2, followed by 7 until 9)
     year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
 
-    print(paste0(author_name, year))
+    #print(paste0(author_name, year))
 
     if (length(bib_id)>0){
       sapply(atoms$all_bibs[bib_id], function(j) {
@@ -526,7 +527,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     #general_collection$insert(d)
   })
 
-  print(verbatim_citations)
+  #print(verbatim_citations)
 
   sapply(verbatim_citations, function(n){
     tt$add_triple(identifiers$nid, mentions, literal(n))
