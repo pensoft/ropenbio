@@ -481,7 +481,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   verbatim_citations = c()
   sapply(atoms$comment, function(n){
 
-    cat(n, file = "../atoms-comment", append = TRUE)
+    cat(toString(n), file = "../atoms-comment", append = TRUE)
     comment = unlist(n)["text_value"]
     if (grep(";", comment)){
       verbatim_citations = c(verbatim_citations,strsplit(comment, ";"))
