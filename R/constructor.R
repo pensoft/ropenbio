@@ -488,23 +488,19 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
 
 
-  verbatim_citations = c()
   sapply(atoms$comment, function(n){
-
-
     comment = n$text_value
     if (grepl(";", comment)){
-      cit = strsplit(comment, ";")
-      verbatim_citations = c(verbatim_citations,cit)
+      verbatim_citations = strsplit(comment, ";")
+      cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
     }else{
-      verbatim_citations = c(verbatim_citations,comment)
+      verbatim_citations = comment
     }
   })
 
-  print(str(verbatim_citations))
   sapply(verbatim_citations, function(comment){
     #extract name:
-    print(comment)
+
     author_name = stringr::str_extract(comment, "^(.*?)(?=[0-9])")
     author_name = gsub(",", "", author_name)
     author_name = strip_trailing_whitespace(author_name)
@@ -522,6 +518,8 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
       }
       })
     }
+
+
 
     #save to mongo for lookup during bibliography constr
     #d = data.frame(key = as.character(identifiers$nid$uri), value = as.character(comment), type = "nomenclature-cit", author = as.character(author_name), year = as.character(year))
