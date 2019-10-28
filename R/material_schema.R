@@ -402,7 +402,7 @@ material_schema = XmlSchema$new(
           prefix = c(openbiodiv = "http://openbiodiv.net/"),
           atoms = c(
             text_content = ".",
-            zoobank = "./tp:taxon-name/object-id[@content-type='zoobank']",
+            zoobank = ".//tp:taxon-name/object-id[@content-type='zoobank']",
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']"
           ),
@@ -454,7 +454,7 @@ material_schema = XmlSchema$new(
                   prefix = c(openbiodiv = "http://openbiodiv.net/"),
                   atoms = c(
                     text_content = ".",
-                    comment = "./comment[not(./xref[@ref-type='bibr'])]"#need to crossreference with the bibliography section,
+                    comment = ".//comment[not(./xref[@ref-type='bibr'])]"#need to crossreference with the bibliography section,
                     #bibr = "./comment/xref/@ref-type"
                     ),
 
