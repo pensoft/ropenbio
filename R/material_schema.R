@@ -448,14 +448,14 @@ material_schema = XmlSchema$new(
               components = list(
                 XmlSchema$new(
                   schema_name = "nomenclature_citation",
-                  xpath = "tp:nomenclature-citation", #rel path from treatment
+                  xpath = "./tp:nomenclature-citation", #rel path from treatment
                   file_pattern = ".*\\.xml",
                   extension = ".xml",
                   prefix = c(openbiodiv = "http://openbiodiv.net/"),
                   atoms = c(
                     text_content = ".",
-                    comment = ".comment[not(./xref[@ref-type='bibr'])", #need to crossreference with the bibliography section,
-                    bibr = ".comment/xref/@ref-type='bibr'"
+                    comment = "./comment[not(./xref[@ref-type='bibr'])", #need to crossreference with the bibliography section,
+                    bibr = "./comment/xref/@ref-type='bibr'"
                     ),
 
                   atom_lang = c(
