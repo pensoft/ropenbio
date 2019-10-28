@@ -510,7 +510,6 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
   sapply(atoms$comment, function(n){
     comment = n$text_value
-    print(comment)
     if (grepl(";", comment)){
       verbatim_citations = strsplit(comment, ";")
       cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
