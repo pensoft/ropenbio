@@ -425,7 +425,7 @@ material_schema = XmlSchema$new(
           components = list(
             XmlSchema$new(
               schema_name = "nomenclature_citations-list",
-              xpath = "./tp:nomenclature-citation-list", #rel path from treatment
+              xpath = "tp:nomenclature-citation-list", #rel path from treatment
               file_pattern = ".*\\.xml",
               extension = ".xml",
               prefix = c(openbiodiv = "http://openbiodiv.net/"),
@@ -448,7 +448,7 @@ material_schema = XmlSchema$new(
               components = list(
                 XmlSchema$new(
                   schema_name = "nomenclature_citation",
-                  xpath = "./tp:nomenclature-citation", #rel path from treatment
+                  xpath = "tp:nomenclature-citation", #rel path from treatment
                   file_pattern = ".*\\.xml",
                   extension = ".xml",
                   prefix = c(openbiodiv = "http://openbiodiv.net/"),
