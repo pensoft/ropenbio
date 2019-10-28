@@ -519,14 +519,17 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     }
   })
 
-  positive = c()
-  for(n in 1:length(verbatim_citations)){
-    positive = process_nomenclature_cit(verbatim_citations[n], atoms, positive)
+  if(length(atoms$comment)>1){
+    positive = c()
+    for(n in 1:length(verbatim_citations)){
+      positive = process_nomenclature_cit(verbatim_citations[n], atoms, positive)
+    }
+    print(positive)
+    sapply(positive, function(n){
+      tt$add_triple(identifiers$nid, mentions, literal(n))
+    })
   }
-  print(positive)
-  sapply(positive, function(n){
-    tt$add_triple(identifiers$nid, mentions, literal(n))
-  })
+
   return(tt)
 }
 
