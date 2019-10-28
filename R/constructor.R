@@ -493,7 +493,6 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
 
     comment = unlist(n)["text_value"]
-    cat(toString(comment), file = "../atoms-comment", append = TRUE)
     if (grepl(";", comment)){
       verbatim_citations = c(verbatim_citations,strsplit(comment, ";"))
     }else{
@@ -510,6 +509,8 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
     #extract year: (only years starting with 1 or 2, followed by 7 until 9)
     year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
+
+    print(paste0(author_name, year))
 
     if (length(bib_id)>0){
       sapply(atoms$all_bibs[bib_id], function(j) {
