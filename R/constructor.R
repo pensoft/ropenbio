@@ -486,28 +486,30 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     as.integer(gsub("B", "", a$text_value))
   })
 
-
-  verbatim_citations = sapply(atoms$comment, function(n){
-    comment = n$text_value
-    split = strsplit(comment, ";")
-    return(as.vector(split))
-  })
-
-  print(str(verbatim_citations))
-  print(verbatim_citations)
-
-  for (i in 1:length(unlist(verbatim_citations))){
-    author_name = stringr::str_extract(verbatim_citations[i], "^(.*?)(?=[0-9])")
-    author_name = gsub(",", "", author_name)
-    author_name = strip_trailing_whitespace(author_name)
-    year = stringr::str_extract(verbatim_citations[i], "[1-2][7-9][0-9]{2}")
-
-    print("author")
-    print(author_name)
-    print("year")
-    print(year)
-
+  if(length(atoms$comment)>0){
+  for (n in 1:length(atoms$comment)){
+     comment = unlist(atoms$journal_zoobank[n])["text_value"]
+     verbatim_citations = strsplit(comment, ";")
+   }
   }
+
+  if(length(verbatim_citations)>0){
+    for (i in 1:length(unlist(verbatim_citations))){
+      author_name = stringr::str_extract(verbatim_citations[i], "^(.*?)(?=[0-9])")
+      author_name = gsub(",", "", author_name)
+      author_name = strip_trailing_whitespace(author_name)
+      year = stringr::str_extract(verbatim_citations[i], "[1-2][7-9][0-9]{2}")
+
+      print("author")
+      print(author_name)
+      print("year")
+      print(year)
+
+    }
+  }
+
+
+
 
 
 #  process_nomenclature_cit =  function(comment, atoms){
