@@ -505,6 +505,9 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
       sapply(atoms$all_bibs_surnames[bib_id], function(a) {
         bib_surnames = a
         print(author_name %in% bib_surnames)
+        print("author_name")
+        print(author_name)
+        print(bib_surnames)
       })
     }
 
