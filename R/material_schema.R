@@ -456,21 +456,28 @@ material_schema = XmlSchema$new(
                     text_content = ".",
                     comment = ".//comment", #need to crossreference with the bibliography section,
                     bibr = ".//comment/xref[@ref-type]/@rid",
-                    all_bibs = "//article/back/ref-list/ref"
+                    all_bibs = "//article/back/ref-list/ref",
+                    all_bibs_surnames = "//article/back/ref-list/ref/mixed-citation/person-group/name/surname",
+                    all_bibs_years = "//article/back/ref-list/ref/mixed-citation/year"
                     ),
 
                   atom_lang = c(
                     text_content = NA,
                     comment = NA,
                     bibr = NA,
-                    all_bibs = NA
+                    all_bibs = NA,
+                    all_bibs_surnames = NA,
+                    all_bibs_years = NA
                   ),
 
                   atom_types = list(
                     text_content =  rdf4r::xsd_string,
                     comment = rdf4r::xsd_string,
                     bibr =  rdf4r::xsd_string,
-                    all_bibs = rdf4r::xsd_string
+                    all_bibs = rdf4r::xsd_string,
+                    all_bibs_surnames = rdf4r::xsd_string,
+                    all_bibs_years = rdf4r::xsd_string
+
                   ),
 
 
