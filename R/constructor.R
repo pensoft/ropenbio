@@ -494,7 +494,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
    }
   }
 
-  sapply(verbatim_citations, function(i){
+  sapply(unlist(verbatim_citations), function(i){
     i = strip_trailing_whitespace(i)
     i = gsub("^ ", "", i)
     author_name = stringr::str_extract(i, "^(.*?)(?=[0-9])")
