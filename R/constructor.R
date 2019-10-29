@@ -486,6 +486,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     as.integer(gsub("B", "", a$text_value))
   })
 
+
   if(length(atoms$comment)>0){
   for (n in 1:length(atoms$comment)){
      comment = unlist(atoms$comment[n])["text_value"]
@@ -500,12 +501,13 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     author_name = gsub(",", "", author_name)
     author_name = strip_trailing_whitespace(author_name)
     year = stringr::str_extract(i, "[1-2][0-9]{3}")
-    print(bib_id)
-    print(atoms$all_bibs_surnames[bib_id])
-    sapply(atoms$all_bibs_surnames[bib_id], function(a) {
-      bib_surnames = a
-      print(author_name %in% bib_surnames)
-    })
+    if (bib_id > 0){
+      sapply(atoms$all_bibs_surnames[bib_id], function(a) {
+        bib_surnames = a
+        print(author_name %in% bib_surnames)
+      })
+    }
+
 
   })
  # print(verbatim_citations)
