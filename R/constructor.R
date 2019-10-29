@@ -518,8 +518,10 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
     if (grepl(";", comment)){
       split = strsplit(comment, ";")
+      non_split = c()
     }else{
       non_split = comment
+      split = c()
     }
 
     verbatim_citations = append(split, non_split)
