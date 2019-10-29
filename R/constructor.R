@@ -493,7 +493,9 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     return(split)
   }))
 
- # print(verbatim_citations)
+  verbatim_citations = lapply(verbatim_citations, rapply, f = c)
+  print(verbatim_citations)
+  print(str(verbatim_citations))
 
   for (i in 1:length(unlist(verbatim_citations))){
     author_name = stringr::str_extract(verbatim_citations[i], "^(.*?)(?=[0-9])")
