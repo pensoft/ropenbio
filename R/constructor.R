@@ -517,11 +517,14 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     cat(toString(comment), file = "../comment", append = TRUE)
 
     if (grepl(";", comment)){
-      verbatim_citations = strsplit(comment, ";")
-      cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
+      split = strsplit(comment, ";")
     }else{
-      verbatim_citations = comment
+      non_split = comment
     }
+
+    verbatim_citations = append(split, non_split)
+
+    cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
   })
 
     positive = c()
