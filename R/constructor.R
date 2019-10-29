@@ -497,6 +497,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
        citID = get_or_set_mongoid(df, prefix)
        citID = identifier(citID)
        tt$add_triple(identifiers$nid, mentions, citID)
+       tt$add_triple(citID, rdf4r::rdf_type, LitCitation)
        tt$add_triple(citID, has_content, literal(i))
        author_name = stringr::str_extract(i, "^(.*?)(?=[0-9])")
        author_name = gsub(",", "", author_name)
