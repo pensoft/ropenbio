@@ -499,7 +499,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     author_name = stringr::str_extract(i, "^(.*?)(?=[0-9])")
     author_name = gsub(",", "", author_name)
     author_name = strip_trailing_whitespace(author_name)
-    year = stringr::str_extract(i, "[1-2][7-9][0-9]{2}")
+    year = stringr::str_extract(i, "[1-2][0-9]{3}")
     print("author")
     print(author_name)
     print("year")
