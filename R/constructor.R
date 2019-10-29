@@ -489,10 +489,10 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   if(length(atoms$comment)>0){
   for (n in 1:length(atoms$comment)){
      comment = unlist(atoms$comment[n])["text_value"]
-     print(comment)
-     #verbatim_citations = strsplit(comment, ";")
+     verbatim_citations = strsplit(comment, ";")
    }
   }
+  print(verbatim_citations)
 
   # if(length(verbatim_citations)>0){
   #   for (i in 1:length(unlist(verbatim_citations))){
