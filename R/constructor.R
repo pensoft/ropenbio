@@ -500,7 +500,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
       sapply(atoms$all_bibs[bib_id], function(j) {
         print("the bib id is")
         print(bib_id)
-        print(j))
+        print(j)
         bib_content = unlist(j)$text_value
         print(bib_content)
         print(author_name)
