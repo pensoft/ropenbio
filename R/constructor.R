@@ -495,12 +495,12 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     #extract year: (only years starting with 1 or 2, followed by 7 until 9)
     year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
 
-    print("the bib id is")
-    print(bib_id)
-    print(atoms$all_bibs[bib_id])
+
     if (length(bib_id)>0){
       sapply(atoms$all_bibs[bib_id], function(j) {
-
+        print("the bib id is")
+        print(bib_id)
+        print(j))
         bib_content = unlist(j)$text_value
         print(bib_content)
         print(author_name)
