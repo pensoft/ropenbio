@@ -500,10 +500,18 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     author_name = gsub(",", "", author_name)
     author_name = strip_trailing_whitespace(author_name)
     year = stringr::str_extract(i, "[1-2][0-9]{3}")
-    print("author")
-    print(author_name)
-    print("year")
-    print(year)
+    sapply(atoms$bibr, function(a) {
+      xpath = paste0("//article/back/ref-list/ref[@id=",a$text_value,"]")
+      bibs = xml2::xml_find_all(xml, xpath)
+      if (length(bibs)>0){
+        surnames =  xml2::xml_text(xml2::xml_find_all(bibs[1], ".//mixed-citation/person-group/name/surname"))
+        print(author_name %in% surnames)
+
+        year = xml2::xml_text(xml2::xml_find_all(bibs[1], ".//mixed-citation/year"))
+        print(year %in% surnames)
+      }
+
+    })
 
   })
  # print(verbatim_citations)
