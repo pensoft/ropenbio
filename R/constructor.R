@@ -498,10 +498,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
     if (length(bib_id)>0){
       sapply(atoms$all_bibs[bib_id], function(j) {
-        print("the bib id is")
-        print(bib_id)
-        print(j)
-        bib_content = unlist(j)$text_value
+        bib_content = j
         print(bib_content)
         print(author_name)
         print(year)
@@ -517,7 +514,6 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
   verbatim_citations = sapply(atoms$comment, function(n){
     comment = n$text_value
-    print(comment)
     if (grepl(";", comment)){
       verbatim_citations = strsplit(comment, ";")
       cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
@@ -527,14 +523,12 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   })
 
     positive = c()
-    print(length(verbatim_citations))
     for(n in 1:length(verbatim_citations)){
        proc = process_nomenclature_cit(verbatim_citations[n], atoms)
        if (!(is.null(proc))){
          positive = c(positive, proc)
        }
     }
-    print(positive)
     sapply(positive, function(n){
       tt$add_triple(identifiers$nid, mentions, literal(n))
     })
