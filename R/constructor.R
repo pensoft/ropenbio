@@ -493,6 +493,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     return(split)
   }))
 
+  print(str(verbatim_citations))
   verbatim_citations = lapply(verbatim_citations, rapply, f = c)
   print(verbatim_citations)
   print(str(verbatim_citations))
