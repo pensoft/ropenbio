@@ -490,7 +490,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   verbatim_citations = sapply(atoms$comment, function(n){
     comment = n$text_value
     split = strsplit(comment, ";")
-    return(split)
+    return(as.vector(split))
   })
 
   print(str(verbatim_citations))
