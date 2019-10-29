@@ -487,58 +487,67 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   })
 
 
-  process_nomenclature_cit =  function(comment, atoms){
-    author_name = stringr::str_extract(comment, "^(.*?)(?=[0-9])")
-    author_name = gsub(",", "", author_name)
-    author_name = strip_trailing_whitespace(author_name)
+  verbatim_citations = c(verbatim_citations, sapply(atoms$comment, function(n){
+    comment = n$text_value
+    split = strsplit(comment, ";")
+    return(split)
+  }))
+
+  print(verbatim_citations)
+
+
+#  process_nomenclature_cit =  function(comment, atoms){
+#    author_name = stringr::str_extract(comment, "^(.*?)(?=[0-9])")
+  #    author_name = gsub(",", "", author_name)
+  #    author_name = strip_trailing_whitespace(author_name)
 
     #extract year: (only years starting with 1 or 2, followed by 7 until 9)
-    year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
+  #   year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
 
 
-    if (length(bib_id)>0){
-      sapply(atoms$all_bibs[bib_id], function(j) {
-        bib_content = j
-        print(bib_content)
-        print(author_name)
-        print(year)
-        if (grepl(author_name, bib_content) == FALSE && grepl(year, bib_content) == FALSE){
-          positive = comment
-        }else{
-          positive = NULL
-        }
-      })
-    }
-    return(positive)
-  }
+  #    if (length(bib_id)>0){
+      #      sapply(atoms$all_bibs[bib_id], function(j) {
+  #       bib_content = j
+  #      print(bib_content)
+  #      print(author_name)
+        #      print(year)
+  #     if (grepl(author_name, bib_content) == FALSE && grepl(year, bib_content) == FALSE){
+  #        positive = comment
+  #      }else{
+          #        positive = NULL
+  ###        }
+  #     })
+  #   }
+  #   return(positive)
+  #  }
 
-  verbatim_citations = sapply(atoms$comment, function(n){
-    comment = n$text_value
-    cat(toString(comment), file = "../comment", append = TRUE)
+  #verbatim_citations = sapply(atoms$comment, function(n){
+  #  comment = n$text_value
+  #  cat(toString(comment), file = "../comment", append = TRUE)
 
-    if (grepl(";", comment)){
-      split = strsplit(comment, ";")
-      non_split = c()
-    }else{
-      non_split = comment
-      split = c()
-    }
+  # if (grepl(";", comment)){
+      #   split = strsplit(comment, ";")
+  #   non_split = c()
+  #  }else{
+  #   non_split = comment
+  #   split = c()
+  #  }
 
-    verbatim_citations = append(split, non_split)
+  #  verbatim_citations = append(split, non_split)
 
-    cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
-  })
-
-    positive = c()
-    for(n in 1:length(verbatim_citations)){
-       proc = process_nomenclature_cit(verbatim_citations[n], atoms)
-       if (!(is.null(proc))){
-         positive = c(positive, proc)
-       }
-    }
-    sapply(positive, function(n){
-      tt$add_triple(identifiers$nid, mentions, literal(n))
-    })
+  # cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
+  # })
+#
+  # positive = c()
+  #  for(n in 1:length(verbatim_citations)){
+  #     proc = process_nomenclature_cit(verbatim_citations[n], atoms)
+  #     if (!(is.null(proc))){
+  #       positive = c(positive, proc)
+  #     }
+  #  }
+  #  sapply(positive, function(n){
+  # tt$add_triple(identifiers$nid, mentions, literal(n))
+  # })
 
 
   return(tt)
