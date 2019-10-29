@@ -482,15 +482,32 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     tt$add_triple(identifiers$nid, has_ref_id, a)
   })
 
-  bib_id = sapply(atoms$bibr, function(a){
-    as.integer(gsub("B", "", a$text_value))
-  })
-
 
   if(length(atoms$comment)>0){
   for (n in 1:length(atoms$comment)){
      comment = unlist(atoms$comment[n])["text_value"]
      verbatim_citations = strsplit(comment, ";")
+
+     sapply(unlist(verbatim_citations), function(i){
+       i = strip_trailing_whitespace(i)
+       i = gsub("^ ", "", i)
+
+       #create an id for each 'verbatim cit'
+       df = set_component_frame(label = i, mongo_key = NA, type = "nomenclature_litCit", orcid = NA, parent = NA, key = NA)
+       citID = get_or_set_mongoid(df, prefix)
+       citID = identifier(citID)
+       tt$add_triple(identifiers$nid, mentions, citID)
+       tt$add_triple(citID, has_content, literal(i))
+       author_name = stringr::str_extract(i, "^(.*?)(?=[0-9])")
+       author_name = gsub(",", "", author_name)
+       author_name = strip_trailing_whitespace(author_name)
+       author_name = stringr::str_extract_all(author_name, "[A-Z].*?(?=[\\s(])|[A-Z].*?$")
+       sapply(unlist(author_name), function(n){
+         tt$add_triple(citID, verbatimAuthor, literal(n))
+       })
+       year = stringr::str_extract(i, "[1-2][0-9]{3}")
+       tt$add_triple(citID, verbatimYear, literal(year))
+     })
    }
   }
 
@@ -511,83 +528,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
         print(bib_surnames)
       })
     }
-
-
   })
- # print(verbatim_citations)
-
-  # if(length(verbatim_citations)>0){
-  #   for (i in 1:length(unlist(verbatim_citations))){
-  #    author_name = stringr::str_extract(verbatim_citations[i], "^(.*?)(?=[0-9])")
-  #    author_name = gsub(",", "", author_name)
-  ##    author_name = strip_trailing_whitespace(author_name)
-  #    year = stringr::str_extract(verbatim_citations[i], "[1-2][7-9][0-9]{2}")
-
-  #    print("author")
-  #   print(author_name)
-  #   print("year")
-  #   print(year)
-
-  #  }
-  # }
-
-
-
-
-
-#  process_nomenclature_cit =  function(comment, atoms){
-#    author_name = stringr::str_extract(comment, "^(.*?)(?=[0-9])")
-  #    author_name = gsub(",", "", author_name)
-  #    author_name = strip_trailing_whitespace(author_name)
-
-    #extract year: (only years starting with 1 or 2, followed by 7 until 9)
-  #   year = stringr::str_extract(comment, "[1-2][7-9][0-9]{2}")
-
-
-  #    if (length(bib_id)>0){
-      #      sapply(atoms$all_bibs[bib_id], function(j) {
-  #       bib_content = j
-  #      print(bib_content)
-  #      print(author_name)
-        #      print(year)
-  #     if (grepl(author_name, bib_content) == FALSE && grepl(year, bib_content) == FALSE){
-  #        positive = comment
-  #      }else{
-          #        positive = NULL
-  ###        }
-  #     })
-  #   }
-  #   return(positive)
-  #  }
-
-  #verbatim_citations = sapply(atoms$comment, function(n){
-  #  comment = n$text_value
-  #  cat(toString(comment), file = "../comment", append = TRUE)
-
-  # if (grepl(";", comment)){
-      #   split = strsplit(comment, ";")
-  #   non_split = c()
-  #  }else{
-  #   non_split = comment
-  #   split = c()
-  #  }
-
-  #  verbatim_citations = append(split, non_split)
-
-  # cat(toString(verbatim_citations), file = "../verbatim-cits", append = TRUE)
-  # })
-#
-  # positive = c()
-  #  for(n in 1:length(verbatim_citations)){
-  #     proc = process_nomenclature_cit(verbatim_citations[n], atoms)
-  #     if (!(is.null(proc))){
-  #       positive = c(positive, proc)
-  #     }
-  #  }
-  #  sapply(positive, function(n){
-  # tt$add_triple(identifiers$nid, mentions, literal(n))
-  # })
-
 
   return(tt)
 }

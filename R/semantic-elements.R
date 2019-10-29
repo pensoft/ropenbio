@@ -1084,6 +1084,31 @@ has_ref_id = rdf4r::identifier(
   id = "hasBibReferenceID",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
+
+# THis is for inside use
+#Literary citation
+#' @export
+LitCitation = rdf4r::identifier(
+  id = "LitCitation",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+# THis is for inside use
+#' @export
+verbatimAuthor = rdf4r::identifier(
+  id = "verbatimAuthor",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+# THis is for inside use
+#' @export
+verbatimYear = rdf4r::identifier(
+  id = "verbatimYear",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+
 #
 # Table:
 #   uri: <http://purl.org/spar/doco/Table>
