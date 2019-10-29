@@ -486,7 +486,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     as.integer(gsub("B", "", a$text_value))
   })
 
-
+  verbatim_citations = c()
   verbatim_citations = c(verbatim_citations, sapply(atoms$comment, function(n){
     comment = n$text_value
     split = strsplit(comment, ";")
