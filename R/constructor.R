@@ -512,25 +512,6 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
    }
   }
 
-  sapply(unlist(verbatim_citations), function(i){
-    i = strip_trailing_whitespace(i)
-    i = gsub("^ ", "", i)
-    author_name = stringr::str_extract(i, "^(.*?)(?=[0-9])")
-    author_name = gsub(",", "", author_name)
-    author_name = strip_trailing_whitespace(author_name)
-    author_name = stringr::str_extract(author_name, "[A-Z].*?(?=[\\s(])|[A-Z].*?$")
-    year = stringr::str_extract(i, "[1-2][0-9]{3}")
-    if (length(bib_id) > 0){
-      sapply(atoms$all_bibs_surnames[bib_id], function(a) {
-        bib_surnames = a
-        print(author_name %in% bib_surnames)
-        print("author_name")
-        print(author_name)
-        print(bib_surnames)
-      })
-    }
-  })
-
   return(tt)
 }
 
