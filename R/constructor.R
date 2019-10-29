@@ -464,7 +464,7 @@ nomenclature_citations = function (atoms, identifiers, prefix, new_taxons, mongo
 
 
 #' @export
-nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_key)
+nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_key, xml)
 {
 
   tt = ResourceDescriptionFramework$new()

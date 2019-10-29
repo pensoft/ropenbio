@@ -56,7 +56,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_tax
 
 #' @export
 node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_taxons,
-          dry = FALSE, filename, root_id)
+          dry = FALSE, filename, root_id, xml = xml)
 {
   if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples))) {
     if (!is.null(xml_schema$injector)) {
@@ -87,7 +87,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
 
       node_extractor_en(n, c, reprocess = reprocess, triples = triples,
                         prefix = prefix, new_taxons = new_taxons, dry = dry, filename = filename,
-                        root_id = root_id)
+                        root_id = root_id, xml = xml)
 
 
     }

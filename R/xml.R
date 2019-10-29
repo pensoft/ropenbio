@@ -122,7 +122,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         new_taxons = new_taxons,
         dry = dry,
         filename = filename,
-        root_id = root_ident
+        root_id = root_ident,
+        xml = xml
       )
 
 
