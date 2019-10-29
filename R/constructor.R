@@ -496,7 +496,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
  # print(verbatim_citations)
 
   for (i in 1:length(unlist(verbatim_citations))){
-    author_name = stringr::extract(verbatim_citations[i], "^(.*?)(?=[0-9])")
+    author_name = stringr::str_extract(verbatim_citations[i], "^(.*?)(?=[0-9])")
     author_name = gsub(",", "", author_name)
     author_name = strip_trailing_whitespace(author_name)
     year = stringr::str_extract(verbatim_citations[i], "[1-2][7-9][0-9]{2}")
