@@ -486,17 +486,15 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     as.integer(gsub("B", "", a$text_value))
   })
 
-  verbatim_citations = c()
-  verbatim_citations = c(verbatim_citations, sapply(atoms$comment, function(n){
+
+  verbatim_citations = sapply(atoms$comment, function(n){
     comment = n$text_value
     split = strsplit(comment, ";")
     return(split)
-  }))
+  })
 
   print(str(verbatim_citations))
-  verbatim_citations = lapply(verbatim_citations, rapply, f = c)
   print(verbatim_citations)
-  print(str(verbatim_citations))
 
   for (i in 1:length(unlist(verbatim_citations))){
     author_name = stringr::str_extract(verbatim_citations[i], "^(.*?)(?=[0-9])")
