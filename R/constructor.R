@@ -482,7 +482,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     tt$add_triple(identifiers$nid, has_ref_id, a)
   })
 
-  bib_id =  sapply(atoms$bibr, function(a){
+  bib_id = sapply(atoms$bibr, function(a){
     as.integer(gsub("B", "", a$text_value))
   })
 
@@ -501,7 +501,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
     author_name = gsub(",", "", author_name)
     author_name = strip_trailing_whitespace(author_name)
     year = stringr::str_extract(i, "[1-2][0-9]{3}")
-    if (bib_id > 0){
+    if (length(bib_id) > 0){
       sapply(atoms$all_bibs_surnames[bib_id], function(a) {
         bib_surnames = a
         print(author_name %in% bib_surnames)
