@@ -495,7 +495,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
        #create an id for each 'verbatim cit'
        df = set_component_frame(label = i, mongo_key = NA, type = "nomenclature_litCit", orcid = NA, parent = NA, key = NA)
        citID = get_or_set_mongoid(df, prefix)
-       citID = identifier(citID)
+       citID = identifier(citID, prefix)
        tt$add_triple(identifiers$nid, mentions, citID)
        tt$add_triple(citID, rdf4r::rdf_type, LitCitation)
        tt$add_triple(citID, has_content, literal(i))
