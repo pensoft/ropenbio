@@ -1107,6 +1107,35 @@ verbatimYear = rdf4r::identifier(
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' @export
+Reference = rdf4r::identifier(
+  id = "BibliographicReference",
+  prefix = c(deo = "http://purl.org/spar/deo/")
+)
+
+#' @export
+ReferenceList = rdf4r::identifier(
+  id = "BibliographicReferenceList",
+  prefix = c(doco = "http://purl.org/spar/doco/")
+)
+
+#' @export
+Bibliography = rdf4r::identifier(
+  id = "Bibliography",
+  prefix = c(doco = "http://purl.org/spar/doco/")
+)
+
+#' @export
+surname = rdf4r::identifier(
+  id = "surname",
+  prefix = c(foaf = "http://xmlns.com/foaf/0.1/")
+)
+
+#' @export
+givenName = rdf4r::identifier(
+  id = "givenName",
+  prefix = c(foaf = "http://xmlns.com/foaf/0.1/")
+)
 
 
 #

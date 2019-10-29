@@ -308,7 +308,6 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   article_id = identifiers$root_id
   author_id = identifiers$nid
   paper_id = check_mongo_key_via_parent(parent = article_id$uri, type = "researchPaper", collection = general_collection)
-  cat(paper_id, file="~/paper_id")
 
   paper_id = gsub("http://openbiodiv.net/", "", paper_id)
   paper_id = identifier(paper_id, prefix)
@@ -479,6 +478,8 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
 
   sapply(atoms$bibr, function(a) {
+    a$text_value = as.integer(gsub("B", "", a$text_value))
+    a$squote = as.integer(gsub("B", "", a$squote))
     tt$add_triple(identifiers$nid, has_ref_id, a)
   })
 
@@ -514,6 +515,102 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
   return(tt)
 }
+
+#For now: no author disambiguation -> separate id for authors
+#' @export
+bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
+{
+  bib = identifiers$nid
+  tt = ResourceDescriptionFramework$new()
+  tt$add_triple(bib, rdf_type, Bibliography)
+
+  #there is only 1 ref list
+  sapply(atoms$text_content, function(n){
+    df = set_component_frame(label = n, mongo_key = NA, type = "reference-list", orcid = NA, parent = NA, key = NA)
+    ref_list = get_or_set_mongoid(df, prefix)
+    ref_list = identifier(ref_list, prefix)
+  })
+
+  tt$add_triple(ref_list, rdf_type, ReferenceList)
+  tt$add_triple(ref_list, is_contained_by, bib)
+
+  #there is only 1 ref list
+  sapply(atoms$reference, function(n){
+    df = set_component_frame(label = n$text_value, mongo_key = NA, type = "reference", orcid = NA, parent = NA, key = NA)
+    ref = get_or_set_mongoid(df, prefix)
+    ref = identifier(ref, prefix)
+
+    tt$add_triple(ref, rdf_type, Reference)
+    tt$add_triple(ref, is_contained_by, ref_list)
+
+    reference_id = atoms$reference_id[[1]]$text_value
+    reference_id = as.integer(gsub("B", "", reference_id))
+    tt$add_triple(ref, has_ref_id, literal(reference_id))
+
+    tt$add_triple(ref, rdfs_label, atoms$verbatimContent[[1]])
+
+    #get or set an id for the cited article
+    check_mongo_citation = function(value, parent, collection)
+    {
+      if (is.na(parent)){
+        query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "value", value)
+      }else{
+        query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "parent", parent)
+      }
+      key = collection$find(query)$key
+      return(key)
+    }
+
+    article_title = atoms$article_title[[1]]$text_value
+    article_doi = atoms$doi[[1]]$text_value
+    key = check_mongo_citation(value = article_title, parent = doi, collection = general_collection)
+    df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
+    article_id = get_or_set(key, df)
+    article_id = identifier(article_id, prefix)
+    tt$add_triple(article_id, rdf_type, Article)
+
+    research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
+    paper_id = get_or_set_mongoid(research_paper_df, prefix)
+    paper_id = identifier(paper_id, prefix)
+
+    tt$add_triple(paper_id, rdf_type, Paper)
+    tt$add_triple(article_id, realization_of, paper_id)
+    tt$add_triple(article_id, rdf_type, Reference)
+
+    if(length(unlist(atoms$author_fullname)) > 0){
+      for (n in 1:length(atoms$author_fullname)){
+        author_fullname = unlist(atoms$author_fullname[n])["text_value"]
+        df = set_component_frame(label = author_fullname, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
+        author = get_or_set_mongoid(df, prefix)
+        author = identifier(author, prefix)
+        tt$add_triple(author, rdf_type, Person)
+        tt$add_triple(paper_id, creator, author)
+
+        tt$add_triple(author, rdfs_label, atoms$author_fullname[[n]])
+        tt$add_triple(author, surname,  atoms$author_surname[[n]])
+        tt$add_triple(author, givenName,  atoms$author_fname[[n]])
+      }
+    }
+
+    tt$add_triple(article_id, publication_date, atoms$year[[1]])
+    tt$add_triple(article_id, dc_title, atoms$article_title[[1]])
+
+    journal_name =  atoms$journal[[1]]$text_value
+    df = set_component_frame(label = journal_name, mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
+    journal = get_or_set_mongoid(df, prefix)
+    journal = identifier(journal, prefix)
+    tt$add_triple(journal, rdf_type, Journal)
+    tt$add_triple(journal, frbr_part, article_id)
+    tt$add_triple(journal, rdfs_label, journal_name)
+
+    tt$add_triple(article_id, has_issue, atoms$issue[[1]])
+    tt$add_triple(article_id, has_doi, atoms$doi[[1]])
+    tt$add_triple(article_id, has_url, atoms$http_doi[[1]])
+  })
+
+}
+
+
 
 #' Diagnosis Section Constructor
 #'

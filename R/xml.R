@@ -85,7 +85,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 {
   # generate lookup functions
 
-      general_collection =  mongolite::mongo(collection = "new_collection", db = "test")
+
       inst_collection = mongolite::mongo(collection = "institutions", db = "test")
       checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
 
@@ -143,8 +143,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
   #  })
 }
 
-
-
+#' @export
+general_collection =  mongolite::mongo(collection = "new_collection", db = "test")
 
 #' @export
 create_new_file = function(serialization_dir){
