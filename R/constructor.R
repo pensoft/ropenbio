@@ -478,9 +478,8 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 
 
   sapply(atoms$bibr, function(a) {
-    a$text_value = as.integer(gsub("B", "", a$text_value))
-    a$squote = as.integer(gsub("B", "", a$squote))
-    tt$add_triple(identifiers$nid, has_ref_id, a)
+    bibr = as.integer(gsub("B", "", a$text_value))
+    tt$add_triple(identifiers$nid, has_ref_id, literal(bibr))
   })
 
 
@@ -494,7 +493,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
        i = gsub("^ ", "", i)
 
        #create an id for each 'verbatim cit'
-       df = set_component_frame(label = i, mongo_key = NA, type = "nomenclature_litCit", orcid = NA, parent = NA, key = NA)
+       df = set_component_frame(label = i, mongo_key = NA, type = "nomenclature_litCit", orcid = NA, parent = identifiers$nid$uri, key = NA)
        citID = get_or_set_mongoid(df, prefix)
        citID = identifier(citID, prefix)
        tt$add_triple(identifiers$nid, mentions, citID)
@@ -534,7 +533,6 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(ref_list, rdf_type, ReferenceList)
   tt$add_triple(ref_list, is_contained_by, bib)
 
-  #there is only 1 ref list
   sapply(atoms$reference, function(n){
     df = set_component_frame(label = n$text_value, mongo_key = NA, type = "reference", orcid = NA, parent = NA, key = NA)
     print(df)
@@ -563,8 +561,8 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       return(key)
     }
 
-    article_title = atoms$article_title[[1]]$text_value
-    article_doi = atoms$doi[[1]]$text_value
+    article_title = atoms$article_title[[n]]$text_value
+    article_doi = atoms$doi[[n]]$text_value
     key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
 
