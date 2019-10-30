@@ -519,33 +519,31 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 #' @export
 bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
-  bib = identifiers$nid
-  tt = ResourceDescriptionFramework$new()
-  tt$add_triple(bib, rdf_type, Bibliography)
+  reference = identifiers$nid
 
-  #there is only 1 ref list
-
-  text_content = atoms$text_content[[1]]$text_value
-  df = set_component_frame(label = text_content, mongo_key = NA, type = "reference-list", orcid = NA, parent = NA, key = NA)
-  ref_list = get_or_set_mongoid(df, prefix)
+  #generating the reference list id: each article has only 1 ref list!
+  df = set_component_frame(label = NA, mongo_key = NA, type = "reference-list", orcid = NA, parent = identifiers$root$uri, key = NA)
+  ref_list = get_or_set(NA, df)
   ref_list = identifier(ref_list, prefix)
 
+  tt = ResourceDescriptionFramework$new()
+
+  #tt$add_triple(bib, rdf_type, Bibliography)
   tt$add_triple(ref_list, rdf_type, ReferenceList)
-  tt$add_triple(ref_list, is_contained_by, bib)
+  tt$add_triple(ref_list, is_contained_by, identifiers$pid)
 
-  sapply(atoms$reference, function(n){
-    df = set_component_frame(label = n$text_value, mongo_key = NA, type = "reference", orcid = NA, parent = NA, key = NA)
-    ref = get_or_set(NULL, df)
-    ref = identifier(ref, prefix)
+  tt$add_triple(reference, rdf_type, Reference)
+  tt$add_triple(reference, is_contained_by, ref_list)
 
-    tt$add_triple(ref, rdf_type, Reference)
-    tt$add_triple(ref, is_contained_by, ref_list)
+  sapply(atoms$reference_id, function(n){
+    reference_num = n$text_value
+    reference_num = as.integer(gsub("B", "", reference_num))
+    tt$add_triple(reference, has_ref_id, literal(reference_num))
+  })
 
-    reference_id = atoms$reference_id[[1]]$text_value
-    reference_id = as.integer(gsub("B", "", reference_id))
-    tt$add_triple(ref, has_ref_id, literal(reference_id))
-
-    tt$add_triple(ref, rdfs_label, atoms$verbatimContent[[n]])
+  sapply(atoms$verbatimContent, function(n){
+    tt$add_triple(reference, rdfs_label, n)
+  })
 
     #get or set an id for the cited article
     check_mongo_citation = function(value, parent, collection)
@@ -563,19 +561,39 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     article_doi = atoms$doi[[1]]$text_value
     key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
-
     article_id = get_or_set(key, df)
     article_id = identifier(article_id, prefix)
-    tt$add_triple(article_id, rdf_type, Article)
 
     research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
-
     paper_id = get_or_set_mongoid(research_paper_df, prefix)
     paper_id = identifier(paper_id, prefix)
 
-    tt$add_triple(paper_id, rdf_type, Paper)
+    tt$add_triple(article_id, rdf_type, Article)
+
+    sapply(atoms$year, function(n){
+      tt$add_triple(article_id, publication_date, n)
+    })
+
+    sapply(atoms$article_title, function(n){
+      tt$add_triple(article_id, dc_title, n)
+    })
+
+    sapply(atoms$issue, function(n){
+      tt$add_triple(article_id, has_issue, n)
+    })
+
+    sapply(atoms$doi, function(n){
+      tt$add_triple(article_id, has_doi, n)
+    })
+
+    sapply(atoms$http_doi, function(n){
+      tt$add_triple(article_id, has_url, n)
+    })
+
+    tt$add_triple(reference, relation, article_id) #link the reference to the article it references
+
     tt$add_triple(article_id, realization_of, paper_id)
-    tt$add_triple(ref, relation, article_id)
+    tt$add_triple(paper_id, rdf_type, Paper)
 
     full_name = function(lsurname, lgiven_name) {
       if (length(lsurname) == 1 && length(lgiven_name) == 1) {
@@ -588,7 +606,6 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
         NA
       }
     }
-
 
       for (n in 1:length(atoms$author_surname)){
         author_surname = unlist(atoms$author_surname[n])["text_value"]
@@ -607,12 +624,9 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       }
 
 
-    tt$add_triple(article_id, publication_date, atoms$year[[1]])
-    tt$add_triple(article_id, dc_title, atoms$article_title[[1]])
 
     journal_name =  atoms$journal[[1]]$text_value
     df = set_component_frame(label = journal_name, mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
-    print(df)
 
     journal = get_or_set_mongoid(df, prefix)
     journal = identifier(journal, prefix)
@@ -620,11 +634,6 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     tt$add_triple(journal, frbr_part, article_id)
     tt$add_triple(journal, rdfs_label, journal_name)
 
-    tt$add_triple(article_id, has_issue, atoms$issue[[1]])
-    tt$add_triple(article_id, has_doi, atoms$doi[[1]])
-    tt$add_triple(article_id, has_url, atoms$http_doi[[1]])
-
-  })
   return(tt)
 }
 
