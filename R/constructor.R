@@ -527,7 +527,7 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   #there is only 1 ref list
 
   text_content = atoms$text_content[[1]]$text_value
-  df = set_component_frame(label = n$text_value, mongo_key = NA, type = "reference-list", orcid = NA, parent = NA, key = NA)
+  df = set_component_frame(label = text_content, mongo_key = NA, type = "reference-list", orcid = NA, parent = NA, key = NA)
   ref_list = get_or_set_mongoid(df, prefix)
   ref_list = identifier(ref_list, prefix)
 

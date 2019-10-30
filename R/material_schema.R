@@ -830,6 +830,69 @@ material_schema = XmlSchema$new(
       components = NULL
 
     ),
+    XmlSchema$new(
+      schema_name = "bibliography",
+      xpath = "/article/back/ref-list",
+      file_pattern = ".*\\.xml",
+      extension = ".xml",
+      prefix = c(openbiodiv = "http://openbiodiv.net/"),
+      atoms = c(
+        text_content = ".",
+        reference = "./ref",
+        reference_id = "./ref/@id",
+        verbatimContent = "./ref/mixed-citation",
+        author_fullname = "./ref/mixed-citation/person-group/name",
+        author_surname = "./ref/mixed-citation/person-group/name/surname",
+        author_fname = "./ref/mixed-citation/person-group/name/given-names",
+        year = "./ref/mixed-citation/year",
+        article_title = "./ref/mixed-citation/article-title",
+        journal = "./ref/mixed-citation/source",
+        volume = "./ref/mixed-citation/volume",
+        issue = "./ref/mixed-citation/issue",
+        doi = "./ref/mixed-citation/ext-link[@ext-link-type='doi']/@xlink:href",
+        http_doi = "./ref/mixed-citation/ext-link[@ext-link-type='doi']"
+      ),
+
+      atom_lang = c(
+        text_content = NA,
+        reference = NA,
+        reference_id = NA,
+        verbatimContent = NA,
+        author_fullname = NA,
+        author_surname = NA,
+        author_fname = NA,
+        year = NA,
+        article_title = NA,
+        journal = NA,
+        volume = NA,
+        issue = NA,
+        doi = NA,
+        http_doi = NA
+
+      ),
+
+      atom_types = list(
+        text_content = rdf4r::xsd_string,
+        reference = rdf4r::xsd_string,
+        reference_id = rdf4r::xsd_string,
+        verbatimContent = rdf4r::xsd_string,
+        author_fullname = rdf4r::xsd_string,
+        author_surname = rdf4r::xsd_string,
+        author_fname = rdf4r::xsd_string,
+        year = rdf4r::xsd_string,
+        article_title = rdf4r::xsd_string,
+        journal = rdf4r::xsd_string,
+        volume = rdf4r::xsd_string,
+        issue = rdf4r::xsd_string,
+        doi = rdf4r::xsd_string,
+        http_doi = rdf4r::xsd_string
+      ),
+      mongo_key =  c(bibliography = "/article/back/ref-list"),
+      constructor = bibliography,
+
+      components = NULL
+
+    ),
     # Taxonomic Name Usage
     XmlSchema$new(
       schema_name = "taxonomic_name_usage",
@@ -936,69 +999,6 @@ material_schema = XmlSchema$new(
       constructor = taxonomic_name_usage,
 
       components = NULL
-    ),
-    XmlSchema$new(
-      schema_name = "bibliography",
-      xpath = "/article/back/ref-list",
-      file_pattern = ".*\\.xml",
-      extension = ".xml",
-      prefix = c(openbiodiv = "http://openbiodiv.net/"),
-      atoms = c(
-        text_content = ".",
-        reference = "./ref",
-        reference_id = "./ref/@id",
-        verbatimContent = "./ref/mixed-citation",
-        author_fullname = "./ref/mixed-citation/person-group/name",
-        author_surname = "./ref/mixed-citation/person-group/name/surname",
-        author_fname = "./ref/mixed-citation/person-group/name/given-names",
-        year = "./ref/mixed-citation/year",
-        article_title = "./ref/mixed-citation/article-title",
-        journal = "./ref/mixed-citation/source",
-        volume = "./ref/mixed-citation/volume",
-        issue = "./ref/mixed-citation/issue",
-        doi = "./ref/mixed-citation/ext-link[@ext-link-type='doi']/@xlink:href",
-        http_doi = "./ref/mixed-citation/ext-link[@ext-link-type='doi']"
-      ),
-
-      atom_lang = c(
-        text_content = NA,
-        reference = NA,
-        reference_id = NA,
-        verbatimContent = NA,
-        author_fullname = NA,
-        author_surname = NA,
-        author_fname = NA,
-        year = NA,
-        article_title = NA,
-        journal = NA,
-        volume = NA,
-        issue = NA,
-        doi = NA,
-        http_doi = NA
-
-      ),
-
-      atom_types = list(
-        text_content = rdf4r::xsd_string,
-        reference = rdf4r::xsd_string,
-        reference_id = rdf4r::xsd_string,
-        verbatimContent = rdf4r::xsd_string,
-        author_fullname = rdf4r::xsd_string,
-        author_surname = rdf4r::xsd_string,
-        author_fname = rdf4r::xsd_string,
-        year = rdf4r::xsd_string,
-        article_title = rdf4r::xsd_string,
-        journal = rdf4r::xsd_string,
-        volume = rdf4r::xsd_string,
-        issue = rdf4r::xsd_string,
-        doi = rdf4r::xsd_string,
-        http_doi = rdf4r::xsd_string
-      ),
-      mongo_key =  c(bibliography = "/article/back/ref-list"),
-      constructor = bibliography,
-
-      components = NULL
-
     )
   )
 )
