@@ -621,8 +621,9 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     tt$add_triple(article_id, has_issue, atoms$issue[[1]])
     tt$add_triple(article_id, has_doi, atoms$doi[[1]])
     tt$add_triple(article_id, has_url, atoms$http_doi[[1]])
-  })
 
+  })
+  return(tt)
 }
 
 
