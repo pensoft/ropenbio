@@ -560,9 +560,14 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
     article_doi = unlist(atoms$doi[1])["text_value"]
     article_title = unlist(atoms$article_title[1])["text_value"]
+
+    print(article_doi)
+    print(article_title)
     if (length(article_doi)<1){
       article_doi = NA
     }
+
+
 
     key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
