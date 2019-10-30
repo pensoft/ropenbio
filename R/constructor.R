@@ -531,14 +531,20 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     ref_list = identifier(ref_list, prefix)
   })
 
+  print(ref_list)
+
   tt$add_triple(ref_list, rdf_type, ReferenceList)
   tt$add_triple(ref_list, is_contained_by, bib)
 
   #there is only 1 ref list
   sapply(atoms$reference, function(n){
     df = set_component_frame(label = n$text_value, mongo_key = NA, type = "reference", orcid = NA, parent = NA, key = NA)
+    print(df)
+
     ref = get_or_set_mongoid(df, prefix)
     ref = identifier(ref, prefix)
+
+    print(ref)
 
     tt$add_triple(ref, rdf_type, Reference)
     tt$add_triple(ref, is_contained_by, ref_list)
@@ -565,11 +571,15 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     article_doi = atoms$doi[[1]]$text_value
     key = check_mongo_citation(value = article_title, parent = doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
+
+    print(df)
     article_id = get_or_set(key, df)
     article_id = identifier(article_id, prefix)
     tt$add_triple(article_id, rdf_type, Article)
 
     research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
+    print(df)
+
     paper_id = get_or_set_mongoid(research_paper_df, prefix)
     paper_id = identifier(paper_id, prefix)
 
@@ -581,6 +591,8 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       for (n in 1:length(atoms$author_fullname)){
         author_fullname = unlist(atoms$author_fullname[n])["text_value"]
         df = set_component_frame(label = author_fullname, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
+        print(df)
+
         author = get_or_set_mongoid(df, prefix)
         author = identifier(author, prefix)
         tt$add_triple(author, rdf_type, Person)
@@ -597,6 +609,8 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
     journal_name =  atoms$journal[[1]]$text_value
     df = set_component_frame(label = journal_name, mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
+    print(df)
+
     journal = get_or_set_mongoid(df, prefix)
     journal = identifier(journal, prefix)
     tt$add_triple(journal, rdf_type, Journal)
