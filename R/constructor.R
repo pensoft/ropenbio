@@ -545,7 +545,7 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     reference_id = as.integer(gsub("B", "", reference_id))
     tt$add_triple(ref, has_ref_id, literal(reference_id))
 
-    tt$add_triple(ref, rdfs_label, atoms$verbatimContent[[1]])
+    tt$add_triple(ref, rdfs_label, atoms$verbatimContent[[n]])
 
     #get or set an id for the cited article
     check_mongo_citation = function(value, parent, collection)
