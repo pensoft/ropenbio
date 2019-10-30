@@ -557,8 +557,10 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       return(key)
     }
 
-    article_title = atoms$article_title[[1]]$text_value
-    article_doi = atoms$doi[[1]]$text_value
+
+    article_doi = unlist(atoms$doi[1])["text_value"]
+    article_title = unlist(article_title[1])["text_value"]
+
     key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
     article_id = get_or_set(key, df)
