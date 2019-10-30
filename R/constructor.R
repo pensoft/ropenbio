@@ -531,9 +531,6 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   ref_list = get_or_set_mongoid(df, prefix)
   ref_list = identifier(ref_list, prefix)
 
-
-  print(ref_list)
-
   tt$add_triple(ref_list, rdf_type, ReferenceList)
   tt$add_triple(ref_list, is_contained_by, bib)
 
@@ -544,8 +541,6 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
     ref = get_or_set_mongoid(df, prefix)
     ref = identifier(ref, prefix)
-
-    print(ref)
 
     tt$add_triple(ref, rdf_type, Reference)
     tt$add_triple(ref, is_contained_by, ref_list)
@@ -573,37 +568,48 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
 
-    print(df)
     article_id = get_or_set(key, df)
     article_id = identifier(article_id, prefix)
     tt$add_triple(article_id, rdf_type, Article)
 
     research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
-    print(df)
 
     paper_id = get_or_set_mongoid(research_paper_df, prefix)
     paper_id = identifier(paper_id, prefix)
 
     tt$add_triple(paper_id, rdf_type, Paper)
     tt$add_triple(article_id, realization_of, paper_id)
-    tt$add_triple(article_id, rdf_type, Reference)
+    tt$add_triple(ref, relation, article_id)
 
-    if(length(unlist(atoms$author_fullname)) > 0){
-      for (n in 1:length(atoms$author_fullname)){
-        author_fullname = unlist(atoms$author_fullname[n])["text_value"]
+    full_name = function(lsurname, lgiven_name) {
+      if (length(lsurname) == 1 && length(lgiven_name) == 1) {
+        paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
+      }
+      else if (length(lsurname) == 1) {
+        lsurname[[1]]$text_value
+      }
+      else {
+        NA
+      }
+    }
+
+
+      for (n in 1:length(atoms$author_surname)){
+        author_surname = unlist(atoms$author_surname[n])["text_value"]
+        author_fname = unlist(atoms$author_fname[n])["text_value"]
+        author_fullname = full_name(author_surname, author_fname)
         df = set_component_frame(label = author_fullname, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
-        print(df)
-
         author = get_or_set_mongoid(df, prefix)
         author = identifier(author, prefix)
+
         tt$add_triple(author, rdf_type, Person)
         tt$add_triple(paper_id, creator, author)
 
-        tt$add_triple(author, rdfs_label, atoms$author_fullname[[n]])
+        tt$add_triple(author, rdfs_label, literal(author_fullname))
         tt$add_triple(author, surname,  atoms$author_surname[[n]])
         tt$add_triple(author, givenName,  atoms$author_fname[[n]])
       }
-    }
+
 
     tt$add_triple(article_id, publication_date, atoms$year[[1]])
     tt$add_triple(article_id, dc_title, atoms$article_title[[1]])

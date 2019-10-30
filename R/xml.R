@@ -353,6 +353,10 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
     xml2::xml_attr(root_node, "obkms_id") = arpha_id #save to xml
     id = identifier(id = arpha_id, prefix = prefix)       #build identifier
   }
+
+  title = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/title-group/article-title"))
+  doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
+  save_to_mongo(key = toString(id$uri), value =  title, type = "article", parent = doi, collection = general_collection)
   id
 }
 
