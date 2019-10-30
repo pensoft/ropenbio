@@ -583,10 +583,10 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
     full_name = function(lsurname, lgiven_name) {
       if (length(lsurname) == 1 && length(lgiven_name) == 1) {
-        paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
+        paste(lgiven_name, lsurname)
       }
       else if (length(lsurname) == 1) {
-        lsurname[[1]]$text_value
+        lsurname
       }
       else {
         NA
