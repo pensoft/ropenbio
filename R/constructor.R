@@ -535,9 +535,7 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
   sapply(atoms$reference, function(n){
     df = set_component_frame(label = n$text_value, mongo_key = NA, type = "reference", orcid = NA, parent = NA, key = NA)
-    print(df)
-
-    ref = get_or_set_mongoid(df, prefix)
+    ref = get_or_set(NULL, df)
     ref = identifier(ref, prefix)
 
     tt$add_triple(ref, rdf_type, Reference)
