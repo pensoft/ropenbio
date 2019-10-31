@@ -621,7 +621,7 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     atoms$author_fullname = ifelse(length(unlist(atoms$author_fullname)) == 0, list(literal(full_name(atoms$author_surname,
                                                                                           atoms$author_fname), xsd_type = rdf4r::xsd_string)), atoms$author_fullname)
 
-    count = 1
+    count = 0
     sapply(atoms$author_fullname, function(i){
       print(i$text_value)
       df = set_component_frame(label = toString(i$text_value), mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
