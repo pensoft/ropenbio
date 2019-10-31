@@ -563,49 +563,49 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     }
 
 
-    #  article_doi = unlist(atoms$doi[1])["text_value"]
-    #  article_title = unlist(atoms$article_title$doi[1])["text_value"]
+      article_doi = unlist(atoms$doi[1])["text_value"]
+      article_title = unlist(atoms$article_title$doi[1])["text_value"]
     #  if (is.null(article_doi))
     #    article_doi = NA
 
     #  if (is.null(article_title))
     #    article_title = NA
 
-    #  key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
-    #    df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
-    #   article_id = get_or_set(key, df)
-    #   article_id = identifier(article_id, prefix)
+      key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
+      df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
+       article_id = get_or_set(key, df)
+       article_id = identifier(article_id, prefix)
 
-    #  research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
-    #  paper_id = get_or_set_mongoid(research_paper_df, prefix)
-    #  paper_id = identifier(paper_id, prefix)
+      research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
+      paper_id = get_or_set_mongoid(research_paper_df, prefix)
+      paper_id = identifier(paper_id, prefix)
 
-    #  tt$add_triple(article_id, rdf_type, Article)
+      tt$add_triple(article_id, rdf_type, Article)
 
-    #  sapply(atoms$year, function(n){
-    #    tt$add_triple(article_id, publication_date, n)
-    # })
+      sapply(atoms$year, function(n){
+        tt$add_triple(article_id, publication_date, n)
+     })
 
-    #  sapply(atoms$article_title, function(n){
-    #    tt$add_triple(article_id, dc_title, n)
-    # })
+      sapply(atoms$article_title, function(n){
+       tt$add_triple(article_id, dc_title, n)
+     })
 
-    #  sapply(atoms$issue, function(n){
-    #    tt$add_triple(article_id, has_issue, n)
-    #  })
+      sapply(atoms$issue, function(n){
+        tt$add_triple(article_id, has_issue, n)
+    })
 
-    #  sapply(atoms$doi, function(n){
-    #   tt$add_triple(article_id, has_doi, n)
-    #  })
+    sapply(atoms$doi, function(n){
+       tt$add_triple(article_id, has_doi, n)
+      })
 
-    # sapply(atoms$http_doi, function(n){
-    #   tt$add_triple(article_id, has_url, n)
-    # })
+     sapply(atoms$http_doi, function(n){
+       tt$add_triple(article_id, has_url, n)
+    })
 
-    #tt$add_triple(reference, relation, article_id) #link the reference to the article it references
+    tt$add_triple(identifiers$nid, relation, article_id) #link the reference to the article it references
 
-    #tt$add_triple(article_id, realization_of, paper_id)
-    #tt$add_triple(paper_id, rdf_type, Paper)
+    tt$add_triple(article_id, realization_of, paper_id)
+    tt$add_triple(paper_id, rdf_type, Paper)
 
     # full_name = function(lsurname, lgiven_name) {
 
