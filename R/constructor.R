@@ -607,48 +607,47 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     tt$add_triple(article_id, realization_of, paper_id)
     tt$add_triple(paper_id, rdf_type, Paper)
 
-    # full_name = function(lsurname, lgiven_name) {
+     full_name = function(lsurname, lgiven_name) {
 
-    # if (length(lsurname) == 1 && length(lgiven_name) == 1) {
-    ##    paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
-    #  }
-    #  else if (length(lsurname) == 1) {
-    #    lsurname[[1]]$text_value
-    #  }
-    #   else {
-    #     NA
-        #  }
-    # }
-
-
-    #  if(length(atoms$author_name)>0){
-    #    for (n in 1:length(atoms$author_name)){
-    #      atoms$author_fullname[n] = list(literal(full_name(atoms$author_surname[n],  atoms$author_fname[n]), xsd_type = rdf4r::xsd_string))
-    #  #      df = set_component_frame(label = atoms$author_name[[n]]$text_value, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
-    #     author = get_or_set_mongoid(df, prefix)
-    #     author = identifier(author, prefix)
-    #     tt$add_triple(author, rdf_type, Person)
-    #     tt$add_triple(paper_id, creator, author)
-    #     tt$add_triple(author, rdfs_label, atoms$author_fullname[n])
-    #    tt$add_triple(author, surname,  atoms$author_surname[[n]])
-    #    tt$add_triple(author, givenName,  atoms$author_fname[[n]])
-    #   }
-    # }
+     if (length(lsurname) == 1 && length(lgiven_name) == 1) {
+        paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
+     }
+      else if (length(lsurname) == 1) {
+        lsurname[[1]]$text_value
+      }
+      else {
+         NA
+          }
+     }
 
 
-    #  sapply(atoms$journal, function(n){
-    #  journal_name = n$text_value
-    #  if (!(is.null(journal_name))){
-    #   #    #    df = set_component_frame(label = toString(journal_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
-    #   print(df)
-      #
-    #  journal = get_or_set_mongoid(df, prefix)
-    #  journal = identifier(journal, prefix)
-    #   tt$add_triple(journal, rdf_type, Journal)
-      #   tt$add_triple(journal, frbr_part, article_id)
-    #    tt$add_triple(journal, rdfs_label, n)
-    #   }
-    #  })
+      if(length(atoms$author_name)>0){
+        for (n in 1:length(atoms$author_name)){
+          atoms$author_fullname[n] = list(literal(full_name(atoms$author_surname[n],  atoms$author_fname[n]), xsd_type = rdf4r::xsd_string))
+          df = set_component_frame(label = atoms$author_name[[n]]$text_value, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
+         author = get_or_set_mongoid(df, prefix)
+         author = identifier(author, prefix)
+         tt$add_triple(author, rdf_type, Person)
+         tt$add_triple(paper_id, creator, author)
+         tt$add_triple(author, rdfs_label, atoms$author_fullname[n])
+        tt$add_triple(author, surname,  atoms$author_surname[[n]])
+        tt$add_triple(author, givenName,  atoms$author_fname[[n]])
+       }
+     }
+
+
+      sapply(atoms$journal, function(n){
+     journal_name = n$text_value
+      if (!(is.null(journal_name))){
+      df = set_component_frame(label = toString(journal_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
+
+     journal = get_or_set_mongoid(df, prefix)
+     journal = identifier(journal, prefix)
+     tt$add_triple(journal, rdf_type, Journal)
+     tt$add_triple(journal, frbr_part, article_id)
+        tt$add_triple(journal, rdfs_label, n)
+       }
+    })
 
   return(tt)
 }
