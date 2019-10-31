@@ -624,7 +624,8 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
     count = 1
     sapply(atoms$author_fullname, function(i){
-      df = set_component_frame(label = i$text_value, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
+      print(i$text_value)
+      df = set_component_frame(label = toString(i$text_value), mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
       print(df)
       author = get_or_set_mongoid(df, prefix)
       author = identifier(author, prefix)
@@ -637,15 +638,10 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     })
 
 
-
-
-
-
-
     sapply(atoms$journal, function(n){
     journal_name = n$text_value
     if (!(is.null(journal_name))){
-      df = set_component_frame(label = journal_name, mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
+      df = set_component_frame(label = toString(journal_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
       print(df)
 
       journal = get_or_set_mongoid(df, prefix)
