@@ -142,6 +142,10 @@ process_general_component = function (node, mongo_key)
   return(df)
 }
 
+
+
+
+
 #' @export
 process_schema_component = function(node, mongo_key)
 {
