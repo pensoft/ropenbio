@@ -904,7 +904,7 @@ material_schema = XmlSchema$new(
           doi = rdf4r::xsd_string,
           http_doi = rdf4r::xsd_string
         ),
-        mongo_key =  c(referencee = "//ref-list/ref"),
+        mongo_key =  c(reference = "."),
         constructor = reference,
 
         components = NULL
