@@ -553,7 +553,7 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       }else{
         if (is.na(parent)){
           query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "value", value)
-        }else if (is.na(parent) = FALSE){
+        }else {
           query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "parent", parent)
         }
         key = collection$find(query)$key
