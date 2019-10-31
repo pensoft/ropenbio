@@ -608,38 +608,40 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
     full_name = function(lsurname, lgiven_name) {
       if (length(lsurname) == 1 && length(lgiven_name) == 1) {
-        paste(lgiven_name, lsurname)
+        paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
       }
       else if (length(lsurname) == 1) {
-        lsurname
+        lsurname[[1]]$text_value
       }
       else {
         NA
       }
     }
 
-      for (n in 1:length(atoms$author_surname)){
-        author_surname = unlist(atoms$author_surname[n])["text_value"]
-        author_fname = unlist(atoms$author_fname[n])["text_value"]
-        author_fullname = full_name(author_surname, author_fname)
-        df = set_component_frame(label = author_fullname, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
-        author = get_or_set_mongoid(df, prefix)
-        author = identifier(author, prefix)
+    atoms$author_fullname = ifelse(length(unlist(atoms$author_fullname)) == 0, list(literal(author_fullname(atoms$surname,
+                                                                                          atoms$author_fname), xsd_type = rdf4r::xsd_string)), atoms$author_fullname)
 
-        tt$add_triple(author, rdf_type, Person)
-        tt$add_triple(paper_id, creator, author)
 
-        tt$add_triple(author, rdfs_label, literal(author_fullname))
-        tt$add_triple(author, surname,  atoms$author_surname[[n]])
-        tt$add_triple(author, givenName,  atoms$author_fname[[n]])
-      }
+    count = 1
+    sapply(atoms$author_fullname, function(i){
+      df = set_component_frame(label = i$text_value, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
+      author = get_or_set_mongoid(df, prefix)
+      author = identifier(author, prefix)
+      count = count + 1
+      tt$add_triple(author, rdf_type, Person)
+      tt$add_triple(paper_id, creator, author)
+      tt$add_triple(author, rdfs_label, i)
+      tt$add_triple(author, surname,  atoms$author_surname[[count]])
+      tt$add_triple(author, givenName,  atoms$author_fname[[count]])
+    })
+
+
+
+
 
 
 
     sapply(atoms$journal, function(n){
-
-
-
     journal_name = n$text_value
     if (!(is.null(journal_name))){
       df = set_component_frame(label = journal_name, mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
