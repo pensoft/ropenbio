@@ -636,16 +636,21 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
 
 
-    journal_name = unlist(atoms$journal[1])["text_value"]
-    if (is.null(journal_name))
-      journal_name = NA
-    df = set_component_frame(label = journal_name, mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
+    sapply(atoms$journal, function(n){
 
-    journal = get_or_set_mongoid(df, prefix)
-    journal = identifier(journal, prefix)
-    tt$add_triple(journal, rdf_type, Journal)
-    tt$add_triple(journal, frbr_part, article_id)
-    tt$add_triple(journal, rdfs_label, journal_name)
+
+
+    journal_name = n$text_value
+    if (!(is.null(journal_name))){
+      df = set_component_frame(label = journal_name, mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
+
+      journal = get_or_set_mongoid(df, prefix)
+      journal = identifier(journal, prefix)
+      tt$add_triple(journal, rdf_type, Journal)
+      tt$add_triple(journal, frbr_part, article_id)
+      tt$add_triple(journal, rdfs_label, journal_name)
+    }
+    })
 
   return(tt)
 }
