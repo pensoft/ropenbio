@@ -840,6 +840,7 @@ material_schema = XmlSchema$new(
         reference_id = "./@id",
         verbatimContent = "./mixed-citation",
         author_fullname = NA,
+        author_name = "./mixed-citation/person-group/name",
         author_surname = "./mixed-citation/person-group/name/surname",
         author_fname = "./mixed-citation/person-group/name/given-names",
         year = "./mixed-citation/year",
@@ -855,6 +856,7 @@ material_schema = XmlSchema$new(
         reference_id = NA,
         verbatimContent = NA,
         author_fullname = NA,
+        author_name = NA,
         author_surname = NA,
         author_fname = NA,
         year = NA,
@@ -871,6 +873,7 @@ material_schema = XmlSchema$new(
         reference_id = rdf4r::xsd_string,
         verbatimContent = rdf4r::xsd_string,
         author_fullname = rdf4r::xsd_string,
+        author_name = rdf4r::xsd_string,
         author_surname = rdf4r::xsd_string,
         author_fname = rdf4r::xsd_string,
         year = rdf4r::xsd_string,
@@ -881,7 +884,7 @@ material_schema = XmlSchema$new(
         doi = rdf4r::xsd_string,
         http_doi = rdf4r::xsd_string
       ),
-      mongo_key =  c(bibliography = "/article/back/ref-list"),
+      mongo_key =  c(bibReference = "/article/back/ref-list/ref"),
       constructor = bibliography,
 
       components = NULL
