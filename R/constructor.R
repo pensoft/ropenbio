@@ -564,7 +564,7 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     }
 
     if (length(unlist(atoms$article_title))>0){
-      article_title = unlist(article_title$doi[1])["text_value"]
+      article_title = unlist(atoms$article_title$doi[1])["text_value"]
     }else{
       article_title = NA
     }
