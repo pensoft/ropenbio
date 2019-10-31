@@ -648,7 +648,7 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       journal = identifier(journal, prefix)
       tt$add_triple(journal, rdf_type, Journal)
       tt$add_triple(journal, frbr_part, article_id)
-      tt$add_triple(journal, rdfs_label, journal_name)
+      tt$add_triple(journal, rdfs_label, n)
     }
     })
 
