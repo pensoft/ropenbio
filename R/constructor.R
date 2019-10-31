@@ -523,7 +523,7 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
   #generating the reference list id: each article has only 1 ref list!
   df = set_component_frame(label = NA, mongo_key = NA, type = "reference-list", orcid = NA, parent = identifiers$root$uri, key = NA)
-  ref_list = get_or_set(NA, df)
+  ref_list = get_or_set(NULL, df)
   ref_list = identifier(ref_list, prefix)
 
   tt = ResourceDescriptionFramework$new()
@@ -541,9 +541,9 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     tt$add_triple(reference, has_ref_id, literal(reference_num))
   })
 
-  sapply(atoms$verbatimContent, function(n){
-    tt$add_triple(reference, rdfs_label, n)
-  })
+#  sapply(atoms$verbatimContent, function(n){
+#    tt$add_triple(reference, rdfs_label, n)
+#  })
 
     #get or set an id for the cited article
     check_mongo_citation = function(value, parent, collection)
@@ -562,92 +562,92 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     }
 
 
-    article_doi = unlist(atoms$doi[1])["text_value"]
-    article_title = unlist(atoms$article_title$doi[1])["text_value"]
-    if (is.null(article_doi))
-      article_doi = NA
+    #  article_doi = unlist(atoms$doi[1])["text_value"]
+    #  article_title = unlist(atoms$article_title$doi[1])["text_value"]
+    #  if (is.null(article_doi))
+    #    article_doi = NA
 
-    if (is.null(article_title))
-      article_title = NA
+    #  if (is.null(article_title))
+    #    article_title = NA
 
-    key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
-    df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
-    article_id = get_or_set(key, df)
-    article_id = identifier(article_id, prefix)
+    #  key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
+    #    df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
+    #   article_id = get_or_set(key, df)
+    #   article_id = identifier(article_id, prefix)
 
-    research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
-    paper_id = get_or_set_mongoid(research_paper_df, prefix)
-    paper_id = identifier(paper_id, prefix)
+    #  research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
+    #  paper_id = get_or_set_mongoid(research_paper_df, prefix)
+    #  paper_id = identifier(paper_id, prefix)
 
-    tt$add_triple(article_id, rdf_type, Article)
+    #  tt$add_triple(article_id, rdf_type, Article)
 
-    sapply(atoms$year, function(n){
-      tt$add_triple(article_id, publication_date, n)
-    })
+    #  sapply(atoms$year, function(n){
+    #    tt$add_triple(article_id, publication_date, n)
+    # })
 
-    sapply(atoms$article_title, function(n){
-      tt$add_triple(article_id, dc_title, n)
-    })
+    #  sapply(atoms$article_title, function(n){
+    #    tt$add_triple(article_id, dc_title, n)
+    # })
 
-    sapply(atoms$issue, function(n){
-      tt$add_triple(article_id, has_issue, n)
-    })
+    #  sapply(atoms$issue, function(n){
+    #    tt$add_triple(article_id, has_issue, n)
+    #  })
 
-    sapply(atoms$doi, function(n){
-      tt$add_triple(article_id, has_doi, n)
-    })
+    #  sapply(atoms$doi, function(n){
+    #   tt$add_triple(article_id, has_doi, n)
+    #  })
 
-    sapply(atoms$http_doi, function(n){
-      tt$add_triple(article_id, has_url, n)
-    })
+    # sapply(atoms$http_doi, function(n){
+    #   tt$add_triple(article_id, has_url, n)
+    # })
 
-    tt$add_triple(reference, relation, article_id) #link the reference to the article it references
+    #tt$add_triple(reference, relation, article_id) #link the reference to the article it references
 
-    tt$add_triple(article_id, realization_of, paper_id)
-    tt$add_triple(paper_id, rdf_type, Paper)
+    #tt$add_triple(article_id, realization_of, paper_id)
+    #tt$add_triple(paper_id, rdf_type, Paper)
 
-    full_name = function(lsurname, lgiven_name) {
+    # full_name = function(lsurname, lgiven_name) {
 
-      if (length(lsurname) == 1 && length(lgiven_name) == 1) {
-        paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
-      }
-      else if (length(lsurname) == 1) {
-        lsurname[[1]]$text_value
-      }
-      else {
-        NA
-      }
-    }
-
-
-    if(length(atoms$author_name)>0){
-      for (n in 1:length(atoms$author_name)){
-        atoms$author_fullname[n] = list(literal(full_name(atoms$author_surname[n],  atoms$author_fname[n]), xsd_type = rdf4r::xsd_string))
-        df = set_component_frame(label = atoms$author_name[[n]]$text_value, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
-        author = get_or_set_mongoid(df, prefix)
-        author = identifier(author, prefix)
-        tt$add_triple(author, rdf_type, Person)
-        tt$add_triple(paper_id, creator, author)
-        tt$add_triple(author, rdfs_label, atoms$author_fullname[n])
-        tt$add_triple(author, surname,  atoms$author_surname[[n]])
-        tt$add_triple(author, givenName,  atoms$author_fname[[n]])
-      }
-    }
+    # if (length(lsurname) == 1 && length(lgiven_name) == 1) {
+    ##    paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
+    #  }
+    #  else if (length(lsurname) == 1) {
+    #    lsurname[[1]]$text_value
+    #  }
+    #   else {
+    #     NA
+        #  }
+    # }
 
 
-    sapply(atoms$journal, function(n){
-    journal_name = n$text_value
-    if (!(is.null(journal_name))){
-      df = set_component_frame(label = toString(journal_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
-      print(df)
+    #  if(length(atoms$author_name)>0){
+    #    for (n in 1:length(atoms$author_name)){
+    #      atoms$author_fullname[n] = list(literal(full_name(atoms$author_surname[n],  atoms$author_fname[n]), xsd_type = rdf4r::xsd_string))
+    #  #      df = set_component_frame(label = atoms$author_name[[n]]$text_value, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
+    #     author = get_or_set_mongoid(df, prefix)
+    #     author = identifier(author, prefix)
+    #     tt$add_triple(author, rdf_type, Person)
+    #     tt$add_triple(paper_id, creator, author)
+    #     tt$add_triple(author, rdfs_label, atoms$author_fullname[n])
+    #    tt$add_triple(author, surname,  atoms$author_surname[[n]])
+    #    tt$add_triple(author, givenName,  atoms$author_fname[[n]])
+    #   }
+    # }
 
-      journal = get_or_set_mongoid(df, prefix)
-      journal = identifier(journal, prefix)
-      tt$add_triple(journal, rdf_type, Journal)
-      tt$add_triple(journal, frbr_part, article_id)
-      tt$add_triple(journal, rdfs_label, n)
-    }
-    })
+
+    #  sapply(atoms$journal, function(n){
+    #  journal_name = n$text_value
+    #  if (!(is.null(journal_name))){
+    #   #    #    df = set_component_frame(label = toString(journal_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
+    #   print(df)
+      #
+    #  journal = get_or_set_mongoid(df, prefix)
+    #  journal = identifier(journal, prefix)
+    #   tt$add_triple(journal, rdf_type, Journal)
+      #   tt$add_triple(journal, frbr_part, article_id)
+    #    tt$add_triple(journal, rdfs_label, n)
+    #   }
+    #  })
 
   return(tt)
 }
