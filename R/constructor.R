@@ -548,12 +548,16 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     #get or set an id for the cited article
     check_mongo_citation = function(value, parent, collection)
     {
-      if (is.na(parent)){
-        query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "value", value)
+      if (is.na(parent) && is.na(value)){
+        key = NULL
       }else{
-        query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "parent", parent)
+        if (is.na(parent)){
+          query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "value", value)
+        }else if (is.na(parent) = FALSE){
+          query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "parent", parent)
+        }
+        key = collection$find(query)$key
       }
-      key = collection$find(query)$key
       return(key)
     }
 
