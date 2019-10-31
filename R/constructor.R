@@ -519,26 +519,27 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
 #' @export
 bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
-  reference = identifiers$nid
+  tt = ResourceDescriptionFramework$new()
 
-  #generating the reference list id: each article has only 1 ref list!
-  df = set_component_frame(label = NA, mongo_key = NA, type = "reference-list", orcid = NA, parent = identifiers$root$uri, key = NA)
-  ref_list = get_or_set(NULL, df)
-  ref_list = identifier(ref_list, prefix)
+  tt$add_triple(identifiers$nid, rdf_type, ReferenceList)
+  tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
+
+  return(tt)
+}
+#For now: no author disambiguation -> separate id for authors
+#' @export
+reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
+{
 
   tt = ResourceDescriptionFramework$new()
 
-  #tt$add_triple(bib, rdf_type, Bibliography)
-  tt$add_triple(ref_list, rdf_type, ReferenceList)
-  tt$add_triple(ref_list, is_contained_by, identifiers$pid)
-
-  tt$add_triple(reference, rdf_type, Reference)
-  tt$add_triple(reference, is_contained_by, ref_list)
+  tt$add_triple(identifiers$nid, rdf_type, Reference)
+  tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
 
   sapply(atoms$reference_id, function(n){
     reference_num = n$text_value
     reference_num = as.integer(gsub("B", "", reference_num))
-    tt$add_triple(reference, has_ref_id, literal(reference_num))
+    tt$add_triple(identifiers$nid, has_ref_id, literal(reference_num))
   })
 
 #  sapply(atoms$verbatimContent, function(n){
