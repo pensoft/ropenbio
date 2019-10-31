@@ -557,14 +557,16 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       return(key)
     }
 
-
-    article_doi = unlist(atoms$doi[1])["text_value"]
-    article_title = unlist(atoms$article_title[1])["text_value"]
-
-    print(article_doi)
-    print(article_title)
-    if (length(article_doi)<1){
+    if (length(unlist(atoms$doi))>0){
+      article_doi = unlist(atoms$doi[1])["text_value"]
+    }else{
       article_doi = NA
+    }
+
+    if (length(unlist(atoms$article_title))>0){
+      article_title = unlist(article_title$doi[1])["text_value"]
+    }else{
+      article_title = NA
     }
 
 
