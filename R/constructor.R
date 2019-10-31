@@ -575,9 +575,10 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       article_title = NA
     }
 
-
-
-    key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
+    print(article_title)
+    print(article_doi)
+    key = NULL
+    #key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
     article_id = get_or_set(key, df)
     article_id = identifier(article_id, prefix)
