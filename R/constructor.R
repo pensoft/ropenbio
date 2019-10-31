@@ -548,10 +548,10 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     #get or set an id for the cited article
     check_mongo_citation = function(value, parent, collection)
     {
-      if (is.na(parent) && is.na(value)){
+      if (is.null(parent) && is.null(value)){
         key = NULL
       }else{
-        if (is.na(parent)){
+        if (is.null(parent)){
           query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "value", value)
         }else {
           query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "parent", parent)
@@ -561,24 +561,11 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       return(key)
     }
 
-    if (length(unlist(atoms$doi))>0){
-      print(atoms$doi)
-      article_doi = unlist(atoms$doi[1])["text_value"]
-    }else{
-      article_doi = NA
-    }
 
-    if (length(unlist(atoms$article_title))>0){
-      print(atoms$article_title)
-      article_title = unlist(atoms$article_title$doi[1])["text_value"]
-    }else{
-      article_title = NA
-    }
+    article_doi = unlist(atoms$doi[1])["text_value"]
+    article_title = unlist(atoms$article_title$doi[1])["text_value"]
 
-    print(article_title)
-    print(article_doi)
-    key = NULL
-    #key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
+    key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
     article_id = get_or_set(key, df)
     article_id = identifier(article_id, prefix)
