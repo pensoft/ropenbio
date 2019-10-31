@@ -548,10 +548,10 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     #get or set an id for the cited article
     check_mongo_citation = function(value, parent, collection)
     {
-      if (is.null(parent) && is.null(value)){
+      if (is.na(parent) && is.na(value)){
         key = NULL
       }else{
-        if (is.null(parent)){
+        if (is.na(parent)){
           query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "value", value)
         }else {
           query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "parent", parent)
@@ -564,6 +564,11 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
     article_doi = unlist(atoms$doi[1])["text_value"]
     article_title = unlist(atoms$article_title$doi[1])["text_value"]
+    if (is.null(article_doi))
+      article_doi = NA
+
+    if (is.null(article_title))
+      article_title = NA
 
     key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
     df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
