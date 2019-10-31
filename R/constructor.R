@@ -636,7 +636,9 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
 
 
-    journal_name =  atoms$journal[[1]]$text_value
+    journal_name = unlist(atoms$journal[1])["text_value"]
+    if (is.null(journal_name))
+      journal_name = NA
     df = set_component_frame(label = journal_name, mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
 
     journal = get_or_set_mongoid(df, prefix)
