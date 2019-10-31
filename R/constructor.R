@@ -618,9 +618,8 @@ bibliography = function (atoms, identifiers, prefix, new_taxons, mongo_key)
       }
     }
 
-    atoms$author_fullname = ifelse(length(unlist(atoms$author_fullname)) == 0, list(literal(full_name(atoms$surname,
+    atoms$author_fullname = ifelse(length(unlist(atoms$author_fullname)) == 0, list(literal(full_name(atoms$author_surname,
                                                                                           atoms$author_fname), xsd_type = rdf4r::xsd_string)), atoms$author_fullname)
-
 
     count = 1
     sapply(atoms$author_fullname, function(i){
