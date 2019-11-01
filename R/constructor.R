@@ -602,7 +602,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
        tt$add_triple(article_id, has_url, n)
     })
 
-    tt$add_triple(identifiers$nid, relation, article_id) #link the reference to the article it references
+    tt$add_triple(identifiers$nid, mentions, article_id) #link the reference to the article it references
 
     tt$add_triple(article_id, realization_of, paper_id)
     tt$add_triple(paper_id, rdf_type, Paper)
