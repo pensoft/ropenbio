@@ -1659,7 +1659,8 @@ serialize_location = function(tt, atoms, typeMaterialID){
 
   verbatim_coord = function(lat, long) {
     if (length(lat) == 1 && length(long) == 1) {
-      paste0(lat[[1]]$text_value, ", ", long[[1]]$text_value)
+      coord = paste0(lat[[1]]$text_value, ", ", long[[1]]$text_value)
+      coord = escape_special(coord)
     }
     else {
       NA
