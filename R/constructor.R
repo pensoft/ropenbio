@@ -1667,8 +1667,12 @@ serialize_location = function(tt, atoms, typeMaterialID){
     }
   }
 
-  atoms$coordinates  = ifelse(length(unlist(atoms$coordinates)) == 0, list(literal(verbatim_coord(atoms$verbatim_lat,
-                                                                                                  atoms$verbatim_long), xsd_type = rdf4r::xsd_string)), atoms$coordinates)
+  if (length(unlist(atoms$decimalLatitude)) > 0 && length(unlist(atoms$decimalLongitude)) > 0){
+    atoms$coordinates = list(literal(verbatim_coord(atoms$decimalLatitude,atoms$decimalLongitude), xsd_type = rdf4r::xsd_string))
+  }else{
+    atoms$coordinates  = ifelse(length(unlist(atoms$coordinates)) == 0, list(literal(verbatim_coord(atoms$verbatim_lat,
+                                                                                                    atoms$verbatim_long), xsd_type = rdf4r::xsd_string)), atoms$coordinates)
+  }
 
   sapply(atoms$coordinates , function(n){
     tt$add_triple(locationID, dwc_coordinates, n)
