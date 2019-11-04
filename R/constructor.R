@@ -627,8 +627,14 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
          tt$add_triple(author, rdf_type, Person)
          tt$add_triple(author, rdfs_label, atoms$author_fullname[n])
-        tt$add_triple(author, surname,  atoms$author_surname[[n]])
-        tt$add_triple(author, givenName,  atoms$author_fname[[n]])
+         if (length(unlist(atoms$author_surname))>0){
+           tt$add_triple(author, surname,  atoms$author_surname[[n]])
+         }
+
+         if (length(unlist(atoms$author_fname))>0){
+           tt$add_triple(author, givenName,  atoms$author_fname[[n]])
+
+         }
        }
      }
 
