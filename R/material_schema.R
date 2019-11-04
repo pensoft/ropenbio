@@ -864,7 +864,7 @@ material_schema = XmlSchema$new(
 
       components = list(XmlSchema$new(
         schema_name = "reference",
-        xpath = "/article/back/ref-list/ref",
+        xpath = "ref",
         file_pattern = ".*\\.xml",
         extension = ".xml",
         prefix = c(openbiodiv = "http://openbiodiv.net/"),
