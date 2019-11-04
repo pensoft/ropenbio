@@ -553,9 +553,9 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
         key = NULL
       }else{
         if (is.na(parent)){
-          query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "value", value)
+          query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "value", value)
         }else {
-          query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "article", "parent", parent)
+          query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "parent", parent)
         }
         key = collection$find(query)$key
       }
@@ -563,49 +563,45 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     }
 
 
-      article_doi = unlist(atoms$doi[1])["text_value"]
-      article_title = unlist(atoms$article_title$doi[1])["text_value"]
-      if (is.null(article_doi))
-        article_doi = NA
+      doi = unlist(atoms$doi[1])["text_value"]
+      title = unlist(atoms$title$doi[1])["text_value"]
+      if (is.null(doi))
+        doi = NA
 
-      if (is.null(article_title))
-        article_title = NA
+      if (is.null(title))
+        title = NA
 
-      key = check_mongo_citation(value = article_title, parent = article_doi, collection = general_collection)
-      df = set_component_frame(label = article_title, mongo_key = NA, type = "article", orcid = NA, parent = article_doi, key = NA)
-       article_id = get_or_set(key, df)
-       article_id = identifier(article_id, prefix)
+      key = check_mongo_citation(value = title, parent = doi, collection = general_collection)
+      df = set_component_frame(label = title, mongo_key = NA, type = "bibResource", orcid = NA, parent = doi, key = NA)
+       bibResource = get_or_set(key, df)
+       bibResource = identifier(bibResource, prefix)
 
-      research_paper_df = set_component_frame(label = article_title, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA)
-      paper_id = get_or_set_mongoid(research_paper_df, prefix)
-      paper_id = identifier(paper_id, prefix)
+      tt$add_triple(bibResource, rdf_type, BibResource)
+      tt$add_triple(bibResource, rdf_type, Work)
 
-      tt$add_triple(article_id, rdf_type, Article)
 
       sapply(atoms$year, function(n){
-        tt$add_triple(article_id, publication_date, n)
+        tt$add_triple(bibResource, publication_date, n)
      })
 
-      sapply(atoms$article_title, function(n){
-       tt$add_triple(article_id, dc_title, n)
+      sapply(atoms$title, function(n){
+       tt$add_triple(bibResource, dc_title, n)
      })
 
       sapply(atoms$issue, function(n){
-        tt$add_triple(article_id, has_issue, n)
+        tt$add_triple(bibResource, has_issue, n)
     })
 
     sapply(atoms$doi, function(n){
-       tt$add_triple(article_id, has_doi, n)
+       tt$add_triple(bibResource, has_doi, n)
       })
 
      sapply(atoms$http_doi, function(n){
-       tt$add_triple(article_id, has_url, n)
+       tt$add_triple(bibResource, has_url, n)
     })
 
-    tt$add_triple(identifiers$nid, mentions, article_id) #link the reference to the article it references
+    tt$add_triple(identifiers$nid, mentions, bibResource) #link the reference to the article it references
 
-    tt$add_triple(article_id, realization_of, paper_id)
-    tt$add_triple(paper_id, rdf_type, Paper)
 
      full_name = function(lsurname, lgiven_name) {
 
@@ -627,8 +623,9 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
           df = set_component_frame(label = atoms$author_name[[n]]$text_value, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
          author = get_or_set_mongoid(df, prefix)
          author = identifier(author, prefix)
+         tt$add_triple(bibResource, creator, author)
+
          tt$add_triple(author, rdf_type, Person)
-         tt$add_triple(paper_id, creator, author)
          tt$add_triple(author, rdfs_label, atoms$author_fullname[n])
         tt$add_triple(author, surname,  atoms$author_surname[[n]])
         tt$add_triple(author, givenName,  atoms$author_fname[[n]])
@@ -636,16 +633,16 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
      }
 
 
-      sapply(atoms$journal, function(n){
-     journal_name = n$text_value
-      if (!(is.null(journal_name))){
-      df = set_component_frame(label = toString(journal_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
+      sapply(atoms$source, function(n){
+     source_name = n$text_value
+      if (!(is.null(source_name))){
+      df = set_component_frame(label = toString(source_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA)
 
-     journal = get_or_set_mongoid(df, prefix)
-     journal = identifier(journal, prefix)
-     tt$add_triple(journal, rdf_type, Journal)
-     tt$add_triple(journal, frbr_part, article_id)
-        tt$add_triple(journal, rdfs_label, n)
+     source = get_or_set_mongoid(df, prefix)
+     source = identifier(source, prefix)
+     tt$add_triple(source, rdf_type, ExpressionCollection) #we are not actually sure if this is a journal (can be a website or other source; fabio:ExpressionCollection is more general)
+     tt$add_triple(source, frbr_part, bibResource)
+        tt$add_triple(source, rdfs_label, n)
        }
     })
 

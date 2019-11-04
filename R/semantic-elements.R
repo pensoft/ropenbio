@@ -105,6 +105,22 @@ Article = rdf4r::identifier(
   prefix = c(fabio = "http://purl.org/spar/fabio/")
 )
 
+#' an article in a science journal
+#' @export
+BibResource = rdf4r::identifier(
+  id = "BibliographicResource",
+  prefix = c(dcterms = "http://purl.org/dc/terms/")
+)
+
+#' an article in a science journal
+#' @export
+ExpressionCollection = rdf4r::identifier(
+  id = "ExpressionCollection",
+  prefix = c(fabio = "http://purl.org/spar/fabio/")
+)
+
+
+
 #' Personal Identifier
 #' @export
 PersonalIdentifier = rdf4r::identifier(
