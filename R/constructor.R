@@ -626,7 +626,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
          tt$add_triple(bibResource, creator, author)
 
          tt$add_triple(author, rdf_type, Person)
-         tt$add_triple(author, rdfs_label, atoms$author_fullname[n])
+         tt$add_triple(author, rdfs_label, atoms$author_fullname[[n]])
          if (length(unlist(atoms$author_surname))>0){
            tt$add_triple(author, surname,  atoms$author_surname[[n]])
          }
