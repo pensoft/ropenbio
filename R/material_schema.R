@@ -872,16 +872,16 @@ material_schema = XmlSchema$new(
           reference_id = "./@id",
           verbatimContent = ".",
           author_fullname = NA,
-          author_name = "../person-group/name",
-          author_surname = "../person-group/name/surname",
-          author_fname = "../person-group/name/given-names",
-          year = "./../year",
-          article_title = "../article-title",
-          journal = "../source",
-          volume = "../volume",
-          issue = "../issue",
-          doi = "../ext-link[@ext-link-type='doi']/@xlink:href",
-          http_doi = "../ext-link[@ext-link-type='doi']"
+          author_name = ".//person-group/name",
+          author_surname = ".//person-group/name/surname",
+          author_fname = ".//person-group/name/given-names",
+          year = ".//year",
+          article_title = ".//article-title",
+          journal = ".//source",
+          volume = ".//volume",
+          issue = ".//issue",
+          doi = ".//ext-link[@ext-link-type='doi']/@xlink:href",
+          http_doi = ".//ext-link[@ext-link-type='doi']"
         ),
 
         atom_lang = c(
