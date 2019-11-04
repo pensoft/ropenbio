@@ -872,16 +872,16 @@ material_schema = XmlSchema$new(
           reference_id = "./@id",
           verbatimContent = "./mixed-citation",
           author_fullname = NA,
-          author_name = "./mixed-citation/person-group/name",
-          author_surname = "./mixed-citation/person-group/name/surname",
-          author_fname = "./mixed-citation/person-group/name/given-names",
-          year = "./mixed-citation/year",
-          article_title = "./mixed-citation/article-title",
-          journal = "./mixed-citation/source",
-          volume = "./mixed-citation/volume",
-          issue = "./mixed-citation/issue",
-          doi = "./mixed-citation/ext-link[@ext-link-type='doi']/@xlink:href",
-          http_doi = "./mixed-citation/ext-link[@ext-link-type='doi']"
+          author_name = "./../person-group/name",
+          author_surname = "./../person-group/name/surname",
+          author_fname = "./../person-group/name/given-names",
+          year = "./../year",
+          article_title = "./../article-title",
+          journal = "./../source",
+          volume = "./../volume",
+          issue = "./../issue",
+          doi = "./../ext-link[@ext-link-type='doi']/@xlink:href",
+          http_doi = "./../ext-link[@ext-link-type='doi']"
         ),
 
         atom_lang = c(
