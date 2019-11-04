@@ -130,6 +130,15 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       #cat(serialization, file = "~/diptera.trig")
       save_serialization(serialization, serialization_dir)
       xml2::write_xml(xml, filename)
+      xml_collection = mongolite::mongo(collection = "xmls", db = "test")
+      xml_str = toString(xml)
+
+      d = data.frame(
+        xml = xml_str,
+        filename = as.character(filename)
+      )
+      collection$insert(d)
+
      # cat(fil, ename, file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
     #  cat("\n", file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
 
