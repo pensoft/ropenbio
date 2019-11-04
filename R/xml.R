@@ -137,7 +137,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         xml = xml_str,
         filename = as.character(filename)
       )
-      collection$insert(d)
+      xml_collection$insert(d)
 
      # cat(fil, ename, file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
     #  cat("\n", file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
