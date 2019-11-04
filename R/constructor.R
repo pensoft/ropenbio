@@ -1596,6 +1596,7 @@ check_dwc_occurrence = function(atoms, typeMaterialID){
   return(occurrenceID)
 }
 
+#' @export
 serialize_occurrence = function(tt, atoms, typeMaterialID){
   # atoms$occurrenceID  = ifelse(length(unlist(atoms$occurrenceID)) == 0, list(occurrenceID), atoms$occurrenceID)
   occurrenceID = atoms$occurrenceID
@@ -1648,6 +1649,7 @@ check_dwc_location = function(atoms, typeMaterialID){
   return(locationID)
 }
 
+#' @export
 serialize_location = function(tt, atoms, typeMaterialID){
 
   #atoms$locationID  = ifelse(length(unlist(atoms$locationID)) == 0, list(locationID), atoms$locationID)
