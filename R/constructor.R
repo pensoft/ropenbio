@@ -1688,7 +1688,7 @@ serialize_location = function(tt, atoms, typeMaterialID){
   }
 
   sapply(atoms$coordinates , function(n){
-    coordinates = gsub("(?<!\\)(?=\"[NSWE])", "\\", n$text_value, fixed = TRUE)
+    coordinates = gsub("(?<!\\)(?=\"[NSWE])", "\\\\", n$text_value, fixed = TRUE)
 
     tt$add_triple(locationID, dwc_coordinates, literal(coordinates))
   })
