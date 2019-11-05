@@ -1669,9 +1669,9 @@ serialize_location = function(tt, atoms, typeMaterialID){
   verbatim_coord = function(lat, long) {
     if (length(lat) == 1 && length(long) == 1) {
       latitude = lat[[1]]$text_value
-      latitude = gsub("(?<!\\)(?=\"[NSWE])", "\\",latitude)
+      latitude = escape_special(latitude)
       longitude = long[[1]]$text_value
-      longitude = gsub("(?<!\\)(?=\"[NSWE])", "\\",longitude)
+      longitude = escape_special(longitude)
       coord = paste0(latitude, ", ", longitude )
     }
     else {
@@ -1688,8 +1688,9 @@ serialize_location = function(tt, atoms, typeMaterialID){
   }
 
   sapply(atoms$coordinates , function(n){
-    coordinates = gsub("(?<!\\)(?=\"[NSWE])", "\\\\", n$text_value, fixed = TRUE)
 
+    coordinates = escape_special(n$text_value)
+    print(coordinates)
     tt$add_triple(locationID, dwc_coordinates, literal(coordinates))
   })
 
