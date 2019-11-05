@@ -766,7 +766,6 @@ checklist = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 #' @export
 distribution = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
-  print(atoms)
   tt = ResourceDescriptionFramework$new()
   distribution_content = atoms$text_content[[1]]
   distribution_content = escape_special(distribution_content$text_value)
@@ -1674,12 +1673,12 @@ serialize_location = function(tt, atoms, typeMaterialID){
       longitude = long[[1]]$text_value
       longitude = gsub("(?<!\\)(?=\"[NSWE])", "\\",longitude)
       coord = paste0(latitude, ", ", longitude )
-      print(coord)
     }
     else {
       NA
     }
   }
+
 
   if (length(unlist(atoms$decimal_lat)) > 0 && length(unlist(atoms$decimal_long)) > 0){
     atoms$coordinates = list(literal(verbatim_coord(atoms$decimal_lat,atoms$decimal_long), xsd_type = rdf4r::xsd_string))
@@ -1689,11 +1688,11 @@ serialize_location = function(tt, atoms, typeMaterialID){
   }
 
   sapply(atoms$coordinates , function(n){
-    tt$add_triple(locationID, dwc_coordinates, n)
+    coordinates = gsub("?<!\\)(?=\"[NSWE])", "\\", n$text_value)
+
+    tt$add_triple(locationID, dwc_coordinates, literal(coordinates))
   })
 
-  print(atoms$decimal_long)
-  print(atoms$decimal_lat)
 
   sapply(atoms$decimal_long , function(n){
     tt$add_triple(locationID, dwc_decimal_long, n)
