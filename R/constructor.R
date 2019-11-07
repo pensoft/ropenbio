@@ -637,8 +637,11 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
          }
 
          if (length(unlist(atoms$author_fname))>0){
-          print(atoms$author_fname)
-          print(atoms$author_fname[n])
+         # print(atoms$author_fname)
+        #  print(atoms$author_fname[n])
+           print(atoms$author_name[[n]])
+                      print(atoms$surname[[n]])
+
           print(atoms$author_fname[[n]])
 
 
