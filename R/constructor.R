@@ -619,7 +619,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
       if(length(atoms$author_name)>0){
         for (n in 1:length(atoms$author_name)){
-          atoms$author_fullname = ifelse(length(unlist(atoms$author_fullname)) == 0, list(literal(full_name(atoms$author_surname,
+          atoms$author_fullname[[n]] = ifelse(length(unlist(atoms$author_fullname)) == 0, list(literal(full_name(atoms$author_surname,
                                                                                 atoms$author_fname), xsd_type = rdf4r::xsd_string)), atoms$author_fullname)
           df = set_component_frame(label = atoms$author_name[[n]]$text_value, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA)
          author = get_or_set_mongoid(df, prefix)
@@ -628,6 +628,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
          tt$add_triple(author, rdf_type, Person)
 
+         print(atoms$author_fullname)
           sapply(atoms$author_fullname, function(i){
             tt$add_triple(author, rdfs_label, i)
 
