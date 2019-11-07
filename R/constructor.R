@@ -636,18 +636,6 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
            tt$add_triple(author, surname,  atoms$author_surname[[n]])
          }
 
-         if (length(unlist(atoms$author_fname))>0){
-         # print(atoms$author_fname)
-        #  print(atoms$author_fname[n])
-           print(atoms$author_name[[n]])
-                      print(atoms$surname[[n]])
-
-          print(atoms$author_fname[[n]])
-
-
-          tt$add_triple(author, givenName,  atoms$author_fname[[n]])
-
-         }
        }
      }
 
@@ -1698,7 +1686,6 @@ serialize_location = function(tt, atoms, typeMaterialID){
   sapply(atoms$coordinates , function(n){
 
     coordinates = escape_special(n$text_value)
-    print(coordinates)
     tt$add_triple(locationID, dwc_coordinates, literal(coordinates))
   })
 
