@@ -637,7 +637,12 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
          }
 
          if (length(unlist(atoms$author_fname))>0){
-           tt$add_triple(author, givenName,  atoms$author_fname[[n]])
+          print(atoms$author_fname)
+          print(atoms$author_fname[n])
+          print(atoms$author_fname[[n]])
+
+
+          tt$add_triple(author, givenName,  atoms$author_fname[[n]])
 
          }
        }
