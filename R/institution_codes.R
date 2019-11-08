@@ -169,11 +169,11 @@ institution_serializer = function (tt, atoms, identifiers)
   nid = identifiers$nid
   if (!(is.null(unlist(atoms$institution_name)))) {
     sapply(atoms$institution_name, function(n) {
-     n$text_value = escape_special(n$text_value)
+     institution_n = escape_special(n$text_value)
 
-      tt$add_triple(nid, inst_names, n)
-      instNames = c(instNames, n$text_value)
-      res = check_mongo_instName(name = n$text_value,
+      tt$add_triple(nid, inst_names, literal(institution_n))
+      instNames = c(instNames, institution_n)
+      res = check_mongo_instName(name = institution_n,
                                  collection = inst_collection)
       if (nrow(res) > 0) {
         for (i in 1:nrow(res)) {
@@ -207,13 +207,13 @@ institution_serializer = function (tt, atoms, identifiers)
   if (!(is.null(unlist(atoms$institution_code)))) {
 
     sapply(atoms$institution_code, function(n) {
-      n$text_value = escape_special(n$text_value)
-      tt$add_triple(nid, dwc_inst_code, n)
+      institution_c = escape_special(n$text_value)
+      tt$add_triple(nid, dwc_inst_code, literal(institution_c))
 
-      instCodes = c(instCodes, n$text_value)
+      instCodes = c(instCodes,institution_c)
       if (!(n$text_value %in% rdfized_codes)) {
 
-        res = check_mongo_instCode(code = n$text_value,
+        res = check_mongo_instCode(code = institution_c,
                                    collection = inst_collection)
         if (nrow(res) > 0) {
           for (i in 1:nrow(res)) {
