@@ -169,7 +169,7 @@ institution_serializer = function (tt, atoms, identifiers)
   nid = identifiers$nid
   if (!(is.null(unlist(atoms$institution_name)))) {
     sapply(atoms$institution_name, function(n) {
-     institution_n = escape_special_json(n$text_value)
+      institution_n = gsub("\"", "\\", n$text_value)
       print(institution_n)
       tt$add_triple(nid, inst_names, literal(institution_n))
       instNames = c(instNames, institution_n)
@@ -207,7 +207,7 @@ institution_serializer = function (tt, atoms, identifiers)
   if (!(is.null(unlist(atoms$institution_code)))) {
 
     sapply(atoms$institution_code, function(n) {
-      institution_c = escape_special_json(n$text_value)
+      institution_c = gsub("\"", "\\", n$text_value)
       print(institution_c)
       tt$add_triple(nid, dwc_inst_code, literal(institution_c))
 
