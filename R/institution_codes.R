@@ -169,6 +169,8 @@ institution_serializer = function (tt, atoms, identifiers)
   nid = identifiers$nid
   if (!(is.null(unlist(atoms$institution_name)))) {
     sapply(atoms$institution_name, function(n) {
+     n$text_value = escape_special(n$text_value)
+
       tt$add_triple(nid, inst_names, n)
       instNames = c(instNames, n$text_value)
       res = check_mongo_instName(name = n$text_value,
@@ -205,6 +207,7 @@ institution_serializer = function (tt, atoms, identifiers)
   if (!(is.null(unlist(atoms$institution_code)))) {
 
     sapply(atoms$institution_code, function(n) {
+      n$text_value = escape_special(n$text_value)
       tt$add_triple(nid, dwc_inst_code, n)
 
       instCodes = c(instCodes, n$text_value)
