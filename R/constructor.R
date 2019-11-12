@@ -324,6 +324,8 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
   if (length(aid)>0){
     sapply(atoms$all_affiliations[aid], function(j) {
+      print(aid)
+      print(j)
       tt$add_triple(author_id, has_affiliation, j)
     })
   }
