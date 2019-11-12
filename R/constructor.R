@@ -486,9 +486,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
   if(length(atoms$comment)>0){
   for (n in 1:length(atoms$comment)){
      comment = unlist(atoms$comment[n])["text_value"]
-     print(comment)
-     print(str(comment))
-     print(typeof(comment))
+     if(!(is.null(comment))){
      verbatim_citations = strsplit(comment, ";")
 
      sapply(unlist(verbatim_citations), function(i){
@@ -512,7 +510,8 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
        year = stringr::str_extract(i, "[1-2][0-9]{3}")
        tt$add_triple(citID, verbatimYear, literal(year))
      })
-   }
+     }
+  }
   }
 
   return(tt)
