@@ -303,7 +303,8 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     as.integer(gsub("[^0-9.]", "", a$text_value))
   })
 
-
+  print(aid)
+  print(atoms$full_name[[1]]$text_value)
 
   article_id = identifiers$root_id
   author_id = identifiers$nid
