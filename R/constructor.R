@@ -303,11 +303,18 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     as.integer(gsub("[^0-9.]", "", a$text_value))
   })
 
+
+
   aff_id = c()
   for (i in 1:length(aid)){
     aff_id = c(aff_id, i)
   }
+  cat(aff_id, file="aff_ids", append = TRUE)
 
+  sapply(atoms$all_affiliations[aff_id], function(j) {
+    cat(j, file="aff_ids", append = TRUE)
+
+  })
   print(aff_id)
   print(atoms$full_name[[1]]$text_value)
 
