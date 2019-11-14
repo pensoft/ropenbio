@@ -322,6 +322,9 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     tt$add_triple(author_id, rdfs_label, j)
   })
 
+
+  print(atoms$all_affiliations)
+
   if (length(aid)>0){
     sapply(atoms$all_affiliations[aid], function(j) {
       print(aid)
