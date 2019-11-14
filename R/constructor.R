@@ -304,11 +304,12 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   })
 
 
+  print(length(aid))
+  aff_id = rep(1:length(aid))
 
-  aff_id = c()
-  for (i in 1:length(aid)){
-    aff_id = c(aff_id, i)
-  }
+  #for (i in 1:length(aid)){
+  #  aff_id = c(aff_id, i)
+  #}
   cat(aff_id, file="aff_ids", append = TRUE)
 
   sapply(atoms$all_affiliations[aff_id], function(j) {
@@ -316,7 +317,7 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
     cat(unlist(j),  file="aff_ids", append = TRUE)
 
   })
-  print(aff_id)
+
   print(atoms$full_name[[1]]$text_value)
 
   article_id = identifiers$root_id
