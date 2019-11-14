@@ -312,7 +312,8 @@ author = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   cat(aff_id, file="aff_ids", append = TRUE)
 
   sapply(atoms$all_affiliations[aff_id], function(j) {
-    cat(j, file="aff_ids", append = TRUE)
+    print(j)
+    cat(unlist(j),  file="aff_ids", append = TRUE)
 
   })
   print(aff_id)
