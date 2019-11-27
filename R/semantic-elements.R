@@ -7,7 +7,7 @@ Occurrence = rdf4r::identifier(
 #' @export
 Location = rdf4r::identifier(
   id="Location",
-  prefix = c(dc = "http://purl.org/dc/terms/")
+  prefix = c(dcterms = "http://purl.org/dc/terms/")
 )
 
 #' @export
