@@ -89,8 +89,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       inst_collection = mongolite::mongo(collection = "institutions", db = "test")
       checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
 
- # tryCatch(
-  #  {
+  tryCatch(
+    {
       xml = xml2::read_xml(filename)
 
      # xml_string = crosslinker(filename)
@@ -143,13 +143,14 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
     #  cat("\n", file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
 
 
-  #    return(TRUE)
-  #  },
-  #  error = function(e)
-  #  {
-  #    warning(e)
-  #    return(FALSE)
-  #  })
+      return(TRUE)
+    },
+    error = function(e)
+    {
+      warning(e)
+      cat(filename, file="/home/backend/OpenBiodiv/skipped.txt", append = TRUE)
+      return(FALSE)
+    })
 }
 
 #' @export
