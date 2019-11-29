@@ -586,9 +586,10 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
         tt$add_triple(bibResource, publication_date, n)
      })
 
-      sapply(atoms$title, function(n){
-       tt$add_triple(bibResource, dc_title, n)
-     })
+      title = escape_special(title)
+
+      tt$add_triple(bibResource, dc_title, literal(title))
+
 
       sapply(atoms$issue, function(n){
         tt$add_triple(bibResource, has_issue, n)
