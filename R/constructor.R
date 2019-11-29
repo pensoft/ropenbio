@@ -566,7 +566,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
 
       doi = unlist(atoms$doi[1])["text_value"]
-      title = unlist(atoms$title$doi[1])["text_value"]
+      title = unlist(atoms$title[1])["text_value"]
       if (is.null(doi))
         doi = NA
 
