@@ -1379,7 +1379,6 @@ tnu = function (atoms, identifiers, prefix, new_taxons, mongo_key){
     scName = atoms$text_content[[1]]$text_value
   }
 
-  print(scName)
 
   if( !(is.null(scName))){
     if ( !(scName == "")){
