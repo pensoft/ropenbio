@@ -228,7 +228,10 @@ get_or_set_mongoid= function (df, prefix)
     } else{
         if (!(is.na(df$orcid))) {
           print(df$orcid)
-          key = check_mongo_key_via_orcid(df$orcid, general_collection)
+          query = sprintf("{\"%s\":\"%s\"}", "orcid", df$orcid)
+          key = general_collection$find(query)$key
+
+          #key = check_mongo_key_via_orcid(df$orcid, general_collection)
           print(key)
           if (is.null(key)){
             key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
@@ -274,8 +277,10 @@ get_or_set = function(key, df){
     id = key
   }else{
     if (!(is.na(df$orcid))){
-      query = sprintf("'{\"%s\":\"%s\"}','{\"$set\":{\"key\": \"%s\"}}'", "orcid", df$orcid, key)
-      general_collection$update('{"key":"')
+      query = sprintf("'{\"key\":\"%s\"}','{\"$set\":{\"orcid\": \"%s\"}}'", key, df$orcid)
+      print("update_query")
+      print(query)
+      general_collection$update(query)
     }
     id = rdf4r::strip_angle(key)
 
