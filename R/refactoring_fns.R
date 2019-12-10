@@ -152,8 +152,6 @@ process_schema_component = function(node, mongo_key)
 
   if (is.author(mongo_key) == TRUE){
     df = process_author(node, mongo_key)
-    print(df)
-
   } else if (is.tnu(mongo_key) == TRUE){
     df = process_tnu(node, mongo_key)
   } else if (is.figure(mongo_key) == TRUE){
@@ -231,6 +229,7 @@ get_or_set_mongoid= function (df, prefix)
         if (!(is.na(df$orcid))) {
           print(df$orcid)
           key = check_mongo_key_via_orcid(df$orcid, general_collection)
+          print(key)
           if (is.null(key)){
             key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
           }
@@ -274,7 +273,12 @@ get_or_set = function(key, df){
     save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,  orcid = df$orcid, parent = df$parent, collection = general_collection)
     id = key
   }else{
+    if (!(is.na(df$orcid))){
+      query = sprintf("'{\"%s\":\"%s\"}','{\"$set\":{\"key\": \"%s\"}}'", "orcid", df$orcid, key)
+      general_collection$update('{"key":"')
+    }
     id = rdf4r::strip_angle(key)
+
     id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", id)
   }
 }
