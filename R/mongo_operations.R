@@ -68,7 +68,7 @@ check_mongo_inst = function(tpKey, collection){
 #' @export
 check_mongo_key_via_orcid = function(orcid, collection)
 {
-  query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "key", "$regex", orcid, "$options", "i")
+  query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "orcid", "$regex", orcid, "$options", "i")
   collection$find(query)
   key = collection$find(query)$key
   return(key)
