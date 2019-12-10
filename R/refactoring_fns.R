@@ -220,7 +220,7 @@ get_or_set_mongoid= function (df, prefix)
 
     if (!(is.na(df$key))){
       key = df$key
-      save_to_mongo(key = key, value = df$label, type = df$type, parent = NA, collection = general_collection)
+      save_to_mongo(key = key, value = df$label, type = df$type, orcid = df$orcid , parent = NA, collection = general_collection)
       key = toString(key)
       id = rdf4r::strip_angle(key)
       id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", id)
@@ -267,7 +267,7 @@ get_or_set = function(key, df){
     #remove dashes and convert to uppercase
     #key = gsub("-", "", key)
     key = toupper(key)
-    save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type, parent = df$parent, collection = general_collection)
+    save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,  orcid = df$orcid, parent = df$parent, collection = general_collection)
     id = key
   }else{
     id = rdf4r::strip_angle(key)

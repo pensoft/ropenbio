@@ -147,9 +147,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
     },
     error = function(e)
     {
-      warning(e)
-      skipped = paste(filename, "\n")
-      cat(skipped, file="/home/backend/OpenBiodiv/skipped.txt", append = TRUE)
+   #   warning(e)
+  #    skipped = paste(filename, "\n")
+     # cat(skipped, file="/home/backend/OpenBiodiv/skipped.txt", append = TRUE)
       return(FALSE)
     })
 }
@@ -367,7 +367,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 
   title = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/title-group/article-title"))
   doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
-  save_to_mongo(key = toString(id$uri), value =  title, type = "article", parent = doi, collection = general_collection)
+  save_to_mongo(key = toString(id$uri), value =  title, type = "article", orcid = NA, parent = doi, collection = general_collection)
   id
 }
 

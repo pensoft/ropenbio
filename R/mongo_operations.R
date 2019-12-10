@@ -78,12 +78,13 @@ check_mongo_key_via_orcid = function(orcid, collection)
 
 
 #' @export
-save_to_mongo = function(key, value, type, parent, collection)
+save_to_mongo = function(key, value, type, orcid, parent, collection)
 {
   d = data.frame(
     key = as.character(key),
     value = as.character(value),
     type = as.character(type),
+    orcid = as.character(orcid),
     parent = as.character(parent)
   )
   collection$insert(d)
