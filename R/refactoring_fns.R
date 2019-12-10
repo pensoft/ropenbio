@@ -152,6 +152,8 @@ process_schema_component = function(node, mongo_key)
 
   if (is.author(mongo_key) == TRUE){
     df = process_author(node, mongo_key)
+    print(df)
+
   } else if (is.tnu(mongo_key) == TRUE){
     df = process_tnu(node, mongo_key)
   } else if (is.figure(mongo_key) == TRUE){
@@ -161,6 +163,7 @@ process_schema_component = function(node, mongo_key)
   } else{
     df = process_general_component(node, mongo_key)
   }
+
   return(df)
 }
 
@@ -226,6 +229,7 @@ get_or_set_mongoid= function (df, prefix)
       id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", id)
     } else{
         if (!(is.na(df$orcid))) {
+          print(df$orcid)
           key = check_mongo_key_via_orcid(df$orcid, general_collection)
           if (is.null(key)){
             key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
