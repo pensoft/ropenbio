@@ -227,6 +227,9 @@ get_or_set_mongoid= function (df, prefix)
     } else{
         if (!(is.na(df$orcid))) {
           key = check_mongo_key_via_orcid(df$orcid, general_collection)
+          if (is.null(key)){
+            key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
+          }
           id = get_or_set(key, df)
         }
         else {
