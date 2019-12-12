@@ -587,6 +587,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
      })
 
       title = escape_special(title)
+      title = gsub("\"", "\\\"", title)
 
       tt$add_triple(bibResource, dc_title, literal(title))
 
@@ -650,6 +651,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
      source = get_or_set_mongoid(df, prefix)
      source = identifier(source, prefix)
+
      tt$add_triple(source, rdf_type, ExpressionCollection) #we are not actually sure if this is a journal (can be a website or other source; fabio:ExpressionCollection is more general)
      tt$add_triple(source, frbr_part, bibResource)
         tt$add_triple(source, rdfs_label, n)
