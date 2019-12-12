@@ -58,7 +58,7 @@ process_author = function (node, mongo_key)
   label = get_author_label(node, mongo_key)
   orcid = get_author_orcid(node)
   mongo_key = c(author = "")
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = orcid, parent = NA, key = NA)
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = as.character(orcid), parent = NA, key = NA)
   print("component frame")
   print(df)
   return(df)
@@ -229,7 +229,6 @@ get_or_set_mongoid= function (df, prefix)
       id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", id)
     } else{
         if (!(is.na(df$orcid))) {
-          print(df$orcid)
           query = sprintf("{\"%s\":\"%s\"}", "orcid", df$orcid)
           print(query)
           key = general_collection$find(query)$key
