@@ -59,6 +59,8 @@ process_author = function (node, mongo_key)
   orcid = get_author_orcid(node)
   mongo_key = c(author = "")
   df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = orcid, parent = NA, key = NA)
+  print("component frame")
+  print(df)
   return(df)
 }
 
