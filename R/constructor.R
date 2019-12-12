@@ -587,7 +587,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
      })
 
       title = escape_special(title)
-      title = gsub("\"", "\\\"", title)
+      title = gsub("\"", " ", title)
 
       tt$add_triple(bibResource, dc_title, literal(title))
 
