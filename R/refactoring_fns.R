@@ -59,8 +59,7 @@ process_author = function (node, mongo_key)
   orcid = get_author_orcid(node)
   mongo_key = c(author = "")
   df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = as.character(orcid), parent = NA, key = NA)
-  print("component frame")
-  print(df)
+
   return(df)
 }
 
@@ -230,11 +229,9 @@ get_or_set_mongoid= function (df, prefix)
     } else{
         if (!(is.na(df$orcid))) {
           query = sprintf("{\"%s\":\"%s\"}", "orcid", df$orcid)
-          print(query)
           key = general_collection$find(query)$key
 
           #key = check_mongo_key_via_orcid(df$orcid, general_collection)
-          print(key)
           if (is.null(key)){
             key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
           }
