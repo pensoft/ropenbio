@@ -147,9 +147,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
     },
     error = function(e)
     {
-   #   warning(e)
-  #    skipped = paste(filename, "\n")
-     # cat(skipped, file="/home/backend/OpenBiodiv/skipped.txt", append = TRUE)
+      warning(e)
+      skipped = paste(filename, "\n")
+      cat(skipped, file="/home/backend/OpenBiodiv/skipped.txt", append = TRUE)
       return(FALSE)
     })
 }
