@@ -10,7 +10,7 @@ identifier_new = function (node, xml, mongo_key, prefix = NA, blank = FALSE)
   }
 
 
-  if (is.na(xml2::xml_attr(node, "obkms_id"))) {
+  if (is.na(xml2::xml_attr(node, "obkms_id")) || is.author(a$mongo_key)) {
 
       component_df = process_schema_component(node, mongo_key)
       id = get_or_set_mongoid(component_df, prefix)
