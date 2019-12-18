@@ -517,7 +517,8 @@ material_schema = XmlSchema$new(
             catalog_number = ".//named-content[@content-type='dwc:catalogNumber']//*[not(ancestor::list-item)]",
             other_catalog_numbers = ".//named-content[@content-type='dwc:otherCatalogNumbers']//*[not(ancestor::list-item)]",
             bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
-            genbank_id = ".//ext-link[@ext-link-type='gen']"
+            genbank_id = ".//ext-link[@ext-link-type='gen']",
+            habitat = ".//named-content[@content-type='dwc:habitat']"
           ),
 
           atom_lang = c(
@@ -549,7 +550,8 @@ material_schema = XmlSchema$new(
             catalog_number = NA,
             other_catalog_numbers = NA,
             bold_id=NA,
-            genbank_id = NA
+            genbank_id = NA,
+            habitat = NA
           ),
 
           atom_types = list(
@@ -582,9 +584,8 @@ material_schema = XmlSchema$new(
             catalog_number = rdf4r::xsd_string,
             other_catalog_numbers = rdf4r::xsd_string,
             bold_id=rdf4r::xsd_string,
-            genbank_id= rdf4r::xsd_string
-
-
+            genbank_id= rdf4r::xsd_string,
+            habitat = rdf4r::xsd_string
           ),
           mongo_key =  c(type_material = "tp:treatment-sec[@sec-type='type material'] | tp:treatment-sec[@sec-type='material'] | tp:treatment-sec[@sec-type='materials'] | tp:treatment-sec[@sec-type='Holotype'] | tp:treatment-sec[@sec-type='Types'] | tp:treatment-sec[@sec-type='Typification']"),
           constructor = type_material,
