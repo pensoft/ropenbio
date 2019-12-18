@@ -367,7 +367,8 @@ material_schema = XmlSchema$new(
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
          institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
-        genbank_id = ".//ext-link[@ext-link-type='gen']"
+        genbank_id = ".//ext-link[@ext-link-type='gen']",
+        habitat = ".//named-content[@content-type='dwc:habitat']"
 
       ),
 
@@ -377,7 +378,8 @@ material_schema = XmlSchema$new(
         institution_name = NA,
         institution_code = NA,
         bold_id=NA,
-        genbank_id = NA
+        genbank_id = NA,
+        habitat = NA
 
       ),
 
@@ -387,7 +389,8 @@ material_schema = XmlSchema$new(
         institution_name = rdf4r::xsd_string,
         institution_code = rdf4r::xsd_string,
         bold_id=rdf4r::xsd_string,
-        genbank_id= rdf4r::xsd_string
+        genbank_id= rdf4r::xsd_string,
+        habitat = rdf4r::xsd_string
       ),
       mongo_key =  c(treatment = "/article/body/..//tp:taxon-treatment"),
       constructor = treatment,
