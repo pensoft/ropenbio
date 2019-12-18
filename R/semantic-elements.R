@@ -631,6 +631,16 @@ mentions = rdf4r::identifier(
 )
 
 
+
+#' mentions habitat
+#' @export
+mentionsHabitat = rdf4r::identifier(
+  id = "mentionsHabitat",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+
 #' publication_date
 #' @export
 publication_date = rdf4r::identifier(

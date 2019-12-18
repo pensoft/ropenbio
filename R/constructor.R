@@ -415,10 +415,11 @@ treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
 
 
   tt$add_triple(treatment_id, has_content, literal(treatment_content))
-
+  if (length(unlist(atoms$habitat))>0 ){
   sapply(atoms$habitat, function(i){
-    tt$add_triple(treatment_id, mentions, i)
+    tt$add_triple(treatment_id, mentionsHabitat, i)
   })
+  }
 
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
