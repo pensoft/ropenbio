@@ -609,9 +609,11 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
        tt$add_triple(bibResource, has_url, n)
     })
 
-     sapply(atoms$verbatimContent, function(n){
-       tt$add_triple(bibResource, rdfs_label, n)
-     })
+    verbatimContent =  unlist(atoms$verbatimContent[1])["text_value"]
+   verbatimContent =  gsub("\"", " ", verbatimContent)
+    
+    tt$add_triple(bibResource, rdfs_label, literal(verbatimContent))
+    
 
     tt$add_triple(identifiers$nid, mentions, bibResource) #link the reference to the article it references
 
