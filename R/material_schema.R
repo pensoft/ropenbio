@@ -186,7 +186,7 @@ material_schema = XmlSchema$new(
         surname = "./name/surname",
         given_names = "./name/given-names",
         email = "./email",
-        aff_id = "./xref[@rid]",
+        aff_id = "./xref/@rid",
         all_affiliations = "//article/front/article-meta/aff/addr-line[1]",
         orcid = "./uri[@content-type='orcid']"
         # role = "./mods:role/mods:roleTerm"
