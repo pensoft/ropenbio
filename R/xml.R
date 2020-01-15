@@ -92,8 +92,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
   tryCatch(
     {
       xml = xml2::read_xml(filename)
-      if (processing_status(xml)==FALSE){
 
+      if (processing_status(xml)==FALSE){
 
      # xml_string = crosslinker(filename)
     #  xml = xml2::as_xml_document(xml_string)
@@ -105,7 +105,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       triples = ResourceDescriptionFramework$new()
       xml_schema = material_schema
       root_ident = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
-
       triples$set_context(root_ident)
 
       #finds all institution codes and names and saves them in mongodb collection
@@ -123,6 +122,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         prefix = prefix,
         new_taxons = new_taxons,
         dry = dry,
+        xml = xml,
         filename = filename,
         root_id = root_ident
       )
@@ -362,6 +362,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 
 
   if(is.na(arpha_id)){
+    processing_status(node)
     id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
 
   }else{
