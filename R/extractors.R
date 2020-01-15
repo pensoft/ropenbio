@@ -56,7 +56,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_tax
 
 #' @export
 node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_taxons,
-          dry = FALSE, xml, filename, root_id)
+          dry = FALSE, filename, root_id)
 {
   if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples))) {
     if (!is.null(xml_schema$injector)) {
@@ -78,8 +78,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     # if (dry == FALSE) {
     #    add_data(serialization, access_options = access_options)
     #  }
-    xml2::xml_attr(node, "obkms_process") = "TRUE"
-    xml2::write_xml(xml, filename)
+
     triples$add_triples(new_triples)
   }
   for (c in xml_schema$components) {
@@ -87,7 +86,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     for (n in nodel) {
 
       node_extractor_en(n, c, reprocess = reprocess, triples = triples,
-                        prefix = prefix, new_taxons = new_taxons, dry = dry, xml = xml, filename = filename,
+                        prefix = prefix, new_taxons = new_taxons, dry = dry, filename = filename,
                         root_id = root_id)
 
 

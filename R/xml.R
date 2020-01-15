@@ -104,7 +104,11 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       triples = ResourceDescriptionFramework$new()
       xml_schema = material_schema
+      node = xml
       root_ident = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
+
+      xml2::xml_attr(node, "obkms_process") = "TRUE"
+      xml2::write_xml(xml, filename)
       triples$set_context(root_ident)
 
       #finds all institution codes and names and saves them in mongodb collection
@@ -115,14 +119,13 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       print(filename)
 
       triples = node_extractor_en(
-        node = xml,
+        node = node,
         xml_schema = xml_schema,
         reprocess = reprocess,
         triples = triples,
         prefix = prefix,
         new_taxons = new_taxons,
         dry = dry,
-        xml = xml,
         filename = filename,
         root_id = root_ident
       )
@@ -362,14 +365,14 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 
 
   if(is.na(arpha_id)){
-    processing_status(node)
     id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE)
 
-  }else{
+    }else{
     #arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
     xml2::xml_attr(root_node, "obkms_id") = arpha_id #save to xml
     id = identifier(id = arpha_id, prefix = prefix)       #build identifier
   }
+
 
   title = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/title-group/article-title"))
   doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
