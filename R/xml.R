@@ -92,6 +92,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
   tryCatch(
     {
       xml = xml2::read_xml(filename)
+      if (processing_status(xml)==FALSE){
+
 
      # xml_string = crosslinker(filename)
     #  xml = xml2::as_xml_document(xml_string)
@@ -144,7 +146,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
 
       return(TRUE)
-    },
+    }
+      },
     error = function(e)
     {
       warning(e)

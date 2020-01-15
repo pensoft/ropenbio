@@ -79,6 +79,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     #    add_data(serialization, access_options = access_options)
     #  }
     xml2::xml_attr(node, "obkms_process") = "TRUE"
+    xml2::write_xml(xml, filename)
     triples$add_triples(new_triples)
   }
   for (c in xml_schema$components) {
