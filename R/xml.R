@@ -104,10 +104,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       triples = ResourceDescriptionFramework$new()
       xml_schema = material_schema
-      node = xml
+
       root_ident = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
 
-      xml2::xml_attr(node, "obkms_process") = "TRUE"
       xml2::write_xml(xml, filename)
       triples$set_context(root_ident)
 
@@ -119,7 +118,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       print(filename)
 
       triples = node_extractor_en(
-        node = node,
+        node = xml,
         xml_schema = xml_schema,
         reprocess = reprocess,
         triples = triples,
@@ -373,6 +372,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
     id = identifier(id = arpha_id, prefix = prefix)       #build identifier
   }
 
+  xml2::xml_attr(node, "obkms_process") = "TRUE"
 
   title = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/title-group/article-title"))
   doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
