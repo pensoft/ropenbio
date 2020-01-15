@@ -151,8 +151,10 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
     error = function(e)
     {
       warning(e)
+      if (processing_status(xml)==FALSE){
       skipped = paste(filename, "\n")
       cat(skipped, file="/home/backend/OpenBiodiv/skipped.txt", append = TRUE)
+      }
       return(FALSE)
     })
 }
