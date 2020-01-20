@@ -17,7 +17,7 @@
 node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_taxons,
                               dry = FALSE, filename, root_id)
 {
-  if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples))) {
+  if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples)) || xml2::xml_name(node)=="article") {
     if (!is.null(xml_schema$injector)) {
       xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename),
                                                        split = "/"), node)
@@ -58,7 +58,7 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_tax
 node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_taxons,
           dry = FALSE, filename, root_id)
 {
-  if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples))) {
+  if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples)) || xml2::xml_name(node)=="article") {
     if (!is.null(xml_schema$injector)) {
       xml_schema$injector(obkms_id = rdf4r::last_token(rdf4r::strip_filename_extension(filename),
                                                        split = "/"), node)
