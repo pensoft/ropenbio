@@ -107,18 +107,19 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       root_ident = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
 
+      processing_xml = xml
       xml2::write_xml(xml, filename)
       triples$set_context(root_ident)
 
       #finds all institution codes and names and saves them in mongodb collection
-      extract_inst_identifiers(xml, root_id = root_ident, prefix = prefix, collection = inst_collection, grbio = grbio)
+      extract_inst_identifiers(processing_xml, root_id = root_ident, prefix = prefix, collection = inst_collection, grbio = grbio)
       #TODO: add into proj directory
       new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
 
       print(filename)
 
       triples = node_extractor_en(
-        node = xml,
+        node = processing_xml,
         xml_schema = xml_schema,
         reprocess = reprocess,
         triples = triples,
@@ -133,9 +134,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       serialization = triples$serialize()
       #cat(serialization, file = "~/diptera.trig")
       save_serialization(serialization, serialization_dir)
-      xml2::write_xml(xml, filename)
+      xml2::write_xml(processing_xml, filename)
       xml_collection = mongolite::mongo(collection = "xmls", db = "test")
-      xml_str = toString(xml)
+      xml_str = toString(processing_xml)
 
       d = data.frame(
         xml = xml_str,
