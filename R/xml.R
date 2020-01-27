@@ -113,14 +113,14 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       #set publisher id as a 'global variable' for mongo purposes
       publisher_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/publisher/publisher-name"))
-      df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+      df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
       print(df)
       publisher_id = get_or_set_mongoid(df, prefix )
       publisher_id = identifier(publisher_id, prefix)
 
       #set journal id as a 'global variable' for mongo purposes
       journal_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/journal-title-group/journal-title"))
-      df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+      df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
       journal_id = get_or_set_mongoid(df, prefix )
       journal_id = identifier(journal_id, prefix)
 
@@ -382,7 +382,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 
 
   if(is.na(arpha_id)){
-    id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE, publisher_id = NULL, journal_id=NULL)
+    id = identifier_new(node=root_node, xml=xml, mongo_key = mongo_key, prefix=prefix, blank = FALSE, publisher_id = NA, journal_id = NA)
 
     }else{
     #arpha_id = stringr::str_extract(arpha_id, "(?:.(?!\\/)){36}$") #extract uuid
@@ -394,7 +394,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 
   title = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/title-group/article-title"))
   doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
-  save_to_mongo(key = toString(id$uri), value =  title, type = "article", orcid = NA, parent = doi, publisher_id = NULL, journal_id=NULL, collection = general_collection)
+  save_to_mongo(key = toString(id$uri), value =  title, type = "article", orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, collection = general_collection)
   id
 }
 
