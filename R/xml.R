@@ -391,7 +391,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 
   title = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/title-group/article-title"))
   doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
-  save_to_mongo(key = toString(id$uri), value =  title, type = "article", orcid = NA, parent = doi, collection = general_collection)
+  save_to_mongo(key = toString(id$uri), value =  title, type = "article", orcid = NA, parent = doi, publisher_id = NULL, journal_id=NULL, collection = general_collection)
   id
 }
 
