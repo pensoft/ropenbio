@@ -58,7 +58,7 @@ process_author = function (node, mongo_key)
   label = get_author_label(node, mongo_key)
   orcid = get_author_orcid(node)
   mongo_key = c(author = "")
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = as.character(orcid), parent = NA, key = NA, publisher_id = NULL, journal_id = NULL )
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = as.character(orcid), parent = NA, key = NA, publisher_id = NA, journal_id = NA )
 
   return(df)
 }
@@ -74,7 +74,7 @@ process_tnu = function (node, mongo_key)
   label = escape_special(label)
   df = set_component_frame(label = label, mongo_key = mongo_key,
                              type = names(mongo_key), orcid = NA, parent = NA,
-                             key = NA, publisher_id = NULL, journal_id = NULL )
+                             key = NA, publisher_id = NA, journal_id = NA )
   return(df)
 }
 

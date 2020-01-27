@@ -16,7 +16,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
   article_id = identifiers$root_id
   publisher_lit = toString(unlist(atoms$publisher)["text_value"])
 
-  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
   publisher_id = get_or_set_mongoid(df, prefix )
   publisher_id = identifier(publisher_id, prefix)
 
@@ -28,14 +28,14 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
   journal_id = identifier(journal_id, prefix)
 
   if(is.null(journal_id)){
-    df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+    df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
     journal_id = get_or_set_mongoid(df, prefix )
     journal_id = identifier(journal_id, prefix)
   }
 
   paper_label = unlist(atoms$title)["text_value"]
 
-  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NULL, journal_id = NULL)
+  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA)
 
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
@@ -397,7 +397,7 @@ treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
   tt = ResourceDescriptionFramework$new()
 
   #get or set taxonomic concept id
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NULL, journal_id = NULL)
+  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA)
   tc_identifier = get_or_set_mongoid(tc_df, prefix)
   tc_identifier = identifier(tc_identifier, prefix)
 
@@ -509,7 +509,7 @@ nomenclature_citation = function (atoms, identifiers, prefix, new_taxons, mongo_
        i = gsub("^ ", "", i)
 
        #create an id for each 'verbatim cit'
-       df = set_component_frame(label = i, mongo_key = NA, type = "nomenclature_litCit", orcid = NA, parent = identifiers$nid$uri, key = NA, publisher_id = NULL, journal_id = NULL)
+       df = set_component_frame(label = i, mongo_key = NA, type = "nomenclature_litCit", orcid = NA, parent = identifiers$nid$uri, key = NA, publisher_id = NA, journal_id = NA)
        citID = get_or_set_mongoid(df, prefix)
        citID = identifier(citID, prefix)
        tt$add_triple(identifiers$nid, mentions, citID)
@@ -647,7 +647,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
       if(length(atoms$author_name)>0){
         for (n in 1:length(atoms$author_name)){
           fullname = full_name(atoms$author_surname[n], atoms$author_fname[n])
-          df = set_component_frame(label = fullname, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+          df = set_component_frame(label = fullname, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
          author = get_or_set_mongoid(df, prefix)
          author = identifier(author, prefix)
          tt$add_triple(bibResource, creator, author)
@@ -666,7 +666,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
       sapply(atoms$source, function(n){
      source_name = n$text_value
       if (!(is.null(source_name))){
-      df = set_component_frame(label = toString(source_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+      df = set_component_frame(label = toString(source_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
 
      source = get_or_set_mongoid(df, prefix)
      source = identifier(source, prefix)
@@ -878,14 +878,14 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key, publ
     scNameParent = scName_gbif$uri
 
   }
-  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NULL, journal_id = NULL)
+  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NA, journal_id = NA)
 
 
   scNameID = get_or_set_mongoid(df, prefix)
   scName_ident = identifier(scNameID, prefix)
 
   #get or set taxonomic concept id
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NULL, journal_id = NULL)
+  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA)
   tc_identifier = get_or_set_mongoid(tc_df, prefix)
   tc_identifier = identifier(tc_identifier, prefix)
 
@@ -962,7 +962,7 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key, pub
     sapply(atoms$holotype, function(n){
       #n$text_value = escape_special(n$text_value)
       #label = escape_special_json(n$text_value)
-      df = set_component_frame(label = escape_special_json(n$text_value), mongo_key = NA, type = "holotype", orcid = NA, parent = identifiers$nid$uri, key = NA, publisher_id = NULL, journal_id = NULL)
+      df = set_component_frame(label = escape_special_json(n$text_value), mongo_key = NA, type = "holotype", orcid = NA, parent = identifiers$nid$uri, key = NA, publisher_id = NA, journal_id = NA)
       holotypeID = get_or_set_mongoid(df, prefix)
       tt$add_triple(identifier(holotypeID, prefix), rdf_type, HolotypeDescription)
       tt$add_triple(identifier(holotypeID, prefix), is_contained_by, typeMaterialID)
@@ -1055,7 +1055,7 @@ taxonomic_name_usage = function (atoms, identifiers, prefix, new_taxons, mongo_k
     if ( !(scName == "")){
 
 
-      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
 
 
       scNameID = get_or_set_mongoid(scName_df, prefix)
@@ -1225,19 +1225,19 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key, publis
   article_id = identifiers$root_id
   publisher_lit = toString(unlist(atoms$publisher)["text_value"])
 
-  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
   publisher_id = get_or_set_mongoid(df, prefix )
   publisher_id = identifier(publisher_id, prefix)
 
   journal_lit = toString(unlist(atoms$journal)["text_value"])
 
-  df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+  df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
   journal_id = get_or_set_mongoid(df, prefix )
   journal_id = identifier(journal_id, prefix)
 
   paper_label = unlist(atoms$title)["text_value"]
 
-  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NULL, journal_id = NULL)
+  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA)
 
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
@@ -1419,7 +1419,7 @@ tnu = function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
     if ( !(scName == "")){
 
 
-      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id=NULL)
+      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id=NULL)
 
 
       scNameID = get_or_set_mongoid(scName_df, prefix)
@@ -1554,14 +1554,14 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key, publ
     scNameParent = scName_gbif$uri
 
   }
-  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NULL, journal_id = NULL)
+  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NA, journal_id = NA)
 
 
   scNameID = get_or_set_mongoid(df, prefix)
   scName_ident = identifier(scNameID, prefix)
 
   #get or set taxonomic concept id
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NULL, journal_id = NULL)
+  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA)
   tc_identifier = get_or_set_mongoid(tc_df, prefix)
   tc_identifier = identifier(tc_identifier, prefix)
 
