@@ -106,6 +106,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       xml_schema = material_schema
 
       root_ident = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
+      print(root_ident)
       processing_xml = xml
       xml2::write_xml(xml, filename)
       triples$set_context(root_ident)
@@ -113,6 +114,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       #set publisher id as a 'global variable' for mongo purposes
       publisher_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/publisher/publisher-name"))
       df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
+      print(df)
       publisher_id = get_or_set_mongoid(df, prefix )
       publisher_id = identifier(publisher_id, prefix)
 
@@ -121,6 +123,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NULL, journal_id = NULL)
       journal_id = get_or_set_mongoid(df, prefix )
       journal_id = identifier(journal_id, prefix)
+
 
 
       #finds all institution codes and names and saves them in mongodb collection
