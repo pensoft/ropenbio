@@ -116,13 +116,13 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
       print(df)
       publisher_id = get_or_set_mongoid(df, prefix )
-      publisher_id = identifier(publisher_id, prefix)
+      publisher_id = paste0("<http://openbiodiv.net/",publisher_id,">")
 
       #set journal id as a 'global variable' for mongo purposes
       journal_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/journal-title-group/journal-title"))
       df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
       journal_id = get_or_set_mongoid(df, prefix )
-      journal_id = identifier(journal_id, prefix)
+      journal_id = paste0("<http://openbiodiv.net/",journal_id,">")
 
 
 
