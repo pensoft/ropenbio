@@ -3,7 +3,7 @@
 #' A modification of identifier() from rdf4r (queries mongo, instead of openbiodiv)
 #'
 #' @export
-identifier_new = function (node, xml, mongo_key, prefix = NA, blank = FALSE)
+identifier_new = function (node, xml, mongo_key, prefix = NA, blank = FALSE, publisher_id, journal_id )
 {
   if (blank == TRUE) {
     prefix = c(`_` = "_")
@@ -12,7 +12,7 @@ identifier_new = function (node, xml, mongo_key, prefix = NA, blank = FALSE)
 
   if (is.na(xml2::xml_attr(node, "obkms_id")) || is.author(mongo_key)) {
 
-      component_df = process_schema_component(node, mongo_key)
+      component_df = process_schema_component(node, mongo_key, publisher_id, journal_id )
       id = get_or_set_mongoid(component_df, prefix)
       xml2::xml_attr(node, "obkms_id") = id
     }else {

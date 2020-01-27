@@ -56,7 +56,8 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_tax
 
 #' @export
 node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_taxons,
-          dry = FALSE, filename, root_id)
+          dry = FALSE, filename, root_id, publisher_id = publisher_id,
+          journal_id = journal_id)
 {
   if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples)) || xml2::xml_name(node)=="article") {
     if (!is.null(xml_schema$injector)) {
@@ -68,10 +69,11 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     atoms = find_literals(node, xml_schema)
     #TODO fix parent_id prefix
 
-    new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE),
+    new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE, publisher_id =publisher_id, journal_id=journal_id),
                                                                    pid = identifier(parent_id(node), prefix),
                                                                    root_id = root_id),
-                                         prefix = xml_schema$prefix,new_taxons = new_taxons, mongo_key = xml_schema$mongo_key)
+                                         prefix = xml_schema$prefix,new_taxons = new_taxons, mongo_key = xml_schema$mongo_key, publisher_id = publisher_id,
+                                         journal_id = journal_id)
     new_triples$set_context(triples$context)
 
     serialization = new_triples$serialize()
@@ -88,7 +90,8 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
 
       node_extractor_en(n, c, reprocess = reprocess, triples = triples,
                         prefix = prefix, new_taxons = new_taxons, dry = dry, filename = filename,
-                        root_id = root_id)
+                        root_id = root_id, publisher_id = publisher_id,
+                        journal_id = journal_id)
 
 
     }

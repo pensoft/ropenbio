@@ -44,10 +44,10 @@ get_figure_label = function (node, mongo_key, fig_number)
 
 
 #' @export
-set_component_frame = function(label, mongo_key, type, orcid, parent, key)
+set_component_frame = function(label, mongo_key, type, orcid, parent, key, publisher_id, journal_id)
 {
 
-  df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid, parent = parent, key = key,  stringsAsFactors = FALSE)
+  df = data.frame(label = label, mongo_key = mongo_key, type = type, orcid = orcid, parent = parent, key = key, publisher_id = publisher_id, journal_id = journal_id,  stringsAsFactors = FALSE)
   return(df)
 }
 
@@ -58,7 +58,7 @@ process_author = function (node, mongo_key)
   label = get_author_label(node, mongo_key)
   orcid = get_author_orcid(node)
   mongo_key = c(author = "")
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = as.character(orcid), parent = NA, key = NA)
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = as.character(orcid), parent = NA, key = NA, publisher_id = NULL, journal_id = NULL )
 
   return(df)
 }
@@ -74,13 +74,13 @@ process_tnu = function (node, mongo_key)
   label = escape_special(label)
   df = set_component_frame(label = label, mongo_key = mongo_key,
                              type = names(mongo_key), orcid = NA, parent = NA,
-                             key = NA)
+                             key = NA, publisher_id = NULL, journal_id = NULL )
   return(df)
 }
 
 
 #' @export
-process_figure = function (node, mongo_key)
+process_figure = function (node, mongo_key, publisher_id, journal_id)
 {
   id = xml2::xml_text(xml2::xml_find_all(node, "object-id[@content-type='arpha']"))
   if (length(id) > 0) {
@@ -100,12 +100,12 @@ process_figure = function (node, mongo_key)
  # label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   type = paste0(names(mongo_key), " ", fig_number)
   df = set_component_frame(label = label, mongo_key = mongo_key,
-                           type = type, orcid = NA, parent = NA, key = fig_id)
+                           type = type, orcid = NA, parent = NA, key = fig_id, publisher_id = publisher_id, journal_id = journal_id)
   return(df)
 }
 
 #' @export
-process_treatment = function (node, mongo_key)
+process_treatment = function (node, mongo_key,publisher_id, journal_id)
 {
   id = xml2::xml_text(xml2::xml_find_all(node, "tp:nomenclature/tp:taxon-name/object-id[@content-type='arpha']"))
   if (length(id) > 0) {
@@ -118,7 +118,7 @@ process_treatment = function (node, mongo_key)
  #   label =  jsonlite::fromJSON(jsonlite::toJSON(label))
     df = set_component_frame(label = label, mongo_key = mongo_key,
                              type = names(mongo_key), orcid = NA, parent = NA,
-                             key = treat_id$uri)
+                             key = treat_id$uri, publisher_id = publisher_id, journal_id = journal_id)
   }
   else {
     df = process_general_component(node, mongo_key)
@@ -127,7 +127,7 @@ process_treatment = function (node, mongo_key)
 }
 
 #' @export
-process_general_component = function (node, mongo_key)
+process_general_component = function (node, mongo_key,  publisher_id, journal_id)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
 
@@ -139,7 +139,7 @@ process_general_component = function (node, mongo_key)
    label = escape_special(label) #escape special chars
  #  label =  jsonlite::fromJSON(jsonlite::toJSON(label))
   #label = escape_special_json(label)
-  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA)
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA,  publisher_id = publisher_id, journal_id = journal_id)
   return(df)
 }
 
@@ -148,7 +148,7 @@ process_general_component = function (node, mongo_key)
 
 
 #' @export
-process_schema_component = function(node, mongo_key)
+process_schema_component = function(node, mongo_key, publisher_id, journal_id)
 {
 
   if (is.author(mongo_key) == TRUE){
@@ -156,11 +156,11 @@ process_schema_component = function(node, mongo_key)
   } else if (is.tnu(mongo_key) == TRUE){
     df = process_tnu(node, mongo_key)
   } else if (is.figure(mongo_key) == TRUE){
-    df = process_figure(node, mongo_key)
+    df = process_figure(node, mongo_key, publisher_id = publisher_id, journal_id = journal_id)
   } else if (is.treatment(mongo_key) == TRUE){
-    df = process_treatment(node, mongo_key)
+    df = process_treatment(node, mongo_key, publisher_id = publisher_id, journal_id = journal_id)
   } else{
-    df = process_general_component(node, mongo_key)
+    df = process_general_component(node, mongo_key, publisher_id = publisher_id, journal_id = journal_id)
   }
 
   return(df)
@@ -222,7 +222,7 @@ get_or_set_mongoid= function (df, prefix)
 
     if (!(is.na(df$key))){
       key = df$key
-      save_to_mongo(key = key, value = df$label, type = df$type, orcid = df$orcid , parent = NA, collection = general_collection)
+      save_to_mongo(key = key, value = df$label, type = df$type, orcid = df$orcid , parent = NA, publisher_id = df$publisher_id, journal_id = df$journal_id, collection = general_collection)
       key = toString(key)
       id = rdf4r::strip_angle(key)
       id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", id)
@@ -272,7 +272,7 @@ get_or_set = function(key, df){
     #remove dashes and convert to uppercase
     #key = gsub("-", "", key)
     key = toupper(key)
-    save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,  orcid = df$orcid, parent = df$parent, collection = general_collection)
+    save_to_mongo(key = identifier(key, prefix)$uri, value = df$label, type = df$type,  orcid = df$orcid, parent = df$parent, publisher_id = df$publisher_id, journal_id = df$journal_id, collection = general_collection)
     id = key
   }else{
     if (!(is.na(df$orcid))){
