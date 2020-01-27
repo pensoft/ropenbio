@@ -244,23 +244,23 @@ title = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 #' @export
 abstract = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
-  abstract_content = atoms$text_content[[1]]
-  abstract_content = escape_special(abstract_content$text_value)
+  #abstract_content = atoms$text_content[[1]]
+  #abstract_content = escape_special(abstract_content$text_value)
 
 
   #  trans_abstract = escape_special(atoms$trans_abstract)
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Abstract)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  tt$add_triple(identifiers$nid, has_content, literal(abstract_content))
+  #tt$add_triple(identifiers$nid, has_content, literal(abstract_content))
 
-  if(length(unlist(atoms$trans_abstract)) > 0)
-  {
-    trans_content = atoms$trans_abstract[[1]]
-    trans_content = escape_special(trans_content$text_value)
-    tt$add_triple(identifiers$nid, has_content, literal(trans_content))
+ # if(length(unlist(atoms$trans_abstract)) > 0)
+#  {
+#    trans_content = atoms$trans_abstract[[1]]
+ #   trans_content = escape_special(trans_content$text_value)
+#    tt$add_triple(identifiers$nid, has_content, literal(trans_content))
 
-  }
+ # }
 
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
@@ -367,14 +367,14 @@ introduction_section = function (atoms, identifiers, prefix, new_taxons, mongo_k
 {
 
 
-  intro_content = atoms$text_content[[1]]
-  intro_content = escape_special(intro_content$text_value)
+ # intro_content = atoms$text_content[[1]]
+#  intro_content = escape_special(intro_content$text_value)
 
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Introduction)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
 
-  tt$add_triple(identifiers$nid, has_content, literal(intro_content))
+ # tt$add_triple(identifiers$nid, has_content, literal(intro_content))
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
@@ -408,13 +408,13 @@ treatment = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   #for (a in 1:length(atoms$text_content)){
   #  atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
   #}
-  treatment_content = atoms$text_content[[1]]
-  treatment_id_literal = treatment_id$id
-  treatment_content = gsub(treatment_id_literal, "", treatment_content$text_value)
-  treatment_content = escape_special(treatment_content)
+#  treatment_content = atoms$text_content[[1]]
+  #treatment_id_literal = treatment_id$id
+  #treatment_content = gsub(treatment_id_literal, "", treatment_content$text_value)
+  #treatment_content = escape_special(treatment_content)
 
 
-  tt$add_triple(treatment_id, has_content, literal(treatment_content))
+  #tt$add_triple(treatment_id, has_content, literal(treatment_content))
   if (length(unlist(atoms$habitat))>0 ){
   sapply(atoms$habitat, function(i){
     tt$add_triple(treatment_id, mentionsHabitat, i)
@@ -436,17 +436,17 @@ nomenclature = function (atoms, identifiers, prefix, new_taxons, mongo_key){
 
   nomenclature_id = identifiers$nid #remove any ids from the text contents
   nomenclature_parent_id = identifiers$pid$id
-  nomenclature_content = atoms$text_content[[1]]
+ # nomenclature_content = atoms$text_content[[1]]
 
-  nomenclature_content = gsub(nomenclature_id, "", nomenclature_content$text_value)
-  nomenclature_content = gsub(nomenclature_parent_id, "", nomenclature_content)
+  #nomenclature_content = gsub(nomenclature_id, "", nomenclature_content$text_value)
+  #nomenclature_content = gsub(nomenclature_parent_id, "", nomenclature_content)
 
-  nomenclature_content = escape_special(nomenclature_content)
+ # nomenclature_content = escape_special(nomenclature_content)
 
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(nomenclature_id, rdf_type, Nomenclature)
   tt$add_triple(nomenclature_id, is_contained_by, identifiers$pid)
-  tt$add_triple(nomenclature_id, has_content, literal(nomenclature_content))
+#  tt$add_triple(nomenclature_id, has_content, literal(nomenclature_content))
   tt = institution_serializer(tt, atoms, identifiers)
   return(tt)
 
@@ -609,11 +609,11 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key)
        tt$add_triple(bibResource, has_url, n)
     })
 
-    verbatimContent =  unlist(atoms$verbatimContent[1])["text_value"]
-   verbatimContent =  gsub("\"", " ", verbatimContent)
-    
-    tt$add_triple(bibResource, rdfs_label, literal(verbatimContent))
-    
+    #verbatimContent =  unlist(atoms$verbatimContent[1])["text_value"]
+   #verbatimContent =  gsub("\"", " ", verbatimContent)
+
+  #  tt$add_triple(bibResource, rdfs_label, literal(verbatimContent))
+
 
     tt$add_triple(identifiers$nid, mentions, bibResource) #link the reference to the article it references
 
@@ -682,12 +682,12 @@ diagnosis = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
 
   diagnosis_id = identifiers$nid
-  diagnosis_content = atoms$text_content[[1]]
-  diagnosis_content = escape_special(diagnosis_content$text_value)
+  #diagnosis_content = atoms$text_content[[1]]
+  #diagnosis_content = escape_special(diagnosis_content$text_value)
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(diagnosis_id, rdf_type, Diagnosis)
   tt$add_triple(diagnosis_id, is_contained_by, identifiers$pid)
-  tt$add_triple(diagnosis_id, has_content, literal(diagnosis_content))
+ # tt$add_triple(diagnosis_id, has_content, literal(diagnosis_content))
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
@@ -707,11 +707,11 @@ discussion = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
 
   tt = ResourceDescriptionFramework$new()
-  discussion_content = atoms$text_content[[1]]
-  discussion_content = escape_special(discussion_content$text_value)
+ # discussion_content = atoms$text_content[[1]]
+#  discussion_content = escape_special(discussion_content$text_value)
   tt$add_triple(identifiers$nid, rdf_type, Discussion)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  tt$add_triple(identifiers$nid, has_content, literal(discussion_content))
+ # tt$add_triple(identifiers$nid, has_content, literal(discussion_content))
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
@@ -724,11 +724,11 @@ methods = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
 
   tt = ResourceDescriptionFramework$new()
-  methods_content = atoms$text_content[[1]]
-  methods_content = escape_special(methods_content$text_value)
+ # methods_content = atoms$text_content[[1]]
+#  methods_content = escape_special(methods_content$text_value)
   tt$add_triple(identifiers$nid, rdf_type, Methods)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  tt$add_triple(identifiers$nid, has_content, literal(methods_content))
+ # tt$add_triple(identifiers$nid, has_content, literal(methods_content))
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
@@ -751,11 +751,11 @@ checklist = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 
   tt = ResourceDescriptionFramework$new()
 
-  checklist_content = atoms$text_content[[1]]
-  checklist_content = escape_special(checklist_content$text_value)
+#  checklist_content = atoms$text_content[[1]]
+#  checklist_content = escape_special(checklist_content$text_value)
   tt$add_triple(identifiers$nid, rdf_type, Checklist)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  tt$add_triple(identifiers$nid, has_content, literal(checklist_content))
+ # tt$add_triple(identifiers$nid, has_content, literal(checklist_content))
   tt = bold_genbank_serializer(tt, atoms, identifiers)
 
   tt =  institution_serializer(tt, atoms, identifiers)
@@ -775,11 +775,11 @@ checklist = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 distribution = function (atoms, identifiers, prefix, new_taxons, mongo_key)
 {
   tt = ResourceDescriptionFramework$new()
-  distribution_content = atoms$text_content[[1]]
-  distribution_content = escape_special(distribution_content$text_value)
+  #distribution_content = atoms$text_content[[1]]
+  #distribution_content = escape_special(distribution_content$text_value)
   tt$add_triple(identifiers$nid, rdf_type, Distribution)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  tt$add_triple(identifiers$nid, has_content, literal(distribution_content))
+  #tt$add_triple(identifiers$nid, has_content, literal(distribution_content))
 
   tt = bold_genbank_serializer(tt, atoms, identifiers)
   tt =  institution_serializer(tt, atoms, identifiers)
@@ -911,9 +911,9 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   #for (a in 1:length(atoms$text_content)){
   #  atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
   #}
-  treatment_content = atoms$text_content[[1]]
-  treatment_content = escape_special(treatment_content$text_value)
-  tt$add_triple(treatment_id, has_content, literal(treatment_content))
+  #treatment_content = atoms$text_content[[1]]
+  #treatment_content = escape_special(treatment_content$text_value)
+  #tt$add_triple(treatment_id, has_content, literal(treatment_content))
 
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
@@ -934,9 +934,9 @@ type_material = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   typeMaterialID = identifiers$nid
   tt$add_triple(typeMaterialID, rdf_type, MaterialsExamined)
   tt$add_triple(typeMaterialID, is_contained_by, identifiers$pid)
-  material_content = atoms$text_content[[1]]
-  material_content = escape_special(material_content$text_value)
-  tt$add_triple(typeMaterialID, has_content, literal(material_content))
+  #material_content = atoms$text_content[[1]]
+  #material_content = escape_special(material_content$text_value)
+  #tt$add_triple(typeMaterialID, has_content, literal(material_content))
 
   if (length(unlist(atoms$holotype))>0){
     sapply(atoms$holotype, function(n){
@@ -1146,13 +1146,14 @@ taxonomic_key = function (atoms, identifiers, prefix, new_taxons, mongo_key)
   tt$add_triple(identifiers$nid, dc_title, title)
 
 
-  if (length(unlist(atoms$text_content))>0){
-    table_content = atoms$text_content[[1]]
+ # if (length(unlist(atoms$text_content))>0){
+#    table_content = atoms$text_content[[1]]
 
-    table_content = escape_special(table_content$text_value)
 
-    tt$add_triple(identifiers$nid, has_content, literal(table_content))
-  }
+#    table_content = escape_special(table_content$text_value)
+
+ #   tt$add_triple(identifiers$nid, has_content, literal(table_content))
+#  }
 
 
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -1579,9 +1580,9 @@ treatment_en = function (atoms, identifiers, prefix, new_taxons, mongo_key){
   #for (a in 1:length(atoms$text_content)){
   #  atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
   #}
-  treatment_content = atoms$text_content[[1]]
-  treatment_content = escape_special(treatment_content$text_value)
-  tt$add_triple(treatment_id, has_content, literal(treatment_content))
+ # treatment_content = atoms$text_content[[1]]
+#  treatment_content = escape_special(treatment_content$text_value)
+ # tt$add_triple(treatment_id, has_content, literal(treatment_content))
 
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
