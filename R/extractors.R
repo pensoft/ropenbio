@@ -76,7 +76,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
                                          journal_id = journal_id)
     new_triples$set_context(triples$context)
 
-    serialization = new_triples$serialize()
+  #  serialization = new_triples$serialize()
     # if (dry == FALSE) {
     #    add_data(serialization, access_options = access_options)
     #  }
