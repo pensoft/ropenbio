@@ -82,9 +82,14 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     tic(paste("set context: ", mgk))
     
     new_triples$set_context(triples$context)
+<<<<<<< HEAD
     toc(log = TRUE)
     
     
+=======
+
+  #  serialization = new_triples$serialize()
+>>>>>>> 53bff6e66cc15e68b5f0b0d4c48426e311a2fb6c
     # if (dry == FALSE) {
     #    add_data(serialization, access_options = access_options)
     #  }
