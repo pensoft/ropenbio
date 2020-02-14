@@ -69,7 +69,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     atoms = find_literals(node, xml_schema)
     #TODO fix parent_id prefix
     toc(log = TRUE)
-  
+
     mgk = xml2::xml_name(node)
     message = paste("constructor + id new: ", mgk)
     tic(message)
@@ -80,20 +80,15 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
                                          journal_id = journal_id)
     toc(log = TRUE)
     tic(paste("set context: ", mgk))
-    
+
     new_triples$set_context(triples$context)
-<<<<<<< HEAD
     toc(log = TRUE)
-    
-    
-=======
 
   #  serialization = new_triples$serialize()
->>>>>>> 53bff6e66cc15e68b5f0b0d4c48426e311a2fb6c
     # if (dry == FALSE) {
     #    add_data(serialization, access_options = access_options)
     #  }
-    
+
     tic("set obkms_process = TRUE")
     xml2::xml_attr(node, "obkms_process") = "TRUE"
     toc(log = TRUE)
@@ -101,8 +96,8 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     tic("add new_triples to triples")
     triples$add_triples(new_triples)
     toc(log = TRUE)
-    
-    
+
+
   }
   for (c in xml_schema$components) {
     nodel = xml2::xml_find_all(node, c$xpath)
