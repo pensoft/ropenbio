@@ -572,11 +572,23 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
         key = NULL
       }else{
         if (is.na(parent)){
-          query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "value", value)
+         # query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "value", value)
+          query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
+          df = collection$find(query)
+          key = NULL
+          if (!(is.null(df))){
+            df <- df[which(df$value == value),]
+            for (n in 1:nrow(df)){
+              if (df[n,]$value == value){
+                key = df[n,]$key
+              }
+            }
+          }
         }else {
           query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "parent", parent)
+          key = collection$find(query)$key
         }
-        key = collection$find(query)$key
+
       }
       return(key)
     }
@@ -591,6 +603,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
         title = NA
 
       key = check_mongo_citation(value = title, parent = doi, collection = general_collection)
+
       df = set_component_frame(label = title, mongo_key = NA, type = "bibResource", orcid = NA, parent = doi, key = NA, publisher_id = publisher_id, journal_id = journal_id)
        bibResource = get_or_set(key, df)
        bibResource = identifier(bibResource, prefix)
@@ -672,8 +685,11 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
      source = identifier(source, prefix)
 
      tt$add_triple(source, rdf_type, ExpressionCollection) #we are not actually sure if this is a journal (can be a website or other source; fabio:ExpressionCollection is more general)
+
      tt$add_triple(source, frbr_part, bibResource)
-        tt$add_triple(source, rdfs_label, n)
+     n = gsub("\"", " ",  n)
+
+      tt$add_triple(source, rdfs_label, n)
        }
     })
 

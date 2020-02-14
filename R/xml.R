@@ -91,15 +91,15 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
   tryCatch(
     {
+      tic("file opening")
       xml = xml2::read_xml(filename)
+      toc(log = TRUE)
+
 
       if (processing_status(xml)==FALSE){
 
-     # xml_string = crosslinker(filename)
-    #  xml = xml2::as_xml_document(xml_string)
 
-      # taxon_discovery = "/home/mid/R_wd/openbidiv/tests/status_vocab_abbrev/taxon_discovery.txt"
-
+      tic("set prefix + init triples + set root id + write back to xml + set context")
       prefix = c(openbiodiv = "http://openbiodiv.net/")
 
       triples = ResourceDescriptionFramework$new()
@@ -110,6 +110,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       processing_xml = xml
       xml2::write_xml(xml, filename)
       triples$set_context(root_ident)
+      toc(log = TRUE)
+
+      tic("set publisher id and journal id")
 
       #set publisher id as a 'global variable' for mongo purposes
       publisher_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/publisher/publisher-name"))
@@ -120,16 +123,26 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       #set journal id as a 'global variable' for mongo purposes
       journal_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/journal-title-group/journal-title"))
+      print(journal_name)
       df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
-      journal_id = get_or_set_mongoid(df, prefix )
+      journal_id = get_or_set_mongoid(df, prefix)
+      print(journal_id)
       journal_id = paste0("<http://openbiodiv.net/",journal_id,">")
+      print(journal_id)
 
+      toc(log = TRUE)
 
+      tic("extract institutional ids")
 
       #finds all institution codes and names and saves them in mongodb collection
       extract_inst_identifiers(processing_xml, root_id = root_ident, prefix = prefix, collection = inst_collection, grbio = grbio)
       #TODO: add into proj directory
+    #  toc(log = TRUE)
+
+      tic("load new taxon abbrevs from taxon_discovery file")
+
       new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
+      toc(log = TRUE)
 
       print(filename)
 
@@ -147,11 +160,18 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         journal_id = journal_id
       )
 
+      tic("serialize triples and save the serialization")
 
       serialization = triples$serialize()
       #cat(serialization, file = "~/diptera.trig")
       save_serialization(serialization, serialization_dir)
+      toc(log = TRUE)
+
+      tic("write to xml file")
       xml2::write_xml(processing_xml, filename)
+      toc(log = TRUE)
+
+      tic("insert xml to mongo")
       xml_collection = mongolite::mongo(collection = "xmls", db = "test")
       xml_str = toString(processing_xml)
 
@@ -160,6 +180,14 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         filename = as.character(filename)
       )
       xml_collection$insert(d)
+      toc(log = TRUE)
+
+      log.txt <- tic.log(format = TRUE)
+      tic.clearlog()
+      names(log.txt) = NULL
+      log = unlist(log.txt)
+      cat(log, file = "tictoc", append =TRUE)
+      cat("\n", file = "tictoc", append =TRUE)
 
      # cat(fil, ename, file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
     #  cat("\n", file = "/opt/data/obkms/processed/obkms-processed.txt", append = TRUE)
