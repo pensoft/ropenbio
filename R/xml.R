@@ -121,6 +121,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       publisher_id = get_or_set_mongoid(df, prefix )
       publisher_id = paste0("<http://openbiodiv.net/",publisher_id,">")
 
+
       #set journal id as a 'global variable' for mongo purposes
       journal_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/journal-title-group/journal-title"))
       print(journal_name)

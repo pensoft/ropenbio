@@ -121,7 +121,7 @@ process_treatment = function (node, mongo_key,publisher_id, journal_id)
                              key = treat_id$uri, publisher_id = publisher_id, journal_id = journal_id)
   }
   else {
-    df = process_general_component(node, mongo_key)
+    df = process_general_component(node, mongo_key, publisher_id = publisher_id, journal_id = journal_id)
   }
   return(df)
 }
