@@ -247,14 +247,14 @@ get_or_set_mongoid= function (df, prefix)
           else
           {
 
-          nocheck = c("introduction", "abstract", "discussion", "bibliography", "keywords")
-          if (df$type %in% nocheck){
-            key = NULL
-            id = get_or_set(key, df)
-          }else{
+          #nocheck = c("introduction", "abstract", "discussion", "bibliography", "keywords")
+          #if (df$type %in% nocheck){
+          #  key = NULL
+          #  id = get_or_set(key, df)
+          #}else{
           key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
           id = get_or_set(key, df)
-           }
+          # }
           }
         }
       }
