@@ -576,7 +576,9 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
           query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
           df = collection$find(query)
           key = NULL
-          if (!(is.null(df))){
+          print(df)
+          print(str(df))
+          if (!(is.null(df)) && nrow(df) > 0){
             df <- df[which(df$value == value),]
             for (n in 1:nrow(df)){
               if (df[n,]$value == value){

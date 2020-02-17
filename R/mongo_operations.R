@@ -11,6 +11,8 @@ check_mongo_key = function(value, type, collection, regex)
     {
   df = collection$find(query)
   key = NULL
+  print(df)
+  print(str(df))
   if (!(is.null(df))){
     df <- df[which(df$value == value),]
     for (n in 1:nrow(df)){
