@@ -604,6 +604,8 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
       if (is.null(title))
         title = NA
 
+      title = gsub("\"", "", title)
+
       key = check_mongo_citation(value = title, parent = doi, collection = general_collection)
 
       df = set_component_frame(label = title, mongo_key = NA, type = "bibResource", orcid = NA, parent = doi, key = NA, publisher_id = publisher_id, journal_id = journal_id)
@@ -619,7 +621,7 @@ reference = function (atoms, identifiers, prefix, new_taxons, mongo_key, publish
      })
 
       title = escape_special(title)
-      title = gsub("\"", " ", title)
+   #   title = gsub("\"", " ", title)
 
       tt$add_triple(bibResource, dc_title, literal(title))
 
