@@ -1029,20 +1029,7 @@ material_schema = XmlSchema$new(
         authorship = "following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type='authority']",
         secundum_literal = NA
       ),
-      mongo_key =  mongo_key = c(
-        kingdom = "./tp:taxon-name-part[@taxon-name-part-type='kingdom' or @taxon-name-part-type='Kingdom' or @taxon-name-part-type='divisio' or @taxon-name-part-type='Divisio' or @taxon-name-part-type='division' or @taxon-name-part-type='Division']",
-        phylum = "./tp:taxon-name-part[@taxon-name-part-type='phylum' or @taxon-name-part-type='Phylum' or @taxon-name-part-type='regnum' or @taxon-name-part-type='Regnum']",
-        class = "./tp:taxon-name-part[@taxon-name-part-type='class' or @taxon-name-part-type='Class' or @taxon-name-part-type='classis' or @taxon-name-part-type='Classis']",
-        order = "./tp:taxon-name-part[@taxon-name-part-type='order' or @taxon-name-part-type='Order' or @taxon-name-part-type='ordo' or @taxon-name-part-type='Ordo']",
-        family = "./tp:taxon-name-part[@taxon-name-part-type='family' or @taxon-name-part-type='Family' or @taxon-name-part-type='familia' or @taxon-name-part-type='Familia' or @taxon-name-part-type='famil' or @taxon-name-part-type='Famil']",
-        subfamily = "./tp:taxon-name-part[@taxon-name-part-type='subfamily' or @taxon-name-part-type='Subfamily' or @taxon-name-part-type='subfamilia' or @taxon-name-part-type='Subfamilia' or @taxon-name-part-type='subfamil' or @taxon-name-part-type='Subfamil' or @taxon-name-part-type='tribe' or @taxon-name-part-type='Tribe' or @taxon-name-part-type='tribus' or @taxon-name-part-type='Tribus' or @taxon-name-part-type='subtribe' or @taxon-name-part-type='Subtribe' or @taxon-name-part-type='subtribus' or @taxon-name-part-type='Subtribus']",
-        genus = "./tp:taxon-name-part[@taxon-name-part-type='genus' or @taxon-name-part-type='Genus' or @taxon-name-part-type='genera' or @taxon-name-part-type='Genera']",
-        subgenus = "./tp:taxon-name-part[@taxon-name-part-type='subgenus' or @taxon-name-part-type='Subgenus' or @taxon-name-part-type='subgenera' or @taxon-name-part-type='Subgenera' or @taxon-name-part-type='section' or @taxon-name-part-type='Section' or @taxon-name-part-type='sectio' or @taxon-name-part-type='Sectio']",
-        species = "./tp:taxon-name-part[@taxon-name-part-type='Species' or @taxon-name-part-type='species']",
-        subspecies = "/tp:taxon-name-part[@taxon-name-part-type='Subspecies' or @taxon-name-part-type='subspecies' or @taxon-name-part-type='Variety' or @taxon-name-part-type='variety' or @taxon-name-part-type='varietas' or @taxon-name-part-type='Varietas' or @taxon-name-part-type='variation' or @taxon-name-part-type='Variation' or @taxon-name-part-type='subvariety' or @taxon-name-part-type='Subvariety' or @taxon-name-part-type='subvarietas' or @taxon-name-part-type='Subvarietas' or @taxon-name-part-type='subvariation' or @taxon-name-part-type='Subvariation' or @taxon-name-part-type='Form' or @taxon-name-part-type='form' or @taxon-name-part-type='forma' or @taxon-name-part-type='Forma' or @taxon-name-part-type='aberration' or @taxon-name-part-type='Aberration' or @taxon-name-part-type='race' or @taxon-name-part-type='Race' or @taxon-name-part-type='Subform' or @taxon-name-part-type='subform' or @taxon-name-part-type='subforma' or @taxon-name-part-type='Subforma' or @taxon-name-part-type='subaberation' or @taxon-name-part-type='Subaberation' or @taxon-name-part-type='subrace' or @taxon-name-part-type='Subrace' ]",
-        authorship = "following-sibling::tp:taxon-authority | ./tp:taxon-name-part[@taxon-name-part-type='authority']",
-        secundum_literal = NA
-      ),
+
       constructor = taxonomic_name_usage,
 
       components = NULL
