@@ -117,7 +117,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       #set publisher id as a 'global variable' for mongo purposes
       publisher_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/publisher/publisher-name"))
       df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA)
-      print(df)
+      #print(df)
       publisher_id = get_or_set_mongoid(df, prefix )
       publisher_id = paste0("<http://openbiodiv.net/",publisher_id,">")
 
