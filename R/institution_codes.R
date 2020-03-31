@@ -244,6 +244,23 @@ institution_serializer = function (tt, atoms, identifiers)
     })
   }
 
+  if (!(is.null(unlist(atoms$institution_uri)))) {
+    sapply(atoms$institution_uri, function(n) {
+      inst_identifier = grbio_uri_parser(n$text_value)
+      tt$add_triple(nid, dwc_inst_id, inst_identifier)
+      tt$add_triple(inst_identifier, rdf_type,
+                    Institution)
+      if (names(inst_identifier$prefix) == "grbioCool" ||
+          names(inst_identifier$prefix) == "biocol" ||
+          names(inst_identifier$prefix) == "biocolCool" ||
+          names(inst_identifier$prefix) == "gsrscicoll" ||
+          names(inst_identifier$prefix) == "usfc") {
+        tt$add_triple(inst_identifier, rdf_type,
+                      GrbioInst)
+      }
+    })
+  }
+
   return(tt)
 }
 
