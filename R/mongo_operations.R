@@ -101,19 +101,32 @@ check_mongo_key_via_orcid = function(orcid, collection)
 
 
 #' @export
-save_to_mongo = function(key, value, type, orcid, parent, publisher_id, journal_id, collection)
+save_to_mongo = function (key, value, type, orcid, parent, publisher_id, journal_id, plazi_doc,
+                          collection) 
 {
-  d = data.frame(
-    key = as.character(key),
-    value = as.character(value),
-    type = as.character(type),
-    orcid = as.character(orcid),
-    parent = as.character(parent),
-    publisher_id = as.character(publisher_id),
-    journal_id = as.character(journal_id)
-  )
+  if (!(is.na(plazi_doc))){
+    if (plazi_doc == TRUE){
+      d = data.frame(key = as.character(key), value = as.character(value), 
+                     type = as.character(type), orcid = as.character(orcid), 
+                     parent = as.character(parent), publisher_id = as.character(publisher_id), 
+                     journal_id = as.character(journal_id), plazi_doc = as.character(plazi_doc))
+    }else{
+      d = data.frame(key = as.character(key), value = as.character(value), 
+                     type = as.character(type), orcid = as.character(orcid), 
+                     parent = as.character(parent), publisher_id = as.character(publisher_id), 
+                     journal_id = as.character(journal_id))
+    }
+  } else{
+    d = data.frame(key = as.character(key), value = as.character(value), 
+                   type = as.character(type), orcid = as.character(orcid), 
+                   parent = as.character(parent), publisher_id = as.character(publisher_id), 
+                   journal_id = as.character(journal_id))
+  }
+  
+  
   collection$insert(d)
 }
+
 
 
 #' @export
