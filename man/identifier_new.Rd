@@ -4,7 +4,8 @@
 \alias{identifier_new}
 \title{Identifier new}
 \usage{
-identifier_new(node, xml, mongo_key, prefix = NA, blank = FALSE)
+identifier_new(node, xml, mongo_key, prefix = NA, blank = FALSE,
+  publisher_id, journal_id)
 }
 \description{
 A modification of identifier() from rdf4r (queries mongo, instead of openbiodiv)

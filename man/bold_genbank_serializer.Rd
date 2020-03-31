@@ -4,7 +4,8 @@
 \alias{bold_genbank_serializer}
 \title{Serialization of BOLD record ids/BINS/Genbank ids in different article sections (a separate function like institution_serializer)}
 \usage{
-bold_genbank_serializer(tt, atoms, identifiers)
+bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id,
+  plazi_doc)
 }
 \description{
 Serialization of BOLD record ids/BINS/Genbank ids in different article sections (a separate function like institution_serializer)

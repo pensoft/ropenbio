@@ -4,7 +4,8 @@
 \alias{author}
 \title{Author constructor}
 \usage{
-author(atoms, identifiers, prefix, new_taxons, mongo_key)
+author(atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
+  journal_id, plazi_doc)
 }
 \arguments{
 \item{atoms}{a list of literals}

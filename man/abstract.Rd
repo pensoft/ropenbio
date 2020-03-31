@@ -4,7 +4,8 @@
 \alias{abstract}
 \title{Abstract Constructor}
 \usage{
-abstract(atoms, identifiers, prefix, new_taxons, mongo_key)
+abstract(atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
+  journal_id, plazi_doc)
 }
 \arguments{
 \item{atoms}{a list of literals}
