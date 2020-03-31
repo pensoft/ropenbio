@@ -35,7 +35,7 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
 
 #' Serialization of BOLD record ids/BINS/Genbank ids in different article sections (a separate function like institution_serializer)
 #' @export
- bold_genbank_serializer = function(tt, atoms, identifiers){
+ bold_genbank_serializer = function(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc){
   nid = identifiers$nid
   
   #BOLD id
@@ -52,7 +52,7 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
       semantic_type = BOLDRecord
     }
     
-    bold_df = set_component_frame(label =  bold_id_label , mongo_key = NA, type = df_type, orcid = NA, parent = NA, key = NA)
+    bold_df = set_component_frame(label =  bold_id_label , mongo_key = NA, type = df_type, orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
     bold_id = identifier(get_or_set_mongoid(bold_df, prefix), prefix)
     tt$add_triple(nid, mentions_id , bold_id)
     tt$add_triple(bold_id, rdf_type , semantic_type)
@@ -67,7 +67,7 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
   sapply(atoms$genbank_id, function(n){
     
     genbank_label = n$text_value
-    genbank_df = set_component_frame(label =  genbank_label , mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA)
+    genbank_df = set_component_frame(label =  genbank_label , mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
     genbank_id = identifier(get_or_set_mongoid(genbank_df, prefix), prefix)
     tt$add_triple(nid, mentions_id , genbank_id)
     tt$add_triple(genbank_id, rdf_type , GenBankAccession)
