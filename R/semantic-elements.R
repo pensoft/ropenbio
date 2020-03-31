@@ -408,6 +408,13 @@ zoobank = rdf4r::identifier(
   prefix = c(datacite = "http://purl.org/spar/datacite/")
 )
 
+#' datacite gbif dataset
+#' @export
+gbif_dataset = rdf4r::identifier(
+    id = "gbif_dataset",
+    prefix = c(datacite = "http://purl.org/spar/datacite/")
+  )
+
 #' datacite bold
 #' @export
 bold = rdf4r::identifier(
@@ -496,6 +503,13 @@ pref_label = rdf4r::identifier(
 #' @export
 alt_label = rdf4r::identifier(
   id = "altLabel",
+  prefix = c(skos = "http://www.w3.org/2004/02/skos/core#")
+)
+
+#' SKOS exact match
+#' @export
+exact_match = rdf4r::identifier(
+  id = "exactMatch",
   prefix = c(skos = "http://www.w3.org/2004/02/skos/core#")
 )
 
@@ -1037,6 +1051,12 @@ dwc_collection_year = rdf4r::identifier(
 #' @export
 dwc_collection_month = rdf4r::identifier(
   id="collectionMonth",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_collection_code = rdf4r::identifier(
+  id="collectionCode",
   prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
 )
 
