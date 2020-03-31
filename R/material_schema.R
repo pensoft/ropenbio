@@ -261,11 +261,11 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = ".",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
+        institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
@@ -273,7 +273,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -296,11 +296,11 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = ".",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
+        institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
@@ -308,7 +308,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -330,11 +330,11 @@ material_schema = XmlSchema$new(
       atoms = c(
         text_content = ".",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
+        institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']"
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         institution_name = NA,
@@ -342,7 +342,7 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         institution_name = rdf4r::xsd_string,
@@ -365,13 +365,13 @@ material_schema = XmlSchema$new(
         text_content = ".",
         status = "tp:nomenclature/tp:taxon-status",
         institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-         institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
+        institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
         bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
         genbank_id = ".//ext-link[@ext-link-type='gen']",
         habitat = ".//named-content[@content-type='dwc:habitat']"
-
+        
       ),
-
+      
       atom_lang = c(
         text_content = NA,
         status = NA,
@@ -380,9 +380,9 @@ material_schema = XmlSchema$new(
         bold_id=NA,
         genbank_id = NA,
         habitat = NA
-
+        
       ),
-
+      
       atom_types = list(
         text_content =  rdf4r::xsd_string,
         status = rdf4r::xsd_string,
@@ -392,6 +392,7 @@ material_schema = XmlSchema$new(
         genbank_id= rdf4r::xsd_string,
         habitat = rdf4r::xsd_string
       ),
+      
       mongo_key =  c(treatment = "/article/body/..//tp:taxon-treatment"),
       constructor = treatment,
 
@@ -513,6 +514,7 @@ material_schema = XmlSchema$new(
             event_date = ".//named-content[@content-type='dwc:eventDate']//*[not(ancestor::list-item)]",
             institution_name = ".//abbrev[@content-type='institution']| .//named-content[@xlink:type='simple'][@content-type='institution'] | .//named-content[@content-type='dwc:institutionID']",
             institution_code = ".//named-content[@content-type='dwc:institutionCode'] | .//named-content[@content-type='dwc:institutionCode']",
+            collection_code = ".//named-content[@content-type='dwc:collectionCode']",
             individual_count = ".//named-content[@content-type='dwc:individualCount']//*[not(ancestor::list-item)]",
             sex = ".//named-content[@content-type='dwc:sex']//*[not(ancestor::list-item)]",
             life_stage = ".//named-content[@content-type='dwc:lifeStage']//*[not(ancestor::list-item)]",
@@ -546,6 +548,7 @@ material_schema = XmlSchema$new(
             event_date = NA,
             institution_name = NA,
             institution_code = NA,
+            collection_code = NA,
             individual_count = NA,
             sex = NA,
             life_stage = NA,
@@ -580,6 +583,7 @@ material_schema = XmlSchema$new(
             event_date =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
             institution_code = rdf4r::xsd_string,
+            collection_code = rdf4r::xsd_string,
             individual_count = rdf4r::xsd_string,
             sex = rdf4r::xsd_string,
             life_stage = rdf4r::xsd_string,
@@ -622,6 +626,7 @@ material_schema = XmlSchema$new(
                 collection_day = ".//named-content[@content-type='dwc:day']",
                 collection_date = NA,
                 event_date = ".//named-content[@content-type='dwc:eventDate']",
+                collection_code = ".//named-content[@content-type='dwc:collectionCode']",
                 individual_count = ".//named-content[@content-type='dwc:individualCount']",
                 sex = ".//named-content[@content-type='dwc:sex']",
                 life_stage = ".//named-content[@content-type='dwc:lifeStage']",
@@ -653,6 +658,7 @@ material_schema = XmlSchema$new(
                 collection_day =  NA,
                 collection_date = NA,
                 event_date =  NA,
+                collection_code = NA,
                 individual_count =  NA,
                 sex =  NA,
                 life_stage =  NA,
@@ -684,6 +690,7 @@ material_schema = XmlSchema$new(
                 collection_day =  rdf4r::xsd_string,
                 collection_date = rdf4r::xsd_date,
                 event_date = rdf4r::xsd_string,
+                collection_code = rdf4r::xsd_string,
                 individual_count =  rdf4r::xsd_string,
                 sex =  rdf4r::xsd_string,
                 life_stage = rdf4r::xsd_string,
@@ -708,11 +715,11 @@ material_schema = XmlSchema$new(
           atoms = c(
             text_content = ".",
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
+            institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
             bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]/@xlink:href",
             genbank_id = ".//ext-link[@ext-link-type='gen']"
           ),
-
+          
           atom_lang = c(
             text_content = NA,
             institution_name =  NA,
@@ -720,7 +727,7 @@ material_schema = XmlSchema$new(
             bold_id=NA,
             genbank_id = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
@@ -745,11 +752,11 @@ material_schema = XmlSchema$new(
           atoms = c(
             text_content = ".",
             institution_name = ".//abbrev[@content-type='institution'] | .//named-content[@xlink:type='simple'][@content-type='institution']",
-             institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
+            institution_code = ".//named-content[@content-type='institutionCode'] | .//named-content[@content-type='dwc:institutional_code']",
             bold_id=".//*[starts-with(@xlink:href, 'http://www.boldsystems.org/')]/@xlink:href | .//*[starts-with(@xlink:href, 'http://boldsystems.org/')]",
             genbank_id = ".//ext-link[@ext-link-type='gen']"
           ),
-
+          
           atom_lang = c(
             text_content = NA,
             institution_name =  NA,
@@ -757,7 +764,7 @@ material_schema = XmlSchema$new(
             bold_id=NA,
             genbank_id = NA
           ),
-
+          
           atom_types = list(
             text_content =  rdf4r::xsd_string,
             institution_name = rdf4r::xsd_string,
