@@ -10,6 +10,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
   if (length(unlist(atoms$pensoft_pub)) > 0) {
     stop("Pensoft publication")
   }
+
   general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
 
@@ -159,8 +160,8 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
     }
 
   }
-  
- 
+
+
   sapply(atoms$publisher, function(i) {
     tt$add_triple(article_id, has_publisher, i)
   })
@@ -194,25 +195,25 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
 #' @export
 plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
                            journal_id, plazi_doc ){
-  
+
   if (length(unlist(atoms$pensoft_pub)) > 0) {
     stop("Pensoft publication")
     #tt = ResourceDescriptionFramework$new()
-  }else{
-    
+  }
+
   general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
-  
+
   article_id = identifiers$root_id
   journal_id = gsub("<http://openbiodiv.net/", "", journal_id)
   journal_id = gsub(">", "", journal_id)
   journal_id = identifier(journal_id, prefix)
-  
+
   paper_label = unlist(atoms$title)["text_value"]
   research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = TRUE)
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
-  
+
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(journal_id, rdf_type, Journal)
   sapply(atoms$journal, function(j) {
@@ -224,54 +225,54 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
   sapply(atoms$eIssn, function(i) {
     tt$add_triple(journal_id, eissn, i)
   })
-  
-  
+
+
   tt$add_triple(journal_id, frbr_part, article_id)
-  
+
   tt$add_triple(article_id, rdf_type, Article)
-  
+
   articleTitle = atoms$title[[1]]
   articleTitle = escape_special(articleTitle$text_value)
-  
+
   tt$add_triple(article_id, rdfs_label, literal(articleTitle))
-  
+
   tt$add_triple(article_id, realization_of, paper_id)
-  
+
   tt$add_triple(article_id, dc_title,  literal(articleTitle))
-  
+
   sapply(atoms$doi, function(i) {
     tt$add_triple(article_id, has_doi, i)
   })
-  
+
   if(length(atoms$zoobank) > 0){
     for (n in 1:length(atoms$zoobank)){
       text_value = gsub("^(.*):", "", unlist(atoms$zoobank[n])["text_value"])
       text_value = gsub(" ", "", text_value)
-      
+
       ll = list(text_value = text_value, xsd_type = xsd_string, lang = "",
                 squote = paste0("\"", text_value, "\"", ""))
       class(ll) = "literal"
       article_zoobank_literal = ll
-      
+
       article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
       tt$add_triple(article_id, has_identifier, article_zoobank_id)
       tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
       tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
       tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
       tt$add_triple(article_zoobank_id, has_url, literal(article_zoobank_id, xsd_type = xsd_uri))
-      
+
     }
   }
-  
+
   if(length(unlist(atoms$zenodo)) > 0){
     for (n in 1:length(atoms$zenodo)){
-      
+
       text_value = unlist(atoms$zenodo[n])["text_value"]
       ll = list(text_value = text_value, xsd_type = xsd_string, lang = "",
                 squote = paste0("\"", text_value, "\"", ""))
       class(ll) = "literal"
       zenodo_literal = ll
-      
+
       zenodo_id = identifier(text_value, c(zenodo = "http://zenodo.org/record/"))
       tt$add_triple(article_id, has_identifier, zenodo_id)
       tt$add_triple(zenodo_id, rdf_type, ResourceIdentifier)
@@ -280,7 +281,7 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
       tt$add_triple(zenodo_id, has_url, literal(strip_angle(zenodo_id$uri), xsd_type = xsd_uri))
     }
   }
- 
+
   if(length(unlist(atoms$gbif_dataset)) > 0){
     for (n in 1:length(atoms$gbif_dataset)){
       text_value = unlist(atoms$gbif_dataset[n])["text_value"]
@@ -289,7 +290,7 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
       class(ll) = "literal"
       gbif_dataset_literal = ll
       gbif_dataset_prefix = c(gbif_dataset = "https://www.gbif.org/dataset/")
-      
+
       gbif_dataset_id = identifier(text_value, gbif_dataset_prefix)
       tt$add_triple(article_id, has_identifier, gbif_dataset_id)
       tt$add_triple(gbif_dataset_id, rdf_type, ResourceIdentifier)
@@ -298,17 +299,17 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
       tt$add_triple(gbif_dataset_id, has_url, literal(strip_angle(gbif_dataset_id$uri), xsd_type = xsd_uri))
     }
   }
-  
-   
+
+
   sapply(atoms$date, function(i) {
     tt$add_triple(article_id, publication_date, i)
   })
   sapply(atoms$issue, function(i) {
     tt$add_triple(article_id, has_issue, i)
   })
-  
+
   tt$add_triple(paper_id, rdf_type, Paper)
-  }
+
   return(tt)
 }
 
@@ -389,7 +390,7 @@ abstract =function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
  # }
 
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt =  institution_serializer(tt, atoms, identifiers)
 
 
@@ -483,23 +484,23 @@ author = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
 #' @export
 plazi_author = function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
                          journal_id,  plazi_doc ){
-  
-  
+
+
   article_id = identifiers$root_id
   author_id = identifiers$nid
   paper_id = check_mongo_key_via_parent(parent = article_id$uri, type = "researchPaper", collection = general_collection)
-  
+
   paper_id = gsub("http://openbiodiv.net/", "", paper_id)
   paper_id = identifier(paper_id, prefix)
-  
+
   tt = ResourceDescriptionFramework$new()
-  
+
   tt$add_triple(paper_id, creator, author_id)
   tt$add_triple(author_id, rdf_type, Person)
   sapply(atoms$full_name, function(j) {
     tt$add_triple(author_id, rdfs_label, j)
   })
-  
+
   name_literal =  unlist(atoms$full_name[1])["text_value"]
   if (grepl(",", name_literal)==TRUE){
     names = strsplit(name_literal, ",")
@@ -507,16 +508,16 @@ plazi_author = function (atoms, identifiers, prefix, new_taxons, mongo_key, publ
       n = gsub("^\\s", "", n)
       n = gsub("\\s$", "", n)
     })
-    
+
     last_name = names[1]
     first_name = names[2]
-    
+
     tt$add_triple(author_id, surname, literal(last_name))
     tt$add_triple(author_id, givenName, literal(first_name))
-    
+
   }
-  
-  
+
+
   return(tt)
 }
 
@@ -543,7 +544,7 @@ introduction_section = function (atoms, identifiers, prefix,new_taxons, mongo_ke
 
  # tt$add_triple(identifiers$nid, has_content, literal(intro_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt =  institution_serializer(tt, atoms, identifiers)
 
   return(tt)
@@ -592,21 +593,21 @@ treatment = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
 
   tt = institution_serializer(tt, atoms, identifiers)
   occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
   atoms$occurrenceID  = occurrenceID
   tt = serialize_occurrence(tt, atoms, identifiers$nid)
-  
+
   locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
   atoms$locationID  = locationID
   tt = serialize_location(tt, atoms, identifiers$nid)
-  
+
   identificationID = check_dwc_identification(atoms = atoms, typeMaterialID =identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
   atoms$identificationID  = identificationID
   tt = serialize_identification(tt, atoms, identifiers$nid)
-  
+
   eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
   atoms$eventID  = eventID
   tt = serialize_event(tt, atoms, identifiers$nid)
@@ -620,34 +621,34 @@ plazi_treatment =  function (atoms, identifiers, prefix, new_taxons, mongo_key, 
   tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
   tc_identifier = get_or_set_mongoid(tc_df, prefix)
   tc_identifier = identifier(tc_identifier, prefix)
-  
+
   plazi_treatment_id = treatment_id$id
   plazi_prefix = c(plazi_treatment = "http://treatment.plazi.org/id/")
   plazi_treatment_id = identifier(plazi_treatment_id, plazi_prefix)
-  
+
   tt$add_triple(treatment_id, rdf_type, Treatment)
   tt$add_triple(treatment_id, exact_match, plazi_treatment_id)
   tt$add_triple(treatment_id, is_contained_by, identifiers$pid)
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
-  
+
   if (plazi_doc == TRUE){
     occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$occurrenceID  = occurrenceID
     tt = serialize_occurrence(tt, atoms, identifiers$nid)
-    
+
     locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$locationID  = locationID
     tt = serialize_location(tt, atoms, identifiers$nid)
-    
+
     identificationID = check_dwc_identification(atoms = atoms, typeMaterialID =identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$identificationID  = identificationID
     tt = serialize_identification(tt, atoms, identifiers$nid)
-    
+
     eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$eventID  = eventID
     tt = serialize_event(tt, atoms, identifiers$nid)
-    
+
   }
   return(tt)
 }
@@ -760,11 +761,11 @@ plazi_nomenclature_citation = function (atoms, identifiers, prefix,new_taxons, m
   text_content =  unlist(atoms$text_content[1])["text_value"]
   text_content = gsub("(?<=[a-z])(?=[A-Z])", " ", text_content, perl = TRUE)
   tt$add_triple(identifiers$nid, has_content, literal(text_content))
-  
+
   sapply(atoms$bibr, function(a) {
     tt$add_triple(identifiers$nid, has_ref_id, a)
   })
-  
+
   return(tt)
 }
 
@@ -941,17 +942,17 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
           journal_id, plazi_doc)
 {
-  
+
   tt = ResourceDescriptionFramework$new()
-  
+
   tt$add_triple(identifiers$nid, rdf_type, Reference)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  
+
   sapply(atoms$reference_id, function(n){
     tt$add_triple(identifiers$nid, has_ref_id, n)
   })
-  
-  
+
+
   #get or set an id for the cited article
   check_mongo_citation = function(value, parent, collection)
   {
@@ -977,42 +978,42 @@ plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
         query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "parent", parent)
         key = collection$find(query)$key
       }
-      
+
     }
     return(key)
   }
-  
-  
+
+
   sapply(atoms$refString, function(n){
     tt$add_triple(identifiers$nid, rdfs_label, n)
   })
-  
+
   value = unlist(atoms$refString[[1]])["text_value"]
   print("REFERENCE")
   print(value)
   value = gsub("\"", "\\\\", value)
-  
+
   key = check_mongo_citation(value = value, parent = NA, collection = general_collection)
-  
+
   df = set_component_frame(label = value, mongo_key = NA, type = "bibResource", orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
   bibResource = get_or_set(key, df)
   bibResource = identifier(bibResource, prefix)
-  
+
   tt$add_triple(bibResource, rdf_type, BibResource)
   tt$add_triple(bibResource, rdf_type, Work)
-  
-  
+
+
   sapply(atoms$year, function(n){
     tt$add_triple(bibResource, publication_date, n)
   })
-  
-  
+
+
   tt$add_triple(identifiers$nid, mentions, bibResource) #link the reference to the article it references
-  
+
   sapply(atoms$author, function(n){
     tt$add_triple(bibResource, creator, n)
   })
-  
+
 
   return(tt)
 }
@@ -1038,10 +1039,10 @@ diagnosis = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
   tt$add_triple(diagnosis_id, is_contained_by, identifiers$pid)
  # tt$add_triple(diagnosis_id, has_content, literal(diagnosis_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt =  institution_serializer(tt, atoms, identifiers)
 
-  
+
   return(tt)
 }
 
@@ -1064,22 +1065,22 @@ discussion = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publis
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
  # tt$add_triple(identifiers$nid, has_content, literal(discussion_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt =  institution_serializer(tt, atoms, identifiers)
 
   if (plazi_doc == TRUE){
     occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$occurrenceID  = occurrenceID
     tt = serialize_occurrence(tt, atoms, identifiers$nid)
-    
+
     locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$locationID  = locationID
     tt = serialize_location(tt, atoms, identifiers$nid)
-    
+
     identificationID = check_dwc_identification(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$identificationID  = identificationID
     tt = serialize_identification(tt, atoms, identifiers$nid)
-    
+
     eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$eventID  = eventID
     tt = serialize_event(tt, atoms, identifiers$nid)
@@ -1100,7 +1101,7 @@ methods = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
  # tt$add_triple(identifiers$nid, has_content, literal(methods_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt =  institution_serializer(tt, atoms, identifiers)
 
   return(tt)
@@ -1127,7 +1128,7 @@ checklist = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
   tt$add_triple(identifiers$nid, rdf_type, Checklist)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
  # tt$add_triple(identifiers$nid, has_content, literal(checklist_content))
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
 
   tt =  institution_serializer(tt, atoms, identifiers)
 
@@ -1153,26 +1154,26 @@ distribution = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   #tt$add_triple(identifiers$nid, has_content, literal(distribution_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt =  institution_serializer(tt, atoms, identifiers)
 
   if (plazi_doc == TRUE){
     occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$occurrenceID  = occurrenceID
     tt = serialize_occurrence(tt, atoms, identifiers$nid)
-    
+
     locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$locationID  = locationID
     tt = serialize_location(tt, atoms, identifiers$nid)
-    
+
     identificationID = check_dwc_identification(atoms = atoms, typeMaterialID = identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$identificationID  = identificationID
     tt = serialize_identification(tt, atoms, identifiers$nid)
-    
+
     eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
     atoms$eventID  = eventID
     tt = serialize_event(tt, atoms, identifiers$nid)
-    
+
   }
   return(tt)
 }
@@ -1204,7 +1205,7 @@ figure = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
     tt$add_triple(identifiers$nid, has_link, i)
   })
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt =  institution_serializer(tt, atoms, identifiers)
   return(tt)
 }
@@ -1311,7 +1312,7 @@ treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt = institution_serializer(tt, atoms, identifiers)
 
 
@@ -1367,7 +1368,7 @@ type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
   atoms$eventID  = eventID
   tt = serialize_event(tt, atoms, typeMaterialID)
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt = institution_serializer(tt, atoms, identifiers)
 
 
@@ -1383,7 +1384,7 @@ occurrence_list = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
   #first check the status
   tt = ResourceDescriptionFramework$new()
   typeMaterialID = identifiers$pid
-  
+
   if (plazi_doc == TRUE)
   {
     nid = typeMaterialID
@@ -1391,13 +1392,13 @@ occurrence_list = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
     nid = identifiers$nid
     tt$add_triple(nid, is_contained_by, typeMaterialID)
   }
-  
+
   if (length(unlist(atoms$collection_code))>0){
     sapply(atoms$collection_code, function(n){
       tt$add_triple(typeMaterialID, dwc_collection_code, n)
     })
   }
-  
+
   occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
   atoms$occurrenceID  = occurrenceID
   tt = serialize_occurrence(tt, atoms, typeMaterialID)
@@ -1419,8 +1420,8 @@ occurrence_list = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
                      pid = identifiers$root_id,
                      root_id = identifiers$root_id)
   tt =  institution_serializer(tt, atoms, identifiers)
-  
-  
+
+
   return(tt)
 }
 
@@ -1558,11 +1559,11 @@ taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_ke
 plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                                                               journal_id, plazi_doc)
 {
-  
+
   tnu_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
-  
-  
+
+
   atoml_to_val = function(atoml)
   {
     if (length(atoml) > 0) {
@@ -1572,33 +1573,33 @@ plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mo
       return (NA)
     }
   }
-  
-  
+
+
   scName = get_scientific_name_or_tcl(kingdom = atoml_to_val(atoms$kingdom), phylum = atoml_to_val(atoms$phylum), class = atoml_to_val(atoms$class), order = atoml_to_val(atoms$order),
                                       family = atoml_to_val(atoms$family), subfamily = atoml_to_val(atoms$subfamily), genus = atoml_to_val(atoms$genus), subgenus = atoml_to_val(atoms$subgenus), species = atoml_to_val(atoms$species),
                                       subspecies = atoml_to_val(atoms$subspecies), authorship = atoml_to_val(atoms$authorship), secundum_literal = NA)
   #if there is no genus, species, etc. just take the whole node content (e.g. <tp:taxon-name obkms_id="540d2809-0e18-4beb-9bf0-a1118d0a6d37" obkms_process="TRUE">Flueggea suffruticosa</tp:taxon-name>)
-  
+
   if(scName==""){
     scName = atoms$text_content[[1]]$text_value
   }
-  
+
   if( !(is.null(scName))){
     if ( !(scName == "")){
-      
-      
+
+
       scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
-      
-      
+
+
       scNameID = get_or_set_mongoid(scName_df, prefix)
       scNameID = identifier(scNameID, prefix)
-      
-      
-      
+
+
+
       #get or set scName identifier - mongoDB
-      
-      
-      
+
+
+
       scName_gbif = gbif_taxonomy_mapping(scName = scName, collection = checklistCol)
       if (is.null(scName_gbif)){
         scNameParent = NA
@@ -1607,30 +1608,30 @@ plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mo
       {
         scNameParent = scName_gbif$uri
         update_parent(key=scNameID$uri, parent = scNameParent, collection = general_collection)
-        
+
       }
       #add the parent to mongo
-      
+
       update_parent = function(key, parent,  collection = general_collection){
         query = sprintf("{\"%s\":\"%s\"}", "key", key)
         update = sprintf("{\"$set\":{\"%s\":\"%s\"}}", "parent", parent)
-        
+
         collection$update(query = query, update = update)
       }
-      
-      
-      
-      
+
+
+
+
       tt$add_triple(tnu_id, rdf_type, TaxonomicNameUsage)
       tt$add_triple(tnu_id, is_contained_by, identifiers$pid)
-      
-      
+
+
       tt$add_triple(tnu_id, mentions, scNameID)
       tt$add_triple(scNameID, rdf_type, ScientificName)
-      
+
       tt$add_triple(scNameID, has_gbifID, scName_gbif)
       tt$add_triple(scNameID, rdfs_label, literal(scName))
-      
+
       sapply(atoms$kingdom, function(i) {
         tt$add_triple(scNameID, dwc_kingdom, i)
       })
@@ -1670,16 +1671,16 @@ plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mo
       sapply(atoms$authorship, function(i) {
         tt$add_triple(scNameID, dwc_authorship, i)
       })
-      
-      
+
+
       if (length(unlist(atoms$status))>0 ){
         status = atoms$status[[1]]$text_value
         tt$add_triple(scNameID, taxonStatus, literal(status))
       }
     }
   }
-  
-  
+
+
   return(tt)
 }
 
@@ -1712,7 +1713,7 @@ taxonomic_key = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
 
 
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
 
 
 
@@ -2148,7 +2149,7 @@ treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc) 
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
   tt = institution_serializer(tt, atoms, identifiers)
 
   return(tt)
