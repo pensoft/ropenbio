@@ -54,8 +54,9 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_tax
   return(triples)
 }
 
+#' @inheritParams xml2rdf
 #' @export
-node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_taxons,
+node_extractor_en = function (node, xml_schema, xml, reprocess, triples, prefix, new_taxons,
           dry = FALSE, filename, root_id, publisher_id = publisher_id,
           journal_id = journal_id, plazi_doc = plazi_doc, plazi_treatment_id=plazi_treatment_id)
 {
@@ -100,7 +101,7 @@ node_extractor_en = function (node, xml_schema, reprocess, triples, prefix, new_
     nodel = xml2::xml_find_all(node, c$xpath)
     for (n in nodel) {
       
-    node_extractor_en(n, c, reprocess = reprocess, triples = triples,
+    node_extractor_en(n, c, xml = xml, reprocess = reprocess, triples = triples,
                         prefix = prefix, new_taxons = new_taxons, dry = dry, filename = filename,
                         root_id = root_id, publisher_id = publisher_id,
                         journal_id = journal_id, plazi_doc = plazi_doc, plazi_treatment_id = plazi_treatment_id)
