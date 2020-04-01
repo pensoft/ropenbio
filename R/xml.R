@@ -103,10 +103,11 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
           xml_schema = material_schema
         }
 
+        processing_xml = xml
+
         root_setting = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
         root_ident = root_setting
 
-        processing_xml = xml
         xml2::write_xml(xml, filename)
         triples$set_context(root_ident)
 
