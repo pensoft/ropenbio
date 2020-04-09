@@ -754,7 +754,6 @@ nomenclature_citation =function (atoms, identifiers, prefix,new_taxons, mongo_ke
 plazi_nomenclature_citation = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                                         journal_id, plazi_doc)
 {
-  print(atoms)
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitation)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -814,8 +813,6 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
           query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
           df = collection$find(query)
           key = NULL
-          print(df)
-          print(str(df))
           if (!(is.null(df)) && nrow(df) > 0){
             df <- df[which(df$value == value),]
             for (n in 1:nrow(df)){
@@ -964,8 +961,6 @@ plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
         query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
         df = collection$find(query)
         key = NULL
-        print(df)
-        print(str(df))
         if (!(is.null(df)) && nrow(df) > 0){
           df <- df[which(df$value == value),]
           for (n in 1:nrow(df)){
@@ -989,8 +984,6 @@ plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
   })
 
   value = unlist(atoms$refString[[1]])["text_value"]
-  print("REFERENCE")
-  print(value)
   value = gsub("\"", "\\\\", value)
 
   key = check_mongo_citation(value = value, parent = NA, collection = general_collection)
@@ -1094,7 +1087,6 @@ methods = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
 {
 
   tt = ResourceDescriptionFramework$new()
-  print("THIS IS THE METHODS SECTION")
  # methods_content = atoms$text_content[[1]]
 #  methods_content = escape_special(methods_content$text_value)
   tt$add_triple(identifiers$nid, rdf_type, Methods)
