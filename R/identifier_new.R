@@ -13,7 +13,6 @@ identifier_new = function (node, xml, mongo_key, prefix = NA, blank = FALSE, pub
   if (is.na(xml2::xml_attr(node, "obkms_id")) || is.author(mongo_key)) {
 
       component_df = process_schema_component(node, mongo_key, publisher_id, journal_id, plazi_doc = is.plazi_doc(xml))
-      print(component_df)
       
       id = get_or_set_mongoid(component_df, prefix)
       xml2::xml_attr(node, "obkms_id") = id
