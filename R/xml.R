@@ -151,7 +151,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
 
         new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
-        print(filename)
 
         triples = node_extractor_en(
           node = processing_xml,
