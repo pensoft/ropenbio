@@ -60,7 +60,6 @@ node_extractor_en = function (node, xml_schema, xml, reprocess, triples, prefix,
           dry = FALSE, filename, root_id, publisher_id = publisher_id,
           journal_id = journal_id, plazi_doc = plazi_doc, plazi_treatment_id=plazi_treatment_id)
 {
-  print(node)
   
 #  print(!is.null(xml_schema$injector))
   if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples)) || xml2::xml_name(node)=="article" || xml2::xml_name(node)=="document") {
@@ -70,15 +69,12 @@ node_extractor_en = function (node, xml_schema, xml, reprocess, triples, prefix,
   #  }s
 
     atoms = find_literals(node, xml_schema)
-    print(atoms)
     #TODO fix parent_id prefix
-    print(xml_schema$schema_name)
     if (plazi_doc == TRUE && xml_schema$schema_name %in% c("nomenclature_section", "materials_examined", "diagnosis_section", "distribution_section", "discussion_section", "taxonomic_key", "figure", "taxonomic_name_usage", "reference")){
       pid = plazi_treatment_id
     }else{
       pid = identifier(parent_id(node), prefix)
     }
-    print(pid)
     new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE, publisher_id =publisher_id, journal_id=journal_id),
                                                                    pid = pid,
                                                                    root_id = root_id),
