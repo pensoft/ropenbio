@@ -94,6 +94,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       xml = xml2::read_xml(filename)
 
       if (processing_status(xml)==FALSE && is.plazi_pensoft_pub(xml) == FALSE){
+        print(filename)
         prefix = c(openbiodiv = "http://openbiodiv.net/")
         triples = ResourceDescriptionFramework$new()
         if (is.plazi_doc(xml)==TRUE)
@@ -170,8 +171,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         )
 
         serialization = triples$serialize()
-        save_serialization(serialization, serialization_dir)
-
+        ret = save_serialization(serialization, serialization_dir)
+        print(ret)
+        
         xml2::write_xml(processing_xml, filename)
         if (is.plazi_doc(xml)==TRUE){
           collection_name = "plazi_xmls"
@@ -220,6 +222,7 @@ save_serialization = function(serialization,serialization_dir){
   if (nrow(df) == 0){
     file = create_new_file(serialization_dir)
     cat(serialization, file = file, append = TRUE)
+    ret = TRUE
   }else{
     #if there are files, find the last modified one and write to it if its less than 200 Mb, or otherwise create a new one
     last_modified = rownames(df)[which.max(df$mtime)]
@@ -227,12 +230,15 @@ save_serialization = function(serialization,serialization_dir){
     if(file_size < 200000000){
       #keep appending to file
       cat(serialization, file = last_modified, append = TRUE)
+      ret =TRUE
     }else{
       file = create_new_file(serialization_dir)
       #open new file and start appending to it
       cat(serialization,file = file,append = TRUE )
+      ret =  TRUE
     }
   }
+  return(ret)
 }
 
 
