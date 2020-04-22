@@ -171,8 +171,19 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         )
 
         serialization = triples$serialize()
-        ret = save_serialization(serialization, serialization_dir)
-        print(ret)
+        #changed to a new mode of triple saving. save + upload
+        #ret = save_serialization(serialization, serialization_dir)
+        #print(ret)
+        
+        add_data(serialization, access_options = access_options)
+
+       cat(
+        serialization,
+        file = paste0(
+          serialization_dir, "/",
+          paste0(strip_filename_extension(last_token(filename, split = "/")), ".trig")
+        )
+      )
         
         xml2::write_xml(processing_xml, filename)
         if (is.plazi_doc(xml)==TRUE){
