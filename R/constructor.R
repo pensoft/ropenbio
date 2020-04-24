@@ -667,6 +667,8 @@ nomenclature = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
   #nomenclature_content = gsub(nomenclature_parent_id, "", nomenclature_content)
 
   nomenclature_content = escape_special(nomenclature_content)
+  nomenclature_content = gsub("\"", "'", nomenclature_content)
+
 
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(nomenclature_id, rdf_type, Nomenclature)
@@ -685,6 +687,7 @@ nomenclature_citations = function (atoms, identifiers, prefix,new_taxons, mongo_
   tt = ResourceDescriptionFramework$new()
   citations = atoms$text_content[[1]]
   citations = escape_special(citations$text_value)
+  citations = gsub("\"", "'", citations)
 
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitationsList)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -701,11 +704,11 @@ nomenclature_citation =function (atoms, identifiers, prefix,new_taxons, mongo_ke
   tt = ResourceDescriptionFramework$new()
   #citations = atoms$text_content[[1]]
   #citations = escape_special(citations$text_value)
-
+  
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitation)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   sapply(atoms$text_content, function(n){
-    tt$add_triple(identifiers$nid, has_content, n)
+    tt$add_triple(identifiers$nid, has_content, literal(gsub("\"", "'", n$text_value)))
   })
 
 
@@ -759,6 +762,7 @@ plazi_nomenclature_citation = function (atoms, identifiers, prefix,new_taxons, m
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   text_content =  unlist(atoms$text_content[1])["text_value"]
   text_content = gsub("(?<=[a-z])(?=[A-Z])", " ", text_content, perl = TRUE)
+  text_content = gsub("\"", "'", text_content)
   tt$add_triple(identifiers$nid, has_content, literal(text_content))
 
   sapply(atoms$bibr, function(a) {
