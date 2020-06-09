@@ -369,7 +369,7 @@ Checklist =  rdf4r::identifier(
 #' @export
 Table =  rdf4r::identifier(
   id = "Table",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+  prefix = c(fabio = "http://purl.org/spar/fabio/")
 )
 
 #' @export
