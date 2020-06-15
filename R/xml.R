@@ -95,13 +95,17 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
       if (processing_status(xml)==FALSE && is.plazi_pensoft_pub(xml) == FALSE){
         print(filename)
+
+
         prefix = c(openbiodiv = "http://openbiodiv.net/")
         triples = ResourceDescriptionFramework$new()
         if (is.plazi_doc(xml)==TRUE)
         {
           xml_schema = plazi_schema
+          cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_plazi", append = TRUE)
         }else{
           xml_schema = material_schema
+          cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_pensoft", append = TRUE)
         }
 
         processing_xml = xml
@@ -174,7 +178,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         #changed to a new mode of triple saving. save + upload
         #ret = save_serialization(serialization, serialization_dir)
         #print(ret)
-        
+
         add_data(serialization, access_options = access_options)
 
        cat(
@@ -184,7 +188,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
           paste0(strip_filename_extension(last_token(filename, split = "/")), ".trig")
         )
       )
-        
+
         xml2::write_xml(processing_xml, filename)
         if (is.plazi_doc(xml)==TRUE){
           collection_name = "plazi_xmls"
