@@ -76,11 +76,12 @@ node_extractor_en = function (node, xml_schema, xml, reprocess, triples, prefix,
     }else{
       pid = identifier(parent_id(node), prefix)
     }
-    new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE, publisher_id =publisher_id, journal_id=journal_id),
+    new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE, publisher_id =publisher_id, journal_id=journal_id, doi=doi, article_id = article_id),
                                                                    pid = pid,
                                                                    root_id = root_id),
                                          prefix = xml_schema$prefix,new_taxons = new_taxons, mongo_key = xml_schema$mongo_key, publisher_id = publisher_id,
-                                         journal_id = journal_id, plazi_doc = plazi_doc)
+                                         journal_id = journal_id, plazi_doc = plazi_doc, doi = doi,
+                                         article_id = article_id)
 
     new_triples$set_context(triples$context)
 
