@@ -96,6 +96,12 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       if (processing_status(xml)==FALSE && is.plazi_pensoft_pub(xml) == FALSE){
         print(filename)
 
+        doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
+        if (is.na(doi)){
+          doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
+        }
+
+        article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
 
         prefix = c(openbiodiv = "http://openbiodiv.net/")
         triples = ResourceDescriptionFramework$new()
@@ -127,12 +133,12 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
           } else{
             journal_name = xml2::xml_text(xml2::xml_find_all(xml, "/article/front/journal-meta/journal-title-group/journal-title"))
             publisher_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/publisher/publisher-name"))
-            df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc= plazi_doc)
+            df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc= plazi_doc, doi = doi, article_id = article_ident)
             publisher_id = get_or_set_mongoid(df, prefix )
             publisher_id = paste0("<http://openbiodiv.net/",publisher_id,">")
           }
 
-          df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+          df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_ident)
           journal_id = get_or_set_mongoid(df, prefix)
           journal_id = paste0("<http://openbiodiv.net/",journal_id,">")
 
@@ -171,7 +177,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
           publisher_id = publisher_id,
           journal_id = journal_id,
           plazi_doc = is.plazi_doc(xml),
-          plazi_treatment_id = plazi_treatment_id
+          plazi_treatment_id = plazi_treatment_id,
+          doi = doi,
+          article_id = article_ident
         )
 
         serialization = triples$serialize()
@@ -200,7 +208,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
         d = data.frame(
           xml = xml_str,
-          filename = as.character(filename)
+          filename = as.character(filename),
+          doi = doi
         )
         xml_collection$insert(d)
       return(TRUE)
@@ -421,10 +430,18 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 
   root_node = xml2::xml_find_all(node, xpath = "/*")
 
+  doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
+  if (is.na(doi)){
+    doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
+  }
+
+  article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
+
+
   if (is.na(arpha_id) && is.na(plazi_id)){
     id = identifier_new(node = root_node, xml = xml, mongo_key = mongo_key,
                         prefix = prefix, blank = FALSE, publisher_id = NA,
-                        journal_id = NA)
+                        journal_id = NA, doi = doi, article_id = article_ident)
   }else
   {
     if (!(is.na(arpha_id))){
@@ -448,17 +465,16 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
     title = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:titleInfo/mods:title"))
   }
 
-  doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
-  if (is.na(doi)){
-    doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
-  }
+
+
+
   #check whether the id was saved and save it to mongo only if it wasnt
   res = check_mongo_key(value = title, type = "article", collection = general_collection, regex = FALSE)
   # remove_meta = FALSE
   #if there is no such article id in mongo, save it
   if (is.null(res)){
     save_to_mongo(key = toString(id$uri), value = title, type = "article",
-                  orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, plazi_doc = is.plazi_doc(xml),
+                  orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, plazi_doc = is.plazi_doc(xml), doi = doi, article_id = article_ident,
                   collection = general_collection)
   } #else if (!(is.null(res) && is_pensoft_pub(xml)==FALSE)){ #if there is such article id in mongo, set appropriate metadata constructor
   # remove_meta = TRUE
