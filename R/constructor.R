@@ -596,19 +596,19 @@ treatment = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
   tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
 
   tt = institution_serializer(tt, atoms, identifiers)
-  occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$occurrenceID  = occurrenceID
   tt = serialize_occurrence(tt, atoms, identifiers$nid)
 
-  locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$locationID  = locationID
   tt = serialize_location(tt, atoms, identifiers$nid)
 
-  identificationID = check_dwc_identification(atoms = atoms, typeMaterialID =identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  identificationID = check_dwc_identification(atoms = atoms, typeMaterialID =identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$identificationID  = identificationID
   tt = serialize_identification(tt, atoms, identifiers$nid)
 
-  eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$eventID  = eventID
   tt = serialize_event(tt, atoms, identifiers$nid)
   return(tt)
@@ -633,19 +633,19 @@ plazi_treatment =  function (atoms, identifiers, prefix, new_taxons, mongo_key, 
   tt$add_triple(tc_identifier, realization, treatment_id)
 
   if (plazi_doc == TRUE){
-    occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$occurrenceID  = occurrenceID
     tt = serialize_occurrence(tt, atoms, identifiers$nid)
 
-    locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$locationID  = locationID
     tt = serialize_location(tt, atoms, identifiers$nid)
 
-    identificationID = check_dwc_identification(atoms = atoms, typeMaterialID =identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    identificationID = check_dwc_identification(atoms = atoms, typeMaterialID =identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$identificationID  = identificationID
     tt = serialize_identification(tt, atoms, identifiers$nid)
 
-    eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$eventID  = eventID
     tt = serialize_event(tt, atoms, identifiers$nid)
 
@@ -1066,19 +1066,19 @@ discussion = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publis
   tt =  institution_serializer(tt, atoms, identifiers)
 
   if (plazi_doc == TRUE){
-    occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$occurrenceID  = occurrenceID
     tt = serialize_occurrence(tt, atoms, identifiers$nid)
 
-    locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$locationID  = locationID
     tt = serialize_location(tt, atoms, identifiers$nid)
 
-    identificationID = check_dwc_identification(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    identificationID = check_dwc_identification(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$identificationID  = identificationID
     tt = serialize_identification(tt, atoms, identifiers$nid)
 
-    eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$eventID  = eventID
     tt = serialize_event(tt, atoms, identifiers$nid)
   }
@@ -1154,19 +1154,19 @@ distribution = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
   tt =  institution_serializer(tt, atoms, identifiers)
 
   if (plazi_doc == TRUE){
-    occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$occurrenceID  = occurrenceID
     tt = serialize_occurrence(tt, atoms, identifiers$nid)
 
-    locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    locationID = check_dwc_location(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$locationID  = locationID
     tt = serialize_location(tt, atoms, identifiers$nid)
 
-    identificationID = check_dwc_identification(atoms = atoms, typeMaterialID = identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    identificationID = check_dwc_identification(atoms = atoms, typeMaterialID = identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$identificationID  = identificationID
     tt = serialize_identification(tt, atoms, identifiers$nid)
 
-    eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+    eventID = check_dwc_event(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     atoms$eventID  = eventID
     tt = serialize_event(tt, atoms, identifiers$nid)
 
@@ -1348,19 +1348,19 @@ type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
     })
   }
 
-  occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$occurrenceID  = occurrenceID
   tt = serialize_occurrence(tt, atoms, typeMaterialID)
 
-  locationID = check_dwc_location(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  locationID = check_dwc_location(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$locationID  = locationID
   tt = serialize_location(tt, atoms, typeMaterialID)
 
-  identificationID = check_dwc_identification(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  identificationID = check_dwc_identification(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$identificationID  = identificationID
   tt = serialize_identification(tt, atoms, typeMaterialID)
 
-  eventID = check_dwc_event(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  eventID = check_dwc_event(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$eventID  = eventID
   tt = serialize_event(tt, atoms, typeMaterialID)
 
@@ -1395,19 +1395,19 @@ occurrence_list = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
     })
   }
 
-  occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   atoms$occurrenceID  = occurrenceID
   tt = serialize_occurrence(tt, atoms, typeMaterialID)
 
-  locationID = check_dwc_location(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  locationID = check_dwc_location(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc,  doi = doi, article_id = article_id)
   atoms$locationID  = locationID
   tt = serialize_location(tt, atoms, typeMaterialID)
 
-  identificationID = check_dwc_identification(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  identificationID = check_dwc_identification(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc,  doi = doi, article_id = article_id)
   atoms$identificationID  = identificationID
   tt = serialize_identification(tt, atoms, typeMaterialID)
 
-  eventID = check_dwc_event(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc)
+  eventID = check_dwc_event(atoms = atoms, typeMaterialID= typeMaterialID, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc,  doi = doi, article_id = article_id)
   atoms$eventID  = eventID
   tt = serialize_event(tt, atoms, typeMaterialID)
 
@@ -2156,7 +2156,7 @@ treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
 
 
 #' @export
-check_dwc_occurrence = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc){
+check_dwc_occurrence = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc, doi, article_id){
   if (length(atoms$catalog_number)>0 || length(atoms$other_catalog_numbers)>0 ||   length(atoms$record_number)>0  || length(atoms$recorded_by)>0 || length(atoms$individual_count)>0 || length(atoms$sex)>0 || length(atoms$life_stage)>0 ){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     occurrence_df = set_component_frame(label = paste0("Occurrence: ", occurrence_content_label), mongo_key = NA, type = "occurrence", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -2209,7 +2209,7 @@ serialize_occurrence = function(tt, atoms, typeMaterialID){
 
 
 #' @export
-check_dwc_location = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc){
+check_dwc_location = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc, doi, article_id){
   if (length(atoms$coordinates)>0 || length(atoms$verbatim_lat)>0 ||   length(atoms$verbatim_long)>0  || length(atoms$decimal_long)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$state_province)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$locality)>0 || length(atoms$elevation)>0 || length(atoms$depth)>0 || length(atoms$water_body)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     location_df = set_component_frame(label = paste0("Location: ", occurrence_content_label), mongo_key = NA, type = "location", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -2295,7 +2295,7 @@ serialize_location = function(tt, atoms, typeMaterialID){
 
 
 #' @export
-check_dwc_identification = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc = plazi_doc){
+check_dwc_identification = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc = plazi_doc, doi, article_id){
   if (length(atoms$identified_by)>0 || length(atoms$type_status)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     identification_df = set_component_frame(label = paste0("Identification: ", occurrence_content_label), mongo_key = NA, type = "identification", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -2327,7 +2327,7 @@ serialize_identification = function(tt, atoms, typeMaterialID){
 }
 
 #' @export
-check_dwc_event = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc = plazi_doc){
+check_dwc_event = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc = plazi_doc, doi, article_id){
   if (length(atoms$collection_year)>0 || length(atoms$collection_month)>0 || length(atoms$collection_day)>0 || length(atoms$event_date)>0 || length(atoms$collection_date)>0 || length(atoms$samplingProtocol)>0 || length(atoms$habitat) > 0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id=publisher_id, journal_id=journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
