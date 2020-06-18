@@ -108,10 +108,10 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         if (is.plazi_doc(xml)==TRUE)
         {
           xml_schema = plazi_schema
-          cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_plazi", append = TRUE)
+          cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_plazi")
         }else{
           xml_schema = material_schema
-          cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_pensoft", append = TRUE)
+          cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_pensoft")
         }
 
         processing_xml = xml
