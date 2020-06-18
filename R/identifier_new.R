@@ -3,7 +3,7 @@
 #' A modification of identifier() from rdf4r (queries mongo, instead of openbiodiv)
 #'
 #' @export
-identifier_new = function (node, xml, mongo_key, prefix = NA, blank = FALSE, publisher_id, journal_id, doi = doi, article_id = article_id )
+identifier_new = function (node, xml, mongo_key, prefix = NA, blank = FALSE, publisher_id, journal_id, doi, article_id )
 {
   if (blank == TRUE) {
     prefix = c(`_` = "_")
