@@ -1,6 +1,6 @@
 #' @export
 metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                     journal_id, plazi_doc)
+                     journal_id, plazi_doc, doi, article_id)
 {
   pub_date = function(year, month, day) {
     literal(paste0(text_value = unlist(year)["text_value"],
@@ -17,7 +17,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
   article_id = identifiers$root_id
   publisher_lit = toString(unlist(atoms$publisher)["text_value"])
 
-  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
   publisher_id = get_or_set_mongoid(df, prefix )
   publisher_id = identifier(publisher_id, prefix)
 
@@ -29,14 +29,14 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
   journal_id = identifier(journal_id, prefix)
 
   if(is.null(journal_id)){
-    df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+    df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
     journal_id = get_or_set_mongoid(df, prefix )
     journal_id = identifier(journal_id, prefix)
   }
 
   paper_label = unlist(atoms$title)["text_value"]
 
-  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
 
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
@@ -194,7 +194,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
 
 #' @export
 plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
-                           journal_id, plazi_doc ){
+                           journal_id, plazi_doc,doi, article_id){
 
   if (length(unlist(atoms$pensoft_pub)) > 0) {
     stop("Pensoft publication")
@@ -210,7 +210,7 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
   journal_id = identifier(journal_id, prefix)
 
   paper_label = unlist(atoms$title)["text_value"]
-  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = TRUE)
+  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = TRUE, doi = doi, article_id = article_id)
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
 
@@ -324,7 +324,7 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 keyword_group = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                         journal_id, plazi_doc)
+                         journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -345,7 +345,7 @@ keyword_group = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 title = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                  journal_id, plazi_doc)
+                  journal_id, plazi_doc, doi, article_id)
 {
   title_content = atoms$text_content[[1]]
   title_content = escape_special(title_content$text_value)
@@ -369,7 +369,7 @@ title = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_i
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 abstract =function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                    journal_id, plazi_doc)
+                    journal_id, plazi_doc, doi, article_id)
 {
   #abstract_content = atoms$text_content[[1]]
   #abstract_content = escape_special(abstract_content$text_value)
@@ -410,7 +410,7 @@ abstract =function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 author = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                   journal_id, plazi_doc)
+                   journal_id, plazi_doc, doi, article_id)
 {
 
   full_name = function(lsurname, lgiven_name) {
@@ -483,7 +483,7 @@ author = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
 
 #' @export
 plazi_author = function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
-                         journal_id,  plazi_doc ){
+                         journal_id,  plazi_doc, doi, article_id){
 
 
   article_id = identifiers$root_id
@@ -531,7 +531,7 @@ plazi_author = function (atoms, identifiers, prefix, new_taxons, mongo_key, publ
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 introduction_section = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                                 journal_id, plazi_doc)
+                                 journal_id, plazi_doc, doi, article_id)
 {
 
 
@@ -553,14 +553,14 @@ introduction_section = function (atoms, identifiers, prefix,new_taxons, mongo_ke
 
 #' @export
 treatment = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                     journal_id, plazi_doc)
+                     journal_id, plazi_doc, doi, article_id)
   {
 
   treatment_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
 
   #get or set taxonomic concept id
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
   tc_identifier = get_or_set_mongoid(tc_df, prefix)
   tc_identifier = identifier(tc_identifier, prefix)
 
@@ -615,10 +615,10 @@ treatment = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 }
 
 plazi_treatment =  function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
-                             journal_id,  plazi_doc ){
+                             journal_id,  plazi_doc, doi, article_id){
   treatment_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc,doi = NA, article_id = NA)
   tc_identifier = get_or_set_mongoid(tc_df, prefix)
   tc_identifier = identifier(tc_identifier, prefix)
 
@@ -656,7 +656,7 @@ plazi_treatment =  function (atoms, identifiers, prefix, new_taxons, mongo_key, 
 
 #' @export
 nomenclature = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                         journal_id, plazi_doc)
+                         journal_id, plazi_doc, doi, article_id)
   {
 
   nomenclature_id = identifiers$nid #remove any ids from the text contents
@@ -681,7 +681,7 @@ nomenclature = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
 
 #' @export
 nomenclature_citations = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                                   journal_id, plazi_doc)
+                                   journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -698,13 +698,13 @@ nomenclature_citations = function (atoms, identifiers, prefix,new_taxons, mongo_
 
 #' @export
 nomenclature_citation =function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                                 journal_id, plazi_doc)
+                                 journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
   #citations = atoms$text_content[[1]]
   #citations = escape_special(citations$text_value)
-  
+
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitation)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   sapply(atoms$text_content, function(n){
@@ -729,7 +729,7 @@ nomenclature_citation =function (atoms, identifiers, prefix,new_taxons, mongo_ke
        i = gsub("^ ", "", i)
 
        #create an id for each 'verbatim cit'
-       df = set_component_frame(label = i, mongo_key = NA, type = "nomenclature_litCit", orcid = NA, parent = identifiers$nid$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+       df = set_component_frame(label = i, mongo_key = NA, type = "nomenclature_litCit", orcid = NA, parent = identifiers$nid$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
        citID = get_or_set_mongoid(df, prefix)
        citID = identifier(citID, prefix)
        tt$add_triple(identifiers$nid, mentions, citID)
@@ -755,7 +755,7 @@ nomenclature_citation =function (atoms, identifiers, prefix,new_taxons, mongo_ke
 
 #' @export
 plazi_nomenclature_citation = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                                        journal_id, plazi_doc)
+                                        journal_id, plazi_doc, doi, article_id)
 {
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitation)
@@ -776,7 +776,7 @@ plazi_nomenclature_citation = function (atoms, identifiers, prefix,new_taxons, m
 #For now: no author disambiguation -> separate id for authors
 #' @export
 bibliography = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                         journal_id, plazi_doc)
+                         journal_id, plazi_doc, doi, article_id)
 {
   tt = ResourceDescriptionFramework$new()
 
@@ -788,7 +788,7 @@ bibliography = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
 #For now: no author disambiguation -> separate id for authors
 #' @export
 reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                      journal_id, plazi_doc)
+                      journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -847,7 +847,7 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 
       key = check_mongo_citation(value = title, parent = doi, collection = general_collection)
 
-      df = set_component_frame(label = title, mongo_key = NA, type = "bibResource", orcid = NA, parent = doi, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
+      df = set_component_frame(label = title, mongo_key = NA, type = "bibResource", orcid = NA, parent = doi, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
        bibResource = get_or_set(key, df)
        bibResource = identifier(bibResource, prefix)
 
@@ -903,7 +903,7 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
       if(length(atoms$author_name)>0){
         for (n in 1:length(atoms$author_name)){
           fullname = full_name(atoms$author_surname[n], atoms$author_fname[n])
-          df = set_component_frame(label = fullname, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+          df = set_component_frame(label = fullname, mongo_key = NA, type = "author", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
          author = get_or_set_mongoid(df, prefix)
          author = identifier(author, prefix)
          tt$add_triple(bibResource, creator, author)
@@ -922,7 +922,7 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
       sapply(atoms$source, function(n){
      source_name = n$text_value
       if (!(is.null(source_name))){
-      df = set_component_frame(label = toString(source_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+      df = set_component_frame(label = toString(source_name), mongo_key = NA, type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
 
      source = get_or_set_mongoid(df, prefix)
      source = identifier(source, prefix)
@@ -941,7 +941,7 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 
 #' @export
 plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-          journal_id, plazi_doc)
+          journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -992,7 +992,7 @@ plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
 
   key = check_mongo_citation(value = value, parent = NA, collection = general_collection)
 
-  df = set_component_frame(label = value, mongo_key = NA, type = "bibResource", orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
+  df = set_component_frame(label = value, mongo_key = NA, type = "bibResource", orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
   bibResource = get_or_set(key, df)
   bibResource = identifier(bibResource, prefix)
 
@@ -1025,7 +1025,7 @@ plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 diagnosis = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                      journal_id, plazi_doc)
+                      journal_id, plazi_doc, doi, article_id)
 {
 
   diagnosis_id = identifiers$nid
@@ -1052,7 +1052,7 @@ diagnosis = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 discussion = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                       journal_id, plazi_doc)
+                       journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -1087,7 +1087,7 @@ discussion = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publis
 
 #' @export
 methods = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                    journal_id, plazi_doc)
+                    journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -1114,7 +1114,7 @@ methods = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 checklist = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                      journal_id, plazi_doc)
+                      journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -1141,7 +1141,7 @@ checklist = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 distribution = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                         journal_id, plazi_doc)
+                         journal_id, plazi_doc, doi, article_id)
 {
   tt = ResourceDescriptionFramework$new()
   #distribution_content = atoms$text_content[[1]]
@@ -1178,7 +1178,7 @@ distribution = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
 
 #' @export
 figure = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                   journal_id, plazi_doc)
+                   journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -1208,7 +1208,7 @@ figure = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
 
 #' @export
 treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                         journal_id, plazi_doc)
+                         journal_id, plazi_doc, doi, article_id)
   {
 
   atoml_to_val = function(atoml)
@@ -1249,14 +1249,14 @@ treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
     scNameParent = scName_gbif$uri
 
   }
-  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
 
 
   scNameID = get_or_set_mongoid(df, prefix)
   scName_ident = identifier(scNameID, prefix)
 
   #get or set taxonomic concept id
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
   tc_identifier = get_or_set_mongoid(tc_df, prefix)
   tc_identifier = identifier(tc_identifier, prefix)
 
@@ -1317,7 +1317,7 @@ treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
 
 #' @export
 type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                          journal_id, plazi_doc)
+                          journal_id, plazi_doc, doi, article_id)
   {
   #first check the status
   tt = ResourceDescriptionFramework$new()
@@ -1335,7 +1335,7 @@ type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
     sapply(atoms$holotype, function(n){
       #n$text_value = escape_special(n$text_value)
       #label = escape_special_json(n$text_value)
-      df = set_component_frame(label = escape_special_json(n$text_value), mongo_key = NA, type = "holotype", orcid = NA, parent = identifiers$nid$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+      df = set_component_frame(label = escape_special_json(n$text_value), mongo_key = NA, type = "holotype", orcid = NA, parent = identifiers$nid$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
       holotypeID = get_or_set_mongoid(df, prefix)
       tt$add_triple(identifier(holotypeID, prefix), rdf_type, HolotypeDescription)
       tt$add_triple(identifier(holotypeID, prefix), is_contained_by, typeMaterialID)
@@ -1375,7 +1375,7 @@ type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
 
 #' @export
 occurrence_list = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                            journal_id, plazi_doc)
+                            journal_id, plazi_doc, doi, article_id)
   {
   #first check the status
   tt = ResourceDescriptionFramework$new()
@@ -1424,7 +1424,7 @@ occurrence_list = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
 
 #' @export
 taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                                journal_id, plazi_doc)
+                                journal_id, plazi_doc, doi, article_id)
   {
 
   tnu_id = identifiers$nid
@@ -1455,7 +1455,7 @@ taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_ke
     if ( !(scName == "")){
 
 
-      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
 
 
       scNameID = get_or_set_mongoid(scName_df, prefix)
@@ -1553,7 +1553,7 @@ taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_ke
 
 #' @export
 plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                                                              journal_id, plazi_doc)
+                                                              journal_id, plazi_doc, doi, article_id)
 {
 
   tnu_id = identifiers$nid
@@ -1584,7 +1584,7 @@ plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mo
     if ( !(scName == "")){
 
 
-      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
 
 
       scNameID = get_or_set_mongoid(scName_df, prefix)
@@ -1689,7 +1689,7 @@ plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mo
 #' @return \code{ResourceDescriptionFramework}
 #' @export
 taxonomic_key = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                          journal_id, plazi_doc)
+                          journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -1724,7 +1724,7 @@ materials_examined = function(){
 
 #' @export
 institution_code_usage = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                                   journal_id, plazi_doc)
+                                   journal_id, plazi_doc, doi, article_id)
 {
 
   tt = ResourceDescriptionFramework$new()
@@ -1739,7 +1739,7 @@ institution_code_usage = function (atoms, identifiers, prefix,new_taxons, mongo_
 
 #' @export
 metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                        journal_id, plazi_doc)
+                        journal_id, plazi_doc, doi, article_id)
 {
   pub_date = function(year, month, day) {
     literal(paste0(text_value = unlist(year)["text_value"],
@@ -1755,19 +1755,19 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
   article_id = identifiers$root_id
   publisher_lit = toString(unlist(atoms$publisher)["text_value"])
 
-  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
   publisher_id = get_or_set_mongoid(df, prefix )
   publisher_id = identifier(publisher_id, prefix)
 
   journal_lit = toString(unlist(atoms$journal)["text_value"])
 
-  df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  df = set_component_frame(label = journal_lit, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
   journal_id = get_or_set_mongoid(df, prefix )
   journal_id = identifier(journal_id, prefix)
 
   paper_label = unlist(atoms$title)["text_value"]
 
-  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
 
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
@@ -1912,7 +1912,7 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
 
 #' @export
 tnu = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                journal_id, plazi_doc)
+                journal_id, plazi_doc, doi, article_id)
   {
 
   tnu_id = identifiers$nid
@@ -1950,7 +1950,7 @@ tnu = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
     if ( !(scName == "")){
 
 
-      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id=NULL, plazi_doc = plazi_doc)
+      scName_df = set_component_frame(label = scName, mongo_key = NA, type = "scName", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id=NULL, plazi_doc = plazi_doc, doi = NA, article_id = NA)
 
 
       scNameID = get_or_set_mongoid(scName_df, prefix)
@@ -2048,7 +2048,7 @@ tnu = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
 
 #' @export
 treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                         journal_id, plazi_doc)
+                         journal_id, plazi_doc, doi, article_id)
   {
 
   atoml_to_val = function(atoml)
@@ -2086,14 +2086,14 @@ treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
     scNameParent = scName_gbif$uri
 
   }
-  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
 
 
   scNameID = get_or_set_mongoid(df, prefix)
   scName_ident = identifier(scNameID, prefix)
 
   #get or set taxonomic concept id
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc)
+  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
   tc_identifier = get_or_set_mongoid(tc_df, prefix)
   tc_identifier = identifier(tc_identifier, prefix)
 
@@ -2159,7 +2159,7 @@ treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
 check_dwc_occurrence = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc){
   if (length(atoms$catalog_number)>0 || length(atoms$other_catalog_numbers)>0 ||   length(atoms$record_number)>0  || length(atoms$recorded_by)>0 || length(atoms$individual_count)>0 || length(atoms$sex)>0 || length(atoms$life_stage)>0 ){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
-    occurrence_df = set_component_frame(label = paste0("Occurrence: ", occurrence_content_label), mongo_key = NA, type = "occurrence", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
+    occurrence_df = set_component_frame(label = paste0("Occurrence: ", occurrence_content_label), mongo_key = NA, type = "occurrence", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     occurrenceID = identifier(get_or_set_mongoid(occurrence_df, prefix), prefix)
   }else{
     occurrenceID = NULL
@@ -2212,7 +2212,7 @@ serialize_occurrence = function(tt, atoms, typeMaterialID){
 check_dwc_location = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc){
   if (length(atoms$coordinates)>0 || length(atoms$verbatim_lat)>0 ||   length(atoms$verbatim_long)>0  || length(atoms$decimal_long)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$state_province)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$locality)>0 || length(atoms$elevation)>0 || length(atoms$depth)>0 || length(atoms$water_body)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
-    location_df = set_component_frame(label = paste0("Location: ", occurrence_content_label), mongo_key = NA, type = "location", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
+    location_df = set_component_frame(label = paste0("Location: ", occurrence_content_label), mongo_key = NA, type = "location", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     locationID = identifier(get_or_set_mongoid(location_df, prefix), prefix)
   }else{
     locationID = NULL
@@ -2298,7 +2298,7 @@ serialize_location = function(tt, atoms, typeMaterialID){
 check_dwc_identification = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc = plazi_doc){
   if (length(atoms$identified_by)>0 || length(atoms$type_status)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
-    identification_df = set_component_frame(label = paste0("Identification: ", occurrence_content_label), mongo_key = NA, type = "identification", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
+    identification_df = set_component_frame(label = paste0("Identification: ", occurrence_content_label), mongo_key = NA, type = "identification", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     identificationID = identifier(get_or_set_mongoid(identification_df, prefix), prefix)
   }else{
     identificationID = NULL
@@ -2330,7 +2330,7 @@ serialize_identification = function(tt, atoms, typeMaterialID){
 check_dwc_event = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc = plazi_doc){
   if (length(atoms$collection_year)>0 || length(atoms$collection_month)>0 || length(atoms$collection_day)>0 || length(atoms$event_date)>0 || length(atoms$collection_date)>0 || length(atoms$samplingProtocol)>0 || length(atoms$habitat) > 0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
-    event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id=publisher_id, journal_id=journal_id, plazi_doc = plazi_doc)
+    event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id=publisher_id, journal_id=journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     eventID = identifier(get_or_set_mongoid(event_df, prefix), prefix)
   }else{
     eventID = NULL

@@ -58,9 +58,10 @@ node_extractor = function (node, xml_schema, reprocess, triples, prefix, new_tax
 #' @export
 node_extractor_en = function (node, xml_schema, xml, reprocess, triples, prefix, new_taxons,
           dry = FALSE, filename, root_id, publisher_id = publisher_id,
-          journal_id = journal_id, plazi_doc = plazi_doc, plazi_treatment_id=plazi_treatment_id)
+          journal_id = journal_id, plazi_doc = plazi_doc, plazi_treatment_id=plazi_treatment_id, doi = doi,
+          article_id = article_id)
 {
-  
+
 #  print(!is.null(xml_schema$injector))
   if (processing_status(node) == FALSE || reprocess == TRUE && !(is.null(triples)) || xml2::xml_name(node)=="article" || xml2::xml_name(node)=="document") {
   #  if (!is.null(xml_schema$injector)) {
@@ -96,11 +97,12 @@ node_extractor_en = function (node, xml_schema, xml, reprocess, triples, prefix,
   for (c in xml_schema$components) {
     nodel = xml2::xml_find_all(node, c$xpath)
     for (n in nodel) {
-      
+
     node_extractor_en(n, c, xml = xml, reprocess = reprocess, triples = triples,
                         prefix = prefix, new_taxons = new_taxons, dry = dry, filename = filename,
                         root_id = root_id, publisher_id = publisher_id,
-                        journal_id = journal_id, plazi_doc = plazi_doc, plazi_treatment_id = plazi_treatment_id)
+                        journal_id = journal_id, plazi_doc = plazi_doc, plazi_treatment_id = plazi_treatment_id, doi = doi,
+                      article_id = article_id)
 
     }
   }

@@ -35,15 +35,15 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
 
 #' Serialization of BOLD record ids/BINS/Genbank ids in different article sections (a separate function like institution_serializer)
 #' @export
- bold_genbank_serializer = function(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc){
+ bold_genbank_serializer = function(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi = doi, article_id = article_id){
   nid = identifiers$nid
-  
+
   #BOLD id
   sapply(atoms$bold_id, function(n){
-    
+
     bold_uri_label = n$text_value
     bold_id_label = stringr::str_extract(bold_uri_label, "(?<==).*")
-    
+
     if (grepl("bin", bold_uri_label) || grepl("clusteruri", bold_uri_label)){
       df_type = "bin"
       semantic_type = BOLDBin
@@ -51,8 +51,8 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
       df_type = "bold-id"
       semantic_type = BOLDRecord
     }
-    
-    bold_df = set_component_frame(label =  bold_id_label , mongo_key = NA, type = df_type, orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
+
+    bold_df = set_component_frame(label =  bold_id_label , mongo_key = NA, type = df_type, orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     bold_id = identifier(get_or_set_mongoid(bold_df, prefix), prefix)
     tt$add_triple(nid, mentions_id , bold_id)
     tt$add_triple(bold_id, rdf_type , semantic_type)
@@ -60,12 +60,12 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
     tt$add_triple(bold_id, identifier_scheme , boldsystems)
     tt$add_triple(bold_id, rdfs_label , literal(bold_id_label))
     tt$add_triple(bold_id, has_url, literal(bold_uri_label, xsd_type = xsd_uri))
-    
+
   })
-  
+
   #GenBank id
   sapply(atoms$genbank_id, function(n){
-    
+
     genbank_label = n$text_value
     genbank_df = set_component_frame(label =  genbank_label , mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
     genbank_id = identifier(get_or_set_mongoid(genbank_df, prefix), prefix)
@@ -74,12 +74,12 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
     tt$add_triple(genbank_id, rdf_type , ResourceIdentifier) #this could go in the ontology (e.g. GenBankAccession subclassOf ResourceIdentifier) but for now stays here until we have updated the ontology
     tt$add_triple(genbank_id, identifier_scheme , genbank)
     tt$add_triple(genbank_id, rdfs_label , literal(genbank_label))
-    
-    
+
+
   })
-  
+
   return(tt)
-  
+
 }
 
 #' DEPRECATED
