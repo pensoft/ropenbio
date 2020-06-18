@@ -192,7 +192,7 @@ process_plazi_treatment = function (node, mongo_key, publisher_id, journal_id, d
 
 
 #' @export
-process_general_component = function (node, mongo_key,  publisher_id, journal_id, plazi_doc, doi = doi, article_id = article_id)
+process_general_component = function (node, mongo_key,  publisher_id, journal_id, plazi_doc, doi, article_id)
 {
   label = xml2::xml_text(xml2::xml_find_first(node, mongo_key))
 
@@ -214,7 +214,7 @@ process_general_component = function (node, mongo_key,  publisher_id, journal_id
 
 
 #' @export
-process_schema_component = function(node, mongo_key, publisher_id, journal_id, plazi_doc, doi = doi, article_id = article_id)
+process_schema_component = function(node, mongo_key, publisher_id, journal_id, plazi_doc, doi, article_id)
 {
 
   if (is.author(mongo_key) == TRUE){
