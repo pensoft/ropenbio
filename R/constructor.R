@@ -14,7 +14,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
   general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
 
-  article_id = identifiers$root_id
+  article_root = identifiers$root_id
   publisher_lit = toString(unlist(atoms$publisher)["text_value"])
 
   df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
@@ -36,7 +36,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
 
   paper_label = unlist(atoms$title)["text_value"]
 
-  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
+  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_root$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
 
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
@@ -83,21 +83,21 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
     }
   }
 
-  tt$add_triple(journal_id, frbr_part, article_id)
-  tt$add_triple(article_id, rdf_type, Article)
+  tt$add_triple(journal_id, frbr_part, article_root)
+  tt$add_triple(article_root, rdf_type, Article)
 
 
   articleTitle = atoms$title[[1]]
   articleTitle = escape_special(articleTitle$text_value)
 
-  tt$add_triple(article_id, rdfs_label, literal(articleTitle))
+  tt$add_triple(article_root, rdfs_label, literal(articleTitle))
 
-  tt$add_triple(article_id, realization_of, paper_id)
+  tt$add_triple(article_root, realization_of, paper_id)
 
-  tt$add_triple(article_id, dc_title, literal(articleTitle))
+  tt$add_triple(article_root, dc_title, literal(articleTitle))
 
   sapply(atoms$doi, function(i) {
-    tt$add_triple(article_id, has_doi, i)
+    tt$add_triple(article_root, has_doi, i)
   })
 
 
@@ -111,7 +111,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
       article_zoobank_literal = ll
 
       article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-      tt$add_triple(article_id, has_identifier, article_zoobank_id)
+      tt$add_triple(article_root, has_identifier, article_zoobank_id)
       tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
       tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
       tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
@@ -130,7 +130,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
       zenodo_literal = ll
 
       zenodo_id = identifier(text_value, c(zenodo = "http://zenodo.org/record/"))
-      tt$add_triple(article_id, has_identifier, zenodo_id)
+      tt$add_triple(article_root, has_identifier, zenodo_id)
       tt$add_triple(zenodo_id, rdf_type, ResourceIdentifier)
       tt$add_triple(zenodo_id, identifier_scheme, zenodo)
       tt$add_triple(zenodo_id, rdfs_label, zenodo_literal)
@@ -151,7 +151,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
       plazi_article_id = identifier(text_value, c(plazi = "http://tb.plazi.org/GgServer/summary/"))
       plazi_url = paste0("http://tb.plazi.org/GgServer/summary/",text_value)
 
-      tt$add_triple(article_id, has_identifier, plazi_article_id)
+      tt$add_triple(article_root, has_identifier, plazi_article_id)
       tt$add_triple(plazi_article_id, rdf_type, ResourceIdentifier)
       tt$add_triple(plazi_article_id, identifier_scheme, plazi)
       tt$add_triple(plazi_article_id, rdfs_label, plazi_article_id_lit)
@@ -163,18 +163,18 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
 
 
   sapply(atoms$publisher, function(i) {
-    tt$add_triple(article_id, has_publisher, i)
+    tt$add_triple(article_root, has_publisher, i)
   })
   sapply(atoms$date, function(i) {
-    tt$add_triple(article_id, publication_date, i)
+    tt$add_triple(article_root, publication_date, i)
   })
   sapply(list(pub_date(atoms$pub_year, atoms$pub_month, atoms$pub_day)),
          function(i) {
-           tt$add_triple(article_id, publication_date, i)
+           tt$add_triple(article_root, publication_date, i)
          })
-  tt$add_triple(article_id, has_publisher_id, publisher_id)
+  tt$add_triple(article_root, has_publisher_id, publisher_id)
   sapply(atoms$issue, function(i) {
-    tt$add_triple(article_id, has_issue, i)
+    tt$add_triple(article_root, has_issue, i)
   })
 
   tt$add_triple(publisher_id, rdf_type, Publisher)
@@ -204,13 +204,13 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
   general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
 
-  article_id = identifiers$root_id
+  article_root = identifiers$root_id
   journal_id = gsub("<http://openbiodiv.net/", "", journal_id)
   journal_id = gsub(">", "", journal_id)
   journal_id = identifier(journal_id, prefix)
 
   paper_label = unlist(atoms$title)["text_value"]
-  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = TRUE, doi = doi, article_id = article_id)
+  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_root$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = TRUE, doi = doi, article_id = article_id)
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
 
@@ -227,21 +227,21 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
   })
 
 
-  tt$add_triple(journal_id, frbr_part, article_id)
+  tt$add_triple(journal_id, frbr_part, article_root)
 
-  tt$add_triple(article_id, rdf_type, Article)
+  tt$add_triple(article_root, rdf_type, Article)
 
   articleTitle = atoms$title[[1]]
   articleTitle = escape_special(articleTitle$text_value)
 
-  tt$add_triple(article_id, rdfs_label, literal(articleTitle))
+  tt$add_triple(article_root, rdfs_label, literal(articleTitle))
 
-  tt$add_triple(article_id, realization_of, paper_id)
+  tt$add_triple(article_root, realization_of, paper_id)
 
-  tt$add_triple(article_id, dc_title,  literal(articleTitle))
+  tt$add_triple(article_root, dc_title,  literal(articleTitle))
 
   sapply(atoms$doi, function(i) {
-    tt$add_triple(article_id, has_doi, i)
+    tt$add_triple(article_root, has_doi, i)
   })
 
   if(length(atoms$zoobank) > 0){
@@ -255,7 +255,7 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
       article_zoobank_literal = ll
 
       article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-      tt$add_triple(article_id, has_identifier, article_zoobank_id)
+      tt$add_triple(article_root, has_identifier, article_zoobank_id)
       tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
       tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
       tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
@@ -274,7 +274,7 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
       zenodo_literal = ll
 
       zenodo_id = identifier(text_value, c(zenodo = "http://zenodo.org/record/"))
-      tt$add_triple(article_id, has_identifier, zenodo_id)
+      tt$add_triple(article_root, has_identifier, zenodo_id)
       tt$add_triple(zenodo_id, rdf_type, ResourceIdentifier)
       tt$add_triple(zenodo_id, identifier_scheme, zenodo)
       tt$add_triple(zenodo_id, rdfs_label, zenodo_literal)
@@ -292,7 +292,7 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
       gbif_dataset_prefix = c(gbif_dataset = "https://www.gbif.org/dataset/")
 
       gbif_dataset_id = identifier(text_value, gbif_dataset_prefix)
-      tt$add_triple(article_id, has_identifier, gbif_dataset_id)
+      tt$add_triple(article_root, has_identifier, gbif_dataset_id)
       tt$add_triple(gbif_dataset_id, rdf_type, ResourceIdentifier)
       tt$add_triple(gbif_dataset_id, identifier_scheme, gbif_dataset)
       tt$add_triple(gbif_dataset_id, rdfs_label, gbif_dataset_literal)
@@ -302,10 +302,10 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
 
 
   sapply(atoms$date, function(i) {
-    tt$add_triple(article_id, publication_date, i)
+    tt$add_triple(article_root, publication_date, i)
   })
   sapply(atoms$issue, function(i) {
-    tt$add_triple(article_id, has_issue, i)
+    tt$add_triple(article_root, has_issue, i)
   })
 
   tt$add_triple(paper_id, rdf_type, Paper)
@@ -433,9 +433,9 @@ author = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
 
 
 
-  article_id = identifiers$root_id
+  article_root = identifiers$root_id
   author_id = identifiers$nid
-  paper_id = check_mongo_key_via_parent(parent = article_id$uri, type = "researchPaper", collection = general_collection)
+  paper_id = check_mongo_key_via_parent(parent = article_root$uri, type = "researchPaper", collection = general_collection)
 
   paper_id = gsub("http://openbiodiv.net/", "", paper_id)
   paper_id = identifier(paper_id, prefix)
@@ -486,9 +486,9 @@ plazi_author = function (atoms, identifiers, prefix, new_taxons, mongo_key, publ
                          journal_id,  plazi_doc, doi, article_id){
 
 
-  article_id = identifiers$root_id
+  article_root = identifiers$root_id
   author_id = identifiers$nid
-  paper_id = check_mongo_key_via_parent(parent = article_id$uri, type = "researchPaper", collection = general_collection)
+  paper_id = check_mongo_key_via_parent(parent = article_root$uri, type = "researchPaper", collection = general_collection)
 
   paper_id = gsub("http://openbiodiv.net/", "", paper_id)
   paper_id = identifier(paper_id, prefix)
@@ -1752,7 +1752,7 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
   general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
 
-  article_id = identifiers$root_id
+  article_root = identifiers$root_id
   publisher_lit = toString(unlist(atoms$publisher)["text_value"])
 
   df = set_component_frame(label = publisher_lit, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
@@ -1767,7 +1767,7 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
 
   paper_label = unlist(atoms$title)["text_value"]
 
-  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
+  research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_root$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
 
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
@@ -1813,23 +1813,23 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
   }
 
 
-  tt$add_triple(journal_id, frbr_part, article_id)
-  tt$add_triple(article_id, rdf_type, Article)
+  tt$add_triple(journal_id, frbr_part, article_root)
+  tt$add_triple(article_root, rdf_type, Article)
 
 
   articleTitle = atoms$title[[1]]
   articleTitle = escape_special(articleTitle$text_value)
 
-  tt$add_triple(article_id, rdfs_label, literal(articleTitle))
+  tt$add_triple(article_root, rdfs_label, literal(articleTitle))
 
-  tt$add_triple(article_id, realization_of, paper_id)
+  tt$add_triple(article_root, realization_of, paper_id)
 
 
   sapply(atoms$title, function(i) {
-    tt$add_triple(article_id, dc_title, i)
+    tt$add_triple(article_root, dc_title, i)
   })
   sapply(atoms$doi, function(i) {
-    tt$add_triple(article_id, has_doi, i)
+    tt$add_triple(article_root, has_doi, i)
   })
 
 
@@ -1846,7 +1846,7 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
         article_zoobank_literal = ll
 
         article_zoobank_id = identifier(text_value, c(zoobank = "http://zoobank.org/"))
-        tt$add_triple(article_id, has_identifier, article_zoobank_id)
+        tt$add_triple(article_root, has_identifier, article_zoobank_id)
         tt$add_triple(article_zoobank_id, rdf_type, ResourceIdentifier)
         tt$add_triple(article_zoobank_id, identifier_scheme, zoobank)
         tt$add_triple(article_zoobank_id, rdfs_label, article_zoobank_literal)
@@ -1872,7 +1872,7 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
 
 
       plazi_article_id = identifier(text_value, c(plazi = "http://tb.plazi.org/GgServer/summary/"))
-      tt$add_triple(article_id, has_identifier, plazi_article_id)
+      tt$add_triple(article_root, has_identifier, plazi_article_id)
       tt$add_triple(plazi_article_id, rdf_type, ResourceIdentifier)
       tt$add_triple(plazi_article_id, identifier_scheme, plazi)
       tt$add_triple(plazi_article_id, rdfs_label, plazi_article_id_lit)
@@ -1881,18 +1881,18 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
   }
 
   sapply(atoms$publisher, function(i) {
-    tt$add_triple(article_id, has_publisher, i)
+    tt$add_triple(article_root, has_publisher, i)
   })
   sapply(atoms$date, function(i) {
-    tt$add_triple(article_id, publication_date, i)
+    tt$add_triple(article_root, publication_date, i)
   })
   sapply(list(pub_date(atoms$pub_year, atoms$pub_month, atoms$pub_day)),
          function(i) {
-           tt$add_triple(article_id, publication_date, i)
+           tt$add_triple(article_root, publication_date, i)
          })
-  tt$add_triple(article_id, has_publisher_id, publisher_id)
+  tt$add_triple(article_root, has_publisher_id, publisher_id)
   sapply(atoms$issue, function(i) {
-    tt$add_triple(article_id, has_issue, i)
+    tt$add_triple(article_root, has_issue, i)
   })
 
   tt$add_triple(publisher_id, rdf_type, Publisher)
