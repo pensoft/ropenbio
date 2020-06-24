@@ -11,7 +11,6 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
     stop("Pensoft publication")
   }
 
-  general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
 
   article_root = identifiers$root_id
@@ -1748,7 +1747,6 @@ metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publi
   if (length(unlist(atoms$pensoft_pub)) > 0) {
     stop("Pensoft publication")
   }
-  general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
 
   article_root = identifiers$root_id

@@ -288,7 +288,6 @@ escape_special = function(string){
 #' @export
 get_or_set_mongoid= function (df, prefix)
 {
-  general_collection = mongolite::mongo("new_collection")
   if (nrow(df)>0){
   if (is.null(df) == FALSE){
     #check whether the type is treatment and the id is not na
