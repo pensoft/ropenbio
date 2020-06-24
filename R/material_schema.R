@@ -1033,6 +1033,29 @@ material_schema = XmlSchema$new(
       constructor = taxonomic_name_usage,
 
       components = NULL
+    ),
+    # Table
+    XmlSchema$new(
+      schema_name = "table",
+      xpath = "/article/body/..//table",
+      file_pattern = ".*\\.xml",
+      extension = ".xml",
+      prefix = c(openbiodiv = "http://openbiodiv.net/"),
+      atoms = c(
+        text_content = "."
+      ),
+
+      atom_lang = c(
+        text_content = NA
+      ),
+
+      atom_types = list(
+        text_content =  rdf4r::xsd_string
+      ),
+      mongo_key = c(table = "."),
+      constructor = table,
+
+      components = NULL
     )
   )
 )

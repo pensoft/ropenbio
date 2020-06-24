@@ -201,7 +201,6 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
     #tt = ResourceDescriptionFramework$new()
   }
 
-  general_collection = mongolite::mongo("new_collection")
   doi = unlist(atoms$doi)["text_value"]
 
   article_root = identifiers$root_id
@@ -2151,7 +2150,17 @@ treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
   return(tt)
 }
 
-###############################3
+
+#' @export
+table = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
+                      journal_id, plazi_doc, doi, article_id)
+{
+  tt = ResourceDescriptionFramework$new()
+  triples$add_triple(identifiers$nid, is_contained_by, identifiers$root_id)
+  triples$add_triple(identifiers$nid, rdf_type, Table)
+  return(tt)
+}
+  ###############################3
 #dwc checks
 
 
