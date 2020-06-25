@@ -2154,8 +2154,8 @@ table = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_i
                       journal_id, plazi_doc, doi, article_id)
 {
   tt = ResourceDescriptionFramework$new()
-  triples$add_triple(identifiers$nid, is_contained_by, identifiers$root_id)
-  triples$add_triple(identifiers$nid, rdf_type, Table)
+  tt$add_triple(identifiers$nid, is_contained_by, identifiers$root_id)
+  tt$add_triple(identifiers$nid, rdf_type, Table)
   return(tt)
 }
   ###############################3
