@@ -20,7 +20,7 @@ is.plazi_pensoft_pub = function(xml){
   }else{
     check = FALSE
   }
-  
+
   return(check)
 }
 
@@ -61,9 +61,16 @@ is.treatment = function(mongo_key){
 }
 
 #' @export
-is.plazi_treatment = function (mongo_key) 
+is.plazi_treatment = function (mongo_key)
 {
   check = "plazi_treatment" %in% names(mongo_key)
+  return(check)
+}
+
+#' @export
+is.table = function (mongo_key)
+{
+  check = "table" %in% names(mongo_key)
   return(check)
 }
 

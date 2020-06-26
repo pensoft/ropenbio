@@ -209,6 +209,21 @@ process_general_component = function (node, mongo_key,  publisher_id, journal_id
   return(df)
 }
 
+#' @export
+process_table = function (node, mongo_key,  publisher_id, journal_id, plazi_doc, doi, article_id)
+{
+  table_content = toString(node)
+  caption = xml2::xml_text(xml2::xml_find_first(node, "./parent::table-wrap/caption"))
+  if (length(caption)==0){
+    label = table_content
+    caption = NA
+  }else{
+    label = caption
+  }
+
+  df = set_component_frame(label = label, mongo_key = mongo_key, type = names(mongo_key), orcid = NA, parent = NA, key = NA,  publisher_id = publisher_id, journal_id = journal_id, plazi_doc= plazi_doc, doi = doi, article_id = article_id)
+  return(df)
+}
 
 
 
@@ -231,6 +246,8 @@ process_schema_component = function(node, mongo_key, publisher_id, journal_id, p
     df = process_plazi_treatment(node, mongo_key, publisher_id, journal_id, doi = doi, article_id = NA)
   } else if (is.plazi_figure(mongo_key) == TRUE){
     df = process_plazi_figure(node, mongo_key, publisher_id, journal_id, doi = doi, article_id = NA)
+  } else if (is.table(mongo_key) == TRUE){
+    df = process_table(node, mongo_key, publisher_id, journal_id, doi = doi, article_id = article_id)
   }
   else{
     df = process_general_component(node, mongo_key, publisher_id = publisher_id, journal_id = journal_id, plazi_doc, doi = doi, article_id = article_id)
