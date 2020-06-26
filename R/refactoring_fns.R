@@ -247,7 +247,7 @@ process_schema_component = function(node, mongo_key, publisher_id, journal_id, p
   } else if (is.plazi_figure(mongo_key) == TRUE){
     df = process_plazi_figure(node, mongo_key, publisher_id, journal_id, doi = doi, article_id = NA)
   } else if (is.table(mongo_key) == TRUE){
-    df = process_table(node, mongo_key, publisher_id, journal_id, doi = doi, article_id = article_id)
+    df = process_table(node, mongo_key, publisher_id = publisher_id, journal_id = journal_id, plazi_doc, doi = doi, article_id = article_id)
   }
   else{
     df = process_general_component(node, mongo_key, publisher_id = publisher_id, journal_id = journal_id, plazi_doc, doi = doi, article_id = article_id)
