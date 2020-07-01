@@ -102,7 +102,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         }
 
         article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
-
+        if (length(article_ident) == 0){
+          article_ident = NA
+        }
         prefix = c(openbiodiv = "http://openbiodiv.net/")
         triples = ResourceDescriptionFramework$new()
         if (is.plazi_doc(xml)==TRUE)
