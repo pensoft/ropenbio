@@ -5,7 +5,7 @@
 \title{Distribution Section Constructor}
 \usage{
 distribution(atoms, identifiers, prefix, new_taxons, mongo_key,
-  publisher_id, journal_id, plazi_doc)
+  publisher_id, journal_id, plazi_doc, doi, article_id)
 }
 \arguments{
 \item{atoms}{a list of literals}

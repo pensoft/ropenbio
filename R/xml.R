@@ -86,8 +86,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
   # generate lookup functions
 
 
-      inst_collection = mongolite::mongo(collection = "institutions", db = "test")
-      checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
 
   tryCatch(
     {
@@ -108,10 +106,10 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         if (is.plazi_doc(xml)==TRUE)
         {
           xml_schema = plazi_schema
-          cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_plazi")
+       #   cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_plazi")
         }else{
-          xml_schema = material_schema
-          cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_pensoft")
+          xml_schema = taxpub
+        #  cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_pensoft")
         }
 
         processing_xml = xml
@@ -163,7 +161,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
         new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
 
-        triples = node_extractor_en(
+        triples = node_extractor(
           node = processing_xml,
           xml_schema = xml_schema,
           xml = processing_xml,
@@ -228,6 +226,13 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
 #' @export
 general_collection =  mongolite::mongo(collection = "new_collection", db = "test")
+
+#' @export
+inst_collection = mongolite::mongo(collection = "institutions", db = "test")
+
+#' @export
+checklistCol = mongolite::mongo(collection = "checklist", db = "openbiodiv")
+
 
 #' @export
 create_new_file = function(serialization_dir){

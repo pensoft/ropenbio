@@ -4,8 +4,11 @@
 \alias{node_extractor}
 \title{Node Extractor}
 \usage{
-node_extractor(node, xml_schema, reprocess, triples, prefix, new_taxons,
-  dry = FALSE, filename, root_id)
+node_extractor(node, xml_schema, xml, reprocess, triples, prefix,
+  new_taxons, dry = FALSE, filename, root_id,
+  publisher_id = publisher_id, journal_id = journal_id,
+  plazi_doc = plazi_doc, plazi_treatment_id = plazi_treatment_id,
+  doi = doi, article_id = article_id)
 }
 \arguments{
 \item{xml_schema}{XML schema of the XML resource; one of

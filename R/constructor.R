@@ -1,4 +1,16 @@
 #' @export
+atoml_to_val = function(atoml)
+{
+  if (length(atoml) > 0) {
+    return(atoml[[1]]$text_value)
+  }
+  else {
+    return (NA)
+  }
+}
+
+
+#' @export
 metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                      journal_id, plazi_doc, doi, article_id)
 {
@@ -1204,114 +1216,6 @@ figure = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
   return(tt)
 }
 
-#' @export
-treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                         journal_id, plazi_doc, doi, article_id)
-  {
-
-  atoml_to_val = function(atoml)
-  {
-    if (length(atoml) > 0) {
-      return(atoml[[1]]$text_value)
-    }
-    else {
-      return (NA)
-    }
-  }
-
-
-
-
-  tt = ResourceDescriptionFramework$new()
-
-
-  #get the name:
-  #escape special chars
-  #atoms$text_content = double_quote_replacer(atoms$text_content)
-
-
-
-  scName = get_scientific_name_or_tcl(kingdom = NA, phylum = NA, class = NA, order = NA,
-                                      family = NA, subfamily = NA, genus = atoml_to_val(atoms$genus), subgenus = NA, species = atoml_to_val(atoms$species),
-                                      subspecies = atoml_to_val(atoms$subspecies), authorship = atoml_to_val(atoms$authorship), secundum_literal = NA)
-
-
-
-
-  scName_gbif = gbif_taxonomy_mapping(scName = scName, collection = checklistCol)
-  if (is.null(scName_gbif))
-    scNameParent = NA
-  else{
-    cat(scName_gbif$uri,file = "~/gbif_names.txt",append = TRUE )
-
-    scNameParent = scName_gbif$uri
-
-  }
-  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
-
-
-  scNameID = get_or_set_mongoid(df, prefix)
-  scName_ident = identifier(scNameID, prefix)
-
-  #get or set taxonomic concept id
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
-  tc_identifier = get_or_set_mongoid(tc_df, prefix)
-  tc_identifier = identifier(tc_identifier, prefix)
-
-
-  treatment_id = identifiers$nid
-  tt$add_triple(treatment_id, rdf_type, Treatment)
-  tt$add_triple(treatment_id, is_contained_by, identifiers$pid)
-
-
-  tt$add_triple(treatment_id, mentions, scName_ident)
-  tt$add_triple(scName_ident, rdf_type, ScientificName)
-
-
-
-  tt$add_triple(scName_ident, has_gbifID, scName_gbif)
-  tt$add_triple(scName_ident, rdfs_label, literal(scName))
-
-  sapply(atoms$genus, function(i){
-    tt$add_triple(scName_ident, dwc_genus, i)
-  })
-
-  sapply(atoms$species, function(i){
-    tt$add_triple(scName_ident, dwc_species_ep, i)
-  })
-
-  sapply(atoms$subspecies, function(i){
-    tt$add_triple(scName_ident, dwc_subspecies_ep, i)
-  })
-
-  sapply(atoms$authorship, function(i){
-    tt$add_triple(scName_ident, dwc_authorship, i)
-  })
-
-
-
-  if (length(unlist(atoms$status))>0 ){
-    status = atoms$status[[1]]$text_value
-    tt$add_triple(treatment_id, taxonStatus, literal(status))
-    if (status %in% new_taxons ==TRUE)
-      tt$add_triple(treatment_id, mentions, TaxonomicDiscovery)
-  }
-  #for (a in 1:length(atoms$text_content)){
-  #  atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
-  #}
-  #treatment_content = atoms$text_content[[1]]
-  #treatment_content = escape_special(treatment_content$text_value)
-  #tt$add_triple(treatment_id, has_content, literal(treatment_content))
-
-  tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
-  tt$add_triple(tc_identifier, realization, treatment_id)
-
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
-  tt = institution_serializer(tt, atoms, identifiers)
-
-
-  return(tt)
-}
 
 #' @export
 type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
@@ -2043,110 +1947,6 @@ tnu = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
   return(tt)
 }
 
-#' @export
-treatment_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
-                         journal_id, plazi_doc, doi, article_id)
-  {
-
-  atoml_to_val = function(atoml)
-  {
-    if (length(atoml) > 0) {
-      return(atoml[[1]]$text_value)
-    }
-    else {
-      return (NA)
-    }
-  }
-
-  tt = ResourceDescriptionFramework$new()
-
-
-  #get the name:
-  #escape special chars
-  #atoms$text_content = double_quote_replacer(atoms$text_content)
-
-
-
-  scName = get_scientific_name_or_tcl(kingdom = NA, phylum = NA, class = NA, order = NA,
-                                      family = NA, subfamily = NA, genus = atoml_to_val(atoms$genus), subgenus = NA, species = atoml_to_val(atoms$species),
-                                      subspecies = atoml_to_val(atoms$subspecies), authorship = atoml_to_val(atoms$authorship), secundum_literal = NA)
-
-
-
-
-  scName_gbif = gbif_taxonomy_mapping(scName = scName, collection = checklistCol)
-  if (is.null(scName_gbif))
-    scNameParent = NA
-  else{
-    cat(scName_gbif$uri,file = "~/gbif_names.txt",append = TRUE )
-
-    scNameParent = scName_gbif$uri
-
-  }
-  df = set_component_frame(label = scName, mongo_key = NA, type = "scientificName", orcid = NA, parent = scNameParent, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
-
-
-  scNameID = get_or_set_mongoid(df, prefix)
-  scName_ident = identifier(scNameID, prefix)
-
-  #get or set taxonomic concept id
-  tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = NA, article_id = NA)
-  tc_identifier = get_or_set_mongoid(tc_df, prefix)
-  tc_identifier = identifier(tc_identifier, prefix)
-
-
-  treatment_id = identifiers$nid
-  tt$add_triple(treatment_id, rdf_type, Treatment)
-  tt$add_triple(treatment_id, is_contained_by, identifiers$pid)
-
-
-  tt$add_triple(treatment_id, mentions, scName_ident)
-  tt$add_triple(scName_ident, rdf_type, ScientificName)
-
-
-
-  tt$add_triple(scName_ident, has_gbifID, scName_gbif)
-  tt$add_triple(scName_ident, rdfs_label, literal(scName))
-
-  sapply(atoms$genus, function(i){
-    tt$add_triple(scName_ident, dwc_genus, i)
-  })
-
-  sapply(atoms$species, function(i){
-    tt$add_triple(scName_ident, dwc_species_ep, i)
-  })
-
-  sapply(atoms$subspecies, function(i){
-    tt$add_triple(scName_ident, dwc_subspecies_ep, i)
-  })
-
-  sapply(atoms$authorship, function(i){
-    tt$add_triple(scName_ident, dwc_authorship, i)
-  })
-
-
-
-  if (length(atoms$status)>0 ){
-    status = atoms$status[[1]]$text_value
-    tt$add_triple(treatment_id, taxonStatus, literal(status))
-    if (status %in% new_taxons ==TRUE)
-      tt$add_triple(treatment_id, mentions, TaxonomicDiscovery)
-  }
-  #for (a in 1:length(atoms$text_content)){
-  #  atoms$text_content[[a]]$text_value = escape_special(atoms$text_content[[a]]$text_value)
-  #}
- # treatment_content = atoms$text_content[[1]]
-#  treatment_content = escape_special(treatment_content$text_value)
- # tt$add_triple(treatment_id, has_content, literal(treatment_content))
-
-  tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
-  tt$add_triple(tc_identifier, realization, treatment_id)
-
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
-  tt = institution_serializer(tt, atoms, identifiers)
-
-  return(tt)
-}
 
 
 #' @export

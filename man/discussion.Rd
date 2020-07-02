@@ -5,7 +5,7 @@
 \title{Discussion Section Constructor}
 \usage{
 discussion(atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
-  journal_id, plazi_doc)
+  journal_id, plazi_doc, doi, article_id)
 }
 \arguments{
 \item{atoms}{a list of literals}
