@@ -4,14 +4,15 @@
 \alias{author}
 \title{Author constructor}
 \usage{
-author(atoms, identifiers, access_options)
+author(atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
+  journal_id, plazi_doc, doi, article_id)
 }
 \arguments{
 \item{atoms}{a list of literals}
 
 \item{identifiers}{a list of identifiers}
 
-\item{access_options}{}
+\item{prefix}{}
 }
 \value{
 \code{ResourceDescriptionFramework}

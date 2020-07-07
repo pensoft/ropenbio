@@ -4,14 +4,15 @@
 \alias{introduction_section}
 \title{Introduction Section Constructor}
 \usage{
-introduction_section(atoms, identifiers, access_options)
+introduction_section(atoms, identifiers, prefix, new_taxons, mongo_key,
+  publisher_id, journal_id, plazi_doc, doi, article_id)
 }
 \arguments{
 \item{atoms}{a list of literals}
 
 \item{identifiers}{a list of identifiers}
 
-\item{access_options}{}
+\item{prefix}{}
 }
 \value{
 \code{ResourceDescriptionFramework}

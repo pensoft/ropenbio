@@ -4,8 +4,8 @@
 \alias{regularize_taxonomic_names.taxpub}
 \title{Regularize Taxonomic Names in an XML Document (TaxPub)}
 \usage{
-\method{regularize_taxonomic_names}{taxpub}(xmldoc, TNU_markup, PTNU_markup,
-  regPTNU_markup)
+\method{regularize_taxonomic_names}{taxpub}(xmldoc, TNU_markup,
+  PTNU_markup, regPTNU_markup)
 }
 \arguments{
 \item{xmldoc}{the taxonomic article as a XML2 document}

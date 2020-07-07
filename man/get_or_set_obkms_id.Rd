@@ -2,7 +2,8 @@
 % Please edit documentation in R/xml.R
 \name{get_or_set_obkms_id}
 \alias{get_or_set_obkms_id}
-\title{Get the OBKMS Id of an XML node, if not set, set it.}
+\title{NOT USED ANYMORE
+Get the OBKMS Id of an XML node, if not set, set it.}
 \usage{
 get_or_set_obkms_id(node)
 }

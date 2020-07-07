@@ -16,24 +16,32 @@ Imports:
     rdf4r,
     gsubfn,
     uuid,
-    purrr
+    purrr,
+    mongolite
 Suggests:
     testthat,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Collate: 
     'biology.R'
     'blr-zenodo.R'
+    'components_checks.R'
     'constructor.R'
+    'crosslinking_functions.R'
     'extractors.R'
+    'institution_codes.R'
+    'mongo_operations.R'
     'nactem.R'
     'pensoft.R'
     'plazi.R'
+    'rdf.R'
+    'refactoring_fns.R'
     'ropenbio.R'
     'semantic-elements.R'
     'sparql.R'
     'xml.R'
     'taxonx.R'
     'taxpub.R'
+Encoding: UTF-8

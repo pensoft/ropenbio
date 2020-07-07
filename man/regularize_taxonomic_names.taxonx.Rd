@@ -4,8 +4,8 @@
 \alias{regularize_taxonomic_names.taxonx}
 \title{Regularize Plazi XML}
 \usage{
-\method{regularize_taxonomic_names}{taxonx}(xmldoc, TNU_markup, PTNU_markup,
-  regPTNU_markup)
+\method{regularize_taxonomic_names}{taxonx}(xmldoc, TNU_markup,
+  PTNU_markup, regPTNU_markup)
 }
 \arguments{
 \item{xmldoc}{}

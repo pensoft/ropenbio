@@ -1,8 +1,41 @@
 #' @export
+Occurrence = rdf4r::identifier(
+  id="Occurrence",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+Location = rdf4r::identifier(
+  id="Location",
+  prefix = c(dcterms = "http://purl.org/dc/terms/")
+)
+
+#' @export
+Identification = rdf4r::identifier(
+  id="Identification",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+Event = rdf4r::identifier(
+  id="Event",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+
+#' @export
 Collection = rdf4r::identifier(
   id = "Collection",
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
+
+#' @export
+GrbioInst = rdf4r::identifier(
+  id = "GRSciCollInstitution",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
 
 #' @export
 Thing = rdf4r::identifier(
@@ -72,12 +105,57 @@ Article = rdf4r::identifier(
   prefix = c(fabio = "http://purl.org/spar/fabio/")
 )
 
-
-#' Keyword Group
+#' an article in a science journal
 #' @export
-KeywordGroup = rdf4r::identifier(
-  id = "KeywordGroup",
-  prefix = c(openbiodiv = "http://openbiodiv.net/")
+BibResource = rdf4r::identifier(
+  id = "BibliographicResource",
+  prefix = c(dcterms = "http://purl.org/dc/terms/")
+)
+
+#' an article in a science journal
+#' @export
+ExpressionCollection = rdf4r::identifier(
+  id = "ExpressionCollection",
+  prefix = c(fabio = "http://purl.org/spar/fabio/")
+)
+
+
+
+#' Personal Identifier
+#' @export
+PersonalIdentifier = rdf4r::identifier(
+  id = "PersonalIdentifier",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+
+#' Resource Identifier
+#' @export
+ResourceIdentifier = rdf4r::identifier(
+  id = "ResourceIdentifier",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' datacite boldsystems
+#' @export
+boldsystems = rdf4r::identifier(
+  id = "boldsystems",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' datacite zenodo
+#' @export
+zenodo = rdf4r::identifier(
+  id = "zenodo",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+
+#' GenBankAccession
+#' @export
+GenBankAccession = rdf4r::identifier(
+  id = "GenBankAccession",
+  prefix = c(openbiodiv = "http://openbiodiv.net")
 )
 
 
@@ -124,6 +202,13 @@ NomenclatureCitationsList = rdf4r::identifier(
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' Nom Citation
+#' the informational content of an article
+#' @export
+NomenclatureCitation = rdf4r::identifier(
+  id = "NomenclatureCitation",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
 
 #' TNU
 #' @export
@@ -194,8 +279,31 @@ MaterialsExamined = rdf4r::identifier(
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' @export
+BOLDRecord = rdf4r::identifier(
+  id="BOLDRecord",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
 
 
+#' @export
+BOLDBin = rdf4r::identifier(
+  id="BOLDBin",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+#' @export
+SequenceRecord = rdf4r::identifier(
+  id="data_2292",
+  prefix = c(edam = "http://edamontology.org/")
+)
+
+#' @export
+Methods = rdf4r::identifier(
+  id = "Methods",
+  prefix = c(deo = "http://purl.org/spar/deo/")
+)
 
 #' Figure:
 #'  uri: <http://purl.org/spar/doco/Figure>
@@ -228,6 +336,11 @@ Introduction = rdf4r::identifier(
 )
 
 
+#' @export
+Institution =  rdf4r::identifier(
+  id = "Institution",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
 
 #' Title:
 #' uri: <http://purl.org/spar/doco/Title>
@@ -237,6 +350,125 @@ Title = rdf4r::identifier(
   id = "Title",
   prefix = c(doco = "http://purl.org/spar/doco/")
 )
+
+#' Keyword Group
+#' @export
+KeywordGroup = rdf4r::identifier(
+  id = "KeywordGroup",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' Checklist
+#' @export
+Checklist =  rdf4r::identifier(
+  id = "Checklist",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' Table
+#' @export
+Table =  rdf4r::identifier(
+  id = "Table",
+  prefix = c(fabio = "http://purl.org/spar/fabio/")
+)
+
+#' @export
+TaxonomicDiscovery = rdf4r::identifier(
+  id = "TaxonomicDiscovery",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+#' @export
+TypeMaterial = rdf4r::identifier(
+  id = "TypeMaterial",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+HolotypeDescription = rdf4r::identifier(
+  id = "HolotypeDescription",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+####################################################
+#Properties
+
+#' datacite orcid
+#' @export
+orcid = rdf4r::identifier(
+  id = "orcid",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' datacite zoobank
+#' @export
+zoobank = rdf4r::identifier(
+  id = "zoobank",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' datacite gbif dataset
+#' @export
+gbif_dataset = rdf4r::identifier(
+    id = "gbif_dataset",
+    prefix = c(datacite = "http://purl.org/spar/datacite/")
+  )
+
+#' datacite bold
+#' @export
+bold = rdf4r::identifier(
+  id = "bold",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' datacite genbank
+#' @export
+genbank = rdf4r::identifier(
+  id = "genbank",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' @export
+has_grbioCool = rdf4r::identifier(
+  id = "hasCoolID",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+#' @export
+has_grbioInstCode = rdf4r::identifier(
+  id = "hasGrbioInstitutionCode",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+inst_codes = rdf4r::identifier(
+  id = "institutionCode",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+inst_names = rdf4r::identifier(
+  id = "institutionName",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+taxonStatus = rdf4r::identifier(
+  id = "taxonomicStatus",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+#' datacite plazi
+#' @export
+plazi = rdf4r::identifier(
+  id = "plazi",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+
 
 
 #' Issn property
@@ -271,6 +503,13 @@ pref_label = rdf4r::identifier(
 #' @export
 alt_label = rdf4r::identifier(
   id = "altLabel",
+  prefix = c(skos = "http://www.w3.org/2004/02/skos/core#")
+)
+
+#' SKOS exact match
+#' @export
+exact_match = rdf4r::identifier(
+  id = "exactMatch",
   prefix = c(skos = "http://www.w3.org/2004/02/skos/core#")
 )
 
@@ -347,6 +586,54 @@ institutional_code = rdf4r::identifier(
   prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
 )
 
+#' @export
+dwc_type_status = rdf4r::identifier(
+  id="typeStatus",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_coordinates = rdf4r::identifier(
+  id="verbatimCoordinates",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_record_number = rdf4r::identifier(
+  id="recordNumber",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_recorded_by = rdf4r::identifier(
+  id="recordedBy",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_country = rdf4r::identifier(
+  id="country",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_state_province = rdf4r::identifier(
+  id="stateProvince",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_locality = rdf4r::identifier(
+  id="locality",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_collection_date = rdf4r::identifier(
+  id="eventDate",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
 
 
 
@@ -356,6 +643,16 @@ mentions = rdf4r::identifier(
   id = "mentions",
   prefix = c(pkm = "http://proton.semanticweb.org/protonkm#")
 )
+
+
+
+#' mentions habitat
+#' @export
+mentionsHabitat = rdf4r::identifier(
+  id = "mentionsHabitat",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
 
 
 #' publication_date
@@ -530,6 +827,11 @@ has_issue = rdf4r::identifier(
   prefix = c(prism = "http://prismstandard.org/namespaces/basic/2.0/")
 )
 
+#' @export
+has_url = rdf4r::identifier(
+  id = "hasURL",
+  prefix = c(fabio = "http://purl.org/spar/fabio/")
+)
 
 #' Has Affiliation
 #' @export
@@ -538,17 +840,348 @@ has_affiliation = rdf4r::identifier(
   prefix = c(openbiodiv = "http://openbiodiv.net/")
 )
 
+#' @export
+has_inst = rdf4r::identifier(
+  id = "hasInstitution",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+has_instName = rdf4r::identifier(
+  id = "hasInstitutionName",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+has_instCode = rdf4r::identifier(
+  id = "hasInstitutionCode",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
 
 
 #' Has email
 #' @export
 has_email = rdf4r::identifier(
   id = "mbox",
-  prefix = c(faof = "http://xmlns.com/foaf/0.1/")
+  prefix = c(foaf = "http://xmlns.com/foaf/0.1/")
+)
+
+#' Has Zoobank
+#' @export
+has_zoobank = rdf4r::identifier(
+  id = "zoobank",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+has_bin = rdf4r::identifier(
+  id = "BIN",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+has_bold = rdf4r::identifier(
+  id = "BOLD",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+has_identifier = rdf4r::identifier(
+  id="hasIdentifier",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' @export
+mentions_id = rdf4r::identifier(
+  id="mentionsIdentifier",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+dwc_occurrence_id = rdf4r::identifier(
+  id="occurrenceID",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_location_id = rdf4r::identifier(
+  id="locationID",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_identification_id = rdf4r::identifier(
+  id="identificationID",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_event_id = rdf4r::identifier(
+  id="eventID",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_catalog_number = rdf4r::identifier(
+  id="catalogNumber",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_other_catalog_numbers = rdf4r::identifier(
+  id="otherCatalogNumbers",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_record_number = rdf4r::identifier(
+  id="recordNumber",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_recorded_by = rdf4r::identifier(
+  id="recordedBy",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_individual_count = rdf4r::identifier(
+  id="individualCount",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_sex = rdf4r::identifier(
+  id="sex",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_life_stage = rdf4r::identifier(
+  id="lifeStage",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_coordinates = rdf4r::identifier(
+  id="verbatimCoordinates",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_verbatim_lat = rdf4r::identifier(
+  id="verbatimLatitude",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
 )
 
 
 
+#' @export
+dwc_verbatim_long = rdf4r::identifier(
+  id="verbatimLongitude",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_decimal_long = rdf4r::identifier(
+  id="decimalLongitude",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_decimal_lat = rdf4r::identifier(
+  id="decimalLatitude",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_country = rdf4r::identifier(
+  id="country",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_state_province = rdf4r::identifier(
+  id="stateProvince",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_locality = rdf4r::identifier(
+  id="locality",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_elevation = rdf4r::identifier(
+  id="elevation",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_depth = rdf4r::identifier(
+  id="depth",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_water_body = rdf4r::identifier(
+  id="waterBody",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_identified_by = rdf4r::identifier(
+  id="identifiedBy",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_collection_year = rdf4r::identifier(
+  id="collectionYear",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_collection_month = rdf4r::identifier(
+  id="collectionMonth",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_collection_code = rdf4r::identifier(
+  id="collectionCode",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_collection_day = rdf4r::identifier(
+  id="collectionDay",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_event_date = rdf4r::identifier(
+  id="eventDate",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_sampling_protocol = rdf4r::identifier(
+  id="samplingProtocol",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+dwc_habitat = rdf4r::identifier(
+  id="habitat",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_inst_id = rdf4r::identifier(
+  id="institutionID",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+
+#' @export
+dwc_inst_code = rdf4r::identifier(
+  id="institutionCode",
+  prefix = c(dwc = "http://rs.tdwg.org/dwc/terms/")
+)
+
+#' @export
+identifier_scheme =  rdf4r::identifier(
+  id="usesIdentifierScheme",
+  prefix = c(datacite = "http://purl.org/spar/datacite/")
+)
+
+#' @export
+has_gbifID = rdf4r::identifier(
+  id="hasGbifTaxon",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+
+#' @export
+has_link = rdf4r::identifier(
+  id = "hasDownloadLink",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+relation = rdf4r::identifier(
+  id = "relation",
+  prefix = c(dcterms = "http://purl.org/dc/terms/")
+)
+
+# THis is for inside use
+#' @export
+has_ref_id = rdf4r::identifier(
+  id = "hasBibReferenceID",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+# THis is for inside use
+#Literary citation
+#' @export
+LitCitation = rdf4r::identifier(
+  id = "LitCitation",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+# THis is for inside use
+#' @export
+verbatimAuthor = rdf4r::identifier(
+  id = "verbatimAuthor",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+# THis is for inside use
+#' @export
+verbatimYear = rdf4r::identifier(
+  id = "verbatimYear",
+  prefix = c(openbiodiv = "http://openbiodiv.net/")
+)
+
+#' @export
+Reference = rdf4r::identifier(
+  id = "BibliographicReference",
+  prefix = c(deo = "http://purl.org/spar/deo/")
+)
+
+#' @export
+ReferenceList = rdf4r::identifier(
+  id = "BibliographicReferenceList",
+  prefix = c(doco = "http://purl.org/spar/doco/")
+)
+
+#' @export
+Bibliography = rdf4r::identifier(
+  id = "Bibliography",
+  prefix = c(doco = "http://purl.org/spar/doco/")
+)
+
+#' @export
+surname = rdf4r::identifier(
+  id = "surname",
+  prefix = c(foaf = "http://xmlns.com/foaf/0.1/")
+)
+
+#' @export
+givenName = rdf4r::identifier(
+  id = "givenName",
+  prefix = c(foaf = "http://xmlns.com/foaf/0.1/")
+)
 
 
 #
