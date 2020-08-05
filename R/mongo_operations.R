@@ -4,7 +4,7 @@ check_mongo_key = function(value, type, collection, regex)
   if (regex == TRUE){
     query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "value", "$regex", value, "$options", "i")
   } else{
-    query = sprintf("{\"$text\":{\"$search\":\"%s\"}, \"type\": \"%s\"}", value, type)
+    query = sprintf("{\"$text\":{\"$search\":\"%s\"}, \"type\": \"%s\"}, {\"value\": 1, \"type\": 1}", value, type)
    # query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
   }
     tryCatch(
@@ -34,7 +34,7 @@ check_mongo_parent = function(key, value, type, collection)
 {
   if (is.null(key)){
     #query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
-    query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, type)
+    query = sprintf("{\"$text\":{\"$search\":\"%s\"}, \"type\": \"%s\"}", value, type)
     df = collection$find(query)
     parent = NULL
     if (!(is.null(df))){
