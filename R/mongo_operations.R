@@ -5,7 +5,10 @@ check_mongo_key = function(value, type, collection, regex)
     query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "value", "$regex", value, "$options", "i")
   } else{
    # query = '{"$text":{"$search":"searrchhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"}, "type": "typeeeeeeeeeeeeeeeeee"}'
-    query = sprintf('{"$text":{"$search":"%s"}, "type": "%s"}', value, type)
+    #query = sprintf('{"$text":{"$search":"%s"}, "type": "%s"}', value, type)
+    #query = paste0('{"$text": {"$search":', value, '}, "type":', type, '}')
+    query = paste0('{"$text": {"$search":"', value, '"}, "type":"', type, '"}')
+
     print("WORKING")
   }
     tryCatch(
