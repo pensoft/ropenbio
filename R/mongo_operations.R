@@ -4,25 +4,27 @@ check_mongo_key = function(value, type, collection, regex)
   if (regex == TRUE){
     query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "value", "$regex", value, "$options", "i")
   } else{
-   # query = '{"$text":{"$search":"searrchhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"}, "type": "typeeeeeeeeeeeeeeeeee"}'
-    #query = sprintf('{"$text":{"$search":"%s"}, "type": "%s"}', value, type)
-    #query = paste0('{"$text": {"$search":', value, '}, "type":', type, '}')
-    query = paste0('{"$text": {"$search":"', value, '"}}, {"type":"', type, '"}')
+   # query = sprintf("{\"$text\":{\"$search\":\"%s\"}, \"type\": \"%s\"}", value, type)
+    query = sprintf("{\"value\": \"%s\"}, \"type\": \"%s\"}", value, type)
 
-    print("WORKING")
+    print("old")
   }
     tryCatch(
     {
   df = collection$find(query)
   key = NULL
   if (!(is.null(df))){
-    df <- df[which(df$value == value),]
-    for (n in 1:nrow(df)){
-      if (df[n,]$value == value){
-        key = df[n,]$key
-        break()
-      }
-    }
+    sapply(df, function(x){
+
+    })
+    df = df[which(df$value == value),]
+    key = df[1,]$key
+    #for (n in 1:nrow(df)){
+    #  if (df[n,]$value == value){
+    #    key = df[n,]$key
+    #    break()
+    #  }
+    #}
   }
   return(key)
       },
@@ -37,8 +39,9 @@ check_mongo_key = function(value, type, collection, regex)
 check_mongo_parent = function(key, value, type, collection)
 {
   if (is.null(key)){
-    #query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
-    query = sprintf('{"$text":{"$search":"%s"}, "type": "%s"}', value, type)
+    query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
+
+    #query = sprintf('{"$text":{"$search":"%s"}, "type": "%s"}', value, type)
     df = collection$find(query)
     parent = NULL
     if (!(is.null(df))){
