@@ -47,9 +47,11 @@ check_mongo_parent = function(key, value, type, collection)
     if (!(is.null(df))){
       df <- df[which(df$value == value),]
       for (n in 1:nrow(df)){
-        if (df[n,]$value == value){
-          parent = df[n,]$parent
+        if (!(is.null(df[n,]$value))){
+         if (df[n,]$value == value){
+            parent = df[n,]$parent
         }
+       }
       }
     }
   } else{
