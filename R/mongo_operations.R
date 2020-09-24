@@ -6,8 +6,6 @@ check_mongo_key = function(value, type, collection, regex)
   } else{
    # query = sprintf("{\"$text\":{\"$search\":\"%s\"}, \"type\": \"%s\"}", value, type)
     query = sprintf("{\"value\": \"%s\"}, \"type\": \"%s\"}", value, type)
-
-    print("old")
   }
     tryCatch(
     {
