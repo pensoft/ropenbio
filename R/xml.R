@@ -92,13 +92,13 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       xml = xml2::read_xml(filename)
 
       if (processing_status(xml)==FALSE && is.plazi_pensoft_pub(xml) == FALSE){
-        print(filename)
-
         doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
         if (is.na(doi)){
           doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
         }
-
+        if (is.null(doi)){
+          doi = NA
+        }
         article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
         if (length(article_ident) == 0){
           article_ident = NA
@@ -108,10 +108,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         if (is.plazi_doc(xml)==TRUE)
         {
           xml_schema = plazi_schema
-       #   cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_plazi")
         }else{
           xml_schema = taxpub
-        #  cat(paste0(filename, "\n"), file = "/home/backend/OpenBiodiv/last_modified_pensoft")
         }
 
         processing_xml = xml
@@ -123,7 +121,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         triples$set_context(root_ident)
 
 
-        #NEW FN
         set_journal_publisher_ids = function(xml){
           plazi_doc = is.plazi_doc(xml)
             #if plazi_doc == TRUE, only set journal_id (with different xpath), otherwise do both
@@ -155,6 +152,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         plazi_treatment_id = xml2::xml_text(xml2::xml_find_all(xml, ".//treatment/@httpUri"))
         pref = "http://treatment.plazi.org/id/"
         plazi_treatment_id = gsub(pref, "", plazi_treatment_id)
+        plazi_treatment_id = uuid_dasher(plazi_treatment_id)
         plazi_treatment_id = identifier(plazi_treatment_id, prefix)
 
         #finds all institution codes and names and saves them in mongodb collection
@@ -162,7 +160,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
 
         new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
-
         triples = node_extractor(
           node = processing_xml,
           xml_schema = xml_schema,
@@ -184,8 +181,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
         serialization = triples$serialize()
         #changed to a new mode of triple saving. save + upload
-        #ret = save_serialization(serialization, serialization_dir)
-        #print(ret)
 
         add_data(serialization, access_options = access_options)
 
@@ -218,10 +213,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
     error = function(e)
     {
       warning(e)
-      #if (processing_status(xml)==FALSE){
-      skipped = paste(filename, "\n")
-      cat(skipped, file="/home/backend/OpenBiodiv/skipped.txt", append = TRUE)
-      #}
       return(FALSE)
     })
 }
