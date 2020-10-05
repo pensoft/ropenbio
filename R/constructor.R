@@ -220,6 +220,11 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
   journal_id = identifier(journal_id, prefix)
 
   paper_label = unlist(atoms$title)["text_value"]
+
+  if (is.null(doi)){
+    doi = NA
+  }
+
   research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_root$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = TRUE, doi = doi, article_id = article_id)
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
   paper_id = identifier(paper_id, prefix)
