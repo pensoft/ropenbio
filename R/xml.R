@@ -120,7 +120,6 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         xml2::write_xml(xml, filename)
         triples$set_context(root_ident)
 
-
         set_journal_publisher_ids = function(xml){
           plazi_doc = is.plazi_doc(xml)
             #if plazi_doc == TRUE, only set journal_id (with different xpath), otherwise do both
@@ -149,15 +148,20 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         journal_id = ids["journal_id"]
         publisher_id = ids["publisher_id"]
 
-        plazi_treatment_id = xml2::xml_text(xml2::xml_find_all(xml, ".//treatment/@httpUri"))
-        pref = "http://treatment.plazi.org/id/"
-        plazi_treatment_id = gsub(pref, "", plazi_treatment_id)
-        plazi_treatment_id = uuid_dasher(plazi_treatment_id)
-        plazi_treatment_id = identifier(plazi_treatment_id, prefix)
+        if (is.plazi_doc(xml)){
+          plazi_treatment_id = xml2::xml_text(xml2::xml_find_all(xml, ".//treatment/@httpUri"))
+          pref = "http://treatment.plazi.org/id/"
+          plazi_treatment_id = gsub(pref, "", plazi_treatment_id)
+          plazi_treatment_id = uuid_dasher(plazi_treatment_id)
+          plazi_treatment_id = identifier(plazi_treatment_id, prefix)
+        }else{
+          plazi_treatment_id =  NA
+        }
+
+
 
         #finds all institution codes and names and saves them in mongodb collection
         extract_inst_identifiers(processing_xml, root_id = root_ident, prefix = prefix, collection = inst_collection, grbio = grbio)
-
 
         new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
         triples = node_extractor(
