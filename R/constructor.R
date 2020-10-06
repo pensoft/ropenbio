@@ -46,7 +46,6 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
   }
 
   paper_label = unlist(atoms$title)["text_value"]
-
   research_paper_df = set_component_frame(label = paper_label, mongo_key = NA, type = "researchPaper", orcid = NA, parent = article_root$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
 
   paper_id = get_or_set_mongoid(research_paper_df, prefix)
@@ -405,7 +404,7 @@ abstract =function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
  # }
 
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
   tt =  institution_serializer(tt, atoms, identifiers)
 
 
@@ -559,7 +558,7 @@ introduction_section = function (atoms, identifiers, prefix,new_taxons, mongo_ke
 
  # tt$add_triple(identifiers$nid, has_content, literal(intro_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
   tt =  institution_serializer(tt, atoms, identifiers)
 
   return(tt)
@@ -608,7 +607,7 @@ treatment = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 
   tt$add_triple(tc_identifier, rdf_type, TaxonomicConcept)
   tt$add_triple(tc_identifier, realization, treatment_id)
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
 
   tt = institution_serializer(tt, atoms, identifiers)
   occurrenceID = check_dwc_occurrence(atoms = atoms, typeMaterialID= identifiers$nid, publisher_id = publisher_id,  journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -833,10 +832,14 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
           df = collection$find(query)
           key = NULL
           if (!(is.null(df)) && nrow(df) > 0){
-            df <- df[which(df$value == value),]
-            for (n in 1:nrow(df)){
-              if (df[n,]$value == value){
-                key = df[n,]$key
+            if (!(is.na(df$value)) %% !(is.na(value))){
+              df <- df[which(df$value == value),]
+              if (nrow(df)>0){
+                for (n in 1:nrow(df)){
+                  if (df[n,]$value == value){
+                    key = df[n,]$key
+                  }
+                }
               }
             }
           }
@@ -859,7 +862,6 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
         title = NA
 
       title = gsub("\"", "", title)
-
       key = check_mongo_citation(value = title, parent = doi, collection = general_collection)
 
       df = set_component_frame(label = title, mongo_key = NA, type = "bibResource", orcid = NA, parent = doi, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -1051,7 +1053,7 @@ diagnosis = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
   tt$add_triple(diagnosis_id, is_contained_by, identifiers$pid)
  # tt$add_triple(diagnosis_id, has_content, literal(diagnosis_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
   tt =  institution_serializer(tt, atoms, identifiers)
 
 
@@ -1077,7 +1079,7 @@ discussion = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publis
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
  # tt$add_triple(identifiers$nid, has_content, literal(discussion_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
   tt =  institution_serializer(tt, atoms, identifiers)
 
   if (plazi_doc == TRUE){
@@ -1112,7 +1114,7 @@ methods = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
  # tt$add_triple(identifiers$nid, has_content, literal(methods_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
   tt =  institution_serializer(tt, atoms, identifiers)
 
   return(tt)
@@ -1139,7 +1141,7 @@ checklist = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
   tt$add_triple(identifiers$nid, rdf_type, Checklist)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
  # tt$add_triple(identifiers$nid, has_content, literal(checklist_content))
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
 
   tt =  institution_serializer(tt, atoms, identifiers)
 
@@ -1165,7 +1167,7 @@ distribution = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
   #tt$add_triple(identifiers$nid, has_content, literal(distribution_content))
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
   tt =  institution_serializer(tt, atoms, identifiers)
 
   if (plazi_doc == TRUE){
@@ -1216,7 +1218,7 @@ figure = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
     tt$add_triple(identifiers$nid, has_link, i)
   })
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
   tt =  institution_serializer(tt, atoms, identifiers)
   return(tt)
 }
@@ -1271,7 +1273,7 @@ type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
   atoms$eventID  = eventID
   tt = serialize_event(tt, atoms, typeMaterialID)
 
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
   tt = institution_serializer(tt, atoms, identifiers)
 
 
@@ -1616,7 +1618,7 @@ taxonomic_key = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
 
 
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
-  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc)
+  tt = bold_genbank_serializer(tt, atoms, identifiers, publisher_id, journal_id, plazi_doc, doi, article_id)
 
 
 
