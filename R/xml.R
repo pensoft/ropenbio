@@ -92,6 +92,10 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       xml = xml2::read_xml(filename)
 
       if (processing_status(xml)==FALSE && is.plazi_pensoft_pub(xml) == FALSE){
+        xml_string = toString(xml)
+        xml_string = strip_xml_newlines(xml_string)
+        xml = xml2::as_xml_document(xml_string)
+
         doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
         if (is.na(doi)){
           doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
@@ -356,7 +360,11 @@ find_literals = function (xml, xml_schema)
     nodes = xml2::xml_find_all(xml, xml_schema$atoms[nn])
     #literals = paste(xml2::xml_text(nodes), collapse = " ")
     literals = xml2::xml_text(nodes)
-   # literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals,
+    literals = strip_starting_whitespace(literals)
+    literals = strip_trailing_whitespace(literals)
+
+
+       # literals = gsub("(?<=[a-z0-9])(?=[A-Z])", " ", literals,
                 #    perl = TRUE)
     languages = tryCatch(xml2::xml_text(xml2::xml_find_all(xml,
                                                            xml_schema$atom_lang[nn])), error = function(e) {
@@ -548,8 +556,11 @@ find_atoms =
   function(xml, xpath) {
     lapply(xpath, function(p)
     {
-      xml2::xml_text(xml2::xml_find_all(xml, p))
+      t = xml2::xml_text(xml2::xml_find_all(xml, p))
+      t = strip_starting_whitespace(t)
+      t = strip_trailing_whitespace(t)
     })
+
   }
 
 
