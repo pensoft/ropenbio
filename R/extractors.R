@@ -38,7 +38,6 @@
           pid = root_id
         }
 
-
       new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE, publisher_id =publisher_id, journal_id=journal_id, doi=doi, article_id = article_id),
                                                                      pid = pid,
                                                                      root_id = root_id),
