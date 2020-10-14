@@ -434,6 +434,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 {
   pensoft_xpath = "//article/front/article-meta/uri[@content-type='arpha']"
   arpha_id = xml2::xml_text(xml2::xml_find_first(node, pensoft_xpath))
+  arpha_id = uuid_dasher(arpha_id)
 
   plazi_xpath = "//document/@masterDocId"
   plazi_id = xml2::xml_text(xml2::xml_find_first(node, plazi_xpath))
