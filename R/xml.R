@@ -434,23 +434,24 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
 {
   pensoft_xpath = "//article/front/article-meta/uri[@content-type='arpha']"
   arpha_id = xml2::xml_text(xml2::xml_find_first(node, pensoft_xpath))
-  arpha_id = uuid_dasher(arpha_id)
-
+  if (!(is.na(arpha_id))){
+    arpha_id = uuid_dasher(arpha_id)
+  }
+  
   plazi_xpath = "//document/@masterDocId"
   plazi_id = xml2::xml_text(xml2::xml_find_first(node, plazi_xpath))
-
   root_node = xml2::xml_find_all(node, xpath = "/*")
-
+  
   doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
   if (is.na(doi)){
     doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
   }
-
+  
   article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
   if (length(article_ident) == 0){
     article_ident = NA #plazi docs don't have this article ident
   }
-
+  
   if (is.na(arpha_id) && is.na(plazi_id)){
     id = identifier_new(node = root_node, xml = xml, mongo_key = mongo_key,
                         prefix = prefix, blank = FALSE, publisher_id = NA,
@@ -461,26 +462,19 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
       article_id = arpha_id
     } else if (!(is.na(plazi_id))){
       #add dashes to uuid if the article is from pensoft
-      #if (is_pensoft_pub(xml)==TRUE){
       article_id = uuid_dasher(plazi_id)
-      #} else {
-      #  article_id = plazi_id
-      #}
     }
   }
-
+  
   xml2::xml_attr(root_node, "obkms_id") = article_id
   id = identifier(id = article_id, prefix = prefix)
   xml2::xml_attr(node, "obkms_process") = "TRUE"
-
+  
   title = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/title-group/article-title"))
   if (is.na(title)){
     title = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:titleInfo/mods:title"))
   }
-
-
-
-
+  
   #check whether the id was saved and save it to mongo only if it wasnt
   res = check_mongo_key(value = title, type = "article", collection = general_collection, regex = FALSE)
   # remove_meta = FALSE
@@ -492,7 +486,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
   } #else if (!(is.null(res) && is_pensoft_pub(xml)==FALSE)){ #if there is such article id in mongo, set appropriate metadata constructor
   # remove_meta = TRUE
   #}
-
+  
   #list(id, remove_meta)
   return(id)
 }
