@@ -397,3 +397,17 @@ strip_trailing_whitespace = function(string){
   string = gsub("\\s*$", "", string)
   return(string)
 }
+
+#' @export
+strip_starting_whitespace = function(string){
+  string = gsub("^\\s*", "", string)
+  return(string)
+}
+
+#' @export
+strip_xml_newlines = function(string){
+  string = gsub("(?<=\\S)(\\s*)(?=<\\/)", "", string, perl=TRUE)
+  string = gsub("(?<=>)\\s*(?=\\S[^<])(?=\\s*)", "", string, perl=TRUE)
+  return(string)
+}
+

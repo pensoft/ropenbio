@@ -67,7 +67,7 @@ gbif_taxonomy_mapping = function(scName, collection = checklistCol)
   sapply(atoms$genbank_id, function(n){
 
     genbank_label = n$text_value
-    genbank_df = set_component_frame(label =  genbank_label , mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc)
+    genbank_df = set_component_frame(label =  genbank_label, mongo_key = NA, type = "genbank-id", orcid = NA, parent = NA, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
     genbank_id = identifier(get_or_set_mongoid(genbank_df, prefix), prefix)
     tt$add_triple(nid, mentions_id , genbank_id)
     tt$add_triple(genbank_id, rdf_type , GenBankAccession)

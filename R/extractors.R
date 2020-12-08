@@ -29,15 +29,19 @@
 
       atoms = find_literals(node, xml_schema)
       #TODO fix parent_id prefix
-      if (plazi_doc == TRUE && xml_schema$schema_name %in% c("nomenclature_section", "materials_examined", "diagnosis_section", "distribution_section", "discussion_section", "taxonomic_key", "figure", "taxonomic_name_usage", "reference")){
-        pid = plazi_treatment_id
-      }else{
+      #if (plazi_doc == TRUE && xml_schema$schema_name %in% c("nomenclature_section", "materials_examined", "diagnosis_section", "distribution_section", "discussion_section", "taxonomic_key", "figure", "taxonomic_name_usage", "reference")){
+    #    pid = plazi_treatment_id
+    #  }else{
         pid = identifier(parent_id(node), prefix)
-      }
+     # }
+        if (is.null(pid)){
+          pid = root_id
+        }
+
       new_triples = xml_schema$constructor(atoms, identifiers = list(nid = identifier_new(node, xml, mongo_key = xml_schema$mongo_key,prefix = prefix, blank = FALSE, publisher_id =publisher_id, journal_id=journal_id, doi=doi, article_id = article_id),
                                                                      pid = pid,
                                                                      root_id = root_id),
-                                           prefix = xml_schema$prefix,new_taxons = new_taxons, mongo_key = xml_schema$mongo_key, publisher_id = publisher_id,
+                                           prefix = xml_schema$prefix, new_taxons = new_taxons, mongo_key = xml_schema$mongo_key, publisher_id = publisher_id,
                                            journal_id = journal_id, plazi_doc = plazi_doc, doi = doi,
                                            article_id = article_id)
 
