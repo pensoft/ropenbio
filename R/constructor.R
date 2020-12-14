@@ -1449,10 +1449,14 @@ taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_ke
       })
 
 
-      if (length(unlist(atoms$status))>0 ){
-        status = atoms$status[[1]]$text_value
-        tt$add_triple(scNameID, taxonStatus, literal(status))
+      sapply(atoms$verbatim_status, function(i) { tt$add_triple(tnu_id, taxonStatus, i ) } )
+
+      if(length(atoms$verbatim_status) >= 1)
+      {
+        atoms$status = list(verbstat2openbiodiv(atoms$verbatim_status[[1]]$text_value, def_prefix = prefix))
       }
+      sapply(atoms$status, function(i) { tt$add_triple(tnu_id, has_taxonomic_status_id, i ) } )
+
     }
   }
 
