@@ -81,15 +81,15 @@ XmlSchema =
 #'
 #'
 #' @export
-xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess, dry, grbio, taxon_discovery)
+xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir, reprocess, dry, grbio, taxon_discovery)
 {
   # generate lookup functions
 
 
 
-  tryCatch(
-    {
-      xml = xml2::read_xml(filename)
+ # tryCatch(
+  #  {
+  #    xml = xml2::read_xml(filename)
 
       if (processing_status(xml)==FALSE && is.plazi_pensoft_pub(xml) == FALSE){
         xml_string = toString(xml)
@@ -109,23 +109,26 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         }
         prefix = c(openbiodiv = "http://openbiodiv.net/")
         triples = ResourceDescriptionFramework$new()
-        if (is.plazi_doc(xml)==TRUE)
+		plazi_doc = is.plazi_doc(xml
+        if (plazi_doc == TRUE)
         {
           xml_schema = plazi_schema
         }else{
           xml_schema = taxpub
         }
 
+		)
+
         processing_xml = xml
 
-        root_setting = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
+        root_setting = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, doi = doi, article_ident = article_ident, plazi_doc = plazi_doc, prefix = prefix, blank = FALSE)
         root_ident = root_setting
 
         xml2::write_xml(xml, filename)
         triples$set_context(root_ident)
 
         set_journal_publisher_ids = function(xml){
-          plazi_doc = is.plazi_doc(xml)
+         # plazi_doc = is.plazi_doc(xml)
             #if plazi_doc == TRUE, only set journal_id (with different xpath), otherwise do both
           if (plazi_doc == TRUE){
             journal_name = xml2::xml_text(xml2::xml_find_all(xml, "/document/mods:mods/mods:relatedItem[@type='host']/mods:titleInfo/mods:title"))
@@ -430,7 +433,7 @@ parent_id = function (node, fullname = FALSE )
 #' @param node
 #'
 #' @export
-root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
+root = function (node, xml_schema, xml, mongo_key, doi, article_ident, plazi_doc, prefix = NA, blank = FALSE)
 {
   pensoft_xpath = "//article/front/article-meta/uri[@content-type='arpha']"
   arpha_id = xml2::xml_text(xml2::xml_find_first(node, pensoft_xpath))
@@ -442,15 +445,15 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
   plazi_id = xml2::xml_text(xml2::xml_find_first(node, plazi_xpath))
   root_node = xml2::xml_find_all(node, xpath = "/*")
   
-  doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
-  if (is.na(doi)){
-    doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
-  }
+#  doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
+ # if (is.na(doi)){
+  #  doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
+  #}
   
-  article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
-  if (length(article_ident) == 0){
-    article_ident = NA #plazi docs don't have this article ident
-  }
+  #article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
+  #if (length(article_ident) == 0){
+   # article_ident = NA #plazi docs don't have this article ident
+  #}
   
   if (is.na(arpha_id) && is.na(plazi_id)){
     id = identifier_new(node = root_node, xml = xml, mongo_key = mongo_key,
@@ -481,7 +484,7 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
   #if there is no such article id in mongo, save it
   if (is.null(res)){
     save_to_mongo(key = toString(id$uri), value = title, type = "article",
-                  orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, plazi_doc = is.plazi_doc(xml), doi = doi, article_id = article_ident,
+                  orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_ident,
                   collection = general_collection)
   } #else if (!(is.null(res) && is_pensoft_pub(xml)==FALSE)){ #if there is such article id in mongo, set appropriate metadata constructor
   # remove_meta = TRUE
