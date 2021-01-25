@@ -306,24 +306,20 @@ escape_special = function(string){
 get_or_set_mongoid= function (df, prefix)
 {
   if (nrow(df)>0){
-  if (is.null(df) == FALSE){
-    #check whether the type is treatment and the id is not na
+    if (is.null(df) == FALSE){
+      #check whether the type is treatment and the id is not na
 
-
-    if (!(is.na(df$key))){
-      key = df$key
-      save_to_mongo(key = key, value = df$label, type = df$type, orcid = df$orcid , parent = NA, publisher_id = df$publisher_id, journal_id = df$journal_id, plazi_doc = df$plazi_doc, doi =  df$doi, article_id = df$article_id, collection = general_collection)
-
-      key = toString(key)
-      id = rdf4r::strip_angle(key)
-      id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", id)
-    } else{
+      if (!(is.na(df$key))){
+        key = df$key
+        save_to_mongo(key = key, value = df$label, type = df$type, orcid = df$orcid , parent = NA, publisher_id = df$publisher_id, journal_id = df$journal_id, plazi_doc = df$plazi_doc, doi =  df$doi, article_id = df$article_id, collection = general_collection)
+        key = toString(key)
+        id = rdf4r::strip_angle(key)
+        id = gsub("http:\\/\\/openbiodiv\\.net\\/", "", id)
+      } else{
         if (!(is.na(df$orcid))) {
           query = sprintf("{\"%s\":\"%s\"}", "orcid", df$orcid)
           key = general_collection$find(query)$key
-
-          #key = check_mongo_key_via_orcid(df$orcid, general_collection)
-          if (is.null(key)){
+          if (is.na(df$key)){
             key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
           }
           id = get_or_set(key, df)
@@ -337,23 +333,15 @@ get_or_set_mongoid= function (df, prefix)
           }
           else
           {
-
-          #nocheck = c("introduction", "abstract", "discussion", "bibliography", "keywords")
-          #if (df$type %in% nocheck){
-          #  key = NULL
-          #  id = get_or_set(key, df)
-          #}else{
-          key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
-          id = get_or_set(key, df)
-          # }
+            key = check_mongo_key(value = df$label, type = df$type, collection = general_collection, regex = FALSE)
+            id = get_or_set(key, df)
           }
         }
       }
-   }
-    }else{
+    }
+  }else{
     id = NULL
   }
-
   return(id)
 }
 
