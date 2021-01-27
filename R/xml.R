@@ -135,7 +135,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
             publisher_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/publisher/publisher-name"))
             type_publisher= "publisher"
 
-            df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = type, orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc= plazi_doc, doi = doi, article_id = article_ident)
+            df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = type_publisher, orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc= plazi_doc, doi = doi, article_id = article_ident)
             publisher_id = get_or_set_mongoid(df, prefix )
             publisher_id = paste0("<http://openbiodiv.net/",publisher_id,">")
           }
