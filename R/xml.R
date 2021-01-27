@@ -81,7 +81,7 @@ XmlSchema =
 #'
 #'
 #' @export
-xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess, dry, grbio, taxon_discovery)
+xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir, reprocess, dry, grbio, taxon_discovery)
 {
   # generate lookup functions
 
@@ -89,9 +89,9 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
 
   tryCatch(
     {
-      xml = xml2::read_xml(filename)
+      #xml = xml2::read_xml(filename)
 
-      if (processing_status(xml)==FALSE && is.plazi_pensoft_pub(xml) == FALSE){
+      if (is.plazi_pensoft_pub(xml) == FALSE){
         xml_string = toString(xml)
         xml_string = strip_xml_newlines(xml_string)
         xml = xml2::as_xml_document(xml_string)
@@ -112,8 +112,14 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         if (is.plazi_doc(xml)==TRUE)
         {
           xml_schema = plazi_schema
+          processed_xml_dir = "/opt/data/obkms/plazi_corpus/plazi_processed/"
+          filename_processed = gsub("/opt/data/obkms/plazi_corpus/", "", filename)
+          filename_processed = paste0(processed_xml_dir, filename_processed)
         }else{
           xml_schema = taxpub
+          processed_xml_dir = "/opt/data/obkms/pjsupload/pensoft_processed/"
+          filename_processed = gsub("/opt/data/obkms/pjsupload/", "", filename)
+          filename_processed = paste0(processed_xml_dir, filename_processed)
         }
 
         processing_xml = xml
@@ -201,8 +207,13 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
           paste0(strip_filename_extension(last_token(filename, split = "/")), ".trig")
         )
       )
+       #save the formatted xml into the directory with processed xmls
 
-        xml2::write_xml(processing_xml, filename)
+        xml2::write_xml(processing_xml, filename_processed)
+        #remove the other xml from the directory with unprocessed xmls
+        file.remove(filename)
+
+
         if (is.plazi_doc(xml)==TRUE){
           collection_name = "plazi_xmls"
         }else{
