@@ -81,20 +81,18 @@ XmlSchema =
 #'
 #'
 #' @export
-xml2rdf = function(filename, xml_schema, access_options, serialization_dir, reprocess, dry, grbio, taxon_discovery)
+xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir, reprocess, dry, grbio, taxon_discovery)
 {
-  # generate lookup functions
 
+ # tryCatch(
+  #  {
+  #    xml = xml2::read_xml(filename)
 
-
-  tryCatch(
-    {
-      xml = xml2::read_xml(filename)
-
-      if (processing_status(xml)==FALSE && is.plazi_pensoft_pub(xml) == FALSE){
-        xml_string = toString(xml)
-        xml_string = strip_xml_newlines(xml_string)
-        xml = xml2::as_xml_document(xml_string)
+      #***checks & var setting***
+      if (is.plazi_pensoft_pub(xml) == FALSE){
+      #  xml_string = toString(xml)
+      #  xml_string = strip_xml_newlines(xml_string)
+      #  xml = xml2::as_xml_document(xml_string)
 
         doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
         if (is.na(doi)){
@@ -109,50 +107,30 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         }
         prefix = c(openbiodiv = "http://openbiodiv.net/")
         triples = ResourceDescriptionFramework$new()
-        if (is.plazi_doc(xml)==TRUE)
+	     	plazi_doc = is.plazi_doc(xml)
+        if (plazi_doc == TRUE)
         {
           xml_schema = plazi_schema
         }else{
           xml_schema = taxpub
         }
 
+
         processing_xml = xml
 
-        root_setting = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, prefix = prefix, blank = FALSE)
-        root_ident = root_setting
-
-        xml2::write_xml(xml, filename)
-        triples$set_context(root_ident)
-
-        set_journal_publisher_ids = function(xml){
-          plazi_doc = is.plazi_doc(xml)
-            #if plazi_doc == TRUE, only set journal_id (with different xpath), otherwise do both
-          if (plazi_doc == TRUE){
-            journal_name = xml2::xml_text(xml2::xml_find_all(xml, "/document/mods:mods/mods:relatedItem[@type='host']/mods:titleInfo/mods:title"))
-            publisher_id = NA
-          } else{
-            journal_name = xml2::xml_text(xml2::xml_find_all(xml, "/article/front/journal-meta/journal-title-group/journal-title"))
-            publisher_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/publisher/publisher-name"))
-            df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc= plazi_doc, doi = doi, article_id = article_ident)
-            publisher_id = get_or_set_mongoid(df, prefix )
-            publisher_id = paste0("<http://openbiodiv.net/",publisher_id,">")
-          }
-
-          df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_ident)
-          journal_id = get_or_set_mongoid(df, prefix)
-          journal_id = paste0("<http://openbiodiv.net/",journal_id,">")
-
-          #return both
-          res = c(journal_id, publisher_id)
-          names(res) = c("journal_id", "publisher_id")
-          return(res)
-        }
-
-        ids = set_journal_publisher_ids(processing_xml)
+        ids = set_journal_publisher_ids(processing_xml, plazi_doc)
         journal_id = ids["journal_id"]
         publisher_id = ids["publisher_id"]
 
-        if (is.plazi_doc(xml)){
+        #***root setting and saving xml with obkms*
+        root_setting = root(node=xml, xml_schema = xml_schema, xml=xml, mongo_key = xml_schema$mongo_key, doi = doi, article_ident = article_ident, plazi_doc = plazi_doc, publisher_id = publisher_id, journal_id = journal_id, prefix = prefix, blank = FALSE)
+        root_ident = root_setting
+        xml2::write_xml(xml, filename)
+
+        triples$set_context(root_ident)
+
+        #***setting plazi treatment id***
+        if (plazi_doc==TRUE){
           plazi_treatment_id = xml2::xml_text(xml2::xml_find_all(xml, ".//treatment/@httpUri"))
           pref = "http://treatment.plazi.org/id/"
           plazi_treatment_id = gsub(pref, "", plazi_treatment_id)
@@ -163,11 +141,12 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         }
 
 
-
-        #finds all institution codes and names and saves them in mongodb collection
+        #***finds all institution codes and names and saves them in mongodb collection
         extract_inst_identifiers(processing_xml, root_id = root_ident, prefix = prefix, collection = inst_collection, grbio = grbio)
 
         new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
+
+        #***node_extractor
         triples = node_extractor(
           node = processing_xml,
           xml_schema = xml_schema,
@@ -181,13 +160,15 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
           root_id = root_ident,
           publisher_id = publisher_id,
           journal_id = journal_id,
-          plazi_doc = is.plazi_doc(xml),
+          plazi_doc = plazi_doc,
           plazi_treatment_id = plazi_treatment_id,
           doi = doi,
           article_id = article_ident
         )
 
+        #***serialize triples
         serialization = triples$serialize()
+        #***save to graphdb
         #changed to a new mode of triple saving. save + upload
 
         add_data(serialization, access_options = access_options)
@@ -201,7 +182,8 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
       )
 
         xml2::write_xml(processing_xml, filename)
-        if (is.plazi_doc(xml)==TRUE){
+
+        if (plazi_doc==TRUE){
           collection_name = "plazi_xmls"
         }else{
           collection_name = "xmls"
@@ -217,12 +199,7 @@ xml2rdf = function(filename, xml_schema, access_options, serialization_dir, repr
         xml_collection$insert(d)
       return(TRUE)
     }
-      },
-    error = function(e)
-    {
-      warning(e)
-      return(FALSE)
-    })
+
 }
 
 #' @export
@@ -430,32 +407,32 @@ parent_id = function (node, fullname = FALSE )
 #' @param node
 #'
 #' @export
-root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
+root = function (node, xml_schema, xml, mongo_key, doi, article_ident, plazi_doc, publisher_id, journal_id, prefix = NA, blank = FALSE)
 {
   pensoft_xpath = "//article/front/article-meta/uri[@content-type='arpha']"
   arpha_id = xml2::xml_text(xml2::xml_find_first(node, pensoft_xpath))
   if (!(is.na(arpha_id))){
     arpha_id = uuid_dasher(arpha_id)
   }
-  
+
   plazi_xpath = "//document/@masterDocId"
   plazi_id = xml2::xml_text(xml2::xml_find_first(node, plazi_xpath))
   root_node = xml2::xml_find_all(node, xpath = "/*")
-  
-  doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
-  if (is.na(doi)){
-    doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
-  }
-  
-  article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
-  if (length(article_ident) == 0){
-    article_ident = NA #plazi docs don't have this article ident
-  }
-  
+
+#  doi = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/article-id[@pub-id-type='doi']"))
+ # if (is.na(doi)){
+  #  doi = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:identifier[@type='DOI']"))
+  #}
+
+  #article_ident = xml2::xml_text(xml2::xml_find_all(xml, "//article/front/article-meta/article-id[@pub-id-type='publisher-id']"))
+  #if (length(article_ident) == 0){
+   # article_ident = NA #plazi docs don't have this article ident
+  #}
+
   if (is.na(arpha_id) && is.na(plazi_id)){
     id = identifier_new(node = root_node, xml = xml, mongo_key = mongo_key,
-                        prefix = prefix, blank = FALSE, publisher_id = NA,
-                        journal_id = NA, doi = doi, article_id = article_ident)
+                        prefix = prefix, blank = FALSE, publisher_id = publisher_id,
+                        journal_id = journal_id, doi = doi, article_id = article_ident)
   }else
   {
     if (!(is.na(arpha_id))){
@@ -465,28 +442,28 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
       article_id = uuid_dasher(plazi_id)
     }
   }
-  
+
   xml2::xml_attr(root_node, "obkms_id") = article_id
   id = identifier(id = article_id, prefix = prefix)
   xml2::xml_attr(node, "obkms_process") = "TRUE"
-  
+
   title = xml2::xml_text(xml2::xml_find_first(xml, "/article/front/article-meta/title-group/article-title"))
   if (is.na(title)){
     title = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:titleInfo/mods:title"))
   }
-  
+
   #check whether the id was saved and save it to mongo only if it wasnt
   res = check_mongo_key(value = title, type = "article", collection = general_collection, regex = FALSE)
   # remove_meta = FALSE
   #if there is no such article id in mongo, save it
   if (is.null(res)){
     save_to_mongo(key = toString(id$uri), value = title, type = "article",
-                  orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, plazi_doc = is.plazi_doc(xml), doi = doi, article_id = article_ident,
+                  orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_ident,
                   collection = general_collection)
   } #else if (!(is.null(res) && is_pensoft_pub(xml)==FALSE)){ #if there is such article id in mongo, set appropriate metadata constructor
   # remove_meta = TRUE
   #}
-  
+
   #list(id, remove_meta)
   return(id)
 }
@@ -573,3 +550,32 @@ standard_injector = function(obkms_id, xml_node)
   xml2::xml_attr(xml_node, "obkms_id") = obkms_id
 }
 
+#' Returns journal and publisher ids from xml
+#'
+#' @param xml
+#' @param plazi_doc
+#' @return
+#' @export
+set_journal_publisher_ids = function(xml, plazi_doc){
+  # plazi_doc = is.plazi_doc(xml)
+  #if plazi_doc == TRUE, only set journal_id (with different xpath), otherwise do both
+  if (plazi_doc == TRUE){
+    journal_name = xml2::xml_text(xml2::xml_find_all(xml, "/document/mods:mods/mods:relatedItem[@type='host']/mods:titleInfo/mods:title"))
+    publisher_id = NA
+  } else{
+    journal_name = xml2::xml_text(xml2::xml_find_all(xml, "/article/front/journal-meta/journal-title-group/journal-title"))
+    publisher_name = xml2::xml_text(xml2::xml_find_all(processing_xml, "/article/front/journal-meta/publisher/publisher-name"))
+    df = set_component_frame(label = publisher_name, mongo_key = c(publisher = NA), type = "publisher", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc= plazi_doc, doi = NA, article_id = NA)
+    publisher_id = get_or_set_mongoid(df, prefix )
+    publisher_id = paste0("<http://openbiodiv.net/",publisher_id,">")
+  }
+
+  df = set_component_frame(label = journal_name, mongo_key = c(journal = NA), type = "journal", orcid = NA, parent = NA, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc, doi = doi, article_id = article_ident)
+  journal_id = get_or_set_mongoid(df, prefix)
+  journal_id = paste0("<http://openbiodiv.net/",journal_id,">")
+
+  #return both
+  res = c(journal_id, publisher_id)
+  names(res) = c("journal_id", "publisher_id")
+  return(res)
+}
