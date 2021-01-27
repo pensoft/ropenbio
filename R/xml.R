@@ -486,7 +486,6 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
     save_to_mongo(key = toString(id$uri), value = title, type = "article",
                   orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, plazi_doc = is.plazi_doc(xml),
                   doi = doi, article_id = article_ident,
-                  hash = hash,
                   collection = general_collection)
   }
   return(id)

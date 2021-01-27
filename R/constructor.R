@@ -828,12 +828,14 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
       }else{
         if (is.na(parent)){
          # query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "value", value)
-          query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
+          #query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
+          hash = set_values_to_sha256(type = "bibResource", value=value)
+          query = sprintf("{\"hash\": \"%s\"}", hash)
           df = collection$find(query)
           key = NULL
           if (!(is.null(df)) && nrow(df) > 0){
             if (!(is.na(df$value)) %% !(is.na(value))){
-              df <- df[which(df$value == value),]
+              df <- df[which(df$hash == hash),]
               if (nrow(df)>0){
                 for (n in 1:nrow(df)){
                   if (df[n,]$value == value){
