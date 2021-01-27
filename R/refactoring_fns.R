@@ -47,7 +47,6 @@ get_figure_label = function (node, mongo_key, fig_number)
 set_component_frame = function (label, mongo_key, type, orcid, parent, key, publisher_id, journal_id, plazi_doc, doi= doi, article_id = article_id)
 {
   hash = set_values_to_sha256(type, label)
-
   df = data.frame(label = label, mongo_key = mongo_key, type = type,
                   orcid = orcid, parent = parent, key = key, publisher_id = publisher_id,
                   journal_id = journal_id, plazi_doc = plazi_doc,

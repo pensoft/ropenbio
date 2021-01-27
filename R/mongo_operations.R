@@ -169,5 +169,6 @@ set_values_to_sha256 = function(type, value){
   val_type = paste0(type, ":", value)
   val_type = tolower(val_type)
   hash = openssl::sha256(val_type)
+  hash = as.character(hash)
   return(hash)
 }
