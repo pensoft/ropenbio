@@ -14,6 +14,7 @@ atoml_to_val = function(atoml)
 metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                      journal_id, plazi_doc, doi, article_id)
 {
+  print("metadata")
   pub_date = function(year, month, day) {
     literal(paste0(text_value = unlist(year)["text_value"],
                    "-", unlist(month)["text_value"], "-", unlist(day)["text_value"]),
@@ -206,6 +207,7 @@ metadata = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publishe
 plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
                            journal_id, plazi_doc,doi, article_id){
 
+  print("plazi_meta")
   if (length(unlist(atoms$pensoft_pub)) > 0) {
     stop("Pensoft publication")
     #tt = ResourceDescriptionFramework$new()
@@ -340,7 +342,7 @@ plazi_metadata = function (atoms, identifiers, prefix, new_taxons, mongo_key, pu
 keyword_group = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                          journal_id, plazi_doc, doi, article_id)
 {
-
+  print("keywords")
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, KeywordGroup)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -361,6 +363,7 @@ keyword_group = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
 title = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                   journal_id, plazi_doc, doi, article_id)
 {
+  print("title")
   title_content = atoms$text_content[[1]]
   title_content = escape_special(title_content$text_value)
 
@@ -388,7 +391,7 @@ abstract =function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
   #abstract_content = atoms$text_content[[1]]
   #abstract_content = escape_special(abstract_content$text_value)
 
-
+  print("abstract")
   #  trans_abstract = escape_special(atoms$trans_abstract)
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, Abstract)
@@ -426,7 +429,7 @@ abstract =function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
 author = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                    journal_id, plazi_doc, doi, article_id)
 {
-
+  print("author")
   full_name = function(lsurname, lgiven_name) {
     if (length(lsurname) == 1 && length(lgiven_name) == 1) {
       paste(lgiven_name[[1]]$text_value, lsurname[[1]]$text_value)
@@ -499,7 +502,7 @@ author = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
 plazi_author = function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
                          journal_id,  plazi_doc, doi, article_id){
 
-
+  print("plazi_author")
   article_root = identifiers$root_id
   author_id = identifiers$nid
   paper_id = check_mongo_key_via_parent(parent = article_root$uri, type = "researchPaper", collection = general_collection)
@@ -548,7 +551,7 @@ introduction_section = function (atoms, identifiers, prefix,new_taxons, mongo_ke
                                  journal_id, plazi_doc, doi, article_id)
 {
 
-
+  print("intro")
  # intro_content = atoms$text_content[[1]]
 #  intro_content = escape_special(intro_content$text_value)
 
@@ -570,6 +573,7 @@ treatment = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
                      journal_id, plazi_doc, doi, article_id)
   {
 
+  print("treatment")
   treatment_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
 
@@ -630,6 +634,8 @@ treatment = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 
 plazi_treatment =  function (atoms, identifiers, prefix, new_taxons, mongo_key, publisher_id,
                              journal_id,  plazi_doc, doi, article_id){
+
+  print("plazi treatment")
   treatment_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
   tc_df = set_component_frame(label = NA, mongo_key = NA, type = "taxonomicConcept", orcid = NA, parent = treatment_id$uri, key = NA, publisher_id = NA, journal_id = NA, plazi_doc = plazi_doc,doi = NA, article_id = NA)
@@ -672,7 +678,7 @@ plazi_treatment =  function (atoms, identifiers, prefix, new_taxons, mongo_key, 
 nomenclature = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                          journal_id, plazi_doc, doi, article_id)
   {
-
+  print("nomenclature")
   nomenclature_id = identifiers$nid #remove any ids from the text contents
   nomenclature_parent_id = identifiers$pid$id
    nomenclature_content = atoms$text_content[[1]]
@@ -697,7 +703,7 @@ nomenclature = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
 nomenclature_citations = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                                    journal_id, plazi_doc, doi, article_id)
 {
-
+  print("nomenclature cits")
   tt = ResourceDescriptionFramework$new()
   citations = atoms$text_content[[1]]
   citations = escape_special(citations$text_value)
@@ -714,7 +720,7 @@ nomenclature_citations = function (atoms, identifiers, prefix,new_taxons, mongo_
 nomenclature_citation =function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                                  journal_id, plazi_doc, doi, article_id)
 {
-
+  print("nomenclature citation")
   tt = ResourceDescriptionFramework$new()
   #citations = atoms$text_content[[1]]
   #citations = escape_special(citations$text_value)
@@ -771,6 +777,7 @@ nomenclature_citation =function (atoms, identifiers, prefix,new_taxons, mongo_ke
 plazi_nomenclature_citation = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                                         journal_id, plazi_doc, doi, article_id)
 {
+  print("plazi_nomenclature_citation")
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, NomenclatureCitation)
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$pid)
@@ -792,6 +799,7 @@ plazi_nomenclature_citation = function (atoms, identifiers, prefix,new_taxons, m
 bibliography = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                          journal_id, plazi_doc, doi, article_id)
 {
+  print("bibliography")
   tt = ResourceDescriptionFramework$new()
 
   tt$add_triple(identifiers$nid, rdf_type, ReferenceList)
@@ -805,6 +813,7 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
                       journal_id, plazi_doc, doi, article_id)
 {
 
+  print("reference")
   tt = ResourceDescriptionFramework$new()
 
   tt$add_triple(identifiers$nid, rdf_type, Reference)
@@ -821,38 +830,35 @@ reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 #  })
 
     #get or set an id for the cited article
-    check_mongo_citation = function(value, parent, collection)
-    {
-      if (is.na(parent) && is.na(value)){
+  check_mongo_citation = function(value, parent, collection)
+  {
+    if (is.na(parent) && is.na(value)){
+      key = NULL
+    }else{
+      if (is.na(parent)){
+        # query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "value", value)
+        # query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
+        # query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
+        hash = set_values_to_sha256(type = "bibResource", value=value)
+        query = sprintf("{\"hash\": \"%s\"}", hash)
+        df = collection$find(query)
         key = NULL
-      }else{
-        if (is.na(parent)){
-         # query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "value", value)
-          #query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
-          hash = set_values_to_sha256(type = "bibResource", value=value)
-          query = sprintf("{\"hash\": \"%s\"}", hash)
-          df = collection$find(query)
-          key = NULL
-          if (!(is.null(df)) && nrow(df) > 0){
-            if (!(is.na(df$value)) %% !(is.na(value))){
-              df <- df[which(df$hash == hash),]
-              if (nrow(df)>0){
-                for (n in 1:nrow(df)){
-                  if (df[n,]$value == value){
-                    key = df[n,]$key
-                  }
-                }
-              }
+        if (!(is.null(df)) && nrow(df) > 0){
+          df <- df[which(df$hash == hash),]
+          for (n in 1:nrow(df)){
+            if (df[n,]$hash == hash){
+              key = df[n,]$key
             }
           }
-        }else {
-          query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "parent", parent)
-          key = collection$find(query)$key
         }
-
+      }else {
+        query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "parent", parent)
+        key = collection$find(query)$key
       }
-      return(key)
+
     }
+    return(key)
+  }
 
 
       doi = unlist(atoms$doi[1])["text_value"]
@@ -963,6 +969,7 @@ plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
           journal_id, plazi_doc, doi, article_id)
 {
 
+  print("plazi_reference")
   tt = ResourceDescriptionFramework$new()
 
   tt$add_triple(identifiers$nid, rdf_type, Reference)
@@ -981,13 +988,16 @@ plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
     }else{
       if (is.na(parent)){
         # query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "type", "bibResource", "value", value)
-        query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
+       # query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
+       # query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}, \"type\": \"%s\"}", value, "bibResource")
+        hash = set_values_to_sha256(type = "bibResource", value=value)
+        query = sprintf("{\"hash\": \"%s\"}", hash)
         df = collection$find(query)
         key = NULL
         if (!(is.null(df)) && nrow(df) > 0){
-          df <- df[which(df$value == value),]
+          df <- df[which(df$hash == hash),]
           for (n in 1:nrow(df)){
-            if (df[n,]$value == value){
+            if (df[n,]$hash == hash){
               key = df[n,]$key
             }
           }
@@ -1046,7 +1056,7 @@ plazi_reference = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
 diagnosis = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                       journal_id, plazi_doc, doi, article_id)
 {
-
+  print("diagnosis")
   diagnosis_id = identifiers$nid
   #diagnosis_content = atoms$text_content[[1]]
   #diagnosis_content = escape_special(diagnosis_content$text_value)
@@ -1073,7 +1083,7 @@ diagnosis = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 discussion = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                        journal_id, plazi_doc, doi, article_id)
 {
-
+  print("discussion")
   tt = ResourceDescriptionFramework$new()
  # discussion_content = atoms$text_content[[1]]
 #  discussion_content = escape_special(discussion_content$text_value)
@@ -1108,7 +1118,7 @@ discussion = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publis
 methods = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                     journal_id, plazi_doc, doi, article_id)
 {
-
+  print("methods")
   tt = ResourceDescriptionFramework$new()
  # methods_content = atoms$text_content[[1]]
 #  methods_content = escape_special(methods_content$text_value)
@@ -1135,7 +1145,7 @@ methods = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher
 checklist = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                       journal_id, plazi_doc, doi, article_id)
 {
-
+  print("checklist")
   tt = ResourceDescriptionFramework$new()
 
 #  checklist_content = atoms$text_content[[1]]
@@ -1162,6 +1172,7 @@ checklist = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publish
 distribution = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                          journal_id, plazi_doc, doi, article_id)
 {
+  print("distribution")
   tt = ResourceDescriptionFramework$new()
   #distribution_content = atoms$text_content[[1]]
   #distribution_content = escape_special(distribution_content$text_value)
@@ -1199,7 +1210,7 @@ distribution = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publ
 figure = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                    journal_id, plazi_doc, doi, article_id)
 {
-
+  print("figure")
   tt = ResourceDescriptionFramework$new()
 
 
@@ -1230,6 +1241,7 @@ figure = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_
 type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                           journal_id, plazi_doc, doi, article_id)
   {
+  print("type material")
   #first check the status
   tt = ResourceDescriptionFramework$new()
   #get the name:
@@ -1288,6 +1300,7 @@ type_material = function (atoms, identifiers, prefix,new_taxons, mongo_key,  pub
 occurrence_list = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                             journal_id, plazi_doc, doi, article_id)
   {
+  print("occurrence list")
   #first check the status
   tt = ResourceDescriptionFramework$new()
   typeMaterialID = identifiers$pid
@@ -1337,7 +1350,7 @@ occurrence_list = function (atoms, identifiers, prefix,new_taxons, mongo_key,  p
 taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                                 journal_id, plazi_doc, doi, article_id)
   {
-
+  print("tnu")
   tnu_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
 
@@ -1470,7 +1483,7 @@ taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_ke
 plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                                                               journal_id, plazi_doc, doi, article_id)
 {
-
+  print("plazi tnu")
   tnu_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
 
@@ -1606,7 +1619,7 @@ plazi_taxonomic_name_usage = function (atoms, identifiers, prefix,new_taxons, mo
 taxonomic_key = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                           journal_id, plazi_doc, doi, article_id)
 {
-
+  print("taxonomic key")
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, rdf_type, TaxonomicKey)
   title = atoms$title[[1]]
@@ -1656,6 +1669,7 @@ institution_code_usage = function (atoms, identifiers, prefix,new_taxons, mongo_
 metadata_en = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                         journal_id, plazi_doc, doi, article_id)
 {
+  print("metadata_en")
   pub_date = function(year, month, day) {
     literal(paste0(text_value = unlist(year)["text_value"],
                    "-", unlist(month)["text_value"], "-", unlist(day)["text_value"]),
@@ -1829,6 +1843,7 @@ tnu = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                 journal_id, plazi_doc, doi, article_id)
   {
 
+  print("tnu short")
   tnu_id = identifiers$nid
   tt = ResourceDescriptionFramework$new()
 
@@ -1966,6 +1981,7 @@ tnu = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
 table = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_id,
                       journal_id, plazi_doc, doi, article_id)
 {
+  print("table")
   tt = ResourceDescriptionFramework$new()
   tt$add_triple(identifiers$nid, is_contained_by, identifiers$root_id)
   tt$add_triple(identifiers$nid, rdf_type, Table)
@@ -1977,6 +1993,7 @@ table = function (atoms, identifiers, prefix,new_taxons, mongo_key,  publisher_i
 
 #' @export
 check_dwc_occurrence = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc, doi, article_id){
+  print("check occurrence")
   if (length(atoms$catalog_number)>0 || length(atoms$other_catalog_numbers)>0 ||   length(atoms$record_number)>0  || length(atoms$recorded_by)>0 || length(atoms$individual_count)>0 || length(atoms$sex)>0 || length(atoms$life_stage)>0 ){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     occurrence_df = set_component_frame(label = paste0("Occurrence: ", occurrence_content_label), mongo_key = NA, type = "occurrence", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -1989,6 +2006,7 @@ check_dwc_occurrence = function(atoms, typeMaterialID, publisher_id, journal_id,
 
 #' @export
 serialize_occurrence = function(tt, atoms, typeMaterialID){
+  print("serialize occurrence")
   # atoms$occurrenceID  = ifelse(length(unlist(atoms$occurrenceID)) == 0, list(occurrenceID), atoms$occurrenceID)
   occurrenceID = atoms$occurrenceID
   #Occurrence
@@ -2030,6 +2048,8 @@ serialize_occurrence = function(tt, atoms, typeMaterialID){
 
 #' @export
 check_dwc_location = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc, doi, article_id){
+  print("check location")
+
   if (length(atoms$coordinates)>0 || length(atoms$verbatim_lat)>0 ||   length(atoms$verbatim_long)>0  || length(atoms$decimal_long)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$state_province)>0 || length(atoms$decimal_lat)>0 || length(atoms$country)>0 || length(atoms$locality)>0 || length(atoms$elevation)>0 || length(atoms$depth)>0 || length(atoms$water_body)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     location_df = set_component_frame(label = paste0("Location: ", occurrence_content_label), mongo_key = NA, type = "location", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -2042,6 +2062,7 @@ check_dwc_location = function(atoms, typeMaterialID, publisher_id, journal_id, p
 
 #' @export
 serialize_location = function(tt, atoms, typeMaterialID){
+  print("serialize location")
 
   #atoms$locationID  = ifelse(length(unlist(atoms$locationID)) == 0, list(locationID), atoms$locationID)
   locationID = atoms$locationID
@@ -2116,6 +2137,8 @@ serialize_location = function(tt, atoms, typeMaterialID){
 
 #' @export
 check_dwc_identification = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc = plazi_doc, doi, article_id){
+  print("check identif")
+
   if (length(atoms$identified_by)>0 || length(atoms$type_status)>0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     identification_df = set_component_frame(label = paste0("Identification: ", occurrence_content_label), mongo_key = NA, type = "identification", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id = publisher_id, journal_id = journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -2129,6 +2152,7 @@ check_dwc_identification = function(atoms, typeMaterialID, publisher_id, journal
 #' @export
 serialize_identification = function(tt, atoms, typeMaterialID){
   # atoms$identificationID  = ifelse(length(unlist(atoms$identificationID)) == 0, list(identificationID), atoms$identificationID)
+  print("serialize identif")
 
   identificationID = atoms$identificationID
   tt$add_triple(typeMaterialID, dwc_identification_id, identificationID)
@@ -2148,6 +2172,8 @@ serialize_identification = function(tt, atoms, typeMaterialID){
 
 #' @export
 check_dwc_event = function(atoms, typeMaterialID, publisher_id, journal_id, plazi_doc = plazi_doc, doi, article_id){
+  print("check event")
+
   if (length(atoms$collection_year)>0 || length(atoms$collection_month)>0 || length(atoms$collection_day)>0 || length(atoms$event_date)>0 || length(atoms$collection_date)>0 || length(atoms$samplingProtocol)>0 || length(atoms$habitat) > 0){
     occurrence_content_label = escape_special(atoms$text_content[[1]]$text_value)
     event_df = set_component_frame(label = paste0("Event: ", occurrence_content_label), mongo_key = NA, type = "event", orcid = NA, parent = typeMaterialID$uri, key = NA, publisher_id=publisher_id, journal_id=journal_id, plazi_doc = plazi_doc, doi = doi, article_id = article_id)
@@ -2160,6 +2186,8 @@ check_dwc_event = function(atoms, typeMaterialID, publisher_id, journal_id, plaz
 
 #' @export
 serialize_event = function(tt, atoms, typeMaterialID){
+  print("serialize event")
+
   eventID = atoms$eventID
   #atoms$eventID  = ifelse(length(unlist(atoms$eventID)) == 0, list(eventID), atoms$eventID)
 
@@ -2227,6 +2255,8 @@ serialize_event = function(tt, atoms, typeMaterialID){
 
 #' @export
 serialize_dwc_relations = function(tt, atoms){
+  print("serialize relations")
+
   tt$add_triple(atoms$occurrenceID, relation, atoms$eventID)
   tt$add_triple(atoms$occurrenceID, relation, atoms$locationID)
   tt$add_triple(atoms$occurrenceID, relation, atoms$identificationID)
