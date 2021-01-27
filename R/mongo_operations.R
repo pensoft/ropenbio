@@ -1,34 +1,25 @@
 #' @export
 check_mongo_key = function(value, type, collection, regex)
 {
+  hash = set_values_to_sha256(type, value)
   if (regex == TRUE){
     query = sprintf("{\"%s\":{\"%s\":\"%s\",\"%s\":\"%s\"}}", "value", "$regex", value, "$options", "i")
   } else{
    # query = sprintf("{\"$text\":{\"$search\":\"%s\"}, \"type\": \"%s\"}", value, type)
-    query = sprintf("{\"value\": \"%s\"}, \"type\": \"%s\"}", value, type)
+    query = sprintf("{\"hash\": \"%s\"}", hash)
   }
     tryCatch(
     {
   df = collection$find(query)
   key = NULL
   if (!(is.null(df))){
-    sapply(df, function(x){
-
-    })
-    df = df[which(df$value == value),]
+    df = df[which(df$hash == hash),]
     key = df[1,]$key
-    #for (n in 1:nrow(df)){
-    #  if (df[n,]$value == value){
-    #    key = df[n,]$key
-    #    break()
-    #  }
-    #}
   }
   return(key)
       },
     error = function(e)
     {
-     # warning(e)
       return(NULL)
     })
 }
@@ -37,16 +28,15 @@ check_mongo_key = function(value, type, collection, regex)
 check_mongo_parent = function(key, value, type, collection)
 {
   if (is.null(key)){
-    query = sprintf("{\"%s\":\"%s\",\"%s\":\"%s\"}", "value", value, "type", type)
-
-    #query = sprintf('{"$text":{"$search":"%s"}, "type": "%s"}', value, type)
+    hash = set_values_to_sha256(type, value)
+    query = sprintf("{\"%s\":\"%s\"}", "hash", hash)
     df = collection$find(query)
     parent = NULL
     if (!(is.null(df))){
-      df <- df[which(df$value == value),]
+      df <- df[which(df$hash == hash),]
       for (n in 1:nrow(df)){
-        if (!(is.null(df[n,]$value)) && length(value)>0 ){
-         if (df[n,]$value == value){
+        if (!(is.null(df[n,]$hash)) && length(hash)>0 ){
+         if (df[n,]$hash == hash){
             parent = df[n,]$parent
         }
        }
@@ -110,23 +100,30 @@ check_mongo_key_via_orcid = function(orcid, collection)
 save_to_mongo = function (key, value, type, orcid, parent, publisher_id, journal_id, plazi_doc, doi, article_id,
                           collection)
 {
+  hash = set_values_to_sha256(type, value)
   if (!(is.na(plazi_doc))){
     if (plazi_doc == TRUE){
       d = data.frame(key = as.character(key), value = as.character(value),
                      type = as.character(type), orcid = as.character(orcid),
                      parent = as.character(parent), publisher_id = as.character(publisher_id),
-                     journal_id = as.character(journal_id), plazi_doc = as.character(plazi_doc), doi = as.character(doi), article_id = as.character(article_id))
+                     journal_id = as.character(journal_id), plazi_doc = as.character(plazi_doc),
+                     doi = as.character(doi), article_id = as.character(article_id),
+                     hash = as.character(hash))
     }else{
       d = data.frame(key = as.character(key), value = as.character(value),
                      type = as.character(type), orcid = as.character(orcid),
                      parent = as.character(parent), publisher_id = as.character(publisher_id),
-                     journal_id = as.character(journal_id), doi = as.character(doi), article_id = as.character(article_id))
+                     journal_id = as.character(journal_id),
+                     doi = as.character(doi), article_id = as.character(article_id),
+                     hash = as.character(hash))
     }
   } else{
     d = data.frame(key = as.character(key), value = as.character(value),
                    type = as.character(type), orcid = as.character(orcid),
                    parent = as.character(parent), publisher_id = as.character(publisher_id),
-                   journal_id = as.character(journal_id), doi = as.character(doi), article_id = as.character(article_id))
+                   journal_id = as.character(journal_id),
+                   doi = as.character(doi), article_id = as.character(article_id),
+                   hash = as.character(hash))
   }
 
 
@@ -138,12 +135,14 @@ save_to_mongo = function (key, value, type, orcid, parent, publisher_id, journal
 #' @export
 save_orcid_to_mongo = function(key, value, type, parent, orcid, collection)
 {
+  hash = set_values_to_sha256(type, value)
   d = data.frame(
     key = as.character(key),
     value = as.character(value),
     type = as.character(type),
     parent = as.character(parent),
-    orcid = as.character(orcid)
+    orcid = as.character(orcid),
+    hash = as.character(hash)
   )
   collection$insert(d)
 }
@@ -163,4 +162,12 @@ update_parent =  function(key, parent, collection = general_collection){
   query = sprintf("{\"%s\":\"%s\"}", "key", key)
   update = sprintf("{\"$set\":{\"%s\":\"%s\"}}", "parent", parent)
   collection$update(query = query, update = update)
+}
+
+#' @export
+set_values_to_sha256 = function(type, value){
+  val_type = paste0(type, ":", value)
+  val_type = tolower(val_type)
+  hash = openssl::sha256(val_type)
+  return(hash)
 }
