@@ -85,8 +85,6 @@ xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir,
 {
   # generate lookup functions
 
-
-
   tryCatch(
     {
       #xml = xml2::read_xml(filename)
@@ -107,19 +105,20 @@ xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir,
         if (length(article_ident) == 0){
           article_ident = NA
         }
+
         prefix = c(openbiodiv = "http://openbiodiv.net/")
         triples = ResourceDescriptionFramework$new()
         if (is.plazi_doc(xml)==TRUE)
         {
           xml_schema = plazi_schema
-          processed_xml_dir = "/opt/data/obkms/plazi_corpus/plazi_processed/"
-          filename_processed = gsub("/opt/data/obkms/plazi_corpus/", "", filename)
-          filename_processed = paste0(processed_xml_dir, filename_processed)
+        #  processed_xml_dir = "/opt/data/obkms/plazi_corpus/plazi_processed/"
+        #  filename_processed = gsub("/opt/data/obkms/plazi_corpus/", "", filename)
+        #  filename_processed = paste0(processed_xml_dir, filename_processed)
         }else{
           xml_schema = taxpub
-          processed_xml_dir = "/opt/data/obkms/pjsupload/pensoft_processed/"
-          filename_processed = gsub("/opt/data/obkms/pjsupload/", "", filename)
-          filename_processed = paste0(processed_xml_dir, filename_processed)
+         # processed_xml_dir = "/opt/data/obkms/pjsupload/pensoft_processed/"
+        #  filename_processed = gsub("/opt/data/obkms/pjsupload/", "", filename)
+         # filename_processed = paste0(processed_xml_dir, filename_processed)
         }
 
         processing_xml = xml
@@ -128,6 +127,7 @@ xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir,
         root_ident = root_setting
 
         xml2::write_xml(xml, filename)
+
         triples$set_context(root_ident)
 
         set_journal_publisher_ids = function(xml){
@@ -160,6 +160,7 @@ xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir,
         journal_id = ids["journal_id"]
         publisher_id = ids["publisher_id"]
 
+
         if (is.plazi_doc(xml)){
           plazi_treatment_id = xml2::xml_text(xml2::xml_find_all(xml, ".//treatment/@httpUri"))
           pref = "http://treatment.plazi.org/id/"
@@ -171,11 +172,12 @@ xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir,
         }
 
 
-
-        #finds all institution codes and names and saves them in mongodb collection
+        #finds a ll institution codes and names and saves them in mongodb collection
         extract_inst_identifiers(processing_xml, root_id = root_ident, prefix = prefix, collection = inst_collection, grbio = grbio)
 
         new_taxons = scan(taxon_discovery, character(), quote = "", sep="\n")
+
+        tic("node extractor total")
         triples = node_extractor(
           node = processing_xml,
           xml_schema = xml_schema,
@@ -195,10 +197,16 @@ xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir,
           article_id = article_ident
         )
 
+        toc()
+
+        tic("serialization")
         serialization = triples$serialize()
         #changed to a new mode of triple saving. save + upload
+        toc()
 
+        tic("add data to graph")
         add_data(serialization, access_options = access_options)
+        toc()
 
        cat(
         serialization,
@@ -209,11 +217,11 @@ xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir,
       )
        #save the formatted xml into the directory with processed xmls
 
-        xml2::write_xml(processing_xml, filename_processed)
+        xml2::write_xml(processing_xml, filename)
         #remove the other xml from the directory with unprocessed xmls
-        file.remove(filename)
+        #file.remove(filename)
 
-
+        tic("saving to mongo xml coll")
         if (is.plazi_doc(xml)==TRUE){
           collection_name = "plazi_xmls"
         }else{
@@ -228,6 +236,7 @@ xml2rdf = function(filename, xml, xml_schema, access_options, serialization_dir,
           doi = doi
         )
         xml_collection$insert(d)
+        toc()
       return(TRUE)
     }
       },
