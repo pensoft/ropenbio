@@ -477,12 +477,12 @@ root = function (node, xml_schema, xml, mongo_key, prefix = NA, blank = FALSE)
     title = xml2::xml_text(xml2::xml_find_first(xml, "/document/mods:mods/mods:titleInfo/mods:title"))
   }
 
+
   #check whether the id was saved and save it to mongo only if it wasnt
   res = check_mongo_key(value = title, type = "article", collection = general_collection, regex = FALSE)
   # remove_meta = FALSE
   #if there is no such article id in mongo, save it
   if (is.null(res)){
-    hash = set_values_to_sha256(type, value)
     save_to_mongo(key = toString(id$uri), value = title, type = "article",
                   orcid = NA, parent = doi, publisher_id = NA, journal_id = NA, plazi_doc = is.plazi_doc(xml),
                   doi = doi, article_id = article_ident,
