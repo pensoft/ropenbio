@@ -4,18 +4,18 @@
 gbif_taxonomy_mapping = function(scName, collection = checklistCol)
 {
 
-  #query_can = sprintf("{\"%s\":\"%s\"}", "canonicalName", scName)
+  query_can = sprintf("{\"%s\":\"%s\"}", "canonicalName", scName)
 
-  #query_sc = sprintf("{\"%s\":\"%s\"}", "scientificName", scName)
-
-  query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}}",scName)
-  res = collection$find(query)
-  #if (nrow(res)==0)
-  #  res = collection$find(query_sc)
-
-
-  if (nrow(res)==0 || nrow(res)>1){
-    gbif_key = NULL
+  query_sc = sprintf("{\"%s\":\"%s\"}", "scientificName", scName)
+  #query = sprintf("{\"$text\":{\"$search\":\"\\\"%s\\\"\"}}",scName)
+  res = collection$find(query_can)
+  if (nrow(res)==0){
+    res = collection$find(query_sc)
+    if (nrow(res)==0 || nrow(res)>1){
+      gbif_key = NULL
+    }else{
+      gbif_key = res$tcId
+    }
   }else{
     gbif_key = res$tcId
   }

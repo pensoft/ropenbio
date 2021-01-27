@@ -46,9 +46,13 @@ get_figure_label = function (node, mongo_key, fig_number)
 #' @export
 set_component_frame = function (label, mongo_key, type, orcid, parent, key, publisher_id, journal_id, plazi_doc, doi= doi, article_id = article_id)
 {
+  hash = set_values_to_sha256(type, label)
   df = data.frame(label = label, mongo_key = mongo_key, type = type,
                   orcid = orcid, parent = parent, key = key, publisher_id = publisher_id,
-                  journal_id = journal_id, plazi_doc = plazi_doc, doi= doi, article_id = article_id, stringsAsFactors = FALSE)
+                  journal_id = journal_id, plazi_doc = plazi_doc,
+                  doi= doi, article_id = article_id,
+                  hash = hash,
+                  stringsAsFactors = FALSE)
   return(df)
 }
 
@@ -312,6 +316,7 @@ get_or_set_mongoid= function (df, prefix)
 
     if (!(is.na(df$key))){
       key = df$key
+      #save to mongo calls hash_vals
       save_to_mongo(key = key, value = df$label, type = df$type, orcid = df$orcid , parent = NA, publisher_id = df$publisher_id, journal_id = df$journal_id, plazi_doc = df$plazi_doc, doi =  df$doi, article_id = df$article_id, collection = general_collection)
 
       key = toString(key)
